@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+		<link rel="stylesheet" href="../../css/mui.min.css">
+		<link rel="stylesheet" href="../../css/custom.css">
+		<style type="text/css">
+			.slider-heaer {
+				height: 100px;
+				line-height: 100px;
+				width: 100%;
+				background: #f2f2f2;
+				padding: 8px 20px;
+				margin: 0;
+				color: #fff;
+				font-size: 30px;
+			}
+			
+			.slider-heaer>.mui-icon-contact {
+				font-size: 50px;
+			}
+			
+			.slider-content {
+				margin-top: 24px;
+				border: none;
+				list-style: none;
+				color: #fff;
+				width: 100%;
+				padding: 0
+			}
+			
+			.slider-content li {
+				display: block;
+				height: 50px;
+				line-height: 30px;
+				/*background-color: #135280;*/
+				border-top: 1px solid rgba(255, 255, 255, 0.15);
+				border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+				margin-bottom: 20px;
+				padding-left: 20px;
+				font-size: 18px;
+				color: #fff;
+			}
+			
+			.slider-content li i {
+				margin-right: 14px;
+				margin-top: 12px;
+			}
+			
+			.slider-content .logout {
+				margin-top: 60px;
+				background-color: #e36a42;
+				border: none;
+				padding: 0;
+				text-align: center;
+			}
+			
+			.container {
+				margin-top: 48px;
+				height: 100%;
+				/*background-color: #135280;*/
+			}
+			
+			.container .mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			.container .mui-icon-arrowright:before {
+				content: '\e583';
+				position: relative;
+				top: -10px;
+			}
+			
+			.slider-content .logout {
+				margin-top: 40px;
+				background-color: #e36a42;
+				border: none;
+				padding-top: 20px;
+				text-align: center;
+				height: 70px;
+				font-size: 22px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 id="title" class="mui-title">南方云</h1>
+		</header>
+		<div class="container">
+			<div class="slider-heaer">
+				<i class="mui-icon mui-icon-contact"></i>
+				<span v-text="user_name"></span>
+			</div>
+			<ul class="mui-grid-view slider-content">
+				<li class="link mui-table-view-cell" href="../../app/index/info.html">个人资料
+					<i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+				</li>
+				<li class="link mui-table-view-cell" href="../../app/index/resetpw.html">修改密码
+					<i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+				</li>
+				<li class="link mui-table-view-cell" href="../../app/index/feedback.html">问题反馈
+					<i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+				</li>
+				<li id="update" class="mui-table-view-cell">检查更新
+					<i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+				</li>
+				<li id="logout" class="logout" data-loading-text=" " :disabled="isdis">退出登录</li>
+			</ul>
+		</div>
+
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#container',
+				data: {
+					user_name: '',
+					token: '',
+					local_version: '',
+				},
+
+				methods: {},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({});
+						if(mui.os.stream || plus.os.name !== 'Android') {
+							document.getElementById('update').style.display = 'none';
+						}
+
+						mui('.mui-scroll-wrapper').scroll({
+							bounce: false,
+							indicators: true // 是否显示滚动条
+						});
+
+						mui('.mui-grid-view').on('tap', '.mui-table-view-cell', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
+						});
+						
+						vm.user_name = plus.storage.getItem('user_name');
+						vm.token = plus.storage.getItem('token');
+						
+						document.getElementById('logout').addEventListener('tap', function() {
+							mui('#logout').button('loading');
+							var lauchFlag = plus.storage.getItem('lauchFlag');
+							plus.storage.clear();
+							plus.storage.setItem('lauchFlag', lauchFlag);
+
+							mui('#logout').button('reset');
+
+							mui.ajax(apiUrl.logout, {
+								data: {
+									user_name: vm.user_name,
+									token: vm.token
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) {
+									if(data.status === 0 || data.status === 40004) {
+										mui.openWindow({
+											url: '../../login.html',
+											id: 'login'
+										});
+										
+										var lauchFlag = plus.storage.getItem('lauchFlag');
+										plus.storage.clear();
+										plus.storage.setItem('lauchFlag', lauchFlag);
+									}
+									mui('#logout').button('reset');
+								},
+								error: function(xhr, type, errorThrown) {
+									onNetChange();
+									mui('#logout').button('reset');
+								}
+							});
+						});
+
+						document.getElementById('update').addEventListener('tap', function() {
+							mui.ajax(apiUrl.latest_version, {
+								data: {
+									app_name: 'south_cloud_app',
+									local_version: vm.local_version
+									// local_version: 1.1
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) {
+									if(data.status === 0 && data.version !== '') {
+										var version = data.version;
+										mui.confirm(data.description, 'SouthCloud', ['取消', '更新'], function(e) {
+											if(e.index === 1) {
+												plus.runtime.openURL(apiUrl.download_app + '?app_name=south_cloud_app&version=' + version);
+											}
+										}, 'div');
+									} else if(data.status === 40004) {
+										mui.openWindow({
+											url: '../../login.html',
+											id: 'login'
+										});
+									} else {
+										mui.alert('', '当前已是最新版本!', '确定', function(e) {}, 'div');
+									}
+								},
+								error: function() {
+									mui.toast('网络发生错误，请稍后再试！');
+								}
+							});
+						});
+						
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

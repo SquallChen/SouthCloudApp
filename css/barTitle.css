@@ -1,0 +1,23 @@
+.mui-bar {
+    height: 50px;
+    background-color: #F5F5F5;
+}
+
+.mui-title {
+    line-height: 50px;
+    font-size: 18px;
+}
+
+.mui-bar-nav~.mui-content {
+    padding-top: 36px;
+    margin-bottom: 5px;
+}
+
+.mui-btn {
+    font-size: 16px;
+}
+
+.mui-table-view-cell>.mui-slider-right>.mui-btn {
+    padding: 0 20px;
+}
+

@@ -1,0 +1,189 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <title>LayIM移动版测试</title>
+
+  <link rel="stylesheet" href="../../js/layim/css/layui.mobile.css">
+</head>
+
+<body>
+  <script src="../../js/im/webim.config.js"></script>
+  <script src="../../js/im/strophe-1.2.8.min.js"></script>
+  <script src="../../js/im/websdk-1.4.10.js"></script>
+  <script src="../../js/im/adapter.js"></script>
+  <script src="../../js/im/webrtc-1.4.10.js"></script>
+  <script src="../../js/layim/layui.js"></script>
+  <script>
+
+    // 环信创建连接
+    var conn = new WebIM.connection({
+      isMultiLoginSessions: WebIM.config.isMultiLoginSessions,
+      https: typeof WebIM.config.https === 'boolean' ? WebIM.config.https : location.protocol === 'https:',
+      url: WebIM.config.xmppURL,
+      heartBeatWait: WebIM.config.heartBeatWait,
+      autoReconnectNumMax: WebIM.config.autoReconnectNumMax,
+      autoReconnectInterval: WebIM.config.autoReconnectInterval,
+      apiUrl: WebIM.config.apiURL,
+      isAutoLogin: true
+    });
+
+    // 登录
+    var options = {
+      apiUrl: WebIM.config.apiURL,
+      user: 'dada',
+      pwd: '123456',
+      appKey: WebIM.config.appkey
+    };
+    conn.open(options);
+
+    // 单聊发送文本消息
+    function sendPrivateText(sendMsg, to) {
+      var id = conn.getUniqueId();                 // 生成本地消息id
+      var msg = new WebIM.message('txt', id);      // 创建文本消息
+      msg.set({
+        msg: sendMsg,                  // 消息内容
+        to: to,                          // 接收消息对象（用户id）
+        roomType: false,
+        success: function (id, serverMsgId) {
+          console.log('send private text Success');
+        },
+        fail: function (e) {
+          console.log("Send private text error");
+        }
+      });
+      msg.body.chatType = 'singleChat';
+      conn.send(msg.body);
+    };
+
+    layui.use('mobile', function () {
+      var mobile = layui.mobile;
+      var layim = mobile.layim;
+      //基础配置
+      layim.config({
+        init: {
+          //设置我的基础信息
+          mine: {
+            "username": "dada" //我的昵称
+            , "id": "dada" //我的ID
+            , "avatar": "http://tp4.sinaimg.cn/1345566427/180/5730976522/0" //我的头像
+          }
+          //好友列表数据
+          , friend: [] //见下文：init数据格式
+        }
+      });
+
+
+      // 环信信息回调函数
+      conn.listen({
+        //连接成功回调
+        onOpened: function (message) {
+          console.log('onOpened')
+        },
+
+        //连接关闭回调
+        onClosed: function (message) { },
+
+        //收到文本消息
+        onTextMessage: function (message) {
+          console.log(message);
+          layim.getMessage({
+            username: message.from //消息来源用户名
+            , avatar: "http://tp1.sinaimg.cn/1571889140/180/40030060651/1" //消息来源用户头像
+            , id: message.from //消息的来源ID（如果是私聊，则是用户id，如果是群聊，则是群组id）
+            , type: 'friend' //聊天窗口来源类型，从发送消息传递的to里面获取
+            , content: message.data //消息内容
+            , cid: 0 //消息id，可不传。除非你要对消息进行一些操作（如撤回）
+            , mine: false //是否我发送的消息，如果为true，则会显示在右方
+            , timestamp: new Date().getTime() //服务端时间戳毫秒数。注意：如果你返回的是标准的 unix 时间戳，记得要 *1000
+          });
+        },
+      });
+
+      //监听发送消息
+      layim.on('sendMessage', function (data) {
+        rtcCall.makeVideoCall('xiao');
+        console.log(data);
+
+/*         var msgText = data.mine.content;
+        // var toUser = data.to.username;
+        var toUser = data.to.username;
+        sendPrivateText(msgText, 'xiao'); */
+        //更多情况下，一般是传递一个对象
+        // socket.send(JSON.stringify(data));
+      });
+
+      var rtcCall = new WebIM.WebRTC.Call({
+        connection: conn,
+        mediaStreamConstaints: {
+          audio: true,
+          video: true
+        },
+        listener: {
+          onAcceptCall: function (from, options) {
+            console.log('onAcceptCall::', 'from: ', from, 'options: ', options);
+          },
+          onGotRemoteStream: function (stream) {
+            console.log('onGotRemoteStream::', 'stream: ', stream);
+          },
+
+          onGotLocalStream: function (stream) {
+            //呼叫
+            console.log('onGotLocalStream::', 'stream:', stream);
+          },
+
+          //消息提示
+          onRinging: function (caller) {
+            console.log('onRinging::', 'caller:', caller);
+            rtcCall.acceptCall();
+
+            confirm('来电', {
+                    btn: [1, 2] //按钮
+                }, function () {
+                    rtcCall.acceptCall();
+                }, function () {
+                    rtcCall.endCall();
+                });
+          },
+          onTermCall: function (reason) {
+            console.log('onTermCall::');
+            console.log('reason:', reason);
+            switch (reason) {
+              case 'decline':
+                break;
+              case 'success':
+                break;
+              case 'busy':
+                break;
+            }
+          },
+          onIceConnectionStateChange: function (iceState) {
+            console.log('onIceConnectionStateChange::', 'iceState:', iceState);
+            switch (iceState) {
+              case 'connected':
+                console.log('连接');
+                break;
+              case 'disconnected':
+                // layer.msg('失去连接！');
+                break;
+              case 'closed':
+                break;
+              case 'failed':
+                break;
+              case 'completed':
+                break;
+            }
+          },
+          onError: function (e) {
+            console.log(e);
+          }
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <link rel="stylesheet" href="user.css">
+</head>
+
+<body class="mui-fullscreen1">
+    <!--页面主结构开始-->
+    <div id="app" class="mui-views">
+        <div class="mui-view">
+            <div class="mui-navbar">
+            </div>
+            <div class="mui-pages">
+            </div>
+        </div>
+    </div>
+    <!--页面主结构结束-->
+    <!--单页面开始-->
+    <div id="setting" class="mui-page">
+        <!--页面标题栏开始-->
+        <div class="mui-navbar-inner mui-bar mui-bar-nav">
+            <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+                <span class="mui-icon mui-icon-left-nav"></span>
+            </button>
+            <h1 class="mui-center mui-title">通讯列表</h1>
+        </div>
+        <!--页面标题栏结束-->
+        <!--页面主内容区开始-->
+        <div class="mui-page-content">
+            <!-- <a href="#chat">修改密码</a> -->
+            <div id="slider" class="mui-slider mui-fullscreen">
+                <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                    <div class="mui-scroll mui-row">
+                        <a class="mui-control-item mui-active" href="#item1">子用户</a>
+                        <a class="mui-control-item" href="#item2">好友</a>
+                    </div>
+                </div>
+                <div class="mui-slider-group">
+                    <div id="item1" class="mui-slider-item mui-control-content mui-active">
+                        <div id="scroll1" class="mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view" id="users"></ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="item2" class="mui-slider-item mui-control-content">
+                        <div class="mui-scroll-wrapper">
+                            <div class="mui-scroll">
+                                <ul class="mui-table-view" id="friends"></ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--页面主内容区结束-->
+    </div>
+    <!--单页面结束-->
+    <!-- 修改密码 -->
+    <div id="chat" class="mui-page">
+        <div class="mui-navbar-inner mui-bar mui-bar-nav">
+            <button type="button" class="mui-left mui-action-back mui-btn  mui-btn-link mui-btn-nav mui-pull-left">
+                <span class="mui-icon mui-icon-left-nav"></span>
+            </button>
+            <h1 class="mui-center mui-title" id="titleUserName">聊天</h1>
+        </div>
+        <div class="mui-page-content">
+            <pre id='h'></pre>
+            <script id='msg-template' type="text/template">
+                <% for(var i in record){ var item=record[i]; %>
+                    <div class="msg-item <%= (item.sender=='self'?' msg-item-self':'') %>" msg-type='<%=(item.type)%>' msg-content='<%=(item.content)%>'>
+                        <% if(item.sender=='self' ) { %>
+                            <i class="msg-user mui-icon mui-icon-person"></i>
+                            <% } else { %>
+                                <!-- <img class="msg-user-img" src="../images/logo.png" alt="" /> -->
+                                <i class="msg-user mui-icon mui-icon-person"></i>
+                                <% } %>
+                                    <div class="msg-content">
+                                        <div class="msg-content-inner">
+                                            <% if(item.type=='text' ) { %>
+                                                <%=( item.content|| '&nbsp;&nbsp;') %>
+                                                    <% } else if(item.type=='image' ) { %>
+                                                        <img class="msg-content-image" src="<%=(item.content)%>" style="max-width: 100px;" />
+                                                        <% } else if(item.type=='sound' ) { %>
+                                                            <span class="mui-icon" style="font-size: 18px;font-weight: bold;"></span>
+                                                            <span class="play-state">点击播放</span>
+                                                            <% } %>
+                                        </div>
+                                        <div class="msg-content-arrow"></div>
+                                    </div>
+                                    <div class="mui-item-clear"></div>
+                    </div>
+                    <% } %>
+            </script>
+            <div class="mui-content">
+                <div id='msg-list'>
+                </div>
+            </div>
+            <footer>
+                <div class="footer-center">
+                    <textarea id='msg-text' type="text" class='input-text'></textarea>
+                </div>
+                <label for="" class="footer-right">
+                    <i id='msg-type' class="mui-icon">发送</i>
+                </label>
+            </footer>
+        </div>
+    </div>
+</body>
+<script src="../../js/mui.min.js "></script>
+<script src="../../js/mui.view.js "></script>
+<script src='../../js/url.js'></script>
+<script src="../../js/mui.pullToRefresh.js"></script>
+<script src="../../js/mui.pullToRefresh.material.js"></script>
+<script src="../../js/converse/strophe.min.js"></script>
+<script src="../../js/arttmpl.js"></script>
+<script>
+mui.init({
+    beforeback: function() {},
+    gestureConfig: {
+        tap: true, //默认为true
+        doubletap: true, //默认为false
+        longtap: true, //默认为false
+        swipe: true, //默认为true
+        drag: true, //默认为true
+        hold: true, //默认为false，不监听
+        release: true //默认为false，不监听
+    }
+});
+//初始化单页view
+var viewApi = mui('#app').view({
+    defaultPage: '#setting'
+});
+//初始化单页的区域滚动
+mui('.mui-scroll-wrapper').scroll();
+
+
+var page0 = 0;
+var page1 = 0;
+var record = [];
+var user_name, token, toUserName, alertUser, pages;
+var countIM = [];
+
+var BOSH_SERVICE = 'http://112.74.209.204:7070/http-bind';
+var connection = null;
+connection = new Strophe.Connection(BOSH_SERVICE);
+var myDB = {
+    db: null
+};
+
+var ui = {
+    body: document.querySelector('body'),
+    footer: document.querySelector('footer'),
+    footerRight: document.querySelector('.footer-right'),
+    btnMsgType: document.querySelector('#msg-type'),
+    boxMsgText: document.querySelector('#msg-text'),
+    btnMsgImage: document.querySelector('#msg-image'),
+    areaMsgList: document.querySelector('#msg-list'),
+    boxSoundAlert: document.querySelector('#sound-alert'),
+    h: document.querySelector('#h'),
+    content: document.querySelector('.mui-content')
+};
+
+var bindMsgList = function() {
+    //绑定数据:
+    /*tp.bind({
+        template: 'msg-template',
+        element: 'msg-list',
+        model: record
+    });*/
+    ui.areaMsgList.innerHTML = template('msg-template', {
+        "record": record
+    });
+    var msgItems = ui.areaMsgList.querySelectorAll('.msg-item');
+
+    ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+};
+
+(function($, doc) {
+    //阻尼系数
+    var deceleration = mui.os.ios ? 0.003 : 0.0009;
+    $('.mui-scroll-wrapper').scroll({
+        bounce: false,
+        indicators: true, //是否显示滚动条
+        deceleration: deceleration
+    });
+
+    template.config('escape', false);
+
+    mui.plusReady(function() {
+        user_name = plus.storage.getItem("user_name");
+        token = plus.storage.getItem("token");
+        myDB.name = user_name;
+
+        mui.ajax(apiUrl.apiIm, {
+            data: {
+                user_name: user_name,
+                token: token,
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function(data) {
+                if (data.status == 0) {
+                    var impasswd = data.impasswd;
+                    var userJID = data.imuser + '@112.74.209.204';
+                    connection.connect(userJID, impasswd, onConnect);
+                }
+            },
+        });
+
+
+        $.ready(function() {
+            //循环初始化所有下拉刷新，上拉加载。
+            $.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+                $(pullRefreshEl).pullToRefresh({
+                    up: {
+                        auto: true,
+                        callback: function() {
+                            var self = this;
+                            var ul = self.element.querySelector('.mui-table-view');
+                            var ajaxType = ul.getAttribute('id');
+                            var parent_id;
+                            switch (ajaxType) {
+                                case 'users':
+                                    parent_id = 0;
+                                    pages = ++page0;
+                                    setTimeout(function() {
+                                        getData(parent_id, pages, ul, self);
+                                    }, 1000);
+                                    break;
+                                case 'friends':
+                                    parent_id = 1;
+                                    pages = ++page1;
+                                    setTimeout(function() {
+                                        getFriends(parent_id, pages, ul, self);
+                                    }, 1000);
+                                    break;
+                            }
+                        }
+                    }
+                });
+            });
+
+            function getData(parent_id, pages, ul, self) {
+                var that = self;
+                mui.ajax(apiUrl.list_child_page, {
+                    data: {
+                        user_name: user_name,
+                        token: token,
+                        parent_id: parent_id,
+                        page_num: pages,
+                        num_per_page: 1000
+                    },
+                    dataType: 'json',
+                    type: 'post',
+                    timeout: 10000,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            if (data.pageCount == 1 || pages == data.endPageIndex || (data.recordList.length == 0 && data.currentPage == 1)) {
+                                that.endPullUpToRefresh(true);
+                            } else {
+                                that.endPullUpToRefresh(false);
+                            }
+
+                            var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                            for (var i = 0; i < data.recordList.length; i++) {
+                                var recordList = data.recordList;
+                                var li = document.createElement('a');
+                                li.className = 'mui-table-view-cell';
+                                li.setAttribute('name', recordList[i].user_name);
+                                li.setAttribute('href', '#chat');
+                                li.innerHTML = recordList[i].user_name + '<img src="../../public/images/msg.png" id="' + recordList[i].user_name + '" style="display:none"/>';
+                                ul.appendChild(li);
+                                countIM.push(recordList[i].user_name);
+                            }
+
+                        } else if (data.status == 40004) {
+                            mui.openWindow({
+                                url: '../../login.html',
+                                id: 'login',
+                            });
+                        } else {
+                            plus.nativeUI.toast(data.info);
+                        }
+                        plus.nativeUI.closeWaiting();
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        onNetChange();
+                    }
+                });
+            }
+
+            function getFriends(parent_id, pages, ul, self) {
+                var that = self;
+                mui.ajax(apiUrl.list_relationship_page, {
+                    data: {
+                        user_name: user_name,
+                        token: token,
+                        parent_id: parent_id,
+                        page_num: pages,
+                        num_per_page: 1000,
+                    },
+                    dataType: 'json',
+                    type: 'post',
+                    timeout: 10000,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            if (data.pageCount == 1 || pages == data.endPageIndex || (data.recordList.length == 0 && data.currentPage == 1)) {
+                                that.endPullUpToRefresh(true);
+                            } else {
+                                that.endPullUpToRefresh(false);
+                            }
+
+                            var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                            for (var i = 0; i < data.recordList.length; i++) {
+                                var recordList = data.recordList;
+                                var li = document.createElement('a');
+                                li.className = 'mui-table-view-cell';
+                                li.setAttribute('name', recordList[i].targetUserName);
+                                li.setAttribute('href', '#chat');
+                                li.innerHTML = recordList[i].targetUserName + '<img src="../../public/images/msg.png" id="' + recordList[i].targetUserName + '" style="display:none"/>';
+                                ul.appendChild(li);
+                                countIM.push(recordList[i].targetUserName);
+
+                            }
+
+                            /*setTimeout(function() {
+                                var theCountIM = plus.storage.getItem("countIM");
+                                console.log(theCountIM);
+                                if (theCountIM != null) {
+                                    theCountIM.split(',').sort().toString();
+                                }
+
+                                version = plus.storage.getItem(user_name + 'Version');
+                                if (version == null) {
+                                    version = 1;
+                                } else {
+                                    Number(version);
+                                }
+
+                                countIM.sort().toString();
+                                console.log(version);
+                                console.log(plus.storage.getItem(user_name + 'Version'));
+                                console.log(theCountIM);
+                                console.log(countIM.sort().toString());
+                                if (countIM != theCountIM) {
+                                    plus.storage.setItem("countIM", countIM.join(","));
+                                    plus.storage.setItem(user_name + 'Version', String(Number(version) + 1));
+                                }
+
+                                openDB(myDB.name, version);
+
+                            }, 1500);*/
+
+                        } else if (data.status == 40004) {
+                            mui.openWindow({
+                                url: '../../login.html',
+                                id: 'login',
+                            });
+                        } else {
+                            plus.nativeUI.toast(data.info);
+                        }
+                        plus.nativeUI.closeWaiting();
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        onNetChange();
+                    }
+                });
+            }
+        });
+    });
+
+    function onConnect(status) {
+        if (status == Strophe.Status.CONNECTING) {
+            console.log('Strophe is connecting.');
+        } else if (status == Strophe.Status.CONNFAIL) {
+            console.log('Strophe failed to connect.');
+            $('#connect').get(0).value = 'connect';
+        } else if (status == Strophe.Status.DISCONNECTING) {
+            console.log('Strophe is disconnecting.');
+        } else if (status == Strophe.Status.DISCONNECTED) {
+            console.log('Strophe is disconnected.');
+            $('#connect').get(0).value = 'connect';
+        } else if (status == Strophe.Status.CONNECTED) {
+            console.log('Strophe is connected.');
+            console.log('ECHOBOT: Send a message to ' + connection.jid +
+                ' to talk to me.');
+            connection.addHandler(onMessage, null, 'message', null, null, null);
+            connection.send($pres().tree());
+        }
+    }
+
+    function onMessage(msg) {
+        var to = msg.getAttribute('to');
+        var from = msg.getAttribute('from');
+        var type = msg.getAttribute('type');
+        var elems = msg.getElementsByTagName('body');
+        var body;
+        var alertUser = from.substr(0, from.indexOf('@'));
+        if (alertUser != toUserName) {
+            document.getElementById(alertUser).style.display = '';
+        }
+        if (type == "chat" && elems.length > 0) {
+            body = elems[0];
+            console.log('ECHOBOT: I got a message from ' + from + ': ' + Strophe.getText(body));
+
+            //消息格式
+            var receiveMsg = {
+                sender: 'zs',
+                type: 'text',
+                content: Strophe.getText(body),
+                timeStamp: new Date().getTime(),
+            };
+
+            //显示接收的消息
+            record.push(receiveMsg);
+            bindMsgList();
+
+            //添加到DB
+            addData(myDB.db, alertUser, receiveMsg);
+        }
+        return true;
+    }
+
+    function sendMsg(toId, fromId, msg) {
+        var reply = $msg({
+            to: toId,
+            from: fromId,
+            type: 'chat'
+        }).cnode(Strophe.xmlElement('body', '', msg));
+        connection.send(reply.tree());
+        console.log('ECHOBOT: I sent ' + toId + ': ' + msg);
+    }
+    var showKeyboard = function() {
+        if ($.os.ios) {
+            var webView = plus.webview.currentWebview().nativeInstanceObject();
+            webView.plusCallMethod({
+                "setKeyboardDisplayRequiresUserAction": false
+            });
+        } else {
+            var Context = plus.android.importClass("android.content.Context");
+            var InputMethodManager = plus.android.importClass("android.view.inputmethod.InputMethodManager");
+            var main = plus.android.runtimeMainActivity();
+            var imm = main.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
+            //var view = ((ViewGroup)main.findViewById(android.R.id.content)).getChildAt(0);
+            imm.showSoftInput(main.getWindow().getDecorView(), InputMethodManager.SHOW_IMPLICIT);
+        }
+    };
+
+    var footerPadding = ui.footer.offsetHeight - ui.boxMsgText.offsetHeight;
+
+    window.addEventListener('resize', function() {
+        ui.areaMsgList.scrollTop = ui.areaMsgList.scrollHeight + ui.areaMsgList.offsetHeight;
+    }, false);
+
+    var send = function(msg) {
+        record.push(msg);
+        bindMsgList();
+    };
+
+    function msgTextFocus() {
+        ui.boxMsgText.focus();
+        setTimeout(function() {
+            ui.boxMsgText.focus();
+        }, 150);
+    }
+    //解决长按“发送”按钮，导致键盘关闭的问题；
+    ui.footerRight.addEventListener('touchstart', function(event) {
+        if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
+            msgTextFocus();
+            event.preventDefault();
+        }
+    });
+    //解决长按“发送”按钮，导致键盘关闭的问题；
+    ui.footerRight.addEventListener('touchmove', function(event) {
+        if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
+            msgTextFocus();
+            event.preventDefault();
+        }
+    });
+
+    ui.footerRight.addEventListener('release', function(event) {
+        if (ui.btnMsgType.classList.contains('mui-icon-paperplane')) {
+            //showKeyboard();
+            ui.boxMsgText.focus();
+            setTimeout(function() {
+                ui.boxMsgText.focus();
+            }, 150);
+
+            //im发送消息
+            sendMsg(toUserName + '@112.74.209.204', user_name + '112.74.209.204', ui.boxMsgText.value.replace(new RegExp('\n', 'gm'), '<br/>'));
+
+            //消息格式
+            var msg = {
+                sender: 'self',
+                type: 'text',
+                content: ui.boxMsgText.value.replace(new RegExp('\n', 'gm'), '<br/>'),
+                timeStamp: new Date().getTime(),
+            };
+            //显示消息
+            send(msg);
+            //存入db
+            addData(myDB.db, toUserName, msg);
+
+            ui.boxMsgText.value = '';
+            $.trigger(ui.boxMsgText, 'input', null);
+        }
+    }, false);
+
+    var setSoundAlertVisable = function(show) {
+        if (show) {
+            ui.boxSoundAlert.style.display = 'block';
+            ui.boxSoundAlert.style.opacity = 1;
+        } else {
+            ui.boxSoundAlert.style.opacity = 0;
+            //fadeOut 完成再真正隐藏
+            setTimeout(function() {
+                ui.boxSoundAlert.style.display = 'none';
+            }, 200);
+        }
+    };
+    var recordCancel = false;
+    var recorder = null;
+    var startTimestamp = null;
+    var stopTimestamp = null;
+    var stopTimer = null;
+
+    ui.boxMsgText.addEventListener('input', function(event) {
+        ui.btnMsgType.classList[ui.boxMsgText.value == '' ? 'remove' : 'add']('mui-icon-paperplane');
+        ui.btnMsgType.setAttribute("for", ui.boxMsgText.value == '' ? '' : 'msg-text');
+        ui.h.innerText = ui.boxMsgText.value;
+        ui.footer.style.height = (ui.h.offsetHeight + footerPadding) + 'px';
+        ui.content.style.paddingBottom = ui.footer.style.height + '10px';
+
+    });
+    var focus = false;
+    ui.boxMsgText.addEventListener('tap', function(event) {
+        ui.boxMsgText.focus();
+        setTimeout(function() {
+            ui.boxMsgText.focus();
+        }, 0);
+        focus = true;
+        setTimeout(function() {
+            focus = false;
+        }, 1000);
+        event.detail.gesture.preventDefault();
+    }, false);
+    //点击消息列表，关闭键盘
+    ui.areaMsgList.addEventListener('click', function(event) {
+        if (!focus) {
+            ui.boxMsgText.blur();
+        }
+    });
+
+    mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+        toUserName = this.getAttribute('name');
+        document.getElementById(toUserName).style.display = 'none';
+        record = [];
+        customers = [];
+        getCursor(myDB.db, toUserName);
+        record = customers;
+    });
+
+})(mui, document);
+
+
+var view = viewApi.view;
+(function($) {
+    //处理view的后退与webview后退
+    var oldBack = $.back;
+    $.back = function() {
+        if (viewApi.canBack()) { //如果view可以后退，则执行view的后退
+            viewApi.back();
+        } else { //执行webview后退
+            oldBack();
+        }
+    };
+
+    view.addEventListener('pageBeforeShow', function(e) {
+        if (e.detail.page.id === 'chat') {
+            ui.h.style.width = ui.boxMsgText.offsetWidth + 'px';
+            document.getElementById('titleUserName').innerHTML = toUserName;
+            document.getElementById('msg-list').innerHTML = '';
+            document.getElementById(alertUser).style.display = 'none';
+        }
+    });
+
+    view.addEventListener('pageShow', function(e) {
+        if (e.detail.page.id === 'chat') {
+            bindMsgList();
+        }
+    });
+    view.addEventListener('pageBeforeBack', function(e) {});
+
+    view.addEventListener('pageBack', function(e) {
+        if (e.detail.page.id === 'chat') {
+            toUserName = '';
+            document.getElementById('msg-list').innerHTML = '';
+            document.getElementById('msg-text').value = '';
+            document.getElementById(alertUser).style.display = 'none';
+        }
+    });
+})(mui);
+</script>
+<script src="indexedDB.js"></script>
+
+</html>

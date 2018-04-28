@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/common.css">
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="mui-action-back"></a>
+		    <h1 class="mui-title">任务管理</h1>
+		</header>
+		<div class="mui-content">
+    	<ul class="mui-table-view">
+	        <div class="fitem" href="tasklist.html">
+			        <img class="ficon" src="../../public/images/fdir.png" />
+			        <span class="fname">任务列表</span>
+		        </div>
+		        <div class="fitem" href="achievelist.html">
+			        <img class="ficon" src="../../public/images/fdir.png" />
+			        <span class="fname">成果文件</span>
+		        </div>
+	        </ul>
+	    </div>
+    	<script src="../../js/mui.min.js"></script>
+    	<script src="../../js/url.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function(){
+					// var index = plus.webview.getLaunchWebview();
+					// mui.fire(index,'offSide');
+					// plus.webview.getLaunchWebview().reload();
+				},
+			});
+		    mui.plusReady(function() {
+		    	onNetChange();
+		    });
+
+		    mui('.mui-table-view').on('tap', '.fitem', function(e) {
+		        var url = this.getAttribute('href');
+		        mui.openWindow({
+		            url: url,
+		            id: url,
+		        });
+		    });
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <link href="../../css/mui.picker.min.css" rel="stylesheet" />
+    <script src="../../js/url.js"></script>
+    <style type="text/css">
+    .mui-row > div {
+        padding: 0 6px 0 0;
+        text-align: right;
+        min-height: 52px;
+        line-height: 52px;
+    }
+
+    .mui-switch {
+        margin-top: 10px;
+        line-height: 22px;
+    }
+
+    input[type=text], textarea{
+        margin-bottom: 5px;
+    }
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">新建任务</h1>
+    </header>
+    <div class="mui-content" style="padding-top: 60px;">
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">任务名称</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <input type="text" name="project_name" id="project_name" value="" placeholder="任务名称">
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">创建时间</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <input type="text" name="create_time" id="create_time" value="" readonly="readonly" ;>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">结束日期</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <input type="text" class="form-control form-date" name="deadline_time" id="deadline_time" placeholder="选择日期" readonly="readonly" data-options='{"type":"date"}'>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">作业人员</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <input type="text" class="form-control" name="child_user" id="child_user" value="" placeholder="选择作业人员" readonly="readonly">
+                <input type="hidden" name="workmanIdArr" id="workmanIdArr" value="">
+                <div id="showWorkman" style="display: none;text-align: left; line-height: 20px"></div>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">短信通知</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <div class="mui-switch mui-switch-blue mui-active" id="msg">
+                    <div class="mui-switch-handle"></div>
+                </div>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">附件</div>
+            <div class="mui-col-sm-6 mui-col-xs-8" style="text-align: left; line-height: 30px">
+                <button class="mui-btn mui-btn-blue" style="padding: 4px 20px;" id="addfile" style="display: block"><i class="mui-icon mui-icon-plusempty" style="font-size: 32px"></i></button><br/>
+                <div id="showFiles" style="display: none">
+                </div>
+                <input type="hidden" name="idArr" id="idArr" value="">
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3">备注信息</div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <textarea class="form-control" name="remarks" id="remarks" value="" placeholder="备注信息" style="height: 90px;"></textarea>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-2 mui-col-xs-3"></div>
+            <div class="mui-col-sm-6 mui-col-xs-8">
+                <button class="mui-btn mui-btn-block mui-btn-blue" id="subadd">提 交</button>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/mui.picker.min.js"></script>
+    <script type="text/javascript">
+    mui.init({
+        beforeback: function() {
+            plus.webview.getWebviewById('tasklist.html').show();
+        }
+    });
+    mui.plusReady(function() {
+        user_name = plus.storage.getItem("user_name");
+        token = plus.storage.getItem("token");
+        var self = plus.webview.currentWebview();
+        var workman = self.workman;
+        workman = workman ? workman : '';
+        $('child_user').value = workman;
+        $('create_time').value = timeTrans(new Date().getTime(), 'yyyy-MM-dd HH:mm:ss');
+
+        $('deadline_time').addEventListener('tap', function() {
+            var optionsJson = this.getAttribute('data-options') || '{}';
+            var options = JSON.parse(optionsJson);
+            var id = this.getAttribute('id');
+            var picker = new mui.DtPicker(options);
+            picker.show(function(rs) {
+                picker.dispose();
+                $('deadline_time').value = rs.text;
+            });
+        }, false);
+
+        $('child_user').addEventListener('tap', function() {
+            mui.openWindow({
+                url: 'taskaddworkman.html',
+                id: 'taskaddworkman',
+            });
+        });
+
+        $('addfile').addEventListener('tap', function() {
+            mui.openWindow({
+                url: 'taskaddfiles.html',
+                id: 'taskaddfiles',
+            });
+        });
+
+        $("subadd").addEventListener('tap', function() {
+            var project_name = $("project_name").value;
+            if (project_name == '' || project_name.replace(/(^\s*)|(\s*$)/g, "") == "") {
+                mui.toast("任务名称不能为空！");
+                return false;
+            }
+
+            var deadline_time = $("deadline_time").value;
+            if (deadline_time == '') {
+                mui.toast("日期不能为空！");
+                return false;
+            }
+            var timestamp = Date.parse(new Date(deadline_time));
+            timestamp = timestamp / 1000 + 57599;
+
+            var date = new Date();
+            var nowTime = timeTrans(date.getTime(), 'yyyy-MM-dd');
+            if (nowTime > deadline_time) {
+                mui.toast("日期错误,结束时间不能小于创建时间！");
+                return false;
+            }
+
+            var child_user = $("child_user").value;
+            if (child_user == '') {
+                mui.toast("作业人员不能为空！");
+                return false;
+            }
+
+            var work_user_id = $("workmanIdArr").value;
+
+            var msg;
+            var isActive = $("msg").classList.contains("mui-active");
+            if (isActive) {
+                msg = 1;
+            } else {
+                msg = 0;
+            }
+            var files_id = $('idArr').value;
+            console.log(typeof files_id);
+
+            var remarks = $("remarks").value;
+
+            plus.nativeUI.showWaiting();
+            mui.ajax('http://120.76.223.87:81/task/create_task', {
+                data: {
+                    user_name: user_name,
+                    token: token,
+                    task_name: project_name,
+                    dead_time: timestamp,
+                    work_user_id: work_user_id,
+                    remarks:remarks,
+                    files_id:files_id,
+                    is_sms:msg,
+                },
+                dataType: 'json',
+                type: 'post',
+                timeout: 10000,
+                success: function(data) {
+                    if (data.status == 0) {
+                        var tasklistdata = plus.webview.getWebviewById('tasklistdata.html');
+                        mui.fire(tasklistdata,'reload');
+                        mui.openWindow({
+                            url: 'tasklist.html',
+                            id: 'tasklist.html',
+                        });
+                        plus.webview.currentWebview().close();
+                        // plus.webview.getWebviewById('tasklist.html').reload();//
+                    } else if (data.status == 40004) {
+                        mui.openWindow({
+                            url: '../../login.html',
+                            id: 'login',
+                        });
+                    } else {
+                            plus.nativeUI.toast(data.info);
+                        }
+                    plus.nativeUI.closeWaiting();
+                },
+            });
+
+        });
+    });
+
+
+    window.addEventListener('clear', function(event) {
+        var showFiles = $('showFiles');
+        showFiles.style.display = 'none';
+        showFiles.innerHTML = '';
+        $('idArr').value = '';
+    });
+
+    window.addEventListener('clearwm', function(event) {
+        var showWorkman = $('showWorkman');
+        showWorkman.style.display = 'none';
+        showWorkman.innerHTML = '';
+        $('workmanIdArr').value = '';
+        $("child_user").value = '';
+    });
+
+    window.addEventListener('addworkman', function(event) {
+        var workmanID = event.detail.workmanID;
+        var workmanName = event.detail.workmanName;
+        $('workmanIdArr').value = workmanName.join(',');
+        var str = '';
+        var showWorkman = $('showWorkman');
+        if(workmanName.length != 0) {
+            $("child_user").value = '已选择' + workmanName.length + '个作业人员';
+            showWorkman.style.display = '';
+            for (var i = 0; i < workmanName.length; i++) {
+                if (i == 5) {
+                    str +=  '<a id="moreWm">更多...</a>';
+                    break;
+                }
+                str += '<span style="display:inline-block;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + workmanName[i] + '</span><br />';
+            }
+            showWorkman.innerHTML = str;
+        } else {
+            showWorkman.style.display = 'none';
+            showWorkman.innerHTML = '';
+        }
+
+        var floatw = null;
+        if (workmanName.length > 4) {
+            $('moreWm').addEventListener('tap', function() {
+                if (floatw) { // 避免快速多次点击创建多个窗口
+                    return;
+                }
+                var width = plus.screen.resolutionWidth * 0.9;
+                var height = plus.screen.resolutionHeight * 0.9;
+                floatw = plus.webview.create("taskaddworkmandetail.html", "taskaddworkmandetail.html", {
+                    width: width,
+                    height: height,
+                    margin: "auto",
+                    background: "rgba(0,0,0,0.5)",
+                    scrollIndicator: 'none',
+                    scalable: false,
+                    popGesture: 'none',
+                }, {
+                    workmanName: workmanName
+                });
+                floatw.addEventListener("loaded", function() {
+                    floatw.show('fade-in', 300);
+                    floatw = null;
+                }, false);
+            });
+        }
+    });
+
+    window.addEventListener('addfiles', function(event) {
+        var idArr = event.detail.idArr;
+        var filesArr = event.detail.filesArr;
+        $('idArr').value = idArr.join(',');
+        var str = '';
+        var showFiles = $('showFiles');
+        if(filesArr.length != 0) {
+            showFiles.style.display = '';
+            for (var i = 0; i < filesArr.length; i++) {
+                if (i == 5) {
+                    str +=  '<a id="more">更多...</a>';
+                    break;
+                }
+                str += '<span style="display:inline-block;overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">' + filesArr[i] + '</span><br />';
+            }
+            showFiles.innerHTML = str;
+        } else {
+            showFiles.style.display = 'none';
+            showFiles.innerHTML = '';
+        }
+
+        var floatw = null;
+        if (filesArr.length > 4) {
+            $('more').addEventListener('tap', function() {
+                if (floatw) { // 避免快速多次点击创建多个窗口
+                    return;
+                }
+                var width = plus.screen.resolutionWidth * 0.9;
+                var height = plus.screen.resolutionHeight * 0.9;
+                floatw = plus.webview.create("taskaddfilesdetail.html", "taskaddfilesdetail.html", {
+                    width: width,
+                    height: height,
+                    margin: "auto",
+                    background: "rgba(0,0,0,0.5)",
+                    scrollIndicator: 'none',
+                    scalable: false,
+                    popGesture: 'none',
+                }, {
+                    filesArr: filesArr
+                });
+                floatw.addEventListener("loaded", function() {
+                    floatw.show('fade-in', 300);
+                    floatw = null;
+                }, false);
+            });
+        }
+    });
+    </script>
+</body>
+
+</html>

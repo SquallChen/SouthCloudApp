@@ -1,0 +1,30 @@
+.mui-input-group .mui-input-row {
+    height: 60px;
+}
+
+input[type=text],
+input[type=password],
+.lab {
+    height: 60px;
+    line-height: 60px;
+}
+
+.mui-icon-eye {
+    margin-top: 10px;
+}
+
+.mui-input-row .mui-input-clear~.mui-icon-clear {
+    top: 20px;
+}
+
+label {
+    height: 60px !important;
+    line-height: 40px !important;
+}
+
+.mui-bar{
+    height:50px;
+}
+.mui-title {
+    line-height: 50px;
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/url.js"></script>
+  <link rel="stylesheet" href="../../css/custom.css">
+  <style type="text/css">
+  .mui-table-view-cell:after {
+    left: 0;
+  }
+
+  .mui-table-view-cell {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  </style>
+</head>
+
+<body style="margin:0;padding:0;width:100%;height:100%;">
+  <div id="files" style="text-align:left;margin-bottom: 49px;">
+  </div>
+  <button class="mui-btn mui-btn-primary mui-btn-block mui-action-back" style="position: absolute;bottom: -10px" id="back"> 关　闭</button>
+  <script type="text/javascript">
+  mui.init();
+  mui.plusReady(function() {
+    var self = plus.webview.currentWebview();
+    var whichRtk = self.whichRtk;
+    console.log(whichRtk.toString());
+    var nickName = whichRtk.nickName ? whichRtk.nickName : '-';
+    var longitude = formatDegree(whichRtk.longitude) + "E";
+    var latitude = formatDegree(whichRtk.latitude) + "N";
+    var onlineStatus = whichRtk.onlineStatus == 1 ? '在线' : '离线';
+    var timeType = whichRtk.onlineStatus == 1 ? '连接时间：' : '断开时间：';
+    var time = whichRtk.onlineStatus == 1 ? timeTrans(whichRtk.connectTime * 1000, 'yyyy-MM-dd HH:mm:ss') : timeTrans(whichRtk.disconnectTime * 1000, 'yyyy-MM-dd HH:mm:ss')
+    var uploadDataByte = byteTrans(whichRtk.uploadDataByte ? whichRtk.uploadDataByte : 0);
+    var files = '<ul class="mui-table-view">';
+    files += '<li class="mui-table-view-cell">机器码：' + whichRtk.identifyCode + '</li>';
+    files += '<li class="mui-table-view-cell">用户名：' + nickName + '</li>';
+    files += '<li class="mui-table-view-cell">经度：' + longitude + '</li>';
+    files += '<li class="mui-table-view-cell">纬度：' + latitude + '</li>';
+    files += '<li class="mui-table-view-cell">状态：' + onlineStatus + '</li>';
+    files += '<li class="mui-table-view-cell">' + timeType + time + '</li>';
+    files += '<li class="mui-table-view-cell">上传数据：' + uploadDataByte + '</li>';
+    files += '</ul>';
+    $('files').innerHTML = files;
+    var ws=plus.webview.currentWebview();
+    $('back').addEventListener('tap', function() {
+      plus.webview.close(ws);
+    });
+  });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+.ol-popup{
+  position: absolute;
+  background-color: white;
+  -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+  border-radius: 10px;
+  border: 1px solid #cccccc;
+  bottom: 12px;
+  left: -110px;
+  height: 200px;
+  min-height: 200px;
+  max-height: 200px;
+  min-width: 220px;
+  width: 220px;
+  max-width: 220px;
+}
+
+#popup-content {
+  height: 200px;
+  width: 220px;
+  line-height: 30px
+}
+#popup-content span {
+  height: 40px;
+  line-height: 40px;
+  display: block;
+  font-size: 16px;
+  color:#fff;
+  text-align: left;
+  margin-left: 10px;
+}
+.ol-popup:after,
+.ol-popup:before {
+  top: 101%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.ol-popup:after {
+  border-top-color: #415872;
+  border-width: 10px;
+  left: 110px;
+  margin-left: -10px;
+}
+
+.ol-popup:before {
+  border-top-color: #415872;
+  border-width: 11px;
+  left: 110px;
+  margin-left: -11px;
+}
+
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: -80px;
+  right: 8px;
+  height: 20px;
+}
+
+.ol-popup-closer:after {
+  content: "✖";
+}

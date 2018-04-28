@@ -1,0 +1,42 @@
+.borderT {
+  border-top: 1px solid #dbdbdb;
+}
+
+.li-row {
+  height: 50px;
+  line-height: 50px;
+  border-bottom: 1px solid #dbdbdb;
+  background-color: #fff;
+  font-size: 18px;
+}
+
+.li-row-left {
+  display: inline-block;
+  width: 100px;
+  height: 50px;
+  line-height: 50px;
+  padding: 0 15px 0 0;
+  text-align: right;
+  color: #808080;
+}
+
+.li-row-right {
+  display: inline-block;
+  width: calc(100% - 155px);
+  height: 42px;
+  line-height: 42px;
+  color: #333;
+}
+
+select,
+input,
+input[type=text],
+input[type=number],
+input[type=password] {
+  margin: 0;
+  padding: 0;
+  height: 46px;
+  color: #333;
+  font-size: 18px;
+  border: none;
+}

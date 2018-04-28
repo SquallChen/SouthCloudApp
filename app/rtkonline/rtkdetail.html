@@ -1,0 +1,308 @@
+
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>设备详情页</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/custom.css" rel="stylesheet" />
+  <style type="text/css">
+  .mui-bar-nav~.mui-content {
+    padding-bottom: 2px;
+    height: 100%
+  }
+  .mui-col-sm-12,
+  .mui-col-xs-12,
+  .mui-col-sm-8,
+  .mui-col-xs-8,
+  .mui-col-sm-4,
+  .mui-col-xs-4,
+  .mui-col-sm-6,
+  .mui-col-xm-6 {
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid #dbdbdb;
+    border-right: 1px solid #dbdbdb;
+    padding: 0 10px;
+    font-size: 16px;
+    color: #808080;
+    background-color: #fff;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .title {
+    font-size: 18px;
+    color: #333;
+    height: 48px;
+    background: #ebebeb
+  }
+
+  .title-1 {
+    background-color: #f5f5f5;
+    height: 56px;
+    line-height: 56px;
+  }
+
+  .text-right {
+    text-align: right;
+    color: #808080;
+    font-size: 16px;
+  }
+
+  .noRb {
+    border-right: none;
+  }
+
+  span {
+    color: #333;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">查看—{{identify_code}}</h1>
+    </header>
+    <div class="mui-content">
+      <div class="mui-row">
+        <div class="mui-col-sm-12 mui-col-xs-12 title title-1">设备状态：<img src="../../public/img/on.png" v-if="basic.isOnline == true"><img src="../../public/img/off.png" v-if="basic.isOnline == false"><span style="color: #b3b3b3">{{basic.isOnline == true ? '在线' : '离线'}}</span></div>
+      </div>
+      <div class="mui-row">
+        <div class="mui-col-sm-4 mui-col-xs-4 title noRb">位置</div>
+        <div class="mui-col-sm-8 mui-col-xs-8 title text-right"><span>{{gnssLocationData.datatime | fromtTime}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">纬度：<span>{{basic.latitude | trans}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">经度：<span>{{basic.longitude | trans}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">航速：<span>{{gnssLocationData.velocity | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">航向：<span>{{gnssLocationData.azimuth | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">解算状态：<span>{{gnssLocationData.solutionType | transSolutionType}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">空间距离：<span>{{getDisance}}</span></div>
+        <div class="mui-col-sm-12 mui-col-xs-12">椭球高：<span>{{basic.altitude | checkNull}}</span></div>
+      </div>
+      <div class="mui-row">
+        <div class="mui-col-sm-12 mui-col-xs-12 title">RTK状态</div>
+        <div class="mui-col-sm-6 mui-col-xs-6">差分延迟：<span>{{gnssLocationData.ageOfDiff | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">水平残差：<span>{{gnssLocationData.hrms | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">垂直残差：<span>{{gnssLocationData.vrms | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">PDOP：<span>{{gnssLocationData.pdop | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">HDOP：<span>{{gnssLocationData.hdop | checkNull}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">VDOP: <span>{{gnssLocationData.vdop | checkNull}}</span></div>
+      </div>
+      <div class="mui-row">
+        <div class="mui-col-sm-4 mui-col-xs-4 title noRb">设备信息</div>
+        <!-- <div class="mui-col-sm-8 mui-col-xs-8 title text-right"><span>{{deviceData.deviceInfo.appVer}}</span></div> -->
+        <div class="mui-col-sm-8 mui-col-xs-8 title text-right"><span>{{appVer}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">工作模式：<span>{{deviceData.curSysmode | sysModel}}</span></div>
+        <div class="mui-col-sm-6 mui-col-xs-6">内置电台：<span>{{curDatalink}}</span></div>
+        <div class="mui-col-sm-12 mui-col-xs-12">注册码期限：<span>{{deviceData.expireDate | checkNull}}</span></div>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/url.js"></script>
+  <script src="../../js/vue.min.js"></script>
+  <script type="text/javascript">
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      user_name: '',
+      token: '',
+      identify_code: '',
+      basic: '',
+      gnssLocationData: '',
+      deviceData: '',
+      gnssRefStationData: '',
+      disance: '-',
+      appVer: '',
+    },
+    methods: {
+
+    },
+    created: function() {
+      mui.plusReady(function() {
+        mui.init({
+          beforeback: function() {
+            // plus.webview.getWebviewById("../rtkonline/rtklist.html").show();
+          }
+        });
+
+        var self = plus.webview.currentWebview();
+        vm.identify_code = self.identify_code;
+        vm.user_name = plus.storage.getItem("user_name");
+        vm.token = plus.storage.getItem("token");
+
+        getRtkInfo();
+        setInterval(function() {
+          getRtkInfo();
+        }, 6000);
+
+      });
+
+    },
+
+    computed: {
+      getDisance: function() {
+        var lat1 = this.basic.latitude;
+        var lng1 = this.basic.longitude;
+        var lat2 = this.gnssRefStationData.latitude;
+        var lng2 = this.gnssRefStationData.longitude;
+        var dis = 0;
+        var radLat1 = toRad(lat1);
+        var radLat2 = toRad(lat2);
+        var deltaLat = radLat1 - radLat2;
+        var deltaLng = toRad(lng1) - toRad(lng2);
+        var dis = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(deltaLng / 2), 2)));
+        var space = dis * 6378137;
+        var res;
+        if (isNaN(space)) {
+          return '-';
+        } else {
+          if (space > 1000) {
+            res = (space / 1000).toFixed(4) + 'Km';
+          } else {
+            res = space.toFixed(0) + 'm';
+          }
+          return res
+        }
+      },
+
+      curDatalink: function() {
+        if (this.deviceData.curSysmode == 'STATIC') {
+          return '-';
+        }
+        var val = this.deviceData.curDatalink;
+        var dataLinkVal = '';
+        switch (val) {
+          case 'CELLULAR_NET':
+            dataLinkVal = '移动网络';
+            break;
+          case 'UHF':
+            dataLinkVal = '内置电台';
+            break;
+          default:
+            dataLinkVal = '-';
+            break;
+        }
+        return dataLinkVal;
+      }
+
+    },
+
+    filters: {
+      checkNull: function(val) {
+        if (val === 0 && val !== '') {
+          return val;
+        } else {
+          return val ? val : '-';
+        }
+      },
+
+      trans: function(val) {
+        return formatDegree(val);
+      },
+
+      fromtTime: function(val) {
+        if (!val) return '-';
+        var hour = val.hour < 10 ? "0" + val.hour : val.hour;
+        var minute = val.minute < 10 ? "0" + val.minute : val.minute;
+        var second = val.second < 10 ? "0" + val.second : val.second;
+        datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+        return datetime_string;
+      },
+
+      transSolutionType: function(val) {
+        if (!val) return '-';
+        var solutionValue = '';
+        switch (val) {
+          case 'ST_INVALID_FIX':
+            solutionValue = '无效解';
+            break;
+          case 'ST_GPS_FIX':
+            solutionValue = '单点解';
+            break;
+          case 'ST_DGPS_FIX':
+            solutionValue = '差分3D';
+            break;
+          case 'ST_RTK_FIX':
+            solutionValue = '固定解';
+            break;
+          case 'ST_FRTK_FIX':
+            solutionValue = '浮点解';
+            break;
+          case 'ST_FIXEDPOS_FIX':
+            solutionValue = '基站';
+            break;
+        }
+        return solutionValue;
+      },
+      sysModel: function(val) {
+        var sysModelVal = '';
+        switch (val) {
+          case 'BASE':
+            sysModelVal = '基准站';
+            break;
+          case 'ROVER':
+            sysModelVal = '移动站';
+            break;
+          case 'STATIC':
+            sysModelVal = '静态';
+            break;
+          default:
+            sysModelVal = '-';
+            break;
+        }
+        return sysModelVal;
+      },
+
+    }
+  });
+
+  function getRtkInfo() {
+    mui.ajax(apiUrl.detail_info, {
+      data: {
+        'user_name': vm.user_name,
+        'token': vm.token,
+        'identify_code': vm.identify_code
+      },
+      dataType: 'json',
+      type: 'post',
+      timeout: 10000,
+      success: function(data) {
+        if (data.status == 0) {
+          if (data.basic && data.detail) {
+            vm.gnssLocationData = data.detail.gnssLocationData;
+            vm.gnssRefStationData = data.detail.gnssRefStationData;
+            vm.deviceData = data.detail.deviceData;
+            vm.basic = data.basic;
+            vm.appVer =data.detail.deviceData.deviceInfo.appVer;
+            // var latitude1 = data.detail.gnssLocationData.latitude;
+            // var longitude1 = data.detail.gnssLocationData.longitude;
+            // basic.longitude
+          }
+        } else if (data.status == 40004) {
+          mui.openWindow({
+            url: '../../login.html',
+            id: 'login',
+          });
+        } else {
+          mui.toast(data.info, {
+            duration: 'long',
+            type: 'div'
+          });
+        }
+      },
+    });
+  }
+
+  function toRad(d) {
+    return d * Math.PI / 180;
+  }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/style.css" rel="stylesheet" />
+		<link href="../../css/my.css" rel="stylesheet" />
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			.mui-input-group label {
+				width: 25%;
+			}
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 75%;
+			}
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			.mui-btn {
+				padding: 10px;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+				margin-top: 1px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">找回密码</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>账号</label>
+					<input id='account' type="text" class="mui-input-clear mui-input" placeholder="请输入注册账号">
+				</div>
+
+				<div class="mui-input-row">
+					<label>手机号</label>
+					<input id='mobile' type="text" class="mui-input-clear mui-input" placeholder="请输入注册手机号">
+				</div>
+				<div class="mui-input-row">
+                <label>验证码</label>
+                <input id='code' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码" style="width: 35%;float: left;">
+                <label>
+                    <button id="getCode" type="button" class="mui-btn-primary" style="margin-top: 2px;">获取验证码</button>
+                </label>
+            </div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='send' class="mui-btn mui-btn-block mui-btn-primary">下一步</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script>
+			(function($, doc) {
+				$.init();
+				$.plusReady(function() {
+					var accountBox = doc.getElementById('account');
+					var mobileBox = doc.getElementById('mobile');
+					var regmobile = /^(1[3|4|5|8])[0-9]{9}$/;
+
+					doc.getElementById('getCode').addEventListener('tap', function() {
+						var account = accountBox.value;
+						var mobile = mobileBox.value;
+						if(account == '')  {
+							plus.nativeUI.toast('请输入注册帐号！');
+			                return false;
+						}
+			            if (mobile == '' || regmobile.test(mobile) == false) {
+			                plus.nativeUI.toast('请输入手机号！');
+			                return false;
+			            }
+						mui.get(apiUrl.apiSendPhoneCode2, {
+			                'mobile': mobile
+			            }, function(data) {
+			                if (data.status == 0) {
+			                    plus.nativeUI.toast('请注意查看验证码！');
+			                } else {
+			                    plus.nativeUI.toast(data.info);
+			                }
+			            }, 'json');
+					}, false);
+
+					document.getElementById('send').addEventListener('tap', function() {
+						var account = accountBox.value;
+						var mobile = mobileBox.value;
+						var code = doc.getElementById('code').value;
+						if(account == '')  {
+							plus.nativeUI.toast('请输入注册帐号！');
+			                return false;
+						}
+			            if (mobile == '' || regmobile.test(mobile) == false) {
+			                plus.nativeUI.toast('请输入手机号！');
+			                return false;
+			            }
+			            if(code == '')  {
+							plus.nativeUI.toast('请输入验证码！');
+			                return false;
+						}
+						plus.nativeUI.showWaiting();
+						mui.get(apiUrl.checkPhoneCode, {
+				                'mobile': mobile
+				            }, function(data) {
+				                if (data.status == 0) {
+				                	$.openWindow({
+										url: 'resetpw.html',
+										id: 'resetpw',
+										show: {
+											aniShow: 'pop-in',
+											duration: 300,
+										},
+										extras:{
+										 	token: data.token,
+   										},
+									});
+				                } else {
+				                    plus.nativeUI.toast(data.info);
+				                }
+				                plus.nativeUI.closeWaiting();
+				            }, 'json');
+						}, false);
+
+				});
+			}(mui, document));
+		</script>
+	</body>
+
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>南方云</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/custom.css">
+  <style>
+  .mui-bar-nav {
+    padding-left: 0;
+    padding-right: 0
+  }
+
+  .header-wrapper {
+    display: flex;
+    margin-top: 48px;
+    height: 48px;
+    line-height: 48px;
+    border-bottom: 1px solid #dbdbdb;
+    background-color: #fff
+  }
+
+  .header-left {
+    flex: 0 0 88px;
+    width: 88px;
+    text-align: center;
+    font-size: 16px;
+    color: #333;
+    border-right: 1px solid #dbdbdb
+  }
+
+  .header-left i {
+    margin-left: 5px;
+    color: #999;
+  }
+
+  .header-right {
+    flex: 1;
+  }
+
+  .header-right input {
+    width: 100%;
+    border: none;
+    padding: 5px 15px;
+  }
+
+  .header-right span#rtksearch {
+    position: absolute;
+    top: 42px;
+    right: 12px;
+    color: #1d77bf;
+  }
+  </style>
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a id="back" class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" style="margin-left: 0px"></a>
+    <h1 class="mui-title">设备列表</h1>
+    <div class="header-wrapper">
+      <div class="header-left" id="online"><span id="typeSearch">全部</span><i class="mui-icon mui-icon-arrowdown"></i></div>
+      <div class="header-right">
+        <input type="text" id="searchVal" placeholder="请输入机器码">
+        <span class="mui-icon mui-icon-search" id="rtksearch" style="font-size:36px"></span>
+      </div>
+    </div>
+  </header>
+  <div class="mui-content">
+  </div>
+</body>
+<script src="../../js/mui.min.js"></script>
+<script src="../../js/url.js"></script>
+<script type="text/javascript">
+mui.init({
+  gestureConfig: {
+    doubletap: true
+  },
+  subpages: [{
+    url: 'rtklistdata.html',
+    id: 'rtklistdata',
+    styles: {
+      top: '96px',
+      bottom: '0px',
+    }
+  }],
+
+  beforeback: function() {},
+});
+
+mui.plusReady(function() {
+  plus.webview.currentWebview().setStyle({
+    softinputMode: "adjustResize"
+  });
+  var contentWebview = null;
+  document.querySelector('header').addEventListener('doubletap', function() {
+    if (contentWebview == null) {
+      contentWebview = plus.webview.currentWebview().children()[0];
+    }
+    contentWebview.evalJS("mui('#pullrefresh').pullRefresh().scrollTo(0,0,100)");
+  });
+
+  var rtkws = null;
+  getDom('rtksearch').addEventListener('tap', function() {
+    if (rtkws == null) {
+      rtkws = plus.webview.currentWebview().children()[0];
+    }
+    searchVal = getDom('searchVal').value;
+    getDom('searchVal').blur();
+    setTimeout(function() {
+      mui.fire(rtkws, 'search', {
+        searchVal: searchVal
+      });
+    }, 500);
+  });
+
+  getDom('searchVal').addEventListener('keyup', function(e) {
+    if (rtkws == null) {
+      rtkws = plus.webview.currentWebview().children()[0];
+    }
+    if (e.keyCode == 13) {
+      this.blur();
+      searchVal = this.value;
+      setTimeout(function() {
+        mui.fire(rtkws, 'search', {
+          searchVal: searchVal
+        });
+      }, 500);
+    }
+  });
+
+  var clickCount = 0;
+  getDom('online').addEventListener('tap', function(e) {
+    if (rtkws == null) {
+      rtkws = plus.webview.currentWebview().children()[0];
+    }
+    searchVal = getDom('searchVal').value;
+    mui.fire(rtkws, 'online', {
+      clickCount: clickCount,
+      searchVal: searchVal,
+    });
+    if (clickCount == 0) {
+      clickCount = 1;
+    } else {
+      clickCount = 0;
+    }
+  });
+
+  window.addEventListener('typeSearch', function(event) {
+    type = event.detail.type;
+    if (type == -1) {
+      getDom('typeSearch').innerHTML = '全部';
+    } else if (type == 1) {
+      getDom('typeSearch').innerHTML = '在线';
+    } else {
+      getDom('typeSearch').innerHTML = '离线';
+    }
+  });
+});
+</script>
+
+</html>

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>个人资料</title>
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/custom.css" rel="stylesheet" />
+  <link href="../../css/input.css" rel="stylesheet" />
+  <style>
+    [v-cloak] {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">个人资料</h1>
+    </header>
+    <div class="mui-content" style="padding-top: 70px">
+      <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label>姓名</label>
+          <input v-model="realName" id="realName" type="text" class="mui-input-clear mui-input" placeholder="请输入姓名">
+        </div>
+        <div class="mui-input-row">
+          <label>手机</label>
+          <input v-model="mobilePhone" id="mobilePhone" type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+        </div>
+        <div class="mui-input-row">
+          <label>邮箱</label>
+          <input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+        </div>
+        <div class="mui-input-row">
+          <label>单位</label>
+          <input v-model="company_name" id="company_name" type="text" class="mui-input-clear mui-input" placeholder="请输入单位">
+        </div>
+        <div class="mui-input-row">
+          <label>地址</label>
+          <input v-model="address" id="address" type="text" class="mui-input-clear mui-input" placeholder="请输入地址">
+        </div>
+        <div class="mui-input-row">
+          <label>电话</label>
+          <input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入电话">
+        </div>
+        <div class="mui-input-row">
+          <label>传真</label>
+          <input v-model="mobile" id="fax" type="text" class="mui-input-clear mui-input" placeholder="请输入传真">
+        </div>
+      </form>
+      <!-- <div style="margin: 40px 20px">
+        <button id="send" class="mui-btn mui-btn-block mui-btn-primary" @click="send()">保&nbsp;&nbsp;&nbsp;&nbsp;存</button>
+      </div> -->
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/url.js"></script>
+  <script src="../../js/vue.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        user_name: '',
+        token: '',
+        realName: '',
+        mobilePhone: '',
+        email: '',
+        company_name: '',
+        address: '',
+        mobile: '',
+        fax: ''
+      },
+      methods: {
+        send: function () {
+          if (this.nick_name === '') {
+            mui.toast('请输入姓名!');
+            return;
+          }
+          if (this.company_name === '') {
+            mui.toast('请输入单位信息！');
+            return;
+          }
+
+          mui('#send').button('loading');
+          mui.ajax(apiUrl.update_user_additional_info, {
+            data: {
+              user_name: vm.user_name,
+              token: vm.token,
+              nick_name: vm.nick_name,
+              company_name: vm.company_name
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function (data) {
+              if (data.status === 0) {
+                mui.toast('修改个人资料成功');
+                setTimeout(function () {
+                  mui.openWindow({
+                    url: '../../index.html',
+                    id: 'login'
+                  });
+                }, 1000);
+              } else if (data.status === 40004) {
+                mui.openWindow({
+                  url: '../../index.html',
+                  id: 'index'
+                });
+              } else {
+                mui.toast(data.info);
+              }
+              mui('#send').button('reset');
+            },
+            error: function (xhr, type, errorThrown) {
+              // 异常处理；
+              onNetChange();
+              mui('#send').button('reset');
+            }
+          });
+        }
+      },
+      created: function () {
+        mui.plusReady(function () {
+          plus.webview.currentWebview().setStyle({
+            softinputMode: 'adjustResize'
+          });
+          mui.init({});
+          vm.user_name = plus.storage.getItem('user_name');
+          vm.token = plus.storage.getItem('token');
+          vm.realName = plus.storage.getItem('realName');
+          var additionalInfo = JSON.parse(plus.storage.getItem('additionalInfo'));
+          var departInfo = JSON.parse(plus.storage.getItem('departInfo'));
+          vm.nick_name = '';
+          vm.mobilePhone = additionalInfo.mobilePhone;
+          vm.email = additionalInfo.email;
+          vm.company_name = departInfo.departname;
+          vm.address = departInfo.address;
+          vm.mobile = departInfo.mobile;
+          vm.fax = departInfo.fax;
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

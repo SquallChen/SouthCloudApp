@@ -1,0 +1,301 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/common.css" rel="stylesheet" />
+    <script src="../../js/url.js"></script>
+    <style type="text/css">
+    /* .fristLi:after {
+        left: 0;
+        }
+        .fristLi {
+            background-color: #eee;
+        }
+    */
+
+    .mui-row div {
+        padding: 6px 0 6px 15px;
+        min-height: 46px;
+        line-height: 32px;
+        font-size: 16px;
+    }
+
+    .bbottom {
+        border-bottom: 1px solid #ccc;
+    }
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title" id="title"></h1>
+    </header>
+    <div class="mui-content" style="margin-top: 15px;background: #fff">
+        <div class="mui-row bbottom">
+            <div class="mui-col-sm-12 mui-col-xs-12">
+                任务ID：<span id="id">-</span>
+            </div>
+        </div>
+        <div class="mui-row bbottom">
+            <div class="mui-col-sm-6 mui-col-xs-12">
+                创建者：<span id="creatorUserName">-</span>
+            </div>
+        </div>
+        <div class="mui-row bbottom">
+            <div class="mui-col-sm-2 mui-col-xs-4"> 作业人员：</div>
+            <div class="mui-col-sm-10 mui-col-xs-8" id="workerUserName">-</div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-6 mui-col-xs-12 bbottom">
+                创建时间：<span id="createTime">-</span>
+            </div>
+            <div class="mui-col-sm-6 mui-col-xs-12 bbottom">
+                结束时间：<span id="deadlineTime">-</span>
+            </div>
+        </div>
+        <div class="mui-row">
+            <div class="mui-col-sm-6 mui-col-xs-12 bbottom">
+                任务进度：<span id="status">-</span>
+            </div>
+            <div class="mui-col-sm-6 mui-col-xs-12 bbottom">
+                倒计时：<span id="djs">-</span>
+            </div>
+        </div>
+        <div class="mui-row bbottom">
+            <div class="mui-col-sm-2 mui-col-xs-3"> 附件：</div>
+            <div class="mui-col-sm-10 mui-col-xs-9" id="attachedFiles">-</div>
+        </div>
+        <div class="mui-row bbottom">
+            <div class="mui-col-sm-12 mui-col-xs-12">
+                <span style="color:#06AAE5"> 备注：</span><span id="remarks">-</span>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/mui.min.js"></script>
+    <script type="text/javascript">
+    mui.init({
+        beforeback: function() {
+            // plus.webview.getWebviewById("tasklist.html").show();
+        }
+    });
+    var task_id, task_name, user_name, token;
+    var floatw = null;
+    mui.plusReady(function() {
+        var self = plus.webview.currentWebview();
+        task_id = self.task_id;
+        task_name = self.task_name;
+        user_name = plus.storage.getItem("user_name");
+        token = plus.storage.getItem("tokne");
+        document.getElementById('title').innerHTML = task_name + '任务';
+        getTaskInfo();
+
+    });
+
+    function getTaskInfo() {
+        mui.ajax(apiUrl.apiTaskInfo2, {
+            data: {
+                user_name: user_name,
+                token: token,
+                task_id: task_id
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function(data) {
+                if (data.status == 0) {
+                    var task_info = data.task_info;
+                    var status = task_info.status;
+                    var djs = djsfun(task_info.deadlineTime);
+                    if (status == -1) {
+                        status = '未启动';
+                    } else if (status == 0) {
+                        status = '已启动';
+                    } else if (status == 1) {
+                        status = '已完成';
+                        djs = '-';
+                    }
+                    var attached_files = data.attached_files;
+                    var originalNameStr = '';
+                    if (attached_files != null) {
+                        for (var i = 0; i < attached_files.length; i++) {
+                            if (i == 5) {
+                                originalNameStr +=  '<a id="more">更多...</a>';
+                                break;
+                            }
+                            originalNameStr += attached_files[i].originalName + "<br />";
+                        }
+                    }
+                    var workerArr = task_info.workerUserNickName.split(',');
+                    var workerStr = '';
+                    if (workerArr != null) {
+                        for (var i = 0; i < workerArr.length; i++) {
+                            if (i == 5) {
+                                workerStr +=  '<a id="morewm">更多...</a>';
+                                break;
+                            }
+                            workerStr += workerArr[i] + "<br />";
+                        }
+                    }
+                    document.getElementById('id').innerHTML = task_info.id;
+                    document.getElementById('creatorUserName').innerHTML = task_info.creatorUserNickName;
+                    document.getElementById('workerUserName').innerHTML = workerStr;
+                    document.getElementById('createTime').innerHTML = timeTrans(task_info.createTime * 1000, 'yyyy-MM-dd HH:mm:ss');
+                    document.getElementById('deadlineTime').innerHTML = timeTrans(task_info.deadlineTime * 1000, 'yyyy-MM-dd HH:mm:ss');
+                    document.getElementById('djs').innerHTML = djs;
+                    document.getElementById('status').innerHTML = status;
+                    document.getElementById('attachedFiles').innerHTML = originalNameStr;
+                    task_info.remarks = task_info.remarks == '' ? '-' : task_info.remarks;
+                    if (task_info.remarks.length > 128) {
+                        document.getElementById('remarks').innerHTML = task_info.remarks.substring(0, 128) + '<a id="showAll">显示全部...</a>';
+                        document.getElementById('showAll').addEventListener('tap', function() {
+                            if (floatw) { // 避免快速多次点击创建多个窗口
+                                return;
+                            }
+                            var width = plus.screen.resolutionWidth * 0.9;
+                            var height = plus.screen.resolutionHeight * 0.9;
+                            floatw = plus.webview.create("taskmark.html", "taskmark.html", {
+                                width: width,
+                                height: height,
+                                margin: "auto",
+                                background: "rgba(0,0,0,0.5)",
+                                scrollIndicator: 'none',
+                                scalable: false,
+                                popGesture: 'none',
+                            }, {
+                                remarks: task_info.remarks
+                            });
+                            floatw.addEventListener("loaded", function() {
+                                floatw.show('fade-in', 300);
+                                floatw = null;
+                            }, false);
+                        });
+                    } else {
+                        document.getElementById('remarks').innerHTML = task_info.remarks;
+                    }
+
+                    if (attached_files.length > 4) {
+                        document.getElementById('more').addEventListener('tap', function() {
+                            if (floatw) { // 避免快速多次点击创建多个窗口
+                                return;
+                            }
+                            var width = plus.screen.resolutionWidth * 0.9;
+                            var height = plus.screen.resolutionHeight * 0.9;
+                            floatw = plus.webview.create("taskdetailfiles.html", "taskdetailfiles.html", {
+                                width: width,
+                                height: height,
+                                margin: "auto",
+                                background: "rgba(0,0,0,0.5)",
+                                scrollIndicator: 'none',
+                                scalable: false,
+                                popGesture: 'none',
+                            }, {
+                                originalNameStr: data.attached_files
+                            });
+                            floatw.addEventListener("loaded", function() {
+                                floatw.show('fade-in', 300);
+                                floatw = null;
+                            }, false);
+                        });
+                    }
+
+                    if (workerArr.length > 4) {
+                        document.getElementById('morewm').addEventListener('tap', function() {
+                            if (floatw) { // 避免快速多次点击创建多个窗口
+                                return;
+                            }
+                            var width = plus.screen.resolutionWidth * 0.9;
+                            var height = plus.screen.resolutionHeight * 0.9;
+                            floatw = plus.webview.create("taskdetailwm.html", "taskdetailwm.html", {
+                                width: width,
+                                height: height,
+                                margin: "auto",
+                                background: "rgba(0,0,0,0.5)",
+                                scrollIndicator: 'none',
+                                scalable: false,
+                                popGesture: 'none',
+                            }, {
+                                workerArr: workerArr
+                            });
+                            floatw.addEventListener("loaded", function() {
+                                floatw.show('fade-in', 300);
+                                floatw = null;
+                            }, false);
+                        });
+                    }
+
+                } else if (data.status == 40004) {
+                    mui.openWindow({
+                        url: '../../login.html',
+                        id: 'login',
+                    });
+                } else {
+                    mui.toast(data.info, {
+                        duration: 'long',
+                        type: 'div'
+                    });
+                }
+            },
+        });
+    }
+
+    function djsfun(deadlineTime) {
+        var date = new Date();
+        var nowTime = date.getTime() / 1000;
+        var deadlineTime = deadlineTime;
+        var lineTime;
+        var str;
+        lineTime = Math.floor((deadlineTime - nowTime) / 86400);
+        if (lineTime < 0) {
+            lineTime = String(lineTime).substr(1);
+            str = "<span style='color:red'>已逾期" + lineTime + "天</span>";
+        } else {
+            str = lineTime + "天";
+        }
+        return str;
+    }
+
+    var task_id = document.getElementById('id').innerHTML;
+    /*mui('#attachedFiles').on('tap', 'a', function(e) {
+        var file_id = this.getAttribute('id');
+        var name = this.innerHTML;
+        var user_name = plus.storage.getItem("user_name");
+        var token = plus.storage.getItem("tokne");
+        var btnArray1 = ['否', '是'];
+        mui.confirm(name, '下载', btnArray1, function(e) {
+            if (e.index == 1) {
+                dtask = plus.downloader.createDownload(apiUrl.apiDownloadAttachedFile2,{
+                    method: 'post',
+                    file_id: file_id,
+                    user_name: user_name,
+                    token: token,
+                    task_id: task_id
+                }, function(d, status) {
+                    // 下载完成
+                    if (status == 200) {
+                        mui.toast('下载成功，文件存放在：' + d.filename, {
+                            duration: 'long',
+                            type: 'div'
+                        });
+                        plus.runtime.openFile(download.filename, {}, function(e) {
+                            mui.toast('无法打开');
+                        });
+                    } else {
+                        mui.toast('下载失败', {
+                            duration: 'long',
+                            type: 'div'
+                        });
+                    }
+                });
+                dtask.start();
+            }
+        }, 'div');
+    });*/
+    </script>
+</body>
+
+</html>

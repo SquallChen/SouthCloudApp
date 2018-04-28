@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>南方云</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="stylesheet" href="./css/mui.min.css">
+  <link rel="stylesheet" href="./css/custom.css">
+  <style>
+    .mui-slider-indicator .mui-indicator,
+    .mui-slider-indicator .mui-active.mui-indicator {
+      box-shadow: none;
+      width: 5px;
+      height: 5px;
+      margin: 0;
+    }
+
+    .mui-slider-indicator .mui-indicator {
+      background: #ccc;
+    }
+
+    .mui-slider-indicator .mui-active.mui-indicator {
+      background: #666;
+    }
+
+
+    .mui-grid-view.mui-grid-9 {
+      background-color: #fff
+    }
+
+    .mui-table-view.mui-grid-9 .mui-table-view-cell.mui-active {
+      background-color: #ebebeb;
+    }
+
+    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+      border-bottom: 1px solid #e5e5e5;
+      border-right: 1px solid #e5e5e5;
+    }
+
+
+    .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+      vertical-align: top;
+      height: 30px;
+      line-height: 30px;
+      font-size: 16px;
+      color: #666;
+    }
+
+    .mui-media-body,
+    .mui-media-body>img {
+      width: 20px;
+      height: 20px;
+      margin-right: 5px;
+    }
+
+    .sp1 {
+      font-size: 36px;
+      color: #1D69BF;
+    }
+
+    .sp2 {
+      font-size: 16px;
+      color: #999;
+    }
+
+    .menu-wrapper>div {
+      height: 120px;
+      line-height: 120px;
+      text-align: center;
+    }
+
+    .mui-off-canvas-wrap.mui-active .mui-off-canvas-backdrop {
+      box-shadow: none;
+    }
+
+    .mui-off-canvas-left {
+      background-color: #135280;
+      width: 75%;
+    }
+
+    .slider-heaer {
+      height: 100px;
+      line-height: 100px;
+      width: 100%;
+      background: #135280 url('./public/img/slidertop.png') no-repeat 0 center;
+      padding: 8px 20px;
+      margin: 0;
+      color: #fff;
+      font-size: 30px;
+    }
+
+    .slider-heaer>.mui-icon-contact {
+      font-size: 50px;
+    }
+
+    .slider-heaer>span {
+      margin-right: 12px
+    }
+
+    .slider-content {
+      margin-top: 24px;
+      border: none;
+      list-style: none;
+      color: #fff;
+      width: 100%;
+      padding: 0
+    }
+
+    .slider-content li {
+      display: block;
+      height: 50px;
+      line-height: 50px;
+      background-color: #135280;
+      border-top: 1px solid rgba(255, 255, 255, 0.15);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+      margin-bottom: 20px;
+      padding-left: 20px;
+      font-size: 18px;
+      color: #fff;
+    }
+
+    .slider-content li i {
+      margin-right: 14px;
+      margin-top: 12px;
+    }
+
+    .mui-table-view-inverted {
+      background-color: #135280;
+      background: #135280;
+    }
+
+    .slider-content .logout {
+      margin-top: 60px;
+      background-color: #e36a42;
+      border: none;
+      padding: 0;
+      text-align: center;
+    }
+
+    .mui-spinner {
+      margin-top: 10px
+    }
+
+    .mui-table-view-cell {
+      padding: 0;
+      border: none;
+    }
+
+    .mui-table-view-cell:after {
+      height: 0;
+    }
+
+    .mui-table-view-cell.mui-active {
+      background-color: #0f4266;
+    }
+
+    .mui-popup-title+.mui-popup-text {
+      font-family: inherit;
+      font-size: 14px;
+      margin: 5px 0 0;
+      text-align: left;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="offCanvasWrapper" class="mui-off-canvas-wrap mui-draggable">
+    <!--侧滑菜单部分-->
+    <aside id="offCanvasSide" class="mui-off-canvas-left">
+      <div id="offCanvasSideScroll" class="mui-scroll-wrapper">
+        <div class="mui-scroll">
+          <div class="slider-heaer">
+            <i class="mui-icon mui-icon-contact"></i>
+            <span v-text="user_name"></span>
+          </div>
+          <ul class="slider-content">
+            <li class="link mui-table-view-cell" href="./app/index/info.html">个人资料
+              <i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+            </li>
+            <li class="link mui-table-view-cell" href="./app/index/resetpw.html">修改密码
+              <i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+            </li>
+            <li class="link mui-table-view-cell" href="./app/index/feedback.html">问题反馈
+              <i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+            </li>
+            <li id="update" class="mui-table-view-cell">检查更新
+              <i class="mui-icon mui-icon-arrowright mui-pull-right"></i>
+            </li>
+            <li id="logout" class="logout" data-loading-text=" " :disabled="isdis">退出登录</li>
+          </ul>
+        </div>
+      </div>
+    </aside>
+    <!--主界面部分-->
+    <div class="mui-inner-wrap">
+      <header class="mui-bar mui-bar-nav">
+        <a href="#offCanvasSide" class="mui-icon mui-action-menu mui-icon-bars mui-pull-left"></a>
+        <h1 class="mui-title">南方云</h1>
+      </header>
+      <div id="offCanvasContentScroll" class="mui-content mui-scroll-wrapper" style="padding-top: 48px;">
+        <div class="mui-scroll">
+          <!-- 轮播 -->
+          <div id="slider" class="mui-slider">
+            <div class="mui-slider-group mui-slider-loop">
+              <!-- 额外增加的一个节点(循环轮播：第一个节点是最后一张轮播) -->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="./public/img/index_track.png">
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="./public/img/index_position.png">
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="./public/img/index_storage.png">
+                </a>
+              </div>
+              <div class="mui-slider-item">
+                <a href="#">
+                  <img src="./public/img/index_track.png">
+                </a>
+              </div>
+              <!-- 额外增加的一个节点(循环轮播：最后一个节点是第一张轮播) -->
+              <div class="mui-slider-item mui-slider-item-duplicate">
+                <a href="#">
+                  <img src="./public/img/index_position.png">
+                </a>
+              </div>
+            </div>
+            <div class="mui-slider-indicator">
+              <div class="mui-indicator mui-active"></div>
+              <div class="mui-indicator"></div>
+              <div class="mui-indicator"></div>
+            </div>
+          </div>
+          <!-- 菜单 -->
+          <div class="mui-row menu-wrapper">
+            <ul class="mui-table-view mui-grid-view mui-grid-9">
+              <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="./app/rtkonline/rtklist.html" style="border-top: 1px solid #ccc;">
+                <a href="#">
+                  <span class="sp1" v-text="rtkCount"></span>
+                  <span class="sp2">台</span>
+                  <div class="mui-media-body">
+                    <img src="./public/img/rtk.png" align="top">设备总数</div>
+                </a>
+              </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="./app/mapmonitor/rtkmap.html" style="border-top: 1px solid #ccc;">
+                <a href="#">
+                  <span class="sp1" v-text="onlineRtkCount"></span>
+                  <span class="sp2">台</span>
+                  <div class="mui-media-body">
+                    <img src="./public/img/map.png" align="top">地图在线</div>
+                </a>
+              </li>
+              <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="./app/datamanager/datalist.html" style="border-bottom: 1px solid #ccc;">
+                <a href="#">
+                  <span class="sp1" v-text="dataCount"></span>
+                  <span class="sp2">个</span>
+                  <div class="mui-media-body">
+                    <img src="./public/img/file.png" align="top">文件总数</div>
+                </a>
+              </li>
+              <!--
+              <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="./app/taskmanager/tasklist.html" style="border-bottom: 1px solid #ccc;">
+                <a href="#">
+                  <span class="sp1" v-text="taskCount"></span>
+                  <span class="sp2">个</span>
+                  <div class="mui-media-body"><img src="./public/img/task.png" align="top">任务总数</div>
+                </a>
+              </li> -->
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- off-canvas backdrop -->
+      <div class="mui-off-canvas-backdrop"></div>
+    </div>
+  </div>
+  <script src="./js/mui.min.js"></script>
+  <script src="./js/url.js"></script>
+  <script src="./js/vue.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#offCanvasWrapper',
+      data: {
+        user_name: '',
+        token: '',
+        alertUpdate: '',
+        local_version: '',
+        isdis: false,
+        rtkCount: '',
+        taskCount: '',
+        dataCount: 0,
+        onlineRtkCount: ''
+      },
+
+      methods: {},
+      created: function () {
+        mui.plusReady(function () {
+          mui.init({});
+          if (mui.os.stream || plus.os.name !== 'Android') {
+            document.getElementById('update').style.display = 'none';
+          }
+
+          mui('.mui-scroll-wrapper').scroll({
+            bounce: false,
+            indicators: true // 是否显示滚动条
+          });
+
+          mui('.mui-grid-view').on('tap', '.mui-table-view-cell', function (e) {
+            var url = this.getAttribute('href');
+            mui.openWindow({
+              url: url,
+              id: url
+            });
+          });
+
+          mui('.slider-content').on('tap', '.link', function (e) {
+            var url = this.getAttribute('href');
+            mui.openWindow({
+              url: url,
+              id: url
+            });
+            setTimeout(function () {
+              offCanvasWrapper.offCanvas('close');
+            }, 500);
+          });
+
+          mui('#slider').slider({
+            interval: 5000
+          });
+
+          var offCanvasWrapper = mui('#offCanvasWrapper');
+
+          vm.local_version = plus.runtime.version;
+          vm.token = plus.storage.getItem('token');
+          vm.user_name = plus.storage.getItem('user_name');
+          vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
+          vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
+          // vm.dataCount = plus.storage.getItem("dataCount") || 0;
+          vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
+
+          vm.alertUpdate = plus.storage.getItem('alertUpdate');
+          // var showGuide = plus.storage.getItem("lauchFlag");
+          var showGuide = true;
+          if (showGuide) {
+            // 有值，说明已经显示过了，无需显示；
+            // 关闭splash页面；
+            plus.navigator.closeSplashscreen();
+            plus.navigator.setFullscreen(false);
+            mui.ajax(apiUrl.check_token, {
+              data: {
+                user_name: vm.user_name,
+                token: vm.token
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function (data) {
+                if (data.status === 40004) {
+                  mui.openWindow({
+                    url: 'login.html',
+                    id: 'login'
+                  });
+                } else {
+                  if (plus.os.name === 'Android' && vm.alertUpdate !== 'false') {
+                    var local_version = plus.runtime.version;
+                    mui.ajax(apiUrl.latest_version, {
+                      data: {
+                        app_name: 'south_cloud_app',
+                        local_version: local_version
+                      },
+                      dataType: 'json',
+                      type: 'post',
+                      timeout: 10000,
+                      success: function (data) {
+                        if (data.status === 0 && data.version !== '') {
+                          var version = data.version;
+                          mui.confirm(data.description, 'SouthCloud', ['取消', '更新'], function (e) {
+                            if (e.index === 1) {
+                              plus.runtime.openURL(apiUrl.download_app + '?app_name=south_cloud_app&version=' + version);
+                            }
+                          }, 'div');
+                        }
+                      }
+                    });
+                  }
+                }
+                plus.storage.setItem('alertUpdate', 'yes');
+              },
+              error: function (xhr, type, errorThrown) {
+                // 异常处理；
+                onNetChange();
+              }
+            });
+          } else {
+            // 显示启动导航
+            mui.openWindow({
+              id: 'guide',
+              url: './app/index/guide.html',
+              styles: {
+                popGesture: 'none'
+              },
+              show: {
+                aniShow: 'none'
+              },
+              waiting: {
+                autoShow: false
+              }
+            });
+          }
+
+          document.getElementById('logout').addEventListener('tap', function () {
+            mui('#logout').button('loading');
+            var lauchFlag = plus.storage.getItem('lauchFlag');
+            plus.storage.clear();
+            plus.storage.setItem('lauchFlag', lauchFlag);
+
+            mui('#logout').button('reset');
+            vm.isdis = false;
+            setTimeout(function () {
+              offCanvasWrapper.offCanvas('close');
+            }, 500);
+
+            mui.ajax(apiUrl.logout, {
+              data: {
+                user_name: vm.user_name,
+                token: vm.token
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function (data) {
+                if (data.status === 0 || data.status === 40004) {
+                  mui.openWindow({
+                    url: 'login.html',
+                    id: 'login'
+                  });
+                  var lauchFlag = plus.storage.getItem('lauchFlag');
+                  plus.storage.clear();
+                  plus.storage.setItem('lauchFlag', lauchFlag);
+                }
+                mui('#logout').button('reset');
+                vm.isdis = false;
+                setTimeout(function () {
+                  offCanvasWrapper.offCanvas('close');
+                }, 500);
+              },
+              error: function (xhr, type, errorThrown) {
+                onNetChange();
+                mui('#logout').button('reset');
+                vm.isdis = false;
+              }
+            });
+          });
+
+          document.getElementById('update').addEventListener('tap', function () {
+            mui.ajax(apiUrl.latest_version, {
+              data: {
+                app_name: 'south_cloud_app',
+                local_version: vm.local_version
+                // local_version: 1.1
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function (data) {
+                if (data.status === 0 && data.version !== '') {
+                  var version = data.version;
+                  mui.confirm(data.description, 'SouthCloud', ['取消', '更新'], function (e) {
+                    if (e.index === 1) {
+                      plus.runtime.openURL(apiUrl.download_app + '?app_name=south_cloud_app&version=' + version);
+                    }
+                  }, 'div');
+                } else if (data.status === 40004) {
+                  mui.openWindow({
+                    url: 'login.html',
+                    id: 'login'
+                  });
+                } else {
+                  mui.alert('', '当前已是最新版本!', '确定', function (e) { }, 'div');
+                }
+              }
+            });
+          });
+        });
+      }
+    });
+
+    document.addEventListener('plusready', onPlusReady, false);
+
+    function onPlusReady() {
+      document.addEventListener('resume', onAppReume, false);
+    }
+
+    function onAppReume() {
+      mui.ajax(apiUrl.apiModuleDescriptor2, {
+        data: {
+          user_name: vm.user_name,
+          token: vm.token
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 10000,
+        success: function (data) {
+          if (data.status === 0) {
+            plus.storage.setItem('rtkCount', String(data.device.count));
+            plus.storage.setItem('onlineRtkCount', String(data.device.onlineCount));
+            // plus.storage.setItem("taskCount", String(data.task.task_count));
+            plus.storage.setItem('dataCount', String(data.data.files_count));
+            plus.storage.setItem('dataSize', byteTrans(data.data.files_size));
+            vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
+            vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
+            vm.dataCount = plus.storage.getItem('dataCount') || 0;
+            vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
+          } else if (data.status === 40004) {
+            mui.openWindow({
+              url: 'login.html',
+              id: 'login'
+            });
+          } else {
+            mui.toast(data.info);
+          }
+        }
+      });
+    }
+  </script>
+</body>
+
+</html>

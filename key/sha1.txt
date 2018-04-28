@@ -1,0 +1,6 @@
+appid: com.southcloud.app
+southmayuan@163.com
+密码: Southgnss2021
+southgnss
+
+javakey: 20:20:D7:4D:07:B3:DD:AD:51:2F:B4:E5:3E:2C:1E:16:DE:16:9F:0B

@@ -1,0 +1,75 @@
+.ol-popup {
+  position: absolute;
+  background-image: url('../public/img/map_monitor_identifycode_tips.png');
+  background-repeat: no-repeat;
+  background-size: 100% 99%;
+  border: 0;
+  padding: 0;
+  border-radius: 10px;
+  border: none;
+  bottom: 42px;
+  left: -94px;
+  min-width: 185px;
+  width: 185px;
+  max-width: 185px;
+  min-height: 80px;
+  height: 80px;
+  max-height: 80px;
+  line-height: 80px;
+  text-align: center;
+}
+
+#popup-content {
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+}
+
+#des {
+  height: 30px;
+  line-height: 30px;
+  position: absolute;
+  top: 32px;
+  left: 53px;
+  text-align: center;
+  color: #fff;
+  text-decoration: underline;
+}
+
+// #popup-content span {
+//   height: 30px;
+//   display: inline-block;
+//   font-size: 20px;
+// }
+// .ol-popup:after,
+// .ol-popup:before {
+//   top: 100%;
+//   border: solid transparent;
+//   content: " ";
+//   height: 0;
+//   width: 0;
+//   position: absolute;
+//   pointer-events: none;
+// }
+// .ol-popup:after {
+//   border-width: 10px;
+//   left: 120px;
+//   margin-left: -10px;
+// }
+// .ol-popup:before {
+//   border-width: 11px;
+//   left: 48px;
+//   margin-left: -11px;
+// }
+.ol-popup-closer {
+  text-decoration: none;
+  position: absolute;
+  top: -25px;
+  right: 2px;
+  height: 20px;
+  width: 20px;
+}
+
+.ol-popup-closer:after {
+  content: "✖";
+}

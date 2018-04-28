@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello MUI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <link rel="stylesheet" href="../../css/mui.min.css">
+    <script src="../../js/url.js"></script>
+    <style>
+    html,
+    body {
+        background-color: #efeff4;
+    }
+
+    .mui-bar~.mui-content .mui-fullscreen {
+        top: 44px;
+        height: auto;
+    }
+
+    .mui-pull-top-tips {
+        position: absolute;
+        top: -20px;
+        left: 50%;
+        margin-left: -25px;
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        z-index: 1;
+    }
+
+    .mui-bar~.mui-pull-top-tips {
+        top: 24px;
+    }
+
+    .mui-pull-top-wrapper {
+        width: 42px;
+        height: 42px;
+        display: block;
+        text-align: center;
+        background-color: #efeff4;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        background-clip: padding-box;
+        box-shadow: 0 4px 10px #bbb;
+        overflow: hidden;
+    }
+
+    .mui-pull-top-tips.mui-transitioning {
+        -webkit-transition-duration: 200ms;
+        transition-duration: 200ms;
+    }
+
+    .mui-pull-top-tips .mui-pull-loading {
+        /*-webkit-backface-visibility: hidden;
+                -webkit-transition-duration: 400ms;
+                transition-duration: 400ms;*/
+        margin: 0;
+    }
+
+    .mui-pull-top-wrapper .mui-icon,
+    .mui-pull-top-wrapper .mui-spinner {
+        margin-top: 7px;
+    }
+
+    .mui-pull-top-wrapper .mui-icon.mui-reverse {
+        /*-webkit-transform: rotate(180deg) translateZ(0);*/
+    }
+
+    .mui-pull-bottom-tips {
+        text-align: center;
+        background-color: #efeff4;
+        font-size: 15px;
+        line-height: 40px;
+        color: #777;
+    }
+
+    .mui-pull-top-canvas {
+        overflow: hidden;
+        background-color: #fafafa;
+        border-radius: 40px;
+        box-shadow: 0 4px 10px #bbb;
+        width: 40px;
+        height: 40px;
+        margin: 0 auto;
+    }
+
+    .mui-pull-top-canvas canvas {
+        width: 40px;
+    }
+
+    .mui-slider-indicator.mui-segmented-control {
+        background-color: #efeff4;
+    }
+
+    li > input{height:16px;vertical-align:text-top;margin-top:0;}
+    </style>
+</head>
+
+<body>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">添加附件</h1>
+        <a class="mui-btn mui-btn-blue mui-btn-link mui-pull-right" style="" id="ok">确认</a>
+    </header>
+    <div class="mui-content">
+        <div id="slider" class="mui-slider mui-fullscreen">
+            <div id="sliderSegmentedControl" class="mui-scroll-wrapper mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+                <div class="mui-scroll">
+                    <a class="mui-control-item mui-active" href="#item1">道路文件</a>
+                    <a class="mui-control-item" href="#item2">放样文件</a>
+                    <a class="mui-control-item" href="#item3">坐标系统</a>
+                    <a class="mui-control-item" href="#item4">作业区域</a>
+                    <a class="mui-control-item" href="#item5">点文件</a>
+                </div>
+            </div>
+            <div class="mui-slider-group">
+                <div id="item1" class="mui-slider-item mui-control-content mui-active">
+                    <div id="scroll1" class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view" id="road">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item2" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view" id="lyft">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item3" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view" id="coor">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item4" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view" id="area">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div id="item5" class="mui-slider-item mui-control-content">
+                    <div class="mui-scroll-wrapper">
+                        <div class="mui-scroll">
+                            <ul class="mui-table-view" id="point">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../../js/mui.min.js"></script>
+    <script src="../../js/mui.pullToRefresh.js"></script>
+    <script src="../../js/mui.pullToRefresh.material.js"></script>
+    <script>
+    var pages;
+    var page0 = 0;
+    var page1 = 0;
+    var page2 = 0;
+    var page6 = 0;
+    var page7 = 0;
+    mui.init({
+        beforeback: function(){
+            var wsadd = plus.webview.getWebviewById('taskadd');
+            mui.fire(wsadd,'clear');
+            mui.openWindow({
+                url: 'taskadd.html',
+                id: 'taskadd',
+            });
+        }
+    });
+    (function($) {
+        //阻尼系数
+        var deceleration = mui.os.ios ? 0.003 : 0.0009;
+        $('.mui-scroll-wrapper').scroll({
+            bounce: false,
+            indicators: true, //是否显示滚动条
+            deceleration: deceleration
+        });
+
+        var user_name, token;
+        mui.plusReady(function() {
+            user_name = plus.storage.getItem("user_name");
+            token = plus.storage.getItem("token");
+        });
+
+        $.ready(function() {
+            //循环初始化所有下拉刷新，上拉加载。
+            $.each(document.querySelectorAll('.mui-slider-group .mui-scroll'), function(index, pullRefreshEl) {
+                $(pullRefreshEl).pullToRefresh({
+                    up: {
+                        auto: true,
+                        callback: function() {
+                            var self = this;
+                            var ul = self.element.querySelector('.mui-table-view');
+                            var ajaxType = ul.getAttribute('id');
+                            var parent_id;
+                            switch (ajaxType) {
+                                case 'road':
+                                    parent_id = 0;
+                                    pages = ++page0
+                                    break;
+                                case 'lyft':
+                                    parent_id = 1;
+                                    pages = ++page1;
+                                    break;
+                                case 'coor':
+                                    parent_id = 2;
+                                    pages = ++page2;
+                                    break;
+                                case 'area':
+                                    parent_id = 6;
+                                    pages = ++page6;
+                                    break;
+                                case 'point':
+                                    parent_id = 7;
+                                    pages = ++page7;
+                                    break;
+                            }
+
+
+                            setTimeout(function() {
+                                getData(parent_id, pages, ul, self);
+                            }, 1000);
+                        }
+                    }
+                });
+            });
+
+            function getData(parent_id, pages, ul, self) {
+                var that = self;
+                mui.ajax(apiUrl.apiFilesInfoPage2, {
+                    data: {
+                        user_name: user_name,
+                        token: token,
+                        parent_id: parent_id,
+                        page_num: pages
+                    },
+                    dataType: 'json',
+                    type: 'post',
+                    timeout: 10000,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            if (data.pageCount == 1 || pages == data.endPageIndex || (data.recordList.length == 0 && data.currentPage == 1) ) {
+                                that.endPullUpToRefresh(true);
+                            } else {
+                                that.endPullUpToRefresh(false);
+                            }
+
+                            var cells = document.body.querySelectorAll('.mui-table-view-cell');
+                            for (var i = 0; i < data.recordList.length; i++) {
+                                var li = document.createElement('li');
+                                li.className = 'mui-table-view-cell';
+                                li.innerHTML = '<input style="margin:0 8px 0 0;" type="checkbox" name="box" id="' + data.recordList[i].id + '" fliename="'+ data.recordList[i].originalName +'"/><label id="'+ data.recordList[i].id +'">' + data.recordList[i].originalName + '</label>';
+                                ul.appendChild(li);
+                            }
+
+                        } else if (data.status == 40004) {
+                            mui.openWindow({
+                                url: '../../login.html',
+                                id: 'login',
+                            });
+                        } else {
+                            plus.nativeUI.toast(data.info);
+                        }
+                        plus.nativeUI.closeWaiting();
+                    },
+                    error: function(xhr, type, errorThrown) {
+                        //异常处理；
+                        onNetChange();
+                    }
+                });
+            }
+        });
+
+
+        document.getElementById('ok').addEventListener('tap',function() {
+            var filesArr = [];
+            var idArr = [];
+            var checkArry = document.getElementsByName('box');
+            for (var i = 0; i < checkArry.length; i++) {
+                if(checkArry[i].checked == true){
+                   filesArr.push(checkArry[i].getAttribute('fliename'));
+                   idArr.push(checkArry[i].getAttribute('id'));
+                }
+            }
+
+            var wsadd = plus.webview.getWebviewById('taskadd');
+            mui.fire(wsadd,'addfiles',{idArr:idArr, filesArr:filesArr});
+            mui.openWindow({
+                url: 'taskadd.html',
+                id: 'taskadd',
+            });
+        });
+
+        $('.mui-slider-group').on('tap', 'a', function(e) {
+
+	    });
+    })(mui);
+
+    </script>
+</body>
+
+</html>

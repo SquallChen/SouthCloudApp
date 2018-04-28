@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="../../css/custom.css">
+  <style>
+  .mui-content>.mui-table-view:first-child {
+    margin-top: 0;
+  }
+
+  .mui-grid-view.mui-grid-9 {
+    background-color: #fff
+  }
+
+  .mui-table-view.mui-grid-9 .mui-table-view-cell.mui-active {
+    background-color: #ebebeb;
+  }
+
+  .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+    border-bottom: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    height: 125px;
+  }
+
+  .mui-grid-view.mui-grid-9 .mui-table-view-cell p {
+    color: #333;
+    font-size: 18px
+  }
+
+  .mui-grid-view.mui-grid-9 .mui-table-view-cell img {
+    width: 60px;
+    height: 60px;
+    margin-top: 8px
+  }
+
+
+  .mui-table-view.mui-grid-view .mui-table-view-cell .mui-media-body {
+    vertical-align: top;
+    height: 30px;
+    line-height: 30px;
+    font-size: 16px;
+    color: #666;
+  }
+  </style>
+</head>
+
+<body>
+  <header class="mui-bar mui-bar-nav">
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="mui-action-back"></a>
+    <h1 class="mui-title">数据管理</h1>
+  </header>
+  <div class="mui-content">
+    <ul class="mui-table-view mui-grid-view mui-grid-9">
+      <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="data.html" id="7">
+        <img src="../../public/img/point.png" alt="">
+        <p>点文件</p>
+      </li>
+      <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="data.html" id="1">
+        <img src="../../public/img/layer.png" alt="">
+        <p>放样文件</p>
+        <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="data.html" id="0">
+          <img src="../../public/img/road.png" alt="">
+          <p>道路文件</p>
+        </li>
+      </li>
+      <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="data.html" id="2">
+        <img src="../../public/img/coor.png" alt="">
+        <p>坐标系统</p>
+      </li>
+      <li class="mui-table-view-cell mui-media mui-col-xs-6 mui-col-sm-6" href="data.html" id="6">
+        <img src="../../public/img/workarea.png" alt="">
+        <p>作业区域</p>
+      </li>
+    </ul>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/url.js"></script>
+  <script type="text/javascript">
+  mui.init({
+    beforeback: function() {},
+  });
+
+  mui.plusReady(function() {
+    onNetChange();
+    mui('.mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+      var id = this.getAttribute('id');
+      plus.storage.setItem("parent_id", id);
+      mui.openWindow({
+        url: 'data.html',
+        id: 'data.html',
+        /*extras:{
+            id: id,
+        }*/
+      });
+    });
+  });
+  </script>
+</body>
+
+</html>

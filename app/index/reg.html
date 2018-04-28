@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title></title>
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/custom.css" rel="stylesheet" />
+  <style>
+  .mui-checkbox.mui-left input[type=checkbox] {
+    left: 10px;
+  }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">注册</h1>
+    </header>
+    <div class="mui-content">
+      <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label>输入账号</label>
+          <input v-model='account' id='account' type="text" class="mui-input-clear mui-input" placeholder='6-16位的字母、数字及"_"组合'> {{account}}
+        </div>
+        <div class="mui-input-row">
+          <label>输入密码</label>
+          <input v-model='password' id='password' type="password" class="mui-input-clear mui-input" placeholder="6-18位的字母、数字的组合">
+        </div>
+        <div class="mui-input-row">
+          <label>确认密码</label>
+          <input v-model='password_confirm' id='password_confirm' type="password" class="mui-input-clear mui-input" placeholder="请确认密码">
+        </div>
+        <div class="mui-input-row">
+          <label>手机号</label>
+          <input v-model='mobile' id='mobile' type="text" class="mui-input-clear mui-input" placeholder="请输入手机号">
+        </div>
+        <div class="mui-input-row">
+          <label>验证码</label>
+          <input v-model='code' id='code' type="text" class="mui-input-clear mui-input" placeholder="请输入验证码">
+          <label style="height: 46px; line-height: 46px; padding-top: 7px;text-align:right; position: absolute; top:0 ;right: 35px">
+            <button @click="getCode" id="getCode" type="button" class="mui-btn-primary" style="height: 30px;line-height: 30px;padding: 0 8px;" :disabled="disabled">{{btnVal}}</button>
+          </label>
+        </div>
+      </form>
+      <div class="mui-input-row mui-checkbox mui-left">
+        <label style="width: 100%; font-size: 12px;padding-left: 40px;color: #808080; text-align: left">我已阅读并接受《统一数据服务平台协议》</label>
+        <input v-model='checked' value="checked" type="checkbox">
+      </div>
+      <div class="mui-content-padded" style="margin-top: 50px;">
+        <button id='reg' class="mui-btn mui-btn-block mui-btn-primary" @click='reg' data-loading-text="注册中">注 册</button>
+      </div>
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/url.js"></script>
+  <script src="../../js/vue.min.js"></script>
+  <script>
+  var vm = new Vue({
+    el: '#app',
+    data: {
+      account: '',
+      password: '',
+      password_confirm: '',
+      mobile: '',
+      code: '',
+      btnVal: '获取验证码',
+      disabled: false,
+      checked: [],
+    },
+    methods: {
+      reg: function() {
+        if (this.checked != 'checked') {
+          mui.toast('请选择协议！');
+          return;
+        }
+        if (/^[_0-9a-zA-Z]{6,16}$/.test(this.account) == false) {
+          plus.nativeUI.toast('帐号为6-16个字符的数字、字母组合！');
+          return;
+        }
+        if (/^[0-9a-zA-Z]{6,18}$/.test(this.password) == false) {
+          mui.toast('密码为6-18个字符的数字、字母组合！');
+          return;
+        }
+        if (this.password != this.password_confirm) {
+          mui.toast('两次输入的密码不一致！');
+          return;
+        }
+
+        if (/^(1[3|4|5|7|8])[0-9]{9}$/.test(this.mobile) == false) {
+          mui.toast('请输入手机号！');
+          return false;
+        }
+
+        if (code == '') {
+          mui.toast('验证码不能为空');
+          return;
+        }
+        mui('#reg').button('loading');
+        mui.ajax(apiUrl.apiRegister2, {
+          data: {
+            'user_name': vm.account,
+            'password': vm.password,
+            'mobile_verify_code': vm.code,
+            'mobile': vm.mobile
+          },
+          dataType: 'json',
+          type: 'post',
+          timeout: 10000,
+          success: function(data) {
+            if (data.status == 0) {
+              mui.toast("注册成功");
+              setTimeout(function() {
+                plus.webview.currentWebview().close();
+                plus.webview.getWebviewById("login").show();
+              }, 2000);
+            } else {
+              mui.toast(data.info);
+            }
+            mui('#reg').button('reset');
+          },
+          error: function(xhr, type, errorThrown) {
+            //异常处理；
+            mui('#reg').button('reset');
+            onNetChange();
+          }
+        });
+      },
+      getCode: function() {
+        if (/^(1[3|4|5|7|8])[0-9]{9}$/.test(this.mobile) == false) {
+          mui.toast('请输入手机号！');
+          return;
+        }
+        var timeNum = 60;
+        this.disabled = true;
+        var timer = setInterval(function() {
+          timeNum--;
+          vm.btnVal = '重新获取' + timeNum + 's';
+          if (timeNum == 0) {
+            timeNum = 60;
+            clearInterval(timer);
+            vm.btnVal = '获取验证码';
+            vm.disabled = false;
+          }
+        }, 1000);
+
+        mui.ajax(apiUrl.apiSendPhoneCode2, {
+          data: {
+            mobile: vm.mobile
+          },
+          dataType: 'json',
+          type: 'post',
+          timeout: 10000,
+          success: function(data) {
+            if (data.status == 0) {
+              mui.toast('请注意查看验证码！');
+            } else {
+              mui.toast(data.info);
+            }
+          },
+          error: function(xhr, type, errorThrown) {
+            //异常处理；
+            onNetChange();
+          }
+        });
+      }
+    },
+    created: function() {
+      mui.plusReady(function() {
+        mui.init({});
+      });
+    },
+    filters: {}
+  });
+  </script>
+</body>
+
+</html>

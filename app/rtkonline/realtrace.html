@@ -1,0 +1,153 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/ol.css" rel="stylesheet" />
+		<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
+		<link href="../../css/map.css" rel="stylesheet" />
+		<script src="../js/jquery.js"></script>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+		    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="mui-action-back"></a>
+		    <h1 class="mui-title" id="rtk_track"></h1>
+
+		</header>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/datetimepicker/datetimepicker.min.js"></script>
+		<script src="../../js/ol.js"></script>
+		<script src="../../js/ol3-layerswitcher.js"></script>
+		<script src="../js/rtkmap.js"></script>
+		<div class="s-map-wrap">
+			<div style="height: 100%;" id="map" class="map"> </div>
+		</div>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function(){
+					//plus.webview.getLaunchWebview().show();
+				}
+			});
+			var identify_code,user_name,token;
+			mui.plusReady(function() {
+				var self = plus.webview.currentWebview();
+		        identify_code = self.identify_code;
+		        user_name = plus.storage.getItem("user_name");
+        		token = plus.storage.getItem("token");
+		        document.getElementById('rtk_track').innerHTML = identify_code+'轨迹';
+		        rtk_info(1,10);
+
+		        function rtk_info(num_pag,num_per){
+		        	 console.log(user_name,token,identify_code)
+	      			$.ajax({
+				        url: "http://120.76.223.87:81/device/track_info_page",
+				        type: 'POST',
+				        dataType: 'json',
+				        data: {
+				            user_name: user_name,
+				            token:token,
+				            filter_identifycode:identify_code,
+				            page_num:num_pag,
+				            num_per_page:num_per
+				        },
+				        success: function(data) {
+				         	var data_info =  data.recordList;
+				         	$.each(data_info, function(index, val) {
+				         		console.log(val)
+
+				         	});
+		                    var page = data.pageCount;
+		                    num_pag++;
+		                    if(num_pag <= page){
+		                        setTimeout(function(){
+		                            rtk_info(num_pag,10);
+		                        },200);
+		                    }
+				        }
+	      			})
+      			}
+			});
+
+			var map; //地图变量
+			var L = 110.017334; //经度
+			var B = 35.29936; //纬度
+			var Z = 4; //缩放级别
+			var Zoom = 18; //最大缩放级别
+			var raster2Url = 'http://t{0-7}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'; /*地图图层url服务*/
+			var layersUrl1 = 'http://t{0-7}.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}';
+			var layersUrl2 = 'http://t{0-7}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}';
+
+			var raster2 =  new ol.layer.Tile({
+			    source: new ol.source.XYZ({
+			      url: raster2Url
+			    })
+			});  //创建文字标注图层
+			var layers = new ol.layer.Group({
+			    'title': '选择图层',
+			    layers: [
+			        new ol.layer.Tile({
+			            title: '卫星影像',
+			            type: 'base',
+			            visible: false,
+			            source: new ol.source.XYZ({
+			                url: layersUrl1
+			            })
+			        }),
+			        new ol.layer.Tile({
+			            title: '地图',
+			            type: 'base',
+			            visible: true,
+			            source: new ol.source.XYZ({
+			                url: layersUrl2
+			            })
+			        }),
+			    ]
+			}); //创建图层组使用图层控件实现可以切换图层
+
+			var arr = [layers, raster2]; //图层名称数组，初始化地图时加载
+			/**
+			 * [LoadMap ：实例化并加载地图]
+			 * @param  L :经度
+			 * @param  B :纬度
+			 * @param  Z :中心级别
+			 */
+			LoadMap(L, B, Z, Zoom);
+			function LoadMap(L, B, Z, Zoom) {
+			    map = new ol.Map({
+			        layers: arr,
+			        target: document.getElementById('map'),
+			        view: new ol.View({
+			            projection: 'EPSG:4326',
+			           /* extent: [70, 18, 135, 51],*/
+			            center: [L, B],
+			            zoom: Z,
+			            minZoom: Z,
+			            maxZoom: Zoom
+			        })
+			    });
+			}
+
+			/*map.addControl(new ol.control.ZoomSlider({})); //缩放下拉条*/
+			map.addControl(new ol.control.ScaleLine()); //比例尺控件
+			/* map.addControl(new ol.control.FullScreen());//全屏控件*/
+
+			var layerSwitcher = new ol.control.LayerSwitcher({
+			    tipLabel: 'Légende'
+			});
+			map.addControl(layerSwitcher); //自定义选择图层控件
+			/*添加悬窗*/
+		   /* var viewport = map.getViewport();
+      		$(viewport).append('<div id="share" class="share"></div>');*/
+
+
+
+		</script>
+
+
+        </div>
+	</body>
+
+</html>

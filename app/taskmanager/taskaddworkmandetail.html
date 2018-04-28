@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <link href="../../css/mui.min.css" rel="stylesheet" />
+    <link href="../../css/mui.common.css" rel="stylesheet" />
+    <script src="../../js/mui.min.js"></script>
+    <style type="text/css">
+    .mui-table-view-cell:after {
+        left: 0;
+    }
+    </style>
+</head>
+
+<body style="margin:0;padding:0;width:100%;height:100%;">
+    <div id="files" style="text-align:left;margin-bottom: 49px;">
+    </div>
+    <button style="height: 48px;position:fixed;bottom:-10px;border-radius: 0px; padding: 5px 0;" class="mui-btn mui-btn-primary mui-btn-block mui-action-back"> 关　闭</button>
+    <script type="text/javascript">
+    mui.init();
+    mui.plusReady(function() {
+        var self = plus.webview.currentWebview();
+        var filesArr = self.workmanName;
+        var files = '<ul class="mui-table-view">';
+        for (var i = 0; i < filesArr.length; i++) {
+            files += '<li class="mui-table-view-cell" style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap; ">' + filesArr[i] + '</li>';
+        }
+        files += '</ul>';
+        document.getElementById('files').innerHTML = files;
+    });
+    </script>
+</body>
+
+</html>

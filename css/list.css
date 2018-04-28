@@ -1,0 +1,32 @@
+/* 斑马线 */
+.mui-table-view>.mui-table-view-cell:nth-child(even),
+.mui-table-view>.mui-table-view-cell:nth-child(even) a,
+.mui-table-view>.mui-table-view-cell:nth-child(even) .mui-row {
+  background-color: #F5F5F5;
+}
+
+.mui-table-view>.mui-table-view-cell:nth-child(even):active,
+.mui-table-view>.mui-table-view-cell:nth-child(even) a:active,
+.mui-table-view>.mui-table-view-cell:nth-child(even) .mui-row:active {
+  background-color: #fff;
+}
+
+.mui-table-view>.mui-table-view-cell:active,
+.mui-table-view>.mui-table-view-cell a:active,
+.mui-table-view>.mui-table-view-cell .mui-row:active {
+  background-color: #F5F5F5;
+}
+
+.mui-table-view-cell:after {
+  left: 0;
+}
+
+.text-hidden {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+#show {
+  display: none
+}
