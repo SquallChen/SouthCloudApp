@@ -14,7 +14,7 @@
 				margin: 0;
 			}
 			
-			body {
+			html,body {
 				background: white;
 			}
 			
@@ -184,7 +184,23 @@
 			.autoMark {
 				margin-top: 15px;
 			}
-			#item1mobile{
+			.channel_content{
+				align-items: flex-start;
+			}
+			.channel_title{
+				position: relative;
+				top:14px;
+			}
+			.channel{
+				display: flex;
+				justify-content: space-between;
+				flex-wrap: wrap;
+			}
+			.channel input[type=text]{
+				width:49%;
+				margin-bottom: 4px;
+			}
+			#item1mobile,#item2mobile,#item3mobile,#item4mobile{
 				overflow: auto;
 			}
 			.active {
@@ -218,7 +234,7 @@
 				font-size: 16px;
 			}
 			
-			input[type=text] {
+			input[type=text],input[type=password] {
 				padding: 10px 15px 10px 15px;
 				margin-bottom: 0;
 				height: 46px;
@@ -284,8 +300,6 @@
 					<div class="mui-slider-group">
 						<!--**************************tab1****************************-->
 						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-							<!--<div id="scroll1" class="mui-scroll-wrapper">
-								<div class="mui-scroll">-->
 							<!--模式选择-->
 							<ul>
 								<li class="modeTitle">
@@ -490,8 +504,6 @@
 									<button class="start">启  动</button>
 								</li>
 							</ul>
-							<!--</div>
-							</div>-->
 						</div>
 						<!--**************************tab2****************************-->
 						<div id="item2mobile" class="mui-slider-item mui-control-content">
@@ -507,51 +519,148 @@
 							<!--*********************移动网络**********************-->
 							<ul v-show="linktypevalue === 0">
 								<li>
-									<div><span>移动网络</span></div>
+									<div><span>ip地址</span></div>
 									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+										<input type="text" placeholder="ip地址" v-model="ip" />
 									</div>
 								</li>
-								<li class="btn">
+								<li>
+									<div><span>端口号</span></div>
+									<div>
+										<input type="text" placeholder="端口号" v-model="port" />
+									</div>
+								</li>
+								<li>
+									<div><span>账户ID</span></div>
+									<div>
+										<input type="text" placeholder="账户ID" v-model="id" />
+									</div>
+								</li>
+								<li>
+									<div><span>密码</span></div>
+									<div>
+										<input type="text" placeholder="密码" v-model="password" />
+									</div>
+								</li>
+								<li>
+									<div><span>模式</span></div>
+									<div class="select">
+										<select name="" v-model="accessModeValue">
+											<option v-for="item in accessMode" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>接入点</span></div>
+									<div class="select">
+										<select name="" v-model="AccessPointValue">
+											<option v-for="item in AccessPoint" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>ANP服务器</span></div>
+									<div>
+										<input type="text" placeholder="密码" v-model="anpserver" />
+									</div>
+								</li>
+								<li>
+									<div><span>ANP用户名</span></div>
+									<div>
+										<input type="text" placeholder="密码" v-model="anpuser" />
+									</div>
+								</li>
+								<li>
+									<div><span>ANP密码</span></div>
+									<div>
+										<input type="password" placeholder="密码" v-model="anppassword" />
+									</div>
+								</li>
+								<li class="btn" style="margin-bottom: 10px;">
 									<button class="setting">设  置</button>
 								</li>
 							</ul>
 							<!--*********************内置电台**********************-->
 							<ul v-show="linktypevalue === 1">
 								<li>
-									<div><span>内置电台</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+									<div><span>通道设置</span></div>
+									<div class="select">
+										<select name="" v-model="channelValue">
+											<option v-for="item in channel" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
 									</div>
 								</li>
-								<li class="btn">
+								<li class="channel_content">
+									<div class="channel_title"><span>频道设置</span></div>
+									<div class="channel">
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue1" />
+									</div>
+								</li>
+								<li>
+									<div><span>功率档位</span></div>
+									<div class="select">
+										<select name="" v-model="powerPositionValue">
+											<option v-for="item in powerPosition" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>空中波特率</span></div>
+									<div class="select">
+										<select name="" v-model="baudRateValue">
+											<option v-for="item in baudRate" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>选择协议</span></div>
+									<div class="select">
+										<select name="" v-model="protocolValue">
+											<option v-for="item in protocol" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li class="btn" style="margin-bottom: 10px;">
 									<button class="setting">设  置</button>
 								</li>
 							</ul>
 						</div>
 						<!--**************************tab3****************************-->
 						<div id="item3mobile" class="mui-slider-item mui-control-content">
-							<!--<div id="scroll3" class="mui-scroll-wrapper">
-								<div class="mui-scroll">-->
 							<ul class="mui-table-view">
 								<li class="mui-table-view-cell">
 									第3个选项卡子项-1
 								</li>
 							</ul>
-							<!--</div>
-							</div>-->
 						</div>
 						<!--**************************tab4****************************-->
 						<div id="item4mobile" class="mui-slider-item mui-control-content">
-							<!--<div id="scroll4" class="mui-scroll-wrapper">
-								<div class="mui-scroll">-->
 							<ul class="mui-table-view">
 								<li class="mui-table-view-cell">
 									第4个选项卡子项-1
 								</li>
 							</ul>
-							<!--</div>
-							</div>-->
 						</div>
 					</div>
 				</div>
@@ -585,7 +694,21 @@
 					l_second: '48.32400096',
 					cut_angle: '12',
 					collectionIntervalvalue: '0',
+					accessModeValue:'0',
+					AccessPointValue:'1',
 					pdop: '3.0',
+					ip:'127.0.0.1',
+					port:'3360',
+					id:'USER123',
+					password:'0',
+					anpserver:'CMNET',
+					anpuser:'CARD',
+					anppassword:'123456',
+					channelValue:'6',
+					channelValue1:'463.625',
+					powerPositionValue:'high',
+					baudRateValue:'9600',
+					protocolValue:0,
 					differenceFormat: [{
 							label: 'RTCA',
 							value: 0
@@ -668,6 +791,32 @@
 							value: 8
 						}
 					],
+					accessMode: [{
+							label: 'SOUTH',
+							value: 0
+						},
+						{
+							label: 'NTRIP',
+							value: 1
+						},
+						{
+							label: 'TCPIP',
+							value: 2
+						}
+					],
+					AccessPoint: [{
+							label: 'SOUTH',
+							value: 0
+						},
+						{
+							label: 'NTRIP',
+							value: 1
+						},
+						{
+							label: 'TCPIP',
+							value: 2
+						}
+					],
 					modetype: [{
 						name: '基准站',
 						index: 1
@@ -684,6 +833,123 @@
 					}, {
 						name: '内置电台',
 						index: 2
+					}],
+					channel: [{
+							label: '0',
+							value: 0
+						},
+						{
+							label: '1',
+							value: 1
+						},
+						{
+							label: '2',
+							value: 2
+						},
+						{
+							label: '3',
+							value: 3
+						},
+						{
+							label: '4',
+							value: 4
+						},
+						{
+							label: '5',
+							value: 5
+						},
+						{
+							label: '6',
+							value: 6
+						},
+						{
+							label: '7',
+							value: 7
+						},
+						{
+							label: '8',
+							value: 8
+						},
+						{
+							label: '9',
+							value: 9
+						},
+						{
+							label: '10',
+							value: 10
+						},
+						{
+							label: '11',
+							value: 11
+						},
+						{
+							label: '12',
+							value: 12
+						},
+						{
+							label: '13',
+							value: 13
+						},
+						{
+							label: '14',
+							value: 14
+						},
+						{
+							label: '15',
+							value: 15
+						},
+						{
+							label: '16',
+							value: 16
+						}
+					],
+					powerPosition: [{
+						label: '高',
+						value: 'high'
+					}, {
+						label: '中',
+						index: 'middle'
+					}, {
+						label: '低',
+						index: 'low'
+					}],
+					baudRate: [{
+						label: '9600',
+						value: '9600'
+					}, {
+						label: '19200',
+						value: '19200'
+					}, {
+						label: '38400',
+						value: '38400'
+					}, {
+						label: '57600',
+						value: '57600'
+					}, {
+						label: '115200',
+						value: '115200'
+					}],
+					protocol: [{
+						label: 'TRIMMARKLL',
+						value: 0
+					}, {
+						label: 'SOUTH',
+						value: 1
+					}, {
+						label: 'TRIMTALK',
+						value: 2
+					}, {
+						label: 'SATEL',
+						value: 3
+					}, {
+						label: 'TT450S',
+						value: 4
+					}, {
+						label: 'TRIMMARK3',
+						value: 5
+					}, {
+						label: 'TRANSEOT',
+						value: 6
 					}]
 				},
 
