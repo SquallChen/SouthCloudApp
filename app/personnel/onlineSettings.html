@@ -69,16 +69,18 @@
 				position: relative;
 			}
 			
-			.mui-slider-group .mui-scroll .select .down {
+			.mui-slider .mui-slider-group .select .down {
 				width: 16px;
 				height: 16px;
 				position: absolute;
 				top: 12px;
 				right: 14px;
 			}
-			.mui-slider-group{
-				height:100%;
+			
+			.mui-slider-group {
+				height: 100%;
 			}
+			
 			select {
 				margin-bottom: 0;
 			}
@@ -133,44 +135,56 @@
 			.checkbox div {
 				padding-right: 6px;
 			}
-			.btn{
+			
+			.btn {
 				margin-bottom: 5px;
 			}
-			.btn button{
-				width:100%;
+			
+			.btn button {
+				width: 100%;
 				height: 50px;
-				color:white;
-				border:none;
-				border-radius:0;
+				color: white;
+				border: none;
+				border-radius: 0;
 				font-size: 20px;
 			}
-			.btn .setting{
+			
+			.btn .setting {
 				background: #18a689;
 				margin-top: 10px;
 			}
-			.btn .start{
+			
+			.btn .start {
 				background: #409eff;
 			}
-			.changeFormat input{
-				width:28.33%;
+			
+			.changeFormat input {
+				width: 28.33%;
 				border-radius: 3px 0 0 3px;
 			}
-			.changeFormat .symbol{
+			
+			.changeFormat .symbol {
 				display: inline-block;
 				position: relative;
-				left:-1px;
-				width:5%;
-				border:1px solid #ddd;
-				height:46px;
+				left: -1px;
+				width: 5%;
+				border: 1px solid #ddd;
+				height: 46px;
 				border-radius: 0 3px 3px 0;
 				background: #eee;
 				font-size: 26px;
 				line-height: 36px;
 				padding-left: 1px;
 			}
-			.changeFormat .content{
+			
+			.changeFormat .content {
 				position: relative;
 			}
+			
+			.autoMark {
+				margin-top: 15px;
+			}
+			
 			.active {
 				color: #409eff;
 				border-color: #409eff;
@@ -183,7 +197,7 @@
 			
 			.mui-control-content {
 				background-color: white;
-				min-height: 738px;
+				/*min-height: 738px;*/
 			}
 			
 			.mui-control-content .mui-loading {
@@ -268,8 +282,8 @@
 					<div class="mui-slider-group">
 						<!--**************************tab1****************************-->
 						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
-							<div id="scroll1" class="mui-scroll-wrapper">
-								<div class="mui-scroll">
+							<!--<div id="scroll1" class="mui-scroll-wrapper">
+								<div class="mui-scroll">-->
 									<!--模式选择-->
 									<ul>
 										<li class="modeTitle">
@@ -280,7 +294,7 @@
 										</li>
 									</ul>
 									<!--*********************基准站**********************-->
-									<ul v-if="mode === 0">
+									<ul v-show="mode === 0">
 										<li>
 											<div><span>差分格式</span></div>
 											<div class="select">
@@ -359,31 +373,31 @@
 										<li v-show="checked!==true">
 											<div><span>纬度</span></div>
 											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="b"/>
+												<input type="text" placeholder="取值为0-90整数" v-model="b" />
 											</div>
 										</li>
 										<li v-show="checked!==true">
 											<div><span>经度</span></div>
 											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="l"/>
+												<input type="text" placeholder="取值为0-90整数" v-model="l" />
 											</div>
 										</li>
 										<li v-show="checked===true" class="changeFormat">
 											<div><span>纬度</span></div>
 											<div class="content">
-												<input type="text"/ v-model="b_degree"><span class="symbol">°</span><input type="text"/ v-model="b_minute"><span class="symbol">′</span><input type="text"/ v-model="b_second"><span class="symbol">″</span>
+												<input type="text" / v-model="b_degree"><span class="symbol">°</span><input type="text" / v-model="b_minute"><span class="symbol">′</span><input type="text" / v-model="b_second"><span class="symbol">″</span>
 											</div>
 										</li>
 										<li v-show="checked===true" class="changeFormat">
 											<div><span>经度</span></div>
 											<div class="content">
-												<input type="text"/ v-model="l_degree"><span class="symbol">°</span><input type="text"/ v-model="l_minute"><span class="symbol">′</span><input type="text"/ v-model="l_second"><span class="symbol">″</span>
+												<input type="text" / v-model="l_degree"><span class="symbol">°</span><input type="text" / v-model="l_minute"><span class="symbol">′</span><input type="text" / v-model="l_second"><span class="symbol">″</span>
 											</div>
 										</li>
 										<li>
 											<div><span>高程</span></div>
 											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="h"/>
+												<input type="text" placeholder="取值为0-90整数" v-model="h" />
 											</div>
 										</li>
 										<li class="btn">
@@ -394,54 +408,124 @@
 										</li>
 									</ul>
 									<!--*********************移动站**********************-->
-									<ul v-else-if="mode === 1">
-										<li>2222222</li>
+									<ul v-show="mode === 1">
+										<li>
+											<div><span>截止角</span></div>
+											<div>
+												<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+											</div>
+										</li>
+										<li class="btn">
+											<button class="setting">设  置</button>
+										</li>
 									</ul>
 									<!--*********************静态站**********************-->
-									<ul v-else>
-										<li>3333333</li>
+									<ul v-show="mode === 2">
+										<li>
+											<div><span>采集间隔</span></div>
+											<div class="select">
+												<select name="" v-model="collectionIntervalvalue">
+													<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
+												</select>
+												<img src="../../public/img/down.png" alt="" class="down" />
+											</div>
+										</li>
+										<li>
+											<div><span>截止角</span></div>
+											<div>
+												<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+											</div>
+										</li>
+										<li>
+											<div><span>PDOP</span></div>
+											<div>
+												<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
+											</div>
+										</li>
+										<li>
+											<div><span>天线类型</span></div>
+											<div class="radio radio2">
+												<div class="mui-input-row mui-radio mui-left">
+													<label>直高</label>
+													<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+												</div>
+												<div class="mui-input-row mui-radio mui-left">
+													<label>斜高</label>
+													<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+												</div>
+												<div class="mui-input-row mui-radio mui-left">
+													<label>杠高</label>
+													<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+												</div>
+												<div class="mui-input-row mui-radio mui-left">
+													<label>侧片高</label>
+													<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+												</div>
+												<div class="mui-input-row mui-radio mui-left">
+													<label>天线相位中心</label>
+													<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+												</div>
+											</div>
+										</li>
+										<li>
+											<div><span>天线高</span></div>
+											<div>
+												<input type="text" placeholder="0-100，支持3位小数" />
+											</div>
+										</li>
+										<li class="autoMark">
+											<div><span>自动记录</span></div>
+											<div>
+												<div class="mui-switch mui-active">
+													<div class="mui-switch-handle"></div>
+												</div>
+											</div>
+										</li>
+										<li class="btn">
+											<button class="setting">设  置</button>
+										</li>
+										<li class="btn">
+											<button class="start">启  动</button>
+										</li>
 									</ul>
-								</div>
-							</div>
+								<!--</div>
+							</div>-->
 						</div>
 						<!--**************************tab2****************************-->
 						<div id="item2mobile" class="mui-slider-item mui-control-content">
-							<div id="scroll2" class="mui-scroll-wrapper">
-								<div class="mui-scroll">
+							<!--<div id="scroll2" class="mui-scroll-wrapper">
+								<div class="mui-scroll">-->
 									<ul class="mui-table-view">
 										<li class="mui-table-view-cell">
 											第2个选项卡子项-1
 										</li>
 									</ul>
-								</div>
-							</div>
-
+								<!--</div>
+							</div>-->
 						</div>
 						<!--**************************tab3****************************-->
 						<div id="item3mobile" class="mui-slider-item mui-control-content">
-							<div id="scroll3" class="mui-scroll-wrapper">
-								<div class="mui-scroll">
+							<!--<div id="scroll3" class="mui-scroll-wrapper">
+								<div class="mui-scroll">-->
 									<ul class="mui-table-view">
 										<li class="mui-table-view-cell">
 											第3个选项卡子项-1
 										</li>
 									</ul>
-								</div>
-							</div>
-
+								<!--</div>
+							</div>-->
 						</div>
 						<!--**************************tab4****************************-->
 						<div id="item4mobile" class="mui-slider-item mui-control-content">
-							<div id="scroll4" class="mui-scroll-wrapper">
-								<div class="mui-scroll">
+							<!--<div id="scroll4" class="mui-scroll-wrapper">
+								<div class="mui-scroll">-->
 									<ul class="mui-table-view">
 										<li class="mui-table-view-cell">
 											第4个选项卡子项-1
 										</li>
 									</ul>
-								</div>
-							</div>
-
+								<!--</div>
+							</div>-->
 						</div>
 					</div>
 				</div>
@@ -462,17 +546,19 @@
 					launchTime: 0,
 					antennaType: 0,
 					changeFormat: 0,
-					checked:true,
-					b:'28.7670271944',
-					l:'105.9634233336',
-					h:'734.306',
-					b_degree:'28',
-					b_minute:'46',
-					b_second:'1.29789984',
-					l_degree:'105',
-					l_minute:'57',
-					l_second:'48.32400096',
-					
+					checked: true,
+					b: '28.7670271944',
+					l: '105.9634233336',
+					h: '734.306',
+					b_degree: '28',
+					b_minute: '46',
+					b_second: '1.29789984',
+					l_degree: '105',
+					l_minute: '57',
+					l_second: '48.32400096',
+					cut_angle: '12',
+					collectionIntervalvalue: '0',
+					pdop: '3.0',
 					differenceFormat: [{
 							label: 'RTCA',
 							value: 0
@@ -518,6 +604,43 @@
 							value: 10
 						}
 					],
+					collectionInterval: [{
+							label: '0.02S',
+							value: 0
+						},
+						{
+							label: '0.05S',
+							value: 1
+						},
+						{
+							label: '0.1S',
+							value: 2
+						},
+						{
+							label: '0.2S',
+							value: 3
+						},
+						{
+							label: '0.5S',
+							value: 4
+						},
+						{
+							label: '1S',
+							value: 5
+						},
+						{
+							label: '2S',
+							value: 6
+						},
+						{
+							label: '5S',
+							value: 7
+						},
+						{
+							label: '10S',
+							value: 8
+						}
+					],
 					modetype: [{
 						name: '基准站',
 						index: 1
@@ -541,7 +664,17 @@
 						this.mode = index;
 					}
 				},
-				created: function() {}
+				created: function() {
+//					mui.plusReady(function() {
+//						mui('.mui-scroll-wrapper').scroll({
+//							indicators: true //是否显示滚动条
+//						});
+//						var resolutionHeight = window.innerHeight;
+//						resolutionHeight = resolutionHeight - 100;
+//						document.getElementById("item1mobile").setAttribute("style", "min-height:" + resolutionHeight + "px;");
+//						document.getElementById("item2mobile").setAttribute("style", "min-height:" + resolutionHeight + "px;");
+//					})
+				}
 			});
 		</script>
 	</body>
