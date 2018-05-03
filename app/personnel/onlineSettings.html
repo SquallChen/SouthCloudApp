@@ -184,7 +184,9 @@
 			.autoMark {
 				margin-top: 15px;
 			}
-			
+			#item1mobile{
+				overflow: auto;
+			}
 			.active {
 				color: #409eff;
 				border-color: #409eff;
@@ -284,247 +286,271 @@
 						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
 							<!--<div id="scroll1" class="mui-scroll-wrapper">
 								<div class="mui-scroll">-->
-									<!--模式选择-->
-									<ul>
-										<li class="modeTitle">
-											<div><span>选择模式</span></div>
-											<div>
-												<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{active:index===mode}">{{item.name}}</button>
-											</div>
-										</li>
-									</ul>
-									<!--*********************基准站**********************-->
-									<ul v-show="mode === 0">
-										<li>
-											<div><span>差分格式</span></div>
-											<div class="select">
-												<select name="" v-model="differenceFormatvalue">
-													<option v-for="item in differenceFormat" :value="item.value">{{item.label}}</option>
-												</select>
-												<img src="../../public/img/down.png" alt="" class="down" />
-											</div>
-										</li>
-										<li>
-											<div><span>发射时间</span></div>
-											<div class="radio">
-												<div class="mui-input-row mui-radio mui-left">
-													<label>1S</label>
-													<input name="radio1" type="radio" value=0 v-model="launchTime" :checked="launchTime===0">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>2S</label>
-													<input name="radio1" type="radio" value=1 v-model="launchTime" :checked="launchTime===1">
-												</div>
-											</div>
-										</li>
-										<li>
-											<div><span>截止角</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" />
-											</div>
-										</li>
-										<li>
-											<div><span>PDOP</span></div>
-											<div>
-												<input type="text" placeholder="支持2位小数" />
-											</div>
-										</li>
-										<li>
-											<div><span>天线类型</span></div>
-											<div class="radio radio2">
-												<div class="mui-input-row mui-radio mui-left">
-													<label>直高</label>
-													<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>斜高</label>
-													<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>杠高</label>
-													<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>侧片高</label>
-													<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>天线相位中心</label>
-													<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
-												</div>
-											</div>
-										</li>
-										<li>
-											<div><span>天线高</span></div>
-											<div>
-												<input type="text" placeholder="0-100，支持3位小数" />
-											</div>
-										</li>
-										<li>
-											<div><span>基站坐标</span></div>
-											<div class="checkbox">
-												<button>获取坐标</button>
-												<div class="mui-input-row mui-checkbox mui-left">
-													<label>度分秒格式</label>
-													<input name="checkbox" value=0 type="checkbox" v-model="checked">
-												</div>
-											</div>
-										</li>
-										<li v-show="checked!==true">
-											<div><span>纬度</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="b" />
-											</div>
-										</li>
-										<li v-show="checked!==true">
-											<div><span>经度</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="l" />
-											</div>
-										</li>
-										<li v-show="checked===true" class="changeFormat">
-											<div><span>纬度</span></div>
-											<div class="content">
-												<input type="text" / v-model="b_degree"><span class="symbol">°</span><input type="text" / v-model="b_minute"><span class="symbol">′</span><input type="text" / v-model="b_second"><span class="symbol">″</span>
-											</div>
-										</li>
-										<li v-show="checked===true" class="changeFormat">
-											<div><span>经度</span></div>
-											<div class="content">
-												<input type="text" / v-model="l_degree"><span class="symbol">°</span><input type="text" / v-model="l_minute"><span class="symbol">′</span><input type="text" / v-model="l_second"><span class="symbol">″</span>
-											</div>
-										</li>
-										<li>
-											<div><span>高程</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="h" />
-											</div>
-										</li>
-										<li class="btn">
-											<button class="setting">设  置</button>
-										</li>
-										<li class="btn">
-											<button class="start">启  动</button>
-										</li>
-									</ul>
-									<!--*********************移动站**********************-->
-									<ul v-show="mode === 1">
-										<li>
-											<div><span>截止角</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
-											</div>
-										</li>
-										<li class="btn">
-											<button class="setting">设  置</button>
-										</li>
-									</ul>
-									<!--*********************静态站**********************-->
-									<ul v-show="mode === 2">
-										<li>
-											<div><span>采集间隔</span></div>
-											<div class="select">
-												<select name="" v-model="collectionIntervalvalue">
-													<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
-												</select>
-												<img src="../../public/img/down.png" alt="" class="down" />
-											</div>
-										</li>
-										<li>
-											<div><span>截止角</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
-											</div>
-										</li>
-										<li>
-											<div><span>PDOP</span></div>
-											<div>
-												<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
-											</div>
-										</li>
-										<li>
-											<div><span>天线类型</span></div>
-											<div class="radio radio2">
-												<div class="mui-input-row mui-radio mui-left">
-													<label>直高</label>
-													<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>斜高</label>
-													<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>杠高</label>
-													<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>侧片高</label>
-													<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
-												</div>
-												<div class="mui-input-row mui-radio mui-left">
-													<label>天线相位中心</label>
-													<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
-												</div>
-											</div>
-										</li>
-										<li>
-											<div><span>天线高</span></div>
-											<div>
-												<input type="text" placeholder="0-100，支持3位小数" />
-											</div>
-										</li>
-										<li class="autoMark">
-											<div><span>自动记录</span></div>
-											<div>
-												<div class="mui-switch mui-active">
-													<div class="mui-switch-handle"></div>
-												</div>
-											</div>
-										</li>
-										<li class="btn">
-											<button class="setting">设  置</button>
-										</li>
-										<li class="btn">
-											<button class="start">启  动</button>
-										</li>
-									</ul>
-								<!--</div>
+							<!--模式选择-->
+							<ul>
+								<li class="modeTitle">
+									<div><span>选择模式</span></div>
+									<div>
+										<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{active:index===mode}">{{item.name}}</button>
+									</div>
+								</li>
+							</ul>
+							<!--*********************基准站**********************-->
+							<ul v-show="mode === 0">
+								<li>
+									<div><span>差分格式</span></div>
+									<div class="select">
+										<select name="" v-model="differenceFormatvalue">
+											<option v-for="item in differenceFormat" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>发射时间</span></div>
+									<div class="radio">
+										<div class="mui-input-row mui-radio mui-left">
+											<label>1S</label>
+											<input name="radio1" type="radio" value=0 v-model="launchTime" :checked="launchTime===0">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>2S</label>
+											<input name="radio1" type="radio" value=1 v-model="launchTime" :checked="launchTime===1">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div><span>截止角</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" />
+									</div>
+								</li>
+								<li>
+									<div><span>PDOP</span></div>
+									<div>
+										<input type="text" placeholder="支持2位小数" />
+									</div>
+								</li>
+								<li>
+									<div><span>天线类型</span></div>
+									<div class="radio radio2">
+										<div class="mui-input-row mui-radio mui-left">
+											<label>直高</label>
+											<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>斜高</label>
+											<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>杠高</label>
+											<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>侧片高</label>
+											<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>天线相位中心</label>
+											<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div><span>天线高</span></div>
+									<div>
+										<input type="text" placeholder="0-100，支持3位小数" />
+									</div>
+								</li>
+								<li>
+									<div><span>基站坐标</span></div>
+									<div class="checkbox">
+										<button>获取坐标</button>
+										<div class="mui-input-row mui-checkbox mui-left">
+											<label>度分秒格式</label>
+											<input name="checkbox" value=0 type="checkbox" v-model="checked">
+										</div>
+									</div>
+								</li>
+								<li v-show="checked!==true">
+									<div><span>纬度</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="b" />
+									</div>
+								</li>
+								<li v-show="checked!==true">
+									<div><span>经度</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="l" />
+									</div>
+								</li>
+								<li v-show="checked===true" class="changeFormat">
+									<div><span>纬度</span></div>
+									<div class="content">
+										<input type="text" / v-model="b_degree"><span class="symbol">°</span><input type="text" / v-model="b_minute"><span class="symbol">′</span><input type="text" / v-model="b_second"><span class="symbol">″</span>
+									</div>
+								</li>
+								<li v-show="checked===true" class="changeFormat">
+									<div><span>经度</span></div>
+									<div class="content">
+										<input type="text" / v-model="l_degree"><span class="symbol">°</span><input type="text" / v-model="l_minute"><span class="symbol">′</span><input type="text" / v-model="l_second"><span class="symbol">″</span>
+									</div>
+								</li>
+								<li>
+									<div><span>高程</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="h" />
+									</div>
+								</li>
+								<li class="btn">
+									<button class="setting">设  置</button>
+								</li>
+								<li class="btn">
+									<button class="start">启  动</button>
+								</li>
+							</ul>
+							<!--*********************移动站**********************-->
+							<ul v-show="mode === 1">
+								<li>
+									<div><span>截止角</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+									</div>
+								</li>
+								<li class="btn">
+									<button class="setting">设  置</button>
+								</li>
+							</ul>
+							<!--*********************静态站**********************-->
+							<ul v-show="mode === 2">
+								<li>
+									<div><span>采集间隔</span></div>
+									<div class="select">
+										<select name="" v-model="collectionIntervalvalue">
+											<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
+										</select>
+										<img src="../../public/img/down.png" alt="" class="down" />
+									</div>
+								</li>
+								<li>
+									<div><span>截止角</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+									</div>
+								</li>
+								<li>
+									<div><span>PDOP</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
+									</div>
+								</li>
+								<li>
+									<div><span>天线类型</span></div>
+									<div class="radio radio2">
+										<div class="mui-input-row mui-radio mui-left">
+											<label>直高</label>
+											<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>斜高</label>
+											<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>杠高</label>
+											<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>侧片高</label>
+											<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+										</div>
+										<div class="mui-input-row mui-radio mui-left">
+											<label>天线相位中心</label>
+											<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+										</div>
+									</div>
+								</li>
+								<li>
+									<div><span>天线高</span></div>
+									<div>
+										<input type="text" placeholder="0-100，支持3位小数" />
+									</div>
+								</li>
+								<li class="autoMark">
+									<div><span>自动记录</span></div>
+									<div>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+									</div>
+								</li>
+								<li class="btn">
+									<button class="setting">设  置</button>
+								</li>
+								<li class="btn">
+									<button class="start">启  动</button>
+								</li>
+							</ul>
+							<!--</div>
 							</div>-->
 						</div>
 						<!--**************************tab2****************************-->
 						<div id="item2mobile" class="mui-slider-item mui-control-content">
-							<!--<div id="scroll2" class="mui-scroll-wrapper">
-								<div class="mui-scroll">-->
-									<ul class="mui-table-view">
-										<li class="mui-table-view-cell">
-											第2个选项卡子项-1
-										</li>
-									</ul>
-								<!--</div>
-							</div>-->
+							<!--模式选择-->
+							<ul>
+								<li class="modeTitle">
+									<div><span>选择链路</span></div>
+									<div>
+										<button v-for="(item,index) in linktype" v-on:tap="changeLink(index)" :class="{active:index===linktypevalue}">{{item.name}}</button>
+									</div>
+								</li>
+							</ul>
+							<!--*********************移动网络**********************-->
+							<ul v-show="linktypevalue === 0">
+								<li>
+									<div><span>移动网络</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+									</div>
+								</li>
+								<li class="btn">
+									<button class="setting">设  置</button>
+								</li>
+							</ul>
+							<!--*********************内置电台**********************-->
+							<ul v-show="linktypevalue === 1">
+								<li>
+									<div><span>内置电台</span></div>
+									<div>
+										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+									</div>
+								</li>
+								<li class="btn">
+									<button class="setting">设  置</button>
+								</li>
+							</ul>
 						</div>
 						<!--**************************tab3****************************-->
 						<div id="item3mobile" class="mui-slider-item mui-control-content">
 							<!--<div id="scroll3" class="mui-scroll-wrapper">
 								<div class="mui-scroll">-->
-									<ul class="mui-table-view">
-										<li class="mui-table-view-cell">
-											第3个选项卡子项-1
-										</li>
-									</ul>
-								<!--</div>
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell">
+									第3个选项卡子项-1
+								</li>
+							</ul>
+							<!--</div>
 							</div>-->
 						</div>
 						<!--**************************tab4****************************-->
 						<div id="item4mobile" class="mui-slider-item mui-control-content">
 							<!--<div id="scroll4" class="mui-scroll-wrapper">
 								<div class="mui-scroll">-->
-									<ul class="mui-table-view">
-										<li class="mui-table-view-cell">
-											第4个选项卡子项-1
-										</li>
-									</ul>
-								<!--</div>
+							<ul class="mui-table-view">
+								<li class="mui-table-view-cell">
+									第4个选项卡子项-1
+								</li>
+							</ul>
+							<!--</div>
 							</div>-->
 						</div>
 					</div>
@@ -541,6 +567,7 @@
 				data: {
 					deviceID: 'SG607A117233388',
 					mode: 0,
+					linktypevalue:0,
 					isActive: 0,
 					differenceFormatvalue: 5,
 					launchTime: 0,
@@ -650,7 +677,14 @@
 					}, {
 						name: '静态站',
 						index: 3
-					}, ]
+					}, ],
+					linktype: [{
+						name: '移动网络',
+						index: 1
+					}, {
+						name: '内置电台',
+						index: 2
+					}]
 				},
 
 				methods: {
@@ -662,18 +696,24 @@
 					},
 					changeMode: function(index) {
 						this.mode = index;
+					},
+					changeLink: function(index) {
+						this.linktypevalue = index;
 					}
 				},
 				created: function() {
-//					mui.plusReady(function() {
-//						mui('.mui-scroll-wrapper').scroll({
-//							indicators: true //是否显示滚动条
-//						});
-//						var resolutionHeight = window.innerHeight;
-//						resolutionHeight = resolutionHeight - 100;
-//						document.getElementById("item1mobile").setAttribute("style", "min-height:" + resolutionHeight + "px;");
-//						document.getElementById("item2mobile").setAttribute("style", "min-height:" + resolutionHeight + "px;");
-//					})
+					//获取屏幕高度减去上面title等占用的高度,剩余高度全部赋予tab内容页，自适应不同屏幕尺寸
+					mui.plusReady(function() {
+						mui('.mui-scroll-wrapper').scroll({
+							indicators: true //是否显示滚动条
+						});
+						var resolutionHeight = window.innerHeight;
+						resolutionHeight = resolutionHeight - 149;
+						document.getElementById("item1mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
+						document.getElementById("item2mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
+						document.getElementById("item3mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
+						document.getElementById("item4mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
+					})
 				}
 			});
 		</script>
