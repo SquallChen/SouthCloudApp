@@ -36,40 +36,46 @@
 			
 			select {
 				margin-bottom: 0;
-			}		
+			}
+			
 			#determine {
 				color: white;
 				background: none;
-				border:none;
+				border: none;
 				float: right;
-				width:60px;
-				height:48px;
+				width: 60px;
+				height: 48px;
 				text-align: center;
 			}
-			.info{
-				width:100%;
+			
+			.info {
+				width: 100%;
 				padding-top: 40px;
 				display: flex;
 				justify-content: space-around;
 				flex-wrap: wrap;
 			}
-			.info span{
+			
+			.info span {
 				display: inline-block;
-				width:30%;
+				width: 30%;
 				text-align: center;
 				font-size: 18px;
 				margin-bottom: 10px;
-				
 			}
-			.management{
-				width:100%;
-				height:60px;
+			
+			.management {
+				width: 100%;
+				height: 60px;
 				line-height: 30px;
 				border-radius: 0;
 				background: linear-gradient(to bottom, #1d86bf, #1d69bf);
-				color:white;
+				color: white;
 				font-size: 20px;
 				margin-top: 20px;
+			}
+			.mui-input-row select{
+				height:40px;
 			}
 		</style>
 	</head>
@@ -144,7 +150,7 @@
 					<span>1056h</span>
 					<span>512km</span>
 				</div>
-				<button class="management">授权设备管理</button>
+				<button class="management" v-on:tap="management">授权设备管理</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -160,9 +166,9 @@
 					mobilePhone: '',
 					email: '',
 					mobile: '',
-					organizationvalue:'',
-					rolevalue:'',
-					accountstatusvalue:'',
+					organizationvalue: '',
+					rolevalue: '',
+					accountstatusvalue: '',
 					organization: [{
 							name: '南方卫星导航',
 							value: 0
@@ -279,10 +285,15 @@
 						//            mui('#send').button('reset');
 						//          }
 						//        });
+					},
+					management: function() {
+						mui.openWindow({
+							url: 'deviceStatus.html',
+							id: 'deviceStatus.html'
+						});
 					}
 				},
-				created: function() {
-				}
+				created: function() {}
 			});
 		</script>
 	</body>

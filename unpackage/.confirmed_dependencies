@@ -1368,7 +1368,8 @@
 	},
 	"app/personnel/userEntry.html": {
 		"refer": [
-			"app/personnel/personnel.html"
+			"app/personnel/personnel.html",
+			"app/personnel/deviceStatus.html"
 		]
 	},
 	"app/personnel/equipmentManagement.html": {
@@ -1376,6 +1377,28 @@
 			"app/personnel/personnel.html",
 			"app/personnel/informationsetting.html",
 			"app/personnel/deviceStatus.html"
+		]
+	},
+	"app/personnel/informationsetting.html": {
+		"refer": [
+			"app/personnel/deviceStatus.html"
+		]
+	},
+	"app/personnel/deviceStatus.html": {
+		"refer": [
+			"app/personnel/userEntry.html",
+			"app/personnel/equipmentManagement.html",
+			"app/personnel/onlineSettings.html"
+		]
+	},
+	"app/personnel/onlineSettings.html": {
+		"refer": [
+			"app/personnel/deviceStatus.html"
+		]
+	},
+	"app/console/subpage_chat.html": {
+		"resources": [
+			"js/layim/layui.js"
 		]
 	}
 }

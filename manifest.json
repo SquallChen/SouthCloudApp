@@ -1519,7 +1519,8 @@
 			"app/personnel/userEntry.html": {
 				"resources": [],
 				"refer": [
-					"app/personnel/personnel.html"
+					"app/personnel/personnel.html",
+					"app/personnel/deviceStatus.html"
 				],
 				"priority": 0
 			},
@@ -1530,6 +1531,36 @@
 					"app/personnel/informationsetting.html",
 					"app/personnel/deviceStatus.html"
 				],
+				"priority": 0
+			},
+			"app/personnel/informationsetting.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/deviceStatus.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/deviceStatus.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userEntry.html",
+					"app/personnel/equipmentManagement.html",
+					"app/personnel/onlineSettings.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/onlineSettings.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/deviceStatus.html"
+				],
+				"priority": 0
+			},
+			"app/console/subpage_chat.html": {
+				"resources": [
+					"js/layim/layui.js"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
