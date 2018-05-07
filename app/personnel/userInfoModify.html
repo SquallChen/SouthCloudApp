@@ -84,25 +84,17 @@
 		<div id="app" v-cloak>
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">用户录入</h1>
+				<h1 class="mui-title">用户资料修改</h1>
 			</header>
 			<div class="mui-content" style="padding-top: 70px">
 				<form class="mui-input-group">
 					<div class="mui-input-row">
 						<label>用户账号：</label>
-						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" placeholder="请输入用户账号">
+						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" disabled>
 					</div>
 					<div class="mui-input-row">
 						<label>用户名称：</label>
 						<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户名称">
-					</div>
-					<div class="mui-input-row">
-						<label>密码：</label>
-						<input v-model="password" id="password" type="text" class="mui-input-clear mui-input" placeholder="请输入密码">
-					</div>
-					<div class="mui-input-row">
-						<label>重复密码：</label>
-						<input v-model="password2" id="password2" type="text" class="mui-input-clear mui-input" placeholder="请再次输入密码">
 					</div>
 					<div class="mui-input-row select">
 						<label>组织机构：</label>
@@ -151,8 +143,8 @@
 			var vm = new Vue({
 				el: '#app',
 				data: {
-					account: '',
-					userName: '',
+					account: '653685',
+					userName: '张三丰',
 					password: '',
 					password2: '',
 					mobilePhone: '',

@@ -1,0 +1,384 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/custom.css">
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			html,body,#vbody{
+				height: 100%;
+			}
+			a {
+				color: #000;
+			}
+			.filter a {
+				display: block;
+				width: 100%;
+				height: 80px;
+				line-height: 80px;
+				font-size: 22px;
+				padding-left: 20px;
+			}
+			
+			.btn {
+				background: none;
+				border: none;
+				color: white;
+				font-size: 40px;
+				line-height: 24px;
+				width: 48px;
+				height: 48px;
+				float: right;
+				right: -4px;
+			}
+			
+			.filter :nth-child(1) {
+				border-bottom: 1px solid #f2f2f2;
+			}
+			
+			select {
+				margin-bottom: 0;
+				font-size: 22px;
+				height: 80px;
+				line-height: 30px;
+			}
+			
+			.select-content {
+				position: relative;
+				top: -10px;
+				border-top: 1px solid #f2f2f2;
+				height: 80px;
+			}
+			
+			.select-content .down {
+				width: 16px;
+				height: 16px;
+				position: absolute;
+				top: 30px;
+				right: 16px;
+			}
+			
+			.mui-bar .mui-icon {
+				font-size: 32px;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				margin-right: -10px;
+				margin-left: -10px;
+				padding-right: 10px;
+				padding-left: 10px;
+				padding-top: 14px;
+				padding-bottom: 14px;
+			}
+			
+			.mui-bar .mui-title {
+				right: 50px;
+				left: 50px;
+			}
+			
+			.mui-content {
+				background: white;
+			}
+			
+			.usertitle {
+				background: #f2f2f2;
+				padding-left: 20px;
+				height: 26px;
+				line-height: 26px;
+			}
+			
+			.personnelInfo .mui-table-cell {
+				display: flex;
+			}
+			
+			.personnelInfo .img-content {
+				width: 25%;
+			}
+			
+			.personnelInfo .main-content {
+				width: 75%;
+				padding-top: 8px;
+			}
+			
+			.personnelInfo img {
+				width: 50px;
+				height: 50px;
+				border-radius: 5px;
+				position: relative;
+				top: 2px;
+			}
+			
+			.personnelInfo .main-content div {
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.personnelInfo .status {
+				position: relative;
+				top: -3px;
+				background: #999;
+				width: 16px;
+				height: 16px;
+				border-radius: 50px;
+				border: 1px solid white;
+				box-shadow: 1px 1px 5px 1px rgba(0, 0, 0, .2);
+			}
+			
+			.personnelInfo .active {
+				background: #00cc00;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(1) {
+				background: #00cc66;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(2) {
+				background: #ff9966;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(3) {
+				background: #0099ff;
+			}
+			
+			.personnelInfo .mui-table-view-cell {
+				padding: 2px 15px;
+			}
+			
+			.mui-table-view-cell:after {
+				right: 15px;
+			}
+			
+			#topPopover .mui-table-view-cell a {
+				display: flex;
+				align-items: center;
+				font-size: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell a img {
+				margin-right: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell {
+				border-bottom: 1px solid #706f71;
+			}
+			
+			.mui-popover {
+				height: 300px;
+			}
+			
+			.mui-popover {
+				width: 180px;
+				height: 166px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			.mui-backdrop {
+				background: transparent;
+			}
+			
+			.mui-scroll-wrapper,
+			.mui-popover .mui-popover-arrow:after,
+			.mui-scroll-wrapper .mui-table-view-cell {
+				background: #49484a;
+				color: white;
+			}
+			
+			.mui-popover .mui-scroll-wrapper {
+				margin: 0;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="vbody">
+			<header class="mui-bar mui-bar-nav">
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+				<h1 class="mui-title">SouthCloud</h1>
+			</header>
+			<div class="mui-content">
+				<div class="filter">
+					<ul class="filter-ul">
+						<li href="../personnel/userEntry.html" class="filter-li">
+							<a href="#">用户录入</a>
+						</li>
+						<li href="../personnel/userfilter.html" class="filter-li">
+							<a href="#">用户筛选</a>
+						</li>
+					</ul>
+				</div>
+				<div class="usertitle">
+					<span>人员</span>
+				</div>
+				<div class="personnelInfo">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
+							<div class="mui-slider-right mui-disabled">
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/userinfo.html">资料</a>
+								<a class="mui-btn" href="#">设备</a>
+								<a class="mui-btn" href="#">工作组</a>	
+							</div>
+							<div class="mui-slider-handle">
+								<div class="mui-table-cell">
+									<div class="img-content">
+										<img src="../../public/img/01.jpg" alt="" class="img" />
+									</div>
+									<div class="main-content">
+										<div><span class="name">{{item.name}}</span><span class="status" :class="{active:item.status===0}"></span></div>
+										<div><span>{{item.pinyin}}</span><span>{{item.group}}</span></div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--右上角弹出菜单-->
+			<div id="topPopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
+								<a href="#">
+									<img src="../../public/img/related.png" alt="" />
+									<span>设备关联</span></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {},
+			});
+			mui.plusReady(function() {});
+			var vbody = new Vue({
+				el: '#vbody',
+				data: {
+					userdata: [{
+							name: '张三',
+							pinyin: 'zhangsan',
+							group: '南方卫星导航',
+							status: 0
+						},
+						{
+							name: '李四',
+							pinyin: 'lisi',
+							group: '南方卫星导航',
+							status: 0
+						},
+						{
+							name: '姚明',
+							pinyin: 'yaoming',
+							group: '南方卫星导航',
+							status: 1
+						},
+						{
+							name: '王五',
+							pinyin: 'wangwu',
+							group: '南方卫星导航',
+							status: 1
+						},
+						{
+							name: '王五',
+							pinyin: 'wangwu',
+							group: '南方卫星导航',
+							status: 1
+						},
+						{
+							name: '王五',
+							pinyin: 'wangwu',
+							group: '南方卫星导航',
+							status: 1
+						},
+						{
+							name: '王五',
+							pinyin: 'wangwu',
+							group: '南方卫星导航',
+							status: 1
+						},
+						{
+							name: '王五',
+							pinyin: 'wangwu',
+							group: '南方卫星导航',
+							status: 1
+						}
+					],
+					option: [{
+							key: 1,
+							name: '南方卫星导航',
+							value: 0
+						},
+						{
+							key: 2,
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							key: 3,
+							name: '南方测绘集团总部',
+							value: 2
+						}
+					],
+				},
+				methods: {
+					openpage: function() {
+						var data_url = event.target.dataset.href;
+						mui.openWindow({
+								url: data_url,
+								id: data_url
+							});
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({});
+						//页面顶部筛选按钮跳转
+						mui('.filter-ul').on('tap', '.filter-li', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
+						});
+						//右上角弹出窗链接跳转
+						mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
+							document.querySelector('#topPopover').style.display = "none";
+							document.querySelector('.mui-backdrop').style.display = "none";
+							document.querySelector('#topPopover').className ='mui-popover';
+						});
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

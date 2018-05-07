@@ -224,7 +224,8 @@
 					"public/img/file.png",
 					"public/img/map.png",
 					"public/img/slidertop.png",
-					"app/console/console.html"
+					"app/console/console.html",
+					"app/console/user.html"
 				],
 				"refer": [
 					"html/setting.html",
@@ -1520,7 +1521,8 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/personnel.html",
-					"app/personnel/deviceStatus.html"
+					"app/personnel/deviceStatus.html",
+					"app/personnel/userinfo.html"
 				],
 				"priority": 0
 			},
@@ -1561,6 +1563,30 @@
 					"js/layim/layui.js"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"app/console/user.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userEntry.html",
+					"app/personnel/userfilter.html",
+					"app/personnel/userinfo.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/userinfo.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userEntry.html",
+					"app/personnel/userInfoModify.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/userInfoModify.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userinfo.html"
+				],
 				"priority": 0
 			}
 		},

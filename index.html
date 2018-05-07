@@ -19,6 +19,9 @@
 				height: 48px;
 				line-height: 48px;
 				}
+			.mui-bar-tab{
+				background: #f2f2f2;
+			}
 			.mui-title {
 				color: #fff;
 				height: 48px;
@@ -29,33 +32,29 @@
 	</head>
 
 	<body>
-		<!--<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-			<h1 id="title" class="mui-title">南方云</h1>
-		</header>-->
 		<nav class="mui-bar mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="app/console/console.html">
-				<span class="mui-icon mui-icon-home"></span>
-				<span class="mui-tab-label">控制台</span>
+			<a id="defaultTab" class="mui-tab-item mui-active" href="app/console/user.html">
+				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-tab-label">用户</span>
 			</a>
 			<a class="mui-tab-item" href="app/console/subpage_chat.html">
-				<span class="mui-icon mui-icon-email"><!--<span class="mui-badge">9</span>--></span>
-				<span class="mui-tab-label">消息</span>
+				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-tab-label">设备</span>
 			</a>
 			<a class="mui-tab-item" href="app/console/subpage_contact.html">
-				<span class="mui-icon mui-icon-contact"></span>
-				<span class="mui-tab-label">通讯录</span>
+				<span class="mui-icon mui-icon-map"></span>
+				<span class="mui-tab-label">地图</span>
 			</a>
 			<a class="mui-tab-item" href="app/console/settings.html">
-				<span class="mui-icon mui-icon-gear"></span>
-				<span class="mui-tab-label">个人设置</span>
+				<span class="mui-icon mui-icon-person"></span>
+				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
 		<script src="js/mui.min.js"></script>
 		<script type="text/javascript" charset="utf-8">
 			 //mui初始化
 			mui.init();
-			var subpages = ['app/console/console.html', 'app/console/subpage_chat.html', 'app/console/subpage_contact.html', 'app/console/settings.html'];
+			var subpages = ['app/console/user.html', 'app/console/subpage_chat.html', 'app/console/subpage_contact.html', 'app/console/settings.html'];
 			var subpage_style = {
 				top: '0',
 				bottom: '51px'

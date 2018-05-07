@@ -54,7 +54,8 @@
 			"public/img/file.png",
 			"public/img/map.png",
 			"public/img/slidertop.png",
-			"app/console/console.html"
+			"app/console/console.html",
+			"app/console/user.html"
 		],
 		"refer": [
 			"examples/tab-webview-main.html",
@@ -97,7 +98,8 @@
 			"app/subpage_contact/subpage_contact.html",
 			"app/console/settings.html",
 			"app/console/subpage_contact.html",
-			"app/console/subpage_chat.html"
+			"app/console/subpage_chat.html",
+			"app/console/user.html"
 		]
 	},
 	"examples/tab-webview-main.html": {
@@ -1369,7 +1371,8 @@
 	"app/personnel/userEntry.html": {
 		"refer": [
 			"app/personnel/personnel.html",
-			"app/personnel/deviceStatus.html"
+			"app/personnel/deviceStatus.html",
+			"app/personnel/userinfo.html"
 		]
 	},
 	"app/personnel/equipmentManagement.html": {
@@ -1399,6 +1402,24 @@
 	"app/console/subpage_chat.html": {
 		"resources": [
 			"js/layim/layui.js"
+		]
+	},
+	"app/console/user.html": {
+		"refer": [
+			"app/personnel/userEntry.html",
+			"app/personnel/userfilter.html",
+			"app/personnel/userinfo.html"
+		]
+	},
+	"app/personnel/userinfo.html": {
+		"refer": [
+			"app/personnel/userEntry.html",
+			"app/personnel/userInfoModify.html"
+		]
+	},
+	"app/personnel/userInfoModify.html": {
+		"refer": [
+			"app/personnel/userinfo.html"
 		]
 	}
 }

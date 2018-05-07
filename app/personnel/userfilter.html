@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>用户筛选</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/custom.css" rel="stylesheet" />
+		<link href="../../css/input.css" rel="stylesheet" />
+		<style>
+			body {
+				background: #fff;
+			}
+			
+			#determine {
+				color: white;
+				background: none;
+				border: none;
+				float: right;
+				width: 60px;
+				height: 60px;
+				text-align: center;
+			}
+			
+			.mui-content div {
+				padding-right: 20px;
+				padding-bottom: 10px;
+				display: flex;
+				background: white;
+			}
+			
+			.mui-content div:nth-child(1) {
+				padding-top: 20px;
+			}
+			.mui-content div:nth-child(2) {
+				position: relative;
+			}
+			.mui-content div label {
+				width: 30%;
+				text-align: right;
+				padding: 16px 15px 17px 15px;
+			}
+			
+			.mui-content div input {
+				width: 70%;
+				margin-bottom: 0;
+				height: 54px;
+			}
+			.mui-content select{
+				width: 70%;
+				height:54px;
+				margin-bottom: 0;
+				border: 1px solid #ddd !important;
+			}
+			 .down {
+				width: 16px;
+				height: 16px;
+				position: absolute;
+				top: 20px;
+				right: 30px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">用户筛选</h1>
+				<button id="determine">确 定</button>
+			</header>
+			<div class="mui-content">
+				<div>
+					<label>关键字：</label>
+					<input v-model="keywords" type="text" placeholder="请输入关键字">
+				</div>
+				<div>
+					<label>工作组：</label>
+					<select name="" v-model="organizationvalue">
+						<option v-for="item in organization" :value="item.value">{{item.name}}</option>
+					</select>
+					<img src="../../public/img/down.png" alt="" class="down" />
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					keywords: '',
+					organizationvalue: '0',
+					organization: [{
+							name: '南方卫星导航',
+							value: 0
+						},
+						{
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							name: '南方测绘集团总部',
+							value: 2
+						},
+						{
+							name: '震源导航',
+							value: 3
+						},
+						{
+							name: '南方质量追踪',
+							value: 4
+						}
+					],
+				},
+				methods: {},
+				created: function() {}
+			});
+		</script>
+	</body>
+
+</html>
