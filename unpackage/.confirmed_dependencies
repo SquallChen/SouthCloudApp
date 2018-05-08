@@ -784,7 +784,8 @@
 		"refer": [
 			"app/taskmanager/taskdetail.html",
 			"app/taskmanager/tasklog.html",
-			"login.html"
+			"login.html",
+			"app/taskmanager/taskmanager.html"
 		]
 	},
 	"app/taskmanager/taskdetail.html": {
@@ -952,7 +953,9 @@
 			"js/timetrans.js",
 			"css/common.css"
 		],
-		"refer": []
+		"refer": [
+			"app/taskmanager/achievelist.html"
+		]
 	},
 	"app/taskmanager/achievecontent.html": {
 		"resources": [
@@ -1215,7 +1218,8 @@
 		],
 		"refer": [
 			"app/rtkonline/rtktrackday.html",
-			"login.html"
+			"login.html",
+			"app/rtkonline/rtklist.html"
 		]
 	},
 	"app/rtkonline/rtktrackday.html": {
@@ -1350,7 +1354,9 @@
 	"app/console/settings.html": {
 		"refer": [
 			"app/index/info.html",
-			"app/index/resetpw.html"
+			"app/index/resetpw.html",
+			"login.html",
+			"app/index/feedback.html"
 		]
 	},
 	"app/map/map.html": {
@@ -1408,7 +1414,19 @@
 		"refer": [
 			"app/personnel/userEntry.html",
 			"app/personnel/userfilter.html",
-			"app/personnel/userinfo.html"
+			"app/personnel/userinfo.html",
+			"app/personnel/authorizedEquipment.html",
+			"app/personnel/workGroup.html",
+			"app/index/info.html",
+			"app/datamanager/datalist.html",
+			"app/mapmonitor/rtkinfo.html",
+			"app/mapmonitor/rtkmap.html",
+			"app/rtkonline/realtrace.html",
+			"app/rtkonline/rtkdetail.html",
+			"app/rtkonline/rtkset.html",
+			"app/rtkonline/rtktrack.html",
+			"app/taskmanager/achievecontent.html",
+			"app/taskmanager/taskmanager.html"
 		]
 	},
 	"app/personnel/userinfo.html": {
@@ -1420,6 +1438,12 @@
 	"app/personnel/userInfoModify.html": {
 		"refer": [
 			"app/personnel/userinfo.html"
+		]
+	},
+	"app/personnel/authorizedEquipment.html": {
+		"refer": [
+			"app/personnel/userinfo.html",
+			"app/personnel/realTimeTrack.html"
 		]
 	}
 }

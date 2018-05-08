@@ -12,7 +12,7 @@
 				padding: 0;
 				margin: 0;
 			}
-			html,body,#vbody{
+			html,body,#vm{
 				height: 100%;
 			}
 			a {
@@ -208,7 +208,7 @@
 	</head>
 
 	<body>
-		<div id="vbody">
+		<div id="vm">
 			<header class="mui-bar mui-bar-nav">
 				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
 				<h1 class="mui-title">SouthCloud</h1>
@@ -232,8 +232,9 @@
 						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
 							<div class="mui-slider-right mui-disabled">
 								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/userinfo.html">资料</a>
-								<a class="mui-btn" href="#">设备</a>
-								<a class="mui-btn" href="#">工作组</a>	
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/authorizedEquipment.html">设备</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../index/info.html">工作组</a>	
+								<!--<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/workGroup.html">工作组</a>-->
 							</div>
 							<div class="mui-slider-handle">
 								<div class="mui-table-cell">
@@ -257,6 +258,11 @@
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
+							<!--<li class="mui-table-view-cell" v-on:tap="getdata">
+								<a href="#">
+									<img src="../../public/img/related.png" alt="" />
+									<span>设备关联</span></a>
+							</li>-->
 							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
 								<a href="#">
 									<img src="../../public/img/related.png" alt="" />
@@ -275,9 +281,14 @@
 				beforeback: function() {},
 			});
 			mui.plusReady(function() {});
-			var vbody = new Vue({
-				el: '#vbody',
+			var vm = new Vue({
+				el: '#vm',
 				data: {
+					token:'',
+					user_name:'',
+					rtkCount:'',
+					onlineRtkCount:'',
+					mapRtk:'',
 					userdata: [{
 							name: '张三',
 							pinyin: 'zhangsan',
@@ -327,22 +338,6 @@
 							status: 1
 						}
 					],
-					option: [{
-							key: 1,
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							key: 2,
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							key: 3,
-							name: '南方测绘集团总部',
-							value: 2
-						}
-					],
 				},
 				methods: {
 					openpage: function() {
@@ -375,9 +370,31 @@
 							document.querySelector('.mui-backdrop').style.display = "none";
 							document.querySelector('#topPopover').className ='mui-popover';
 						});
+						
+						//登陆时存放到本地的数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
+						vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
+						vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
 					});
 				}
 			});
+			function getdata(){
+				mui.ajax(apiUrl.device_list, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						console.log('获取数据成功');
+						console.log(JSON.stringify(data));
+					}
+				});
+			};
 		</script>
 	</body>
 

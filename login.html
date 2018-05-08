@@ -159,6 +159,7 @@
             type: 'post',
             timeout: 10000,
             success: function (data) {
+            	//console.log(JSON.stringify(data))
               if (data.status === 0) {
                 var ws = plus.webview.getWebviewById('main');
                 plus.webview.close(ws);
