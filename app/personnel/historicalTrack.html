@@ -39,9 +39,8 @@
 				display: inline-block;
 				width: 49%;
 			}
-			ul li:nth-child(4){
-				/*display: flex;
-				justify-content: center;*/
+			ul li:nth-child(1) span{
+				display: inline-block;
 			}
 			ul li:nth-child(4) a{
 				background: #409eff;
@@ -126,6 +125,34 @@
 			.dropDown .btn-content .changecolor {
 				background: #409eff;
 			}
+			.date{
+				display: inline-block;
+				text-align: center;
+				width:116px;
+				border:1px solid #999;
+				padding: 0px;
+				position: relative;
+			}
+			.date img{
+				width: 12px;
+				height: 12px;
+				position: absolute;
+				top: 5px;
+				right: 3px;
+			}
+			.Num{
+				width:49%;
+			}
+			#pickDateBtn{
+				width:120px;
+				height: 20px;
+				line-height: 4px;
+				position: absolute;
+				top:-5px;
+				left:-1px;
+				margin:0;
+				opacity: 0;
+			}
 		</style>
 	</head>
 
@@ -133,7 +160,7 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">实时轨迹</h1>
+				<h1 class="mui-title">历史轨迹</h1>
 			</header>
 			<div class="mui-content">
 				<div class="s-map-wrap">
@@ -142,7 +169,16 @@
 							<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
 						</div>
 						<ul v-show="mode===0">
-							<li>4512255sd45642125</li>
+							<li>
+								<span class="Num">4512255sd456421</span>
+								<span>日期：
+									<span class="date" id="info">{{date}}
+										<img src="../../public/img/down.png" alt="" class="down" />
+										<button id='pickDateBtn' type="button" class="mui-btn mui-btn-block">选择日期</button>
+									</span>
+								</span>
+								
+							</li>
 							<li><span>白云组</span><span>海尔兄弟</span></li>
 							<li><span>在线时长:11小时47分</span>
 								<span>作业里程:142623m</span>
@@ -176,6 +212,7 @@
 				data: {
 					isActive: false,
 					mode: 0,
+					date:'',
 					modetype: [{
 						name: '轨迹',
 					}, {
@@ -190,7 +227,11 @@
 						this.mode = index;
 					},
 				},
-				created: function() {}
+				created: function() {
+					//获取当前时间，给时间控制器默认显示当天的值
+					var currentDate = new Date();
+					this.date = currentDate.getFullYear() + "-" + (currentDate.getMonth() + 1) + "-" + currentDate.getDate();
+				}
 			});
 
 			mui.init({
@@ -277,6 +318,29 @@
 			/*添加悬窗*/
 			/* var viewport = map.getViewport();
       		$(viewport).append('<div id="share" class="share"></div>');*/
+      		
+      		
+      		
+      		//日期控件
+      		var info = document.getElementById("info");
+			document.getElementById("pickDateBtn").addEventListener('tap', function() {
+				var dDate = new Date();
+				//dDate.setFullYear(2014, 7, 16);
+				var minDate = new Date();
+				minDate.setFullYear(2010, 0, 1);
+				var maxDate = new Date();
+				maxDate.setFullYear(2018, 11, 31);
+				plus.nativeUI.pickDate(function(e) {
+					var d = e.date;
+					vm.date = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate();
+				}, function(e) {
+				}, {
+					title: "请选择日期",
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
+				});
+			})
 		</script>
 	</body>
 

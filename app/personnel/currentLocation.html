@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>实时轨迹</title>
+		<title>当前位置</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
 		<link href="../../css/input.css" rel="stylesheet" />
@@ -17,114 +17,12 @@
 				background: #fff;
 				font-size: 20px;
 			}
-			
-			ul {
-				list-style: none;
-				padding-left: 10px;
-				padding-right: 10px;
-				font-size: 16px;
-				margin-top: 10px;
-			}
-			
-			ul li {
-				margin-bottom: 10px;
-			}
-			
-			ul li:nth-child(2) span {
-				display: inline-block;
-				width: 50%;
-			}
-			
-			ul li:nth-child(3) span {
-				display: inline-block;
-				width: 49%;
-			}
-			ul li:nth-child(4){
-				/*display: flex;
-				justify-content: center;*/
-			}
-			ul li:nth-child(4) a{
-				background: #409eff;
-				color: white;
-				width: 100px;
-				font-size: 18px;
-				position: relative;
-				top:-3px;
-				text-align: center;
-				line-height: 36px;
-				border-radius: 5px;
-			}
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 60px;
 				height: 60px;
 				display: flex;
 				align-items: center;
-			}
-			
-			.dropDown {
-				width: 100%;
-				height: 200px;
-				position: fixed;
-				background: white;
-				z-index: 1;
-				bottom: 0;
-				left: 0;
-				border: 1px solid #ddd;
-				-webkit-transform: translateY(0px);
-				-webkit-transition: 0.38s;
-			}
-			
-			.active {
-				-webkit-transform: translateY(200px);
-				-webkit-transition: 0.38s;
-			}
-			
-			.dropDown a {
-				display: block;
-				width: 70px;
-				height: 34px;
-				background: white;
-				border-top-left-radius: 5px;
-				border-top-right-radius: 5px;
-				position: absolute;
-				left: 50%;
-				top: -34px;
-				-webkit-transform: translate(-50%);
-				border: 1px solid #ddd;
-				border-bottom: none;
-			}
-			
-			.dropDown a span {
-				display: block;
-				width: 50px;
-				height: 1px;
-				background: #ddd;
-				position: absolute;
-				top: 10px;
-				left: 10px;
-			}
-			
-			.dropDown a span:nth-child(2) {
-				top: 20px;
-			}
-			
-			.dropDown .btn-content {
-				padding-top: 10px;
-				padding-left: 10px;
-				height: 50px;
-			}
-			
-			.dropDown .btn-content button {
-				margin-right: 5px;
-				width: 80px;
-				background: #999;
-				color: white;
-				font-size: 18px;
-				padding: 4px 12px;
-			}
-			
-			.dropDown .btn-content .changecolor {
-				background: #409eff;
 			}
 		</style>
 	</head>
@@ -133,31 +31,11 @@
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">实时轨迹</h1>
+				<h1 class="mui-title">当前位置</h1>
 			</header>
 			<div class="mui-content">
 				<div class="s-map-wrap">
-					<div class="dropDown" :class="{active:isActive}">
-						<div class="btn-content">
-							<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
-						</div>
-						<ul v-show="mode===0">
-							<li>4512255sd45642125</li>
-							<li><span>白云组</span><span>海尔兄弟</span></li>
-							<li><span>在线时长:11小时47分</span>
-								<span>作业里程:142623m</span>
-						</ul>
-						<ul v-show="mode===1">
-							<li><span>时间：2018年4月10日 12:23:56</span></li>
-							<li><span>状态：固定解</span></li>
-							<li><span>工作模式:移动站</span><span>数据链:内置电台</span></li>
-							<li><a href="coordinateDetails.html">查看详情</a></li>
-						</ul>
-						<a v-on:tap="changestatus">
-							<span></span>
-							<span></span>
-						</a>
-					</div>
+					
 					<div style="height: 100%;" id="map" class="map"> </div>
 				</div>
 			</div>

@@ -1566,13 +1566,22 @@
 			},
 			"app/console/subpage_chat.html": {
 				"resources": [
-					"js/layim/layui.js"
+					"js/layim/layui.js",
+					"js/im/adapter.js",
+					"js/im/strophe-1.2.8.min.js",
+					"js/layim/css/layui.mobile.css",
+					"js/im/websdk-1.4.10.js",
+					"js/im/webim.config.js",
+					"js/im/webrtc-1.4.10.js"
 				],
 				"refer": [],
 				"priority": 0
 			},
 			"app/console/user.html": {
-				"resources": [],
+				"resources": [
+					"public/img/related.png",
+					"public/img/01.jpg"
+				],
 				"refer": [
 					"app/personnel/userEntry.html",
 					"app/personnel/userfilter.html",
@@ -1611,7 +1620,31 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/userinfo.html",
-					"app/personnel/realTimeTrack.html"
+					"app/personnel/realTimeTrack.html",
+					"app/personnel/historicalTrack.html",
+					"app/personnel/currentLocation.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/realTimeTrack.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/coordinateDetails.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/coordinateDetails.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/realTimeTrack.html",
+					"app/personnel/historicalTrack.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/historicalTrack.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/coordinateDetails.html"
 				],
 				"priority": 0
 			}

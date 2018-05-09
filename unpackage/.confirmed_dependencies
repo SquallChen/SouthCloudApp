@@ -1407,7 +1407,13 @@
 	},
 	"app/console/subpage_chat.html": {
 		"resources": [
-			"js/layim/layui.js"
+			"js/layim/layui.js",
+			"js/im/adapter.js",
+			"js/im/strophe-1.2.8.min.js",
+			"js/layim/css/layui.mobile.css",
+			"js/im/websdk-1.4.10.js",
+			"js/im/webim.config.js",
+			"js/im/webrtc-1.4.10.js"
 		]
 	},
 	"app/console/user.html": {
@@ -1427,6 +1433,10 @@
 			"app/rtkonline/rtktrack.html",
 			"app/taskmanager/achievecontent.html",
 			"app/taskmanager/taskmanager.html"
+		],
+		"resources": [
+			"public/img/related.png",
+			"public/img/01.jpg"
 		]
 	},
 	"app/personnel/userinfo.html": {
@@ -1443,7 +1453,25 @@
 	"app/personnel/authorizedEquipment.html": {
 		"refer": [
 			"app/personnel/userinfo.html",
-			"app/personnel/realTimeTrack.html"
+			"app/personnel/realTimeTrack.html",
+			"app/personnel/historicalTrack.html",
+			"app/personnel/currentLocation.html"
+		]
+	},
+	"app/personnel/realTimeTrack.html": {
+		"refer": [
+			"app/personnel/coordinateDetails.html"
+		]
+	},
+	"app/personnel/coordinateDetails.html": {
+		"refer": [
+			"app/personnel/realTimeTrack.html",
+			"app/personnel/historicalTrack.html"
+		]
+	},
+	"app/personnel/historicalTrack.html": {
+		"refer": [
+			"app/personnel/coordinateDetails.html"
 		]
 	}
 }

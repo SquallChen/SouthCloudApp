@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>坐标点信息</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/custom.css" rel="stylesheet" />
+		<link href="../../css/input.css" rel="stylesheet" />
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			*{
+				padding: 0;
+				margin: 0;
+			}
+			
+			.mui-input-row label {
+				text-align: left;
+			}
+			.mui-content{
+				padding-top: 0;
+			}
+			.mui-input-group .mui-input-row {
+				height: 50px;
+			}
+			.mui-input-row{
+				padding-left: 15px;
+			}
+			.mui-input-row label {
+				padding: 16px 15px 17px 0;
+			}
+			.mui-input-row span{
+				display: inline-block;
+				height:50px;
+				line-height: 50px;
+			}
+			.title{
+				font-weight: bold;
+				font-size: 18px;
+				line-height: 20;
+			}
+			input[type=text] {
+				height: 50px;
+			}
+			body{
+				background: #fff;
+			}
+			.mui-bar-nav.mui-bar .mui-icon{
+				width:60px;
+				height:60px;
+				display: flex;
+				align-items: center;
+			}
+			.mui-input-group .mui-input-row:after{
+				left:0;
+			}
+			
+			
+
+			
+		</style>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">坐标点信息</h1>
+			</header>
+			<div class="mui-content">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label class="title">位置</label>
+					</div>
+					<div class="mui-input-row">
+						<span>经度：</span><span>106°07'57.2169"</span>
+					</div>
+					<div class="mui-input-row">
+						<span>纬度：</span><span>28°46'34.4285"</span>
+					</div>
+					<div class="mui-input-row">
+						<span>高程：</span><span>610.4958</span>
+					</div>
+					<div class="mui-input-row">
+						<label class="title">状态</label>
+					</div>
+					<div class="mui-input-row">
+						<span>解算状态：</span><span>差分解</span>
+					</div>
+					<div class="mui-input-row">
+						<span>UTC时间：</span><span>2018-4-28 06:07:40</span>
+					</div>
+					<div class="mui-input-row">
+						<span>PDOP：</span><span>1.48</span>
+					</div>
+					<div class="mui-input-row">
+						<span>HDOP：</span><span>0.69</span>
+					</div>
+					<div class="mui-input-row">
+						<span>VDOP：</span><span>1.38</span>
+					</div>
+					<div class="mui-input-row">
+						<label class="title">主机设置</label>
+					</div>
+					<div class="mui-input-row">
+						<span>解算状态：</span><span>差分解</span>
+					</div>
+					<div class="mui-input-row">
+						<span>UTC时间：</span><span>2018-4-28 06:07:40</span>
+					</div>
+					<div class="mui-input-row">
+						<span>PDOP：</span><span>1.48</span>
+					</div>
+					<div class="mui-input-row">
+						<span>HDOP：</span><span>0.69</span>
+					</div>
+					<div class="mui-input-row">
+						<span>VDOP：</span><span>1.38</span>
+					</div>
+				</form>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					account: '653685',
+					userName: '张三丰',
+					password: '',
+					password2: '',
+					mobilePhone: '1234567',
+					email: '123456@qq.com',
+					mobile: '123456',
+					organizationvalue: '1',
+					rolevalue: '0',
+					organization: [{
+							name: '南方卫星导航',
+							value: 0
+						},
+						{
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							name: '南方测绘集团总部',
+							value: 2
+						},
+						{
+							name: '震源导航',
+							value: 3
+						},
+						{
+							name: '南方质量追踪',
+							value: 4
+						}
+					],
+					role: [{
+							name: '管理员',
+							value: 0
+						},
+						{
+							name: '南方管理员',
+							value: 1
+						},
+						{
+							name: '南方外贸管理员',
+							value: 2
+						},
+						{
+							name: '仪器管理员',
+							value: 3
+						},
+					]
+				},
+				methods: {
+
+				},
+				created: function() {}
+			});
+		</script>
+	</body>
+
+</html>
