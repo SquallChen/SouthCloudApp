@@ -28,20 +28,39 @@
 				line-height: 48px;
 				font-size: 20px;
 				}
+			/*.user{
+				display: block;
+				width:30px;
+				height: 30px;
+				background: url(./public/img/main_icon02pre.png) no-repeat;
+				
+			}*/
+			.mui-icon-contact{
+				/*background: url(./public/img/main_icon02pre.png) no-repeat;
+				background-size: 24px 24px;*/
+			}
+			.mui-bar-tab .mui-tab-item.mui-active{
+				color: #0b60de;
+			}
+			.mui-bar-tab .mui-tab-item{
+				color: #666;
+			}
 		</style>
 	</head>
 
 	<body>
 		<nav class="mui-bar mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="app/console/user.html">
-				<span class="mui-icon mui-icon-contact"></span>
+				<span class="mui-icon mui-icon-contact">
+					<span class="user1"></span><span class="user2"></span>
+				</span>
 				<span class="mui-tab-label">用户</span>
 			</a>
-			<a class="mui-tab-item" href="app/console/subpage_chat.html">
+			<a class="mui-tab-item" href="app/console/equipment.html">
 				<span class="mui-icon mui-icon-gear"></span>
 				<span class="mui-tab-label">设备</span>
 			</a>
-			<a class="mui-tab-item" href="app/console/subpage_contact.html">
+			<a class="mui-tab-item" href="app/console/map.html">
 				<span class="mui-icon mui-icon-map"></span>
 				<span class="mui-tab-label">地图</span>
 			</a>
@@ -54,7 +73,7 @@
 		<script type="text/javascript" charset="utf-8">
 			 //mui初始化
 			mui.init();
-			var subpages = ['app/console/user.html', 'app/console/subpage_chat.html', 'app/console/subpage_contact.html', 'app/console/settings.html'];
+			var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/settings.html'];
 			var subpage_style = {
 				top: '0',
 				bottom: '51px'

@@ -99,7 +99,9 @@
 			"app/console/settings.html",
 			"app/console/subpage_contact.html",
 			"app/console/subpage_chat.html",
-			"app/console/user.html"
+			"app/console/user.html",
+			"app/console/equipment.html",
+			"app/console/map.html"
 		]
 	},
 	"examples/tab-webview-main.html": {
@@ -1472,6 +1474,16 @@
 	"app/personnel/historicalTrack.html": {
 		"refer": [
 			"app/personnel/coordinateDetails.html"
+		]
+	},
+	"app/console/equipment.html": {
+		"refer": [
+			"app/equipment/deviceEntry.html",
+			"app/personnel/userEntry.html",
+			"app/equipment/equipmentFilter.html",
+			"app/personnel/realTimeTrack.html",
+			"app/personnel/historicalTrack.html",
+			"app/personnel/currentLocation.html"
 		]
 	}
 }

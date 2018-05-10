@@ -16,14 +16,14 @@ body {
 }
 
 .mui-bar-nav~.mui-content {
-  padding-top: 60px;
+  padding-top: 73px;
 }
 
 .mui-bar-nav {
   /*background: linear-gradient(to right, #1d86bf, #1d69bf);*/
- background: #2b2a2f;
-  height: 60px;
-  line-height: 60px;
+ background: #0b60de;
+  height: 73px;
+  line-height: 73px;
 }
 
 .mui-icon {
@@ -32,8 +32,8 @@ body {
 
 .mui-title {
   color: #fff;
-  height: 60px;
-  line-height: 60px;
+  height: 73px;
+  line-height: 73px;
   font-size: 20px;
 }
 

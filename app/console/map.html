@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>实时轨迹</title>
+		<title>南方云</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
 		<link href="../../css/input.css" rel="stylesheet" />
@@ -17,151 +17,184 @@
 				background: #fff;
 				font-size: 20px;
 			}
-			
-			ul {
+			ul{
 				list-style: none;
-				padding-left: 10px;
-				padding-right: 10px;
-				font-size: 16px;
-				margin-top: 10px;
-			}
-			
-			ul li {
-				margin-bottom: 10px;
-			}
-			
-			ul li:nth-child(2) span {
-				display: inline-block;
-				width: 50%;
-			}
-			
-			ul li:nth-child(3) span {
-				display: inline-block;
-				width: 49%;
-			}
-			ul li:nth-child(4){
-				/*display: flex;
-				justify-content: center;*/
-			}
-			ul li:nth-child(4) a{
-				background: #409eff;
-				color: white;
-				width: 100px;
-				font-size: 18px;
-				position: relative;
-				top:-3px;
-				text-align: center;
-				line-height: 36px;
-				border-radius: 5px;
+				padding: 0;
+				margin: 0;
 			}
 			.mui-bar-nav.mui-bar .mui-icon {
-				width: 73px;
+				width: 40px;
 				height: 73px;
 				display: flex;
 				align-items: center;
-			}
-			
-			.dropDown {
-				width: 100%;
-				height: 200px;
-				position: fixed;
-				background: white;
-				z-index: 1;
-				bottom: 0;
-				left: 0;
-				border: 1px solid #ddd;
-				-webkit-transform: translateY(0px);
-				-webkit-transition: 0.38s;
-			}
-			
-			.active {
-				-webkit-transform: translateY(200px);
-				-webkit-transition: 0.38s;
-			}
-			
-			.dropDown a {
-				display: block;
-				width: 70px;
-				height: 34px;
-				background: white;
-				border-top-left-radius: 5px;
-				border-top-right-radius: 5px;
-				position: absolute;
-				left: 50%;
-				top: -34px;
-				-webkit-transform: translate(-50%);
-				border: 1px solid #ddd;
-				border-bottom: none;
-			}
-			
-			.dropDown a span {
-				display: block;
-				width: 50px;
-				height: 1px;
-				background: #ddd;
-				position: absolute;
-				top: 10px;
-				left: 10px;
-			}
-			
-			.dropDown a span:nth-child(2) {
-				top: 20px;
-			}
-			
-			.dropDown .btn-content {
-				padding-top: 10px;
-				padding-left: 10px;
-				height: 50px;
-			}
-			
-			.dropDown .btn-content button {
-				margin-right: 5px;
-				width: 80px;
-				background: #999;
-				color: white;
-				font-size: 18px;
-				padding: 4px 12px;
-			}
-			
-			.dropDown .btn-content .changecolor {
-				background: #409eff;
+				justify-content: flex-end;
+				margin: 0;
+				padding-left: 0;
+				padding-right: 0;
 			}
 			.s-map-wrap{
-				top:73px;
+				padding-top: 73px;
 			}
+			
+						#topPopover .mui-table-view-cell a {
+				display: flex;
+				align-items: center;
+				font-size: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell a img {
+				margin-right: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell {
+				border-bottom: 1px solid #706f71;
+			}
+			
+			.mui-popover {
+				height: 300px;
+			}
+			
+			.mui-popover {
+				width: 180px;
+				height: 166px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			#topPopover2{
+				width: 280px;
+				height: 278px;
+			}
+			#topPopover2 .mui-scroll-wrapper,#topPopover2 .mui-scroll-wrapper .mui-table-view-cell{
+				background: white;
+			}
+			#topPopover2 ul li{
+				padding: 0;
+				border-bottom: 1px solid #ccc;
+			}
+			#topPopover2 ul :nth-child(4){
+				display: flex;
+				padding-top:60px;
+			}
+			#topPopover2 ul li span{
+				display: block;
+			}
+			#topPopover2 ul li div{
+				text-align: center;
+			}
+			#topPopover2 ul li div button,#topPopover2 ul li button{
+				margin-right: 15px;
+				background: #ccc;
+				color:white;
+				width:80px;
+				margin-bottom: 10px;
+			}
+			#topPopover2 ul li>button{
+				height: 46px;
+				width: 50%;
+				margin:0;
+				border-radius: 0;
+				border: none;
+			}
+			#topPopover2 ul li div .active,	#topPopover2 ul li .active{
+				/*background: #0b60de;*/
+				background: #ddd url(../../public/img/user.svg) no-repeat;
+				background-size: 20px 20px;
+			}
+			#topPopover2 .group_title{
+				font-size: 13px;
+				color:#999;
+				padding-left: 5px;
+				padding-top: 2px;
+			}
+			#topPopover2 .group{
+				padding-left: 20px;
+				padding-top: 2px;
+				padding-bottom: 6px;
+			}
+			#topPopover2 .mui-scroll-wrapper{
+				border-radius: 0;
+			}
+			.mui-popover .mui-table-view{
+				background: white;;
+			}
+			.mui-backdrop {
+				background: transparent;
+			}
+			
+			.mui-popover .mui-scroll-wrapper {
+				margin: 0;
+			}
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+			
+			
 		</style>
 	</head>
 
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">实时轨迹</h1>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right" href="#topPopover1"></a>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover2"></a>
+				<h1 class="mui-title">南方云</h1>
 			</header>
 			<div class="mui-content">
 				<div class="s-map-wrap">
-					<div class="dropDown" :class="{active:isActive}">
-						<div class="btn-content">
-							<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
-						</div>
-						<ul v-show="mode===0">
-							<li>4512255sd45642125</li>
-							<li><span>白云组</span><span>海尔兄弟</span></li>
-							<li><span>在线时长:11小时47分</span>
-								<span>作业里程:142623m</span>
-						</ul>
-						<ul v-show="mode===1">
-							<li><span>时间：2018年4月10日 12:23:56</span></li>
-							<li><span>状态：固定解</span></li>
-							<li><span>工作模式:移动站</span><span>数据链:内置电台</span></li>
-							<li><a href="coordinateDetails.html">查看详情</a></li>
-						</ul>
-						<a v-on:tap="changestatus">
-							<span></span>
-							<span></span>
-						</a>
-					</div>
+					
 					<div style="height: 100%;" id="map" class="map"> </div>
+				</div>
+			</div>
+			
+			<!--右上角弹出菜单1-->
+			<div id="topPopover1" class="mui-popover">
+				<div class="mui-popover-arrow" style="left:130px"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
+								<a href="#">
+									<img src="../../public/img/related.png" alt="" />
+									<span>设备关联</span></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--右上角弹出菜单2-->
+			<div id="topPopover2" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul>
+							<li>
+								<span class="group_title">工作组</span>
+								<span class="group">白云组</span>
+							</li>
+							<li>
+								<span class="group_title">机身号</span>
+								<span class="group">5468456565465</span>
+							</li>
+							<li>
+								<span class="group_title">状态</span>
+								<div>
+									<button class="active">在线</button>
+									<button>离线</button>
+								</div>
+								
+							</li>
+							<li>
+									<button>重置</button>
+									<button class="active">完成</button>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

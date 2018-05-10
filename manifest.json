@@ -257,7 +257,9 @@
 					"app/subpage_contact/subpage_contact.html",
 					"app/console/settings.html",
 					"app/console/subpage_contact.html",
-					"app/console/subpage_chat.html"
+					"app/console/subpage_chat.html",
+					"app/console/equipment.html",
+					"app/console/map.html"
 				],
 				"priority": 0
 			},
@@ -1645,6 +1647,18 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/coordinateDetails.html"
+				],
+				"priority": 0
+			},
+			"app/console/equipment.html": {
+				"resources": [],
+				"refer": [
+					"app/equipment/deviceEntry.html",
+					"app/personnel/userEntry.html",
+					"app/equipment/equipmentFilter.html",
+					"app/personnel/realTimeTrack.html",
+					"app/personnel/historicalTrack.html",
+					"app/personnel/currentLocation.html"
 				],
 				"priority": 0
 			}

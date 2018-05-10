@@ -123,7 +123,7 @@
 			}
 			
 			.personnelInfo .main-content {
-				width: 75%;
+				width: 100%;
 				padding-top: 12px;
 			}
 			.personnelInfo .main-content :nth-child(2){
@@ -272,39 +272,36 @@
 			<div class="mui-content">
 				<div class="filter">
 					<ul class="filter-ul">
-						<li href="../personnel/userEntry.html" class="filter-li">
+						<li href="../equipment/deviceEntry.html" class="filter-li">
 							<span class="userEntryImg"></span>
-							<a href="#">用户录入</a>
+							<a href="#">设备录入</a>
 							<span class="mui-icon mui-icon-arrowright"></span>
 							<span class="border_bottom"></span>
 						</li>
-						<li href="../personnel/userfilter.html" class="filter-li">
+						<li href="../equipment/equipmentFilter.html" class="filter-li">
 							<span class="userfilter"></span>
-							<a href="#">用户筛选</a>
+							<a href="#">设备筛选</a>
 							<span class="mui-icon mui-icon-arrowright"></span>
 							<span class="border_bottom"></span>
 						</li>
 					</ul>
 				</div>
 				<div class="usertitle">
-					<span>人员</span>
+					<span>设备</span>
 				</div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
 							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/userinfo.html">资料</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/authorizedEquipment.html">设备</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/workGroup.html">工作组</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/historicalTrack.html">历史轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/currentLocation.html">位置</a>
 							</div>
 							<div class="mui-slider-handle">
 								<div class="mui-table-cell">
-									<div class="img-content">
-										<img src="../../public/img/01.jpg" alt="" class="img" />
-									</div>
 									<div class="main-content">
-										<div><span class="name">{{item.name}}</span><span class="status" :class="{active:item.status===0}"></span></div>
-										<div><span class="pinyin">{{item.pinyin}}</span><span class="group">{{item.group}}</span></div>
+										<div><span class="name">{{item.Num}}</span><span class="status" :class="{active:item.status===0}"></span></div>
+										<div><span class="pinyin">{{item.name}}</span><span class="group">{{item.group}}</span></div>
 									</div>
 								</div>
 							</div>
@@ -352,49 +349,49 @@
 					mapRtk:'',
 					userdata: [{
 							name: '张三',
-							pinyin: 'zhangsan',
+							Num: '421682125452',
 							group: '南方卫星导航',
 							status: 0
 						},
 						{
 							name: '李四',
-							pinyin: 'lisi',
+							Num: '588462585823',
 							group: '南方卫星导航',
 							status: 0
 						},
 						{
 							name: '姚明',
-							pinyin: 'yaoming',
+							Num: '5589512453654',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							pinyin: 'wangwu',
+							Num: '7846245454563',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							pinyin: 'wangwu',
+							Num: '9564232787545',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '姚明',
-							pinyin: 'yaoming',
+							Num: '32645887887425',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							pinyin: 'wangwu',
+							Num: '62355454856569',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							pinyin: 'wangwu',
+							Num: '87465112655632',
 							group: '南方卫星导航',
 							status: 1
 						}

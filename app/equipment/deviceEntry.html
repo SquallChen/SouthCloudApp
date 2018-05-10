@@ -23,21 +23,6 @@
 				display: flex;
 				align-items: center;
 			}
-			.info{
-				padding: 20px 20px 20px 0;
-			}
-
-			.info span{
-				display: inline-block;
-			}
-			.info span:nth-child(1){
-				margin-bottom: 16px;
-				min-width: 35%;
-				text-align: right;
-			}
-			.info ul li{
-				display: flex;
-			}
 			.mui-content{
 				background: white;
 			}
@@ -50,8 +35,17 @@
 				height: 73px;
 				text-align: center;
 			}
-			.info ul li input{
-				/*width:200px;*/
+			.mui-content ul{
+				padding-left: 10px;
+				padding-right: 10px;
+			}
+			.mui-content ul li span{
+				display: inline-block;
+				width:24%;
+				text-align: center
+			}
+			.mui-content ul li input{
+				width:76%;
 			}
 		</style>
 	</head>
@@ -60,28 +54,13 @@
 		<div id="app" v-cloak>
 			<header class="mui-bar mui-bar-nav">
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">工作组</h1>
+				<h1 class="mui-title">设备录入</h1>
 				<button id="determine">完成</button>
 			</header>
 			<div class="mui-content">
-				<div class="info">
-					<div>
-						<ul>
-							<li>
-								<span>用户名称：</span>
-								<span>{{name}}</span>
-							</li>
-							<li>
-								<span>用户账号：</span>
-								<span>{{account}}</span>
-							</li>
-							<li>
-								<span>工作组：</span>
-								<input type="text" />
-							</li>
-						</ul>
-					</div>
-				</div>
+				<ul>
+					<li><span>机身号：</span><input v-model="Num"/></li>
+				</ul>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -92,9 +71,12 @@
 			var vm = new Vue({
 				el: '#app',
 				data: {
-					name:'张三丰',
-					group:'高手组',
-					account: '653685',
+					Num:'25451215645',
+					organization: [{
+							name: '南方卫星导航',
+							value: 0
+						}
+					],
 				},
 				methods: {},
 				created: function() {}
