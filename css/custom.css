@@ -12,7 +12,7 @@ body {
 
 .mui-content {
   height: 100%;
-  background: #f5f5f5;
+  background: #f2f2f2;
 }
 
 .mui-bar-nav~.mui-content {
@@ -34,7 +34,7 @@ body {
   color: #fff;
   height: 73px;
   line-height: 73px;
-  font-size: 20px;
+  font-size: 17px;
 }
 
 

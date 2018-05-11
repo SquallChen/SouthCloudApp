@@ -9,6 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 
 		<link rel="stylesheet" href="css/mui.min.css">
+		<link href="./css/iconfont.css" rel="stylesheet" />
 		<style>
 			html,
 			body {
@@ -20,7 +21,7 @@
 				line-height: 48px;
 				}
 			.mui-bar-tab{
-				background: #f2f2f2;
+				background: white;
 			}
 			.mui-title {
 				color: #fff;
@@ -28,16 +29,9 @@
 				line-height: 48px;
 				font-size: 20px;
 				}
-			/*.user{
-				display: block;
-				width:30px;
-				height: 30px;
-				background: url(./public/img/main_icon02pre.png) no-repeat;
-				
-			}*/
+
 			.mui-icon-contact{
-				/*background: url(./public/img/main_icon02pre.png) no-repeat;
-				background-size: 24px 24px;*/
+				
 			}
 			.mui-bar-tab .mui-tab-item.mui-active{
 				color: #0b60de;
@@ -45,27 +39,61 @@
 			.mui-bar-tab .mui-tab-item{
 				color: #666;
 			}
+			.mui-bar2{
+				position: fixed;
+				z-index: 10;
+				right: 0;
+				left: 0;
+				/*box-shadow: 0 0 1px rgba(0,0,0,.85);*/
+				-webkit-backface-visibility: hidden;	
+			}
+			.line{
+				position: fixed;
+				left: 0;
+				bottom: 50px;
+				width: 100%;
+				height: 1px;
+				background:#ccc ;
+				-webkit-transform: scaleY(.5);
+			}
+			.mui-bar-tab .mui-tab-item .mui-icon{
+				position: relative;
+				top:4px;
+			}
+			
+			/*如果处于选中状态下,改变其显示图案*/
+			.mui-active .icon-user:before {
+			  content: "\e905";
+			}
+			.mui-active .icon-map:before {
+			  content: "\e904";
+			}
+			.mui-active .icon-equipment:before {
+			  content: "\e906";
+			}
+			.mui-active .icon-userlist:before {
+			  content: "\e907";
+			}
 		</style>
 	</head>
 
 	<body>
-		<nav class="mui-bar mui-bar-tab">
+		<div class="line"></div>
+		<nav class="mui-bar2 mui-bar-tab">
 			<a id="defaultTab" class="mui-tab-item mui-active" href="app/console/user.html">
-				<span class="mui-icon mui-icon-contact">
-					<span class="user1"></span><span class="user2"></span>
-				</span>
+				<span class="mui-icon icon-user"></span>
 				<span class="mui-tab-label">用户</span>
 			</a>
 			<a class="mui-tab-item" href="app/console/equipment.html">
-				<span class="mui-icon mui-icon-gear"></span>
+				<span class="mui-icon icon-equipment"></span>
 				<span class="mui-tab-label">设备</span>
 			</a>
 			<a class="mui-tab-item" href="app/console/map.html">
-				<span class="mui-icon mui-icon-map"></span>
+				<span class="mui-icon icon-map"></span>
 				<span class="mui-tab-label">地图</span>
 			</a>
-			<a class="mui-tab-item" href="app/console/settings.html">
-				<span class="mui-icon mui-icon-person"></span>
+			<a class="mui-tab-item" href="app/console/me.html">
+				<span class="mui-icon icon-userlist"></span>
 				<span class="mui-tab-label">我</span>
 			</a>
 		</nav>
@@ -73,7 +101,7 @@
 		<script type="text/javascript" charset="utf-8">
 			 //mui初始化
 			mui.init();
-			var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/settings.html'];
+			var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/me.html'];
 			var subpage_style = {
 				top: '0',
 				bottom: '51px'

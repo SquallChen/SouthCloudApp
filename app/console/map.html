@@ -32,6 +32,11 @@
 				padding-left: 0;
 				padding-right: 0;
 			}
+			.mui-bar-nav.mui-bar :nth-child(1){
+				font-size: 40px;
+				position: relative;
+				left:8px;
+			}
 			.s-map-wrap{
 				padding-top: 73px;
 			}
@@ -96,9 +101,7 @@
 				border: none;
 			}
 			#topPopover2 ul li div .active,	#topPopover2 ul li .active{
-				/*background: #0b60de;*/
-				background: #ddd url(../../public/img/user.svg) no-repeat;
-				background-size: 20px 20px;
+				background: #0b60de;
 			}
 			#topPopover2 .group_title{
 				font-size: 13px;
@@ -133,8 +136,15 @@
 				border-top-left-radius: 0;
 				border-top-right-radius: 0;
 			}
-			
-			
+			.mui-popover .mui-popover-arrow:after{
+				background: white;
+			}
+			#topPopover1 .mui-table-view-cell {
+				border-bottom: 1px solid #ddd;
+			}
+			.mui-popover .mui-table-view{
+				border-radius: 0;
+			}
 		</style>
 	</head>
 

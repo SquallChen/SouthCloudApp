@@ -101,7 +101,8 @@
 			"app/console/subpage_chat.html",
 			"app/console/user.html",
 			"app/console/equipment.html",
-			"app/console/map.html"
+			"app/console/map.html",
+			"app/console/me.html"
 		]
 	},
 	"examples/tab-webview-main.html": {
@@ -1484,6 +1485,12 @@
 			"app/personnel/realTimeTrack.html",
 			"app/personnel/historicalTrack.html",
 			"app/personnel/currentLocation.html"
+		]
+	},
+	"app/console/me.html": {
+		"refer": [
+			"app/personnel/userEntry.html",
+			"app/personnel/userinfo.html"
 		]
 	}
 }

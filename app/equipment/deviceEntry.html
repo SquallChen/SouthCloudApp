@@ -4,18 +4,81 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>用户筛选</title>
+		<title>设备录入</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
 		<link href="../../css/input.css" rel="stylesheet" />
 		<style>
-			body {
-				background: #fff;
-				font-size: 20px;
+			[v-cloak] {
+				display: none;
 			}
-			ul{
-				list-style: none;
-				padding-left: 0;
+			.select {
+				display: flex;
+			}
+			
+			.select div {
+				width: 65%;
+			}
+			
+			.select .down {
+				width: 10px;
+				height: 7px;
+				position: absolute;
+				top: 16px;
+				right: 15px;
+			}
+			
+			select {
+				margin-bottom: 0;
+			}
+			
+			.management {
+				margin-left: 6%;
+				width: 88%;
+				height: 50px;
+				line-height: 25px;
+				border-radius: 0;
+				background: #0b60de;
+				color: white;
+				font-size: 20px;
+				margin-top: 24px;
+				border:none;
+				border-radius: 4px;
+			}
+			.management:active{
+				background: #3182fa !important;
+			}
+			.mui-input-row label {
+				padding: 0;
+				height: 40px;
+				line-height: 40px;
+				color: #333;
+				width:70px;
+				text-align: right;
+				margin-right: 25px;
+			}
+			.mui-input-group .mui-input-row{
+				padding-left: 15px;
+				position: relative;
+			}
+			input[type=text] {
+				height: 40px;
+			}
+			input::-webkit-input-placeholder{
+				color:#999;
+			}
+			.mui-input-row select {
+				height: 40px;
+			}
+			.mui-input-row label~input{
+				float: left;
+			}
+			.mui-input-group .mui-input-row:after{
+				left:0;
+				background-color: #ccc;
+			}
+			body{
+				background: #f2f2f2;
 			}
 			.mui-bar-nav.mui-bar .mui-icon{
 				width:73px;
@@ -23,29 +86,16 @@
 				display: flex;
 				align-items: center;
 			}
-			.mui-content{
-				background: white;
+			.mui-icon-back:before, .mui-icon-left-nav:before{
+				content:'';
 			}
-			#determine {
-				color: white;
-				background: none;
-				border: none;
-				float: right;
-				width: 60px;
-				height: 73px;
-				text-align: center;
-			}
-			.mui-content ul{
-				padding-left: 10px;
-				padding-right: 10px;
-			}
-			.mui-content ul li span{
-				display: inline-block;
-				width:24%;
-				text-align: center
-			}
-			.mui-content ul li input{
-				width:76%;
+			.back{
+				display: block;
+				width: 10px;
+				height: 16px;
+				background:url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
 			}
 		</style>
 	</head>
@@ -53,14 +103,20 @@
 	<body>
 		<div id="app" v-cloak>
 			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
 				<h1 class="mui-title">设备录入</h1>
-				<button id="determine">完成</button>
 			</header>
-			<div class="mui-content">
-				<ul>
-					<li><span>机身号：</span><input v-model="Num"/></li>
-				</ul>
+			<div class="mui-content" style="padding-top: 94px">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>机身号</label>
+						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" placeholder="请输入机身号">
+					</div>
+				</form>
+
+				<button class="management" v-on:tap="send">确  定</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -71,14 +127,104 @@
 			var vm = new Vue({
 				el: '#app',
 				data: {
-					Num:'25451215645',
+					account: '',
+					userName: '',
+					password: '',
+					password2: '',
+					mobilePhone: '',
+					email: '',
+					mobile: '',
+					organizationvalue: '',
+					rolevalue: '',
 					organization: [{
 							name: '南方卫星导航',
 							value: 0
+						},
+						{
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							name: '南方测绘集团总部',
+							value: 2
+						},
+						{
+							name: '震源导航',
+							value: 3
+						},
+						{
+							name: '南方质量追踪',
+							value: 4
 						}
 					],
+					role: [{
+							name: '管理员',
+							value: 0
+						},
+						{
+							name: '南方管理员',
+							value: 1
+						},
+						{
+							name: '南方外贸管理员',
+							value: 2
+						},
+						{
+							name: '仪器管理员',
+							value: 3
+						},
+					]
 				},
-				methods: {},
+				methods: {
+					send: function() {
+						console.log('track.......');
+						if(this.account === '') {
+							mui.toast('请输入用户账号!');
+							return;
+						}
+						if(this.userName === '') {
+							mui.toast('请输入用户名称!');
+							return;
+						}
+						if(this.mobilePhone === '') {
+							mui.toast('请输入手机号码！');
+							return;
+						}
+						if(this.password === '') {
+							mui.toast('请输入密码！');
+							return;
+						}
+						if(this.password2 === '') {
+							mui.toast('请再次输入密码！');
+							return;
+						}
+						if(this.password !== this.password2) {
+							mui.toast('两次密码输入不一致！');
+							return;
+						}
+						if(this.email === '') {
+							mui.toast('请输入邮箱！');
+							return;
+						}
+						if(this.mobile === '') {
+							mui.toast('请输入办公电话！');
+							return;
+						}
+						if(this.organizationvalue === '') {
+							mui.toast('请选择组织机构！');
+							return;
+						}
+						if(this.rolevalue === '') {
+							mui.toast('请选择角色！');
+							return;
+						}
+						if(this.accountstatusvalue === '') {
+							mui.toast('请选择账号状态设置！');
+							return;
+						}
+						console.log('信息完整，可以进行下一步')
+					}
+				},
 				created: function() {}
 			});
 		</script>

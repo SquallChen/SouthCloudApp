@@ -43,20 +43,27 @@
 				right: -4px;
 			}
 			.filter{
-				height: 102px;
 				margin-bottom: 20px;
+				padding-top: 20px;
+				padding-left: 20px;
 			}
 			.filter ul li{
 				display: flex;
 				align-items: center;
-				padding-left: 10px;
-				padding-right: 10px;
 				position: relative;
 				flex-wrap: wrap;
 			}
 			.filter ul li img{
-				width: 38px;
-				height: 44px;
+				width: 68px;
+				height: 68px;
+			}
+			.filter ul li span{
+				display: block;
+				height: 23px;
+			}
+			.filter ul li div{
+				padding-left: 10px;
+				font-size: 14px;
 			}
 			.filter .userentry {
 				border-bottom: 1px solid #ccc;
@@ -68,7 +75,6 @@
 				background: #ccc;
 				left: 30px;
 				bottom: 0px;
-				-webkit-transform: scaleY(.5);
 			}
 			.mui-bar .mui-icon {
 				font-size: 32px;
@@ -103,17 +109,14 @@
 				padding-left: 20px;
 				height: 36px;
 				line-height: 36px;
-				color:#0b60de;
-				font-weight: 500;
-				font-size: 14px;
 			}
 			.personnelInfo{
 				width:100%;
-				overflow: auto;
+				overflow: hidden;
 				flex: 1;
 			}
 			.personnelInfo ul li{
-				height: 60px;
+				height: 70px;
 			}
 			.personnelInfo .mui-table-cell {
 				display: flex;
@@ -127,7 +130,7 @@
 			}
 			
 			.personnelInfo .main-content {
-				width: 100%;
+				width: 75%;
 				padding-top: 12px;
 			}
 			.personnelInfo .main-content :nth-child(2){
@@ -186,7 +189,7 @@
 			}
 			
 			.personnelInfo .mui-table-view-cell {
-				padding: 0 14px 0 10px;
+				padding: 0 10px;
 			}
 			
 			.mui-table-view-cell:after {
@@ -261,6 +264,11 @@
 			}
 			.mui-content .mui-icon{
 				color:#ccc;
+				position: relative;
+				left:15px;
+			}
+			.mui-content .mui-icon{
+				color:#ccc;
 				position: absolute;
 				right:15px;
 				top:13px;
@@ -291,39 +299,22 @@
 			<div class="mui-content">
 				<div class="filter">
 					<ul class="filter-ul">
-						<li href="../equipment/deviceEntry.html" class="filter-li">
-							<span class="userEntryImg"></span>
-							<a href="#">设备录入</a>
-							<span class="mui-icon mui-icon-arrowright"></span>
-							<span class="border_bottom"></span>
-						</li>
-						<li href="../equipment/equipmentFilter.html" class="filter-li">
-							<span class="userfilter"></span>
-							<a href="#">设备筛选</a>
-							<span class="mui-icon mui-icon-arrowright"></span>
-							<span class="border_bottom"></span>
+						<li href="../personnel/userinfo.html" class="filter-li">
+							<img src="../../public/img/01.jpg" alt="" class="img" />
+							<div>
+								<span>张三</span>
+								<span>zhangsan</span>
+								<span>白云组</span>
+							</div>
 						</li>
 					</ul>
 				</div>
 				<div class="usertitle">
-					<span>设备</span>
 				</div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
-							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/historicalTrack.html">历史轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="../personnel/currentLocation.html">位置</a>
-							</div>
-							<div class="mui-slider-handle">
-								<div class="mui-table-cell">
-									<div class="main-content">
-										<div><span class="name">{{item.Num}}</span><span class="status" :class="{active:item.status===0}"></span></div>
-										<div><span class="pinyin">{{item.name}}</span><span class="group">{{item.group}}</span></div>
-									</div>
-								</div>
-							</div>
+	
 						</li>
 					</ul>
 				</div>
@@ -368,49 +359,49 @@
 					mapRtk:'',
 					userdata: [{
 							name: '张三',
-							Num: '421682125452',
+							pinyin: 'zhangsan',
 							group: '南方卫星导航',
 							status: 0
 						},
 						{
 							name: '李四',
-							Num: '588462585823',
+							pinyin: 'lisi',
 							group: '南方卫星导航',
 							status: 0
 						},
 						{
 							name: '姚明',
-							Num: '5589512453654',
+							pinyin: 'yaoming',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							Num: '7846245454563',
+							pinyin: 'wangwu',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							Num: '9564232787545',
+							pinyin: 'wangwu',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '姚明',
-							Num: '32645887887425',
+							pinyin: 'yaoming',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							Num: '62355454856569',
+							pinyin: 'wangwu',
 							group: '南方卫星导航',
 							status: 1
 						},
 						{
 							name: '王五',
-							Num: '87465112655632',
+							pinyin: 'wangwu',
 							group: '南方卫星导航',
 							status: 1
 						}

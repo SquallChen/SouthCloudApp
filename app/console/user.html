@@ -53,6 +53,7 @@
 				padding-right: 10px;
 				position: relative;
 				flex-wrap: wrap;
+				position: relative;
 			}
 			.filter ul li img{
 				width: 38px;
@@ -68,6 +69,7 @@
 				background: #ccc;
 				left: 30px;
 				bottom: 0px;
+				-webkit-transform: scaleY(.5);
 			}
 			.mui-bar .mui-icon {
 				font-size: 32px;
@@ -102,6 +104,9 @@
 				padding-left: 20px;
 				height: 36px;
 				line-height: 36px;
+				color:#0b60de;
+				font-weight: 500;
+				font-size: 14px;
 			}
 			.personnelInfo{
 				width:100%;
@@ -116,14 +121,16 @@
 			}
 			
 			.personnelInfo .img-content {
-				width: 25%;
+				/*width: 25%;*/
+				margin-right: 10px;
 				display: flex;
 				align-items: center;
 				height: 60px;
 			}
 			
 			.personnelInfo .main-content {
-				width: 75%;
+				flex: 1;
+				/*width: 75%;*/
 				padding-top: 12px;
 			}
 			.personnelInfo .main-content :nth-child(2){
@@ -170,19 +177,23 @@
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(1) {
-				background: #00cc66;
+				background: #f87776;
+				border-right: 1px solid #eee;
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(2) {
-				background: #ff9966;
+				background: #deaa02;
+				border-right: 1px solid #eee;
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(3) {
-				background: #0099ff;
+				background: #019bdc;
 			}
-			
+			.mui-table-view-cell>.mui-slider-left>.mui-btn:after, .mui-table-view-cell>.mui-slider-right>.mui-btn:after{
+				position: relative;
+			}
 			.personnelInfo .mui-table-view-cell {
-				padding: 0 10px;
+				padding: 0 14px 0 10px;
 			}
 			
 			.mui-table-view-cell:after {
@@ -194,14 +205,19 @@
 				display: flex;
 				align-items: center;
 				font-size: 20px;
+				border-bottom: 1px solid #ddd;
 			}
-			
+			#topPopover .mui-table-view-cell a span{
+				display: inline-block;
+				width: 100%;
+				text-align: center;
+			}
 			#topPopover .mui-table-view-cell a img {
 				margin-right: 20px;
 			}
 			
 			#topPopover .mui-table-view-cell {
-				border-bottom: 1px solid #706f71;
+				/*border-bottom: 1px solid #706f71;*/
 			}
 			
 			.mui-popover {
@@ -222,8 +238,8 @@
 			.mui-scroll-wrapper,
 			.mui-popover .mui-popover-arrow:after,
 			.mui-scroll-wrapper .mui-table-view-cell {
-				background: #49484a;
-				color: white;
+				/*background: #49484a;
+				color: white;*/
 			}
 			
 			.mui-popover .mui-scroll-wrapper {
@@ -257,8 +273,18 @@
 			}
 			.mui-content .mui-icon{
 				color:#ccc;
-				position: relative;
-				left:15px;
+				position: absolute;
+				right:15px;
+				top:13px;
+			}
+			.mui-popover .mui-table-view{
+				background: white;
+			}
+			.mui-popover .mui-table-view{
+				border-radius: 0;
+			}
+			.mui-popover .mui-popover-arrow:after{
+				background: white;
 			}
 		</style>
 	</head>
@@ -326,7 +352,7 @@
 							</li>-->
 							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
 								<a href="#">
-									<img src="../../public/img/related.png" alt="" />
+									<!--<img src="../../public/img/related.png" alt="" />-->
 									<span>设备关联</span></a>
 							</li>
 						</ul>

@@ -259,7 +259,8 @@
 					"app/console/subpage_contact.html",
 					"app/console/subpage_chat.html",
 					"app/console/equipment.html",
-					"app/console/map.html"
+					"app/console/map.html",
+					"app/console/me.html"
 				],
 				"priority": 0
 			},
@@ -1659,6 +1660,14 @@
 					"app/personnel/realTimeTrack.html",
 					"app/personnel/historicalTrack.html",
 					"app/personnel/currentLocation.html"
+				],
+				"priority": 0
+			},
+			"app/console/me.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userEntry.html",
+					"app/personnel/userinfo.html"
 				],
 				"priority": 0
 			}
