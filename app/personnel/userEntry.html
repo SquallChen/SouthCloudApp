@@ -4,8 +4,6 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>用户录入</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
@@ -178,7 +176,7 @@
 					</div>
 				</form>
 
-				<button class="management" v-on:tap="send">确  定</button>
+				<button class="management" v-on:tap="test">确  定</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -188,6 +186,8 @@
 		<script>
 			var vm = new Vue({
 				el: '#app',
+				user_name:'',
+				token:'',
 				data: {
 					account: '',
 					userName: '',
@@ -285,6 +285,29 @@
 							return;
 						}
 						console.log('信息完整，可以进行下一步')
+					},
+					test: function() {
+//						console.log('user_name=' + vm.user_name + '+' + 'token=' + vm.token);
+//						mui.ajax(apiUrl.list_child, {
+//							data: {
+//								user_name: vm.user_name,
+//								token: vm.token,
+//							},
+//							dataType: 'json',
+//							type: 'post',
+//							timeout: 10000,
+//							success: function(data) {
+//								console.log(11111111);
+//								console.log('data+'+JSON.stringify(data));
+//							},
+//							error: function(xhr, type, errorThrown) {
+//								console.log(222222);
+//								console.log(errorThrown);
+//								console.log(JSON.stringify(xhr));
+//								console.log(JSON.stringify(type));
+//								onNetChange();
+//							}
+//						});
 					}
 				},
 				created: function() {}
@@ -294,10 +317,9 @@
 				mui.init({
 					beforeback: function() {}
 				});
-
+				vm.user_name = plus.storage.getItem('user_name');
+				vm.token = plus.storage.getItem('token');
 			});
-			
-			
 		</script>
 	</body>
 

@@ -260,7 +260,8 @@
 					"app/console/subpage_chat.html",
 					"app/console/equipment.html",
 					"app/console/map.html",
-					"app/console/me.html"
+					"app/console/me.html",
+					"app/personnel/onlineSettings.html"
 				],
 				"priority": 0
 			},
@@ -1531,7 +1532,8 @@
 				"refer": [
 					"app/personnel/personnel.html",
 					"app/personnel/deviceStatus.html",
-					"app/personnel/userinfo.html"
+					"app/personnel/userinfo.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -1667,7 +1669,8 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/userEntry.html",
-					"app/personnel/userinfo.html"
+					"app/personnel/userinfo.html",
+					"login.html"
 				],
 				"priority": 0
 			}

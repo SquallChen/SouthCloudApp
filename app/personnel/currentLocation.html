@@ -57,19 +57,8 @@
 				data: {
 					isActive: false,
 					mode: 0,
-					modetype: [{
-						name: '轨迹',
-					}, {
-						name: '坐标点',
-					}],
 				},
 				methods: {
-					changestatus: function() {
-						vm.isActive = !vm.isActive
-					},
-					changeMode: function(index) {
-						this.mode = index;
-					},
 				},
 				created: function() {}
 			});

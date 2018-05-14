@@ -200,6 +200,29 @@
 				width:49%;
 				margin-bottom: 4px;
 			}
+			#item3mobile ul li{
+				flex-wrap: wrap;
+			}
+			#item3mobile .satellite-title{
+				width:100%;
+				padding: 5px 10px;
+				font-weight: 500;
+			}
+			#item3mobile .satellite-set{
+				display: flex;
+			}
+			#item3mobile .satellite-set span{
+				display: inline-block;
+				width:80px;
+				text-align:center;
+				height: 30px;
+				line-height: 30px;
+				font-size: 20px;
+			}
+			#item3mobile .mui-switch{
+				margin-right: 10px;
+			}
+			
 			#item1mobile,#item2mobile,#item3mobile,#item4mobile{
 				overflow: auto;
 			}
@@ -303,7 +326,7 @@
 					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
 					<div class="mui-slider-group">
 						<!--**************************tab1****************************-->
-						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="item1mobile" class="mui-slider-item mui-control-content">
 							<!--模式选择-->
 							<ul>
 								<li class="modeTitle">
@@ -651,10 +674,17 @@
 							</ul>
 						</div>
 						<!--**************************tab3****************************-->
-						<div id="item3mobile" class="mui-slider-item mui-control-content">
-							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
-									第3个选项卡子项-1
+						<div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
+							<ul>
+								<li>
+									<span class="satellite-title">卫星系统</span>
+									<div class="satellite-set">
+										<span>GPS</span>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+										<button>设置卫星号</button>										
+									</div>
 								</li>
 							</ul>
 						</div>

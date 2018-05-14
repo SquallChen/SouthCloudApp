@@ -102,7 +102,8 @@
 			"app/console/user.html",
 			"app/console/equipment.html",
 			"app/console/map.html",
-			"app/console/me.html"
+			"app/console/me.html",
+			"app/personnel/onlineSettings.html"
 		]
 	},
 	"examples/tab-webview-main.html": {
@@ -1381,7 +1382,8 @@
 		"refer": [
 			"app/personnel/personnel.html",
 			"app/personnel/deviceStatus.html",
-			"app/personnel/userinfo.html"
+			"app/personnel/userinfo.html",
+			"login.html"
 		]
 	},
 	"app/personnel/equipmentManagement.html": {
@@ -1490,7 +1492,8 @@
 	"app/console/me.html": {
 		"refer": [
 			"app/personnel/userEntry.html",
-			"app/personnel/userinfo.html"
+			"app/personnel/userinfo.html",
+			"login.html"
 		]
 	}
 }

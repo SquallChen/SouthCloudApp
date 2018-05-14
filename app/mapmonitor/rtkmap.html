@@ -218,6 +218,7 @@
       type: 'post',
       timeout: 10000,
       success: function (data) {
+      	console.log('data+'+JSON.stringify(data))
         if (data.status === 0) {
           monitorUrlAddress = data.map_monitor;
           map_id_prefix = data.map_id_prefix;

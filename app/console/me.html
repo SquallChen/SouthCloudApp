@@ -31,17 +31,6 @@
 				padding-left: 20px;
 			}
 			
-			.btn {
-				background: none;
-				border: none;
-				color: white;
-				font-size: 40px;
-				line-height: 24px;
-				width: 48px;
-				height: 48px;
-				float: right;
-				right: -4px;
-			}
 			.filter{
 				margin-bottom: 20px;
 				padding-top: 20px;
@@ -106,9 +95,7 @@
 			.usertitle {
 				width:100%;
 				background: #f2f2f2;
-				padding-left: 20px;
-				height: 36px;
-				line-height: 36px;
+				height: 30px;
 			}
 			.personnelInfo{
 				width:100%;
@@ -287,6 +274,19 @@
 				width: 100%;
 				text-align: center;
 			}
+			.btn a{
+				width:100%;
+				font-size: 20px;
+				display: block;
+				padding: 16px 16px;
+				position: relative;
+			}
+			.btn a span{
+				font-size: 18px;
+				color: #999;
+				position: absolute;
+				right:20px;
+			}
 		</style>
 	</head>
 
@@ -309,12 +309,16 @@
 						</li>
 					</ul>
 				</div>
-				<div class="usertitle">
+				<div class="usertitle"></div>
+				<div class="btn">
+					<a>关联设备
+					<span>点击检测关联设备</span>
+					</a>
 				</div>
+				<div class="usertitle"></div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
-	
 						</li>
 					</ul>
 				</div>
@@ -326,15 +330,13 @@
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
-							<!--<li class="mui-table-view-cell" v-on:tap="getdata">
-								<a href="#">
-									<img src="../../public/img/related.png" alt="" />
-									<span>设备关联</span></a>
-							</li>-->
 							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
 								<a href="#">
-									<!--<img src="../../public/img/related.png" alt="" />-->
 									<span>设备关联</span></a>
+							</li>
+							<li id="logout" class="mui-table-view-cell">
+								<a href="#">
+									<span>退出帐号</span></a>
 							</li>
 						</ul>
 					</div>
@@ -445,6 +447,43 @@
 						vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
 						vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
 						vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
+						
+						
+						document.getElementById('logout').addEventListener('tap', function() {
+							mui('#logout').button('loading');
+							var lauchFlag = plus.storage.getItem('lauchFlag');
+							plus.storage.clear();
+							plus.storage.setItem('lauchFlag', lauchFlag);
+
+							mui('#logout').button('reset');
+
+							mui.ajax(apiUrl.logout, {
+								data: {
+									user_name: vm.user_name,
+									token: vm.token
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) {
+									if(data.status === 0 || data.status === 40004) {
+										mui.openWindow({
+											url: '../../login.html',
+											id: 'login'
+										});
+										
+										var lauchFlag = plus.storage.getItem('lauchFlag');
+										plus.storage.clear();
+										plus.storage.setItem('lauchFlag', lauchFlag);
+									}
+									mui('#logout').button('reset');
+								},
+								error: function(xhr, type, errorThrown) {
+									onNetChange();
+									mui('#logout').button('reset');
+								}
+							});
+						});
 					});
 				}
 			});

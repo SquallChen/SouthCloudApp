@@ -10,6 +10,7 @@ var apiUrl = {
   module_desc: str + '/user/module_desc',
   register: str + '/user/register',
   check_token: str + '/user/check_token',
+ 	device_list_page: str + '/device/list_page',
 
   // 设备
   device_list: str + '/device/list_page',
