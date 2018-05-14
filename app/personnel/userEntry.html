@@ -4,6 +4,8 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="apple-mobile-web-app-status-bar-style" content="black">
 		<title>用户录入</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
@@ -12,6 +14,7 @@
 			[v-cloak] {
 				display: none;
 			}
+			
 			.select {
 				display: flex;
 			}
@@ -42,58 +45,71 @@
 				color: white;
 				font-size: 20px;
 				margin-top: 24px;
-				border:none;
+				border: none;
 				border-radius: 4px;
 			}
-			.management:active{
+			
+			.management:active {
 				background: #3182fa !important;
 			}
+			
 			.mui-input-row label {
 				padding: 0;
 				height: 40px;
 				line-height: 40px;
 				color: #333;
-				width:70px;
+				width: 70px;
 				text-align: right;
 				margin-right: 25px;
 			}
-			.mui-input-group .mui-input-row{
+			
+			.mui-input-group .mui-input-row {
 				padding-left: 15px;
 				position: relative;
 			}
+			
 			input[type=text] {
 				height: 40px;
 			}
-			input::-webkit-input-placeholder{
-				color:#999;
+			
+			input::-webkit-input-placeholder {
+				color: #999;
 			}
+			
 			.mui-input-row select {
 				height: 40px;
 			}
-			.mui-input-row label~input{
+			
+			.mui-input-row label~input {
 				float: left;
 			}
-			.mui-input-group .mui-input-row:after{
-				left:0;
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0;
 				background-color: #ccc;
 			}
-			body{
+			
+			body {
 				background: #f2f2f2;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:73px;
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 73px;
 				display: flex;
 				align-items: center;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before{
-				content:'';
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
 			}
-			.back{
+			
+			.back {
 				display: block;
 				width: 10px;
 				height: 16px;
-				background:url('../../public/img/back.png') no-repeat;
+				background: url('../../public/img/back.png') no-repeat;
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
@@ -273,6 +289,15 @@
 				},
 				created: function() {}
 			});
+
+			mui.plusReady(function() {
+				mui.init({
+					beforeback: function() {}
+				});
+
+			});
+			
+			
 		</script>
 	</body>
 
