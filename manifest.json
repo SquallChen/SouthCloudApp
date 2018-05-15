@@ -225,7 +225,8 @@
 					"public/img/map.png",
 					"public/img/slidertop.png",
 					"app/console/console.html",
-					"app/console/user.html"
+					"app/console/user.html",
+					"app/personnel/onlineSettings.html"
 				],
 				"refer": [
 					"html/setting.html",
@@ -261,7 +262,7 @@
 					"app/console/equipment.html",
 					"app/console/map.html",
 					"app/console/me.html",
-					"app/personnel/onlineSettings.html"
+					"app/rtkonline/rtkset.html"
 				],
 				"priority": 0
 			},

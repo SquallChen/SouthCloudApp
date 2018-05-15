@@ -1,1022 +1,733 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>在线配置</title>
-		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
-		<style>
-			* {
-				padding: 0;
-				margin: 0;
-			}
-			
-			html,body {
-				background: white;
-			}
-			
-			html,
-			body,
-			#app {
-				height: 100%;
-			}
-			
-			ul {
-				list-style: none;
-				-webkit-padding-start: 0px;
-			}
-			
-			ul li {
-				display: flex;
-				align-items: center;
-				margin-bottom: 5px;
-			}
-			
-			ul li>div:nth-child(1) {
-				width: 22%;
-				text-align: right;
-				margin-right: 20px;
-			}
-			
-			ul li>div:nth-child(2) {
-				width: 78%;
-				margin-right: 6px;
-			}
-			
-			.modeTitle {
-				margin-top: 15px;
-				margin-bottom: 15px;
-			}
-			
-			.modeTitle button {
-				margin-right: 5px;
-				font-size: 16px;
-				width: 80px;
-			}
-			
-			.select {
-				display: flex;
-				position: relative;
-				border: 1px solid #ddd;
-				border-radius: 5px;
-			}
-			
-			.select div {
-				width: 65%;
-				position: relative;
-			}
-			
-			.mui-slider .mui-slider-group .select .down {
-				width: 16px;
-				height: 16px;
-				position: absolute;
-				top: 12px;
-				right: 14px;
-			}
-			
-			.mui-slider-group {
-				height: 100%;
-			}
-			
-			select {
-				margin-bottom: 0;
-			}
-			
-			.equipmentTitle {
-				text-align: center;
-				line-height: 60px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				border-bottom: 1px solid #ddd;
-			}
-			
-			.equipmentTitle .refresh {
-				margin-left: 30px;
-				display: inline-block;
-				background: #409eff;
-				color: white;
-				width: 60px;
-				height: 30px;
-				line-height: 12px;
-				border-radius: 5px;
-				border: 1px solid #409eff;
-			}
-			
-			.radio {
-				display: flex;
-				flex-wrap: wrap;
-			}
-			
-			.radio3 {
-				position: relative;
-				top: 22px;
-			}
-			
-			.checkbox {
-				display: flex;
-				flex-wrap: wrap;
-				justify-content: space-between;
-				margin-top: 10px;
-				margin-bottom: 10px;
-			}
-			
-			.checkbox button {
-				width: 100px;
-				background: #409eff;
-				color: white;
-				font-size: 16px;
-				border: 1px solid #409eff;
-			}
-			
-			.checkbox div {
-				padding-right: 6px;
-			}
-			
-			.btn {
-				margin-bottom: 5px;
-			}
-			
-			.btn button {
-				width: 100%;
-				height: 50px;
-				color: white;
-				border: none;
-				border-radius: 0;
-				font-size: 20px;
-			}
-			
-			.btn .setting {
-				background: #18a689;
-				margin-top: 10px;
-			}
-			
-			.btn .start {
-				background: #409eff;
-			}
-			
-			.changeFormat input {
-				width: 28.33%;
-				border-radius: 3px 0 0 3px;
-			}
-			
-			.changeFormat .symbol {
-				display: inline-block;
-				position: relative;
-				left: -1px;
-				width: 5%;
-				border: 1px solid #ddd;
-				height: 46px;
-				border-radius: 0 3px 3px 0;
-				background: #eee;
-				font-size: 26px;
-				line-height: 36px;
-				padding-left: 1px;
-			}
-			
-			.changeFormat .content {
-				position: relative;
-			}
-			
-			.autoMark {
-				margin-top: 15px;
-			}
-			.channel_content{
-				align-items: flex-start;
-			}
-			.channel_title{
-				position: relative;
-				top:14px;
-			}
-			.channel{
-				display: flex;
-				justify-content: space-between;
-				flex-wrap: wrap;
-			}
-			.channel input[type=text]{
-				width:49%;
-				margin-bottom: 4px;
-			}
-			#item3mobile ul li{
-				flex-wrap: wrap;
-			}
-			#item3mobile .satellite-title{
-				width:100%;
-				padding: 5px 10px;
-				font-weight: 500;
-			}
-			#item3mobile .satellite-set{
-				display: flex;
-			}
-			#item3mobile .satellite-set span{
-				display: inline-block;
-				width:80px;
-				text-align:center;
-				height: 30px;
-				line-height: 30px;
-				font-size: 20px;
-			}
-			#item3mobile .mui-switch{
-				margin-right: 10px;
-			}
-			
-			#item1mobile,#item2mobile,#item3mobile,#item4mobile{
-				overflow: auto;
-			}
-			.active {
-				color: #409eff;
-				border-color: #409eff;
-			}
-			
-			.mui-content {
-				background: white;
-				position: relative;
-			}
-			
-			.mui-control-content {
-				background-color: white;
-				/*min-height: 738px;*/
-			}
-			
-			.mui-control-content .mui-loading {
-				margin-top: 50px;
-			}
-			
-			.mui-col-xs-4 {
-				width: 25%;
-			}
-			
-			.mui-slider .mui-segmented-control.mui-segmented-control-inverted~.mui-slider-group .mui-slider-item {
-				border-bottom: none;
-			}
-			
-			.mui-scroll-wrapper {
-				font-size: 16px;
-			}
-			
-			input[type=text],input[type=password] {
-				padding: 10px 15px 10px 15px;
-				margin-bottom: 0;
-				height: 46px;
-				line-height: 23px;
-				position: relative;
-			}
-			
-			.mui-radio.mui-left label {
-				padding-left: 34px;
-			}
-			
-			.mui-radio.mui-left input[type=radio] {
-				left: 0;
-				top: 7px;
-				width: 20px;
-				height: 20px;
-			}
-			
-			.mui-checkbox input[type=checkbox]:before,
-			.mui-radio input[type=radio]:before {
-				font-size: 22px;
-			}
-			
-			.mui-checkbox.mui-left input[type=checkbox] {
-				left: 0;
-				top: 8px;
-			}
-			
-			.mui-checkbox.mui-left label {
-				padding-left: 30px;
-				padding-right: 0;
-				;
-			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				padding-top: 24px;
-				padding-bottom: 25px;
-			}
-		</style>
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>在线配置</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<link href="../../css/input.css" rel="stylesheet" />
+	<link href="../css/onlineSettings.css" rel="stylesheet" />
+</head>
 
-	<body>
-		<div id="app" v-cloak>
-			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">在线配置</h1>
-			</header>
-			<div class="mui-content">
-				<div class="equipmentTitle">
-					<span>设备信息-</span><span>{{deviceID}}</span><button class="refresh">刷新</button>
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">在线配置</h1>
+		</header>
+		<div class="mui-content">
+			<div class="equipmentTitle">
+				<span>设备信息-</span>
+				<span>{{deviceID}}</span>
+				<button class="refresh">刷新</button>
+			</div>
+			<div id="slider" class="mui-slider">
+				<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
+					<a class="mui-control-item" href="#item1mobile">
+						工作模式
+					</a>
+					<a class="mui-control-item" href="#item2mobile">
+						数据链
+					</a>
+					<a class="mui-control-item" href="#item3mobile">
+						卫星控制
+					</a>
+					<a class="mui-control-item" href="#item4mobile">
+						其他
+					</a>
 				</div>
-				<div id="slider" class="mui-slider">
-					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<a class="mui-control-item" href="#item1mobile">
-							工作模式
-						</a>
-						<a class="mui-control-item" href="#item2mobile">
-							数据链
-						</a>
-						<a class="mui-control-item" href="#item3mobile">
-							卫星控制
-						</a>
-						<a class="mui-control-item" href="#item4mobile">
-							其他
-						</a>
+				<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+				<div class="mui-slider-group">
+					<!--**************************tab1****************************-->
+					<div id="item1mobile" class="mui-slider-item mui-control-content">
+						<!--模式选择-->
+						<ul>
+							<li class="modeTitle">
+								<div>
+									<span>选择模式</span>
+								</div>
+								<div>
+									<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{active:index===mode}">{{item.name}}</button>
+								</div>
+							</li>
+						</ul>
+						<!--*********************基准站**********************-->
+						<ul v-show="mode === 0">
+							<li>
+								<div>
+									<span>差分格式</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="differenceFormatvalue">
+										<option v-for="item in differenceFormat" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>发射时间</span>
+								</div>
+								<div class="radio">
+									<div class="mui-input-row mui-radio mui-left">
+										<label>1S</label>
+										<input name="radio1" type="radio" value=0 v-model="launchTime" :checked="launchTime===0">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>2S</label>
+										<input name="radio1" type="radio" value=1 v-model="launchTime" :checked="launchTime===1">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>截止角</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>PDOP</span>
+								</div>
+								<div>
+									<input type="text" placeholder="支持2位小数" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>天线类型</span>
+								</div>
+								<div class="radio radio2">
+									<div class="mui-input-row mui-radio mui-left">
+										<label>直高</label>
+										<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>斜高</label>
+										<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>杠高</label>
+										<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>侧片高</label>
+										<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>天线相位中心</label>
+										<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>天线高</span>
+								</div>
+								<div>
+									<input type="text" placeholder="0-100，支持3位小数" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>基站坐标</span>
+								</div>
+								<div class="checkbox">
+									<button>获取坐标</button>
+									<div class="mui-input-row mui-checkbox mui-left">
+										<label>度分秒格式</label>
+										<input name="checkbox" value=0 type="checkbox" v-model="checked">
+									</div>
+								</div>
+							</li>
+							<li v-show="checked!==true">
+								<div>
+									<span>纬度</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="b" />
+								</div>
+							</li>
+							<li v-show="checked!==true">
+								<div>
+									<span>经度</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="l" />
+								</div>
+							</li>
+							<li v-show="checked===true" class="changeFormat">
+								<div>
+									<span>纬度</span>
+								</div>
+								<div class="content">
+									<input type="text" / v-model="b_degree">
+									<span class="symbol">°</span>
+									<input type="text" / v-model="b_minute">
+									<span class="symbol">′</span>
+									<input type="text" / v-model="b_second">
+									<span class="symbol">″</span>
+								</div>
+							</li>
+							<li v-show="checked===true" class="changeFormat">
+								<div>
+									<span>经度</span>
+								</div>
+								<div class="content">
+									<input type="text" / v-model="l_degree">
+									<span class="symbol">°</span>
+									<input type="text" / v-model="l_minute">
+									<span class="symbol">′</span>
+									<input type="text" / v-model="l_second">
+									<span class="symbol">″</span>
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>高程</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="h" />
+								</div>
+							</li>
+							<li class="btn">
+								<button class="setting">设 置</button>
+							</li>
+							<li class="btn">
+								<button class="start">启 动</button>
+							</li>
+						</ul>
+						<!--*********************移动站**********************-->
+						<ul v-show="mode === 1">
+							<li>
+								<div>
+									<span>截止角</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+								</div>
+							</li>
+							<li class="btn">
+								<button class="setting">设 置</button>
+							</li>
+						</ul>
+						<!--*********************静态站**********************-->
+						<ul v-show="mode === 2">
+							<li>
+								<div>
+									<span>采集间隔</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="collectionIntervalvalue">
+										<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>截止角</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>PDOP</span>
+								</div>
+								<div>
+									<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>天线类型</span>
+								</div>
+								<div class="radio radio2">
+									<div class="mui-input-row mui-radio mui-left">
+										<label>直高</label>
+										<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>斜高</label>
+										<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>杠高</label>
+										<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>侧片高</label>
+										<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+									</div>
+									<div class="mui-input-row mui-radio mui-left">
+										<label>天线相位中心</label>
+										<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+									</div>
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>天线高</span>
+								</div>
+								<div>
+									<input type="text" placeholder="0-100，支持3位小数" />
+								</div>
+							</li>
+							<li class="autoMark">
+								<div>
+									<span>自动记录</span>
+								</div>
+								<div>
+									<div class="mui-switch mui-active">
+										<div class="mui-switch-handle"></div>
+									</div>
+								</div>
+							</li>
+							<li class="btn">
+								<button class="setting">设 置</button>
+							</li>
+							<li class="btn">
+								<button class="start">启 动</button>
+							</li>
+						</ul>
 					</div>
-					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
-					<div class="mui-slider-group">
-						<!--**************************tab1****************************-->
-						<div id="item1mobile" class="mui-slider-item mui-control-content">
-							<!--模式选择-->
-							<ul>
-								<li class="modeTitle">
-									<div><span>选择模式</span></div>
-									<div>
-										<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{active:index===mode}">{{item.name}}</button>
-									</div>
-								</li>
-							</ul>
-							<!--*********************基准站**********************-->
-							<ul v-show="mode === 0">
-								<li>
-									<div><span>差分格式</span></div>
-									<div class="select">
-										<select name="" v-model="differenceFormatvalue">
-											<option v-for="item in differenceFormat" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>发射时间</span></div>
-									<div class="radio">
-										<div class="mui-input-row mui-radio mui-left">
-											<label>1S</label>
-											<input name="radio1" type="radio" value=0 v-model="launchTime" :checked="launchTime===0">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>2S</label>
-											<input name="radio1" type="radio" value=1 v-model="launchTime" :checked="launchTime===1">
-										</div>
-									</div>
-								</li>
-								<li>
-									<div><span>截止角</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" />
-									</div>
-								</li>
-								<li>
-									<div><span>PDOP</span></div>
-									<div>
-										<input type="text" placeholder="支持2位小数" />
-									</div>
-								</li>
-								<li>
-									<div><span>天线类型</span></div>
-									<div class="radio radio2">
-										<div class="mui-input-row mui-radio mui-left">
-											<label>直高</label>
-											<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>斜高</label>
-											<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>杠高</label>
-											<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>侧片高</label>
-											<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>天线相位中心</label>
-											<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
-										</div>
-									</div>
-								</li>
-								<li>
-									<div><span>天线高</span></div>
-									<div>
-										<input type="text" placeholder="0-100，支持3位小数" />
-									</div>
-								</li>
-								<li>
-									<div><span>基站坐标</span></div>
-									<div class="checkbox">
-										<button>获取坐标</button>
-										<div class="mui-input-row mui-checkbox mui-left">
-											<label>度分秒格式</label>
-											<input name="checkbox" value=0 type="checkbox" v-model="checked">
-										</div>
-									</div>
-								</li>
-								<li v-show="checked!==true">
-									<div><span>纬度</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="b" />
-									</div>
-								</li>
-								<li v-show="checked!==true">
-									<div><span>经度</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="l" />
-									</div>
-								</li>
-								<li v-show="checked===true" class="changeFormat">
-									<div><span>纬度</span></div>
-									<div class="content">
-										<input type="text" / v-model="b_degree"><span class="symbol">°</span><input type="text" / v-model="b_minute"><span class="symbol">′</span><input type="text" / v-model="b_second"><span class="symbol">″</span>
-									</div>
-								</li>
-								<li v-show="checked===true" class="changeFormat">
-									<div><span>经度</span></div>
-									<div class="content">
-										<input type="text" / v-model="l_degree"><span class="symbol">°</span><input type="text" / v-model="l_minute"><span class="symbol">′</span><input type="text" / v-model="l_second"><span class="symbol">″</span>
-									</div>
-								</li>
-								<li>
-									<div><span>高程</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="h" />
-									</div>
-								</li>
-								<li class="btn">
-									<button class="setting">设  置</button>
-								</li>
-								<li class="btn">
-									<button class="start">启  动</button>
-								</li>
-							</ul>
-							<!--*********************移动站**********************-->
-							<ul v-show="mode === 1">
-								<li>
-									<div><span>截止角</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
-									</div>
-								</li>
-								<li class="btn">
-									<button class="setting">设  置</button>
-								</li>
-							</ul>
-							<!--*********************静态站**********************-->
-							<ul v-show="mode === 2">
-								<li>
-									<div><span>采集间隔</span></div>
-									<div class="select">
-										<select name="" v-model="collectionIntervalvalue">
-											<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>截止角</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
-									</div>
-								</li>
-								<li>
-									<div><span>PDOP</span></div>
-									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
-									</div>
-								</li>
-								<li>
-									<div><span>天线类型</span></div>
-									<div class="radio radio2">
-										<div class="mui-input-row mui-radio mui-left">
-											<label>直高</label>
-											<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>斜高</label>
-											<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>杠高</label>
-											<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>侧片高</label>
-											<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
-										</div>
-										<div class="mui-input-row mui-radio mui-left">
-											<label>天线相位中心</label>
-											<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
-										</div>
-									</div>
-								</li>
-								<li>
-									<div><span>天线高</span></div>
-									<div>
-										<input type="text" placeholder="0-100，支持3位小数" />
-									</div>
-								</li>
-								<li class="autoMark">
-									<div><span>自动记录</span></div>
+					<!--**************************tab2****************************-->
+					<div id="item2mobile" class="mui-slider-item mui-control-content">
+						<!--模式选择-->
+						<ul>
+							<li class="modeTitle">
+								<div>
+									<span>选择链路</span>
+								</div>
+								<div>
+									<button v-for="(item,index) in linktype" v-on:tap="changeLink(index)" :class="{active:index===linktypevalue}">{{item.name}}</button>
+								</div>
+							</li>
+						</ul>
+						<!--*********************移动网络**********************-->
+						<ul v-show="linktypevalue === 0">
+							<li>
+								<div>
+									<span>ip地址</span>
+								</div>
+								<div>
+									<input type="text" placeholder="ip地址" v-model="ip" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>端口号</span>
+								</div>
+								<div>
+									<input type="text" placeholder="端口号" v-model="port" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>账户ID</span>
+								</div>
+								<div>
+									<input type="text" placeholder="账户ID" v-model="id" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>密码</span>
+								</div>
+								<div>
+									<input type="text" placeholder="密码" v-model="password" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>模式</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="accessModeValue">
+										<option v-for="item in accessMode" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>接入点</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="AccessPointValue">
+										<option v-for="item in AccessPoint" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>ANP服务器</span>
+								</div>
+								<div>
+									<input type="text" placeholder="密码" v-model="anpserver" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>ANP用户名</span>
+								</div>
+								<div>
+									<input type="text" placeholder="密码" v-model="anpuser" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>ANP密码</span>
+								</div>
+								<div>
+									<input type="password" placeholder="密码" v-model="anppassword" />
+								</div>
+							</li>
+							<li class="btn" style="margin-bottom: 10px;">
+								<button class="setting">设 置</button>
+							</li>
+						</ul>
+						<!--*********************内置电台**********************-->
+						<ul v-show="linktypevalue === 1">
+							<li>
+								<div>
+									<span>通道设置</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="channelValue">
+										<option v-for="item in channel" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li class="channel_content">
+								<div class="channel_title">
+									<span>频道设置</span>
+								</div>
+								<div class="channel">
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+									<input type="text" v-model="channelValue1" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>功率档位</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="powerPositionValue">
+										<option v-for="item in powerPosition" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>空中波特率</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="baudRateValue">
+										<option v-for="item in baudRate" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li>
+								<div>
+									<span>选择协议</span>
+								</div>
+								<div class="select">
+									<select name="" v-model="protocolValue">
+										<option v-for="item in protocol" :value="item.value">{{item.label}}</option>
+									</select>
+									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+							</li>
+							<li class="btn" style="margin-bottom: 10px;">
+								<button class="setting">设 置</button>
+							</li>
+						</ul>
+					</div>
+					<!--**************************tab3****************************-->
+					<div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
+						<ul>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>GPS</span>
 									<div>
 										<div class="mui-switch mui-active">
 											<div class="mui-switch-handle"></div>
 										</div>
+										<a href="#gps">设置卫星号</a>
 									</div>
-								</li>
-								<li class="btn">
-									<button class="setting">设  置</button>
-								</li>
-								<li class="btn">
-									<button class="start">启  动</button>
-								</li>
-							</ul>
-						</div>
-						<!--**************************tab2****************************-->
-						<div id="item2mobile" class="mui-slider-item mui-control-content">
-							<!--模式选择-->
-							<ul>
-								<li class="modeTitle">
-									<div><span>选择链路</span></div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>L1-C/A|L1-P|L2-C/A|L5</span>
+									<a href="#gps-track">修改跟踪频段</a>
+								</div>
+							</li>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>BDS</span>
 									<div>
-										<button v-for="(item,index) in linktype" v-on:tap="changeLink(index)" :class="{active:index===linktypevalue}">{{item.name}}</button>
-									</div>
-								</li>
-							</ul>
-							<!--*********************移动网络**********************-->
-							<ul v-show="linktypevalue === 0">
-								<li>
-									<div><span>ip地址</span></div>
-									<div>
-										<input type="text" placeholder="ip地址" v-model="ip" />
-									</div>
-								</li>
-								<li>
-									<div><span>端口号</span></div>
-									<div>
-										<input type="text" placeholder="端口号" v-model="port" />
-									</div>
-								</li>
-								<li>
-									<div><span>账户ID</span></div>
-									<div>
-										<input type="text" placeholder="账户ID" v-model="id" />
-									</div>
-								</li>
-								<li>
-									<div><span>密码</span></div>
-									<div>
-										<input type="text" placeholder="密码" v-model="password" />
-									</div>
-								</li>
-								<li>
-									<div><span>模式</span></div>
-									<div class="select">
-										<select name="" v-model="accessModeValue">
-											<option v-for="item in accessMode" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>接入点</span></div>
-									<div class="select">
-										<select name="" v-model="AccessPointValue">
-											<option v-for="item in AccessPoint" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>ANP服务器</span></div>
-									<div>
-										<input type="text" placeholder="密码" v-model="anpserver" />
-									</div>
-								</li>
-								<li>
-									<div><span>ANP用户名</span></div>
-									<div>
-										<input type="text" placeholder="密码" v-model="anpuser" />
-									</div>
-								</li>
-								<li>
-									<div><span>ANP密码</span></div>
-									<div>
-										<input type="password" placeholder="密码" v-model="anppassword" />
-									</div>
-								</li>
-								<li class="btn" style="margin-bottom: 10px;">
-									<button class="setting">设  置</button>
-								</li>
-							</ul>
-							<!--*********************内置电台**********************-->
-							<ul v-show="linktypevalue === 1">
-								<li>
-									<div><span>通道设置</span></div>
-									<div class="select">
-										<select name="" v-model="channelValue">
-											<option v-for="item in channel" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li class="channel_content">
-									<div class="channel_title"><span>频道设置</span></div>
-									<div class="channel">
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-									</div>
-								</li>
-								<li>
-									<div><span>功率档位</span></div>
-									<div class="select">
-										<select name="" v-model="powerPositionValue">
-											<option v-for="item in powerPosition" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>空中波特率</span></div>
-									<div class="select">
-										<select name="" v-model="baudRateValue">
-											<option v-for="item in baudRate" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li>
-									<div><span>选择协议</span></div>
-									<div class="select">
-										<select name="" v-model="protocolValue">
-											<option v-for="item in protocol" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
-									</div>
-								</li>
-								<li class="btn" style="margin-bottom: 10px;">
-									<button class="setting">设  置</button>
-								</li>
-							</ul>
-						</div>
-						<!--**************************tab3****************************-->
-						<div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
-							<ul>
-								<li>
-									<span class="satellite-title">卫星系统</span>
-									<div class="satellite-set">
-										<span>GPS</span>
 										<div class="mui-switch mui-active">
 											<div class="mui-switch-handle"></div>
 										</div>
-										<button>设置卫星号</button>										
+										<a href="#bds">设置卫星号</a>
 									</div>
-								</li>
-							</ul>
-						</div>
-						<!--**************************tab4****************************-->
-						<div id="item4mobile" class="mui-slider-item mui-control-content">
-							<ul class="mui-table-view">
-								<li class="mui-table-view-cell">
-									第4个选项卡子项-1
-								</li>
-							</ul>
-						</div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>B1|B2|B3</span>
+									<a href="#bds-track">修改跟踪频段</a>
+								</div>
+							</li>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>SBAS</span>
+									<div>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+										<a href="#sbas">设置卫星号</a>
+									</div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>暂无设置</span>
+									<a href="#sbas-track">修改跟踪频段</a>
+								</div>
+							</li>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>QZSS</span>
+									<div>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+										<a href="#qzss">设置卫星号</a>
+									</div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>暂无设置</span>
+									<a href="#qzss-track">修改跟踪频段</a>
+								</div>
+							</li>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>GLONASS</span>
+									<div>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+										<a href="#glonass">设置卫星号</a>
+									</div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>L1-C/A|L1-P|L2-C/A|L3</span>
+									<a href="#glonass-track">修改跟踪频段</a>
+								</div>
+							</li>
+							<li>
+								<span class="satellite-title">卫星系统</span>
+								<div class="satellite-set">
+									<span>GALILEO</span>
+									<div>
+										<div class="mui-switch mui-active">
+											<div class="mui-switch-handle"></div>
+										</div>
+										<a href="#galileo">设置卫星号</a>
+									</div>
+								</div>
+								<span class="satellite-title">跟踪状态</span>
+								<div class="tracking-status">
+									<span>E1|E5|E6|E5-ALIBOC</span>
+									<a href="#galileo-track">修改跟踪频段</a>
+								</div>
+							</li>
+
+							<button class="ClearEphemeris">清除星历</button>
+						</ul>
+					</div>
+					<!--**************************tab4****************************-->
+					<div id="item4mobile" class="mui-slider-item mui-control-content">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								第4个选项卡子项-1
+							</li>
+						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/app.js"></script>
-		<script src="../../js/url.js"></script>
-		<script src="../../js/vue.min.js"></script>
-		<script>
-			var vm = new Vue({
-				el: '#app',
-				data: {
-					deviceID: 'SG607A117233388',
-					mode: 0,
-					linktypevalue:0,
-					isActive: 0,
-					differenceFormatvalue: 5,
-					launchTime: 0,
-					antennaType: 0,
-					changeFormat: 0,
-					checked: true,
-					b: '28.7670271944',
-					l: '105.9634233336',
-					h: '734.306',
-					b_degree: '28',
-					b_minute: '46',
-					b_second: '1.29789984',
-					l_degree: '105',
-					l_minute: '57',
-					l_second: '48.32400096',
-					cut_angle: '12',
-					collectionIntervalvalue: '0',
-					accessModeValue:'0',
-					AccessPointValue:'1',
-					pdop: '3.0',
-					ip:'127.0.0.1',
-					port:'3360',
-					id:'USER123',
-					password:'0',
-					anpserver:'CMNET',
-					anpuser:'CARD',
-					anppassword:'123456',
-					channelValue:'6',
-					channelValue1:'463.625',
-					powerPositionValue:'high',
-					baudRateValue:'9600',
-					protocolValue:0,
-					differenceFormat: [{
-							label: 'RTCA',
-							value: 0
-						},
-						{
-							label: 'TRCM',
-							value: 1
-						},
-						{
-							label: 'RTCM23',
-							value: 2
-						},
-						{
-							label: 'RTCM3',
-							value: 3
-						},
-						{
-							label: 'RTCM30',
-							value: 4
-						},
-						{
-							label: 'RTCM32',
-							value: 5
-						},
-						{
-							label: 'RTD',
-							value: 6
-						},
-						{
-							label: 'CMR',
-							value: 7
-						},
-						{
-							label: 'SCMRX',
-							value: 8
-						},
-						{
-							label: 'CMRX',
-							value: 9
-						},
-						{
-							label: 'NOVATELX',
-							value: 10
-						}
-					],
-					collectionInterval: [{
-							label: '0.02S',
-							value: 0
-						},
-						{
-							label: '0.05S',
-							value: 1
-						},
-						{
-							label: '0.1S',
-							value: 2
-						},
-						{
-							label: '0.2S',
-							value: 3
-						},
-						{
-							label: '0.5S',
-							value: 4
-						},
-						{
-							label: '1S',
-							value: 5
-						},
-						{
-							label: '2S',
-							value: 6
-						},
-						{
-							label: '5S',
-							value: 7
-						},
-						{
-							label: '10S',
-							value: 8
-						}
-					],
-					accessMode: [{
-							label: 'SOUTH',
-							value: 0
-						},
-						{
-							label: 'NTRIP',
-							value: 1
-						},
-						{
-							label: 'TCPIP',
-							value: 2
-						}
-					],
-					AccessPoint: [{
-							label: 'SOUTH',
-							value: 0
-						},
-						{
-							label: 'NTRIP',
-							value: 1
-						},
-						{
-							label: 'TCPIP',
-							value: 2
-						}
-					],
-					modetype: [{
-						name: '基准站',
-						index: 1
-					}, {
-						name: '移动站',
-						index: 2
-					}, {
-						name: '静态站',
-						index: 3
-					}, ],
-					linktype: [{
-						name: '移动网络',
-						index: 1
-					}, {
-						name: '内置电台',
-						index: 2
-					}],
-					channel: [{
-							label: '0',
-							value: 0
-						},
-						{
-							label: '1',
-							value: 1
-						},
-						{
-							label: '2',
-							value: 2
-						},
-						{
-							label: '3',
-							value: 3
-						},
-						{
-							label: '4',
-							value: 4
-						},
-						{
-							label: '5',
-							value: 5
-						},
-						{
-							label: '6',
-							value: 6
-						},
-						{
-							label: '7',
-							value: 7
-						},
-						{
-							label: '8',
-							value: 8
-						},
-						{
-							label: '9',
-							value: 9
-						},
-						{
-							label: '10',
-							value: 10
-						},
-						{
-							label: '11',
-							value: 11
-						},
-						{
-							label: '12',
-							value: 12
-						},
-						{
-							label: '13',
-							value: 13
-						},
-						{
-							label: '14',
-							value: 14
-						},
-						{
-							label: '15',
-							value: 15
-						},
-						{
-							label: '16',
-							value: 16
-						}
-					],
-					powerPosition: [{
-						label: '高',
-						value: 'high'
-					}, {
-						label: '中',
-						index: 'middle'
-					}, {
-						label: '低',
-						index: 'low'
-					}],
-					baudRate: [{
-						label: '9600',
-						value: '9600'
-					}, {
-						label: '19200',
-						value: '19200'
-					}, {
-						label: '38400',
-						value: '38400'
-					}, {
-						label: '57600',
-						value: '57600'
-					}, {
-						label: '115200',
-						value: '115200'
-					}],
-					protocol: [{
-						label: 'TRIMMARKLL',
-						value: 0
-					}, {
-						label: 'SOUTH',
-						value: 1
-					}, {
-						label: 'TRIMTALK',
-						value: 2
-					}, {
-						label: 'SATEL',
-						value: 3
-					}, {
-						label: 'TT450S',
-						value: 4
-					}, {
-						label: 'TRIMMARK3',
-						value: 5
-					}, {
-						label: 'TRANSEOT',
-						value: 6
-					}]
-				},
 
-				methods: {
-					management: function() {
-						mui.openWindow({
-							url: 'deviceStatus.html',
-							id: 'deviceStatus.html'
-						});
-					},
-					changeMode: function(index) {
-						this.mode = index;
-					},
-					changeLink: function(index) {
-						this.linktypevalue = index;
-					}
-				},
-				created: function() {
-					//获取屏幕高度减去上面title等占用的高度,剩余高度全部赋予tab内容页，自适应不同屏幕尺寸
-					mui.plusReady(function() {
-						mui('.mui-scroll-wrapper').scroll({
-							indicators: true //是否显示滚动条
-						});
-						var resolutionHeight = window.innerHeight;
-						resolutionHeight = resolutionHeight - 149;
-						document.getElementById("item1mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
-						document.getElementById("item2mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
-						document.getElementById("item3mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
-						document.getElementById("item4mobile").setAttribute("style", "height:" + resolutionHeight + "px;");
-					})
-				}
-			});
-		</script>
-	</body>
+		<!--**************************设置卫星号弹窗****************************-->
+		<div id="gps" class="mui-popover Satellite">
+			<div class="content">
+				<span>设置GPS卫星号
+				</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+							<label>全选</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+					</div>
+				<hr>
+				<ul>
+					<li>
+						<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.gps">
+							<label>{{item.label}}</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="bds" class="mui-popover Satellite">
+			<div class="content">
+				<span>设置BDS卫星号
+				</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+							<label>全选</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+					</div>
+				<hr>
+				<ul>
+					<li>
+						<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.gps">
+							<label>{{item.label}}</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="sbas" class="mui-popover Satellite">
+			<div class="content">
+				<span>设置SBAS卫星号</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+							<label>全选</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+					</div>
+				<hr>
+				<ul>
+					<li>
+						<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.gps">
+							<label>{{item.label}}</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="qzss" class="mui-popover Satellite">
+			<div class="content">
+				<span>设置QZSS卫星号</span>
+				<div class="mui-input-row mui-checkbox mui-left selectAll">
+						<label>全选</label>
+						<input name="checkbox" value="item.value" type="checkbox">
+				</div>
+				<hr>
+				<ul>
+					<li>
+						<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.qzss">
+							<label>{{item.label}}</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="glonass" class="mui-popover Satellite">
+			<div class="content">
+				<span>设置GLONASS卫星号</span>
+				<div class="mui-input-row mui-checkbox mui-left selectAll">
+						<label>全选</label>
+						<input name="checkbox" value="item.value" type="checkbox">
+				</div>
+				<hr>
+				<ul>
+					<li>
+						<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.glonass">
+							<label>{{item.label}}</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<div id="galileo" class="mui-popover Satellite">
+				<div class="content">
+					<span>设置GALILEO卫星号</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+							<label>全选</label>
+							<input name="checkbox" value="item.value" type="checkbox">
+					</div>
+					<hr>
+					<ul>
+						<li>
+							<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.galileo">
+								<label>{{item.label}}</label>
+								<input name="checkbox" value="item.value" type="checkbox">
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!--**************************设置跟踪频段****************************-->
+			<div id="gps-track" class="mui-popover Satellite">
+					<div class="content">
+						<span>修改GPS跟踪频段</span>
+							<div class="mui-input-row mui-checkbox mui-left selectAll">
+									<label>全选</label>
+									<input name="checkbox" value="item.value" type="checkbox">
+							</div>
+						<hr>
+						<ul>
+							<li>
+								<div class="mui-input-row mui-checkbox mui-left" v-for="item in SatelliteNumber.gps">
+									<label>{{item.label}}</label>
+									<input name="checkbox" value="item.value" type="checkbox">
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+
+
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script src="../js/onlineSettings.js"></script>
+</body>
 
 </html>
