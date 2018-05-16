@@ -1,26 +1,5 @@
 var vm = new Vue({
   el: '#app',
-  computed: {
-    allChecked: {
-      get: function () {
-        return this.checkedCount === this.SatelliteNumber.gps.length;
-      },
-      set: function (value) {
-        if (value) {
-          this.gpsChecked = this.SatelliteNumber.gps.map(function (item) {
-            return item.value;
-          });
-        } else {
-          this.gpsChecked = [];
-        }
-      }
-    },
-    checkedCount: {
-      get: function () {
-        return this.gpsChecked.length;
-      }
-    }
-  },
   data: {
     deviceID: 'SG607A117233388',
     mode: 0,
@@ -58,6 +37,7 @@ var vm = new Vue({
     baudRateValue: '9600',
     protocolValue: 0,
     gpsChecked: [],
+    currentIndex: '',
     differenceFormat: [
       {
         label: 'RTCA',
@@ -833,7 +813,793 @@ var vm = new Vue({
           value: 'E5-ALIBOC'
         }
       ]
-    }
+    },
+    Satellite: [
+      {
+        name: 'gps',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          },
+          {
+            label: '6',
+            value: 6
+          },
+          {
+            label: '7',
+            value: 7
+          },
+          {
+            label: '8',
+            value: 8
+          },
+          {
+            label: '9',
+            value: 9
+          },
+          {
+            label: '10',
+            value: 10
+          },
+          {
+            label: '11',
+            value: 11
+          },
+          {
+            label: '12',
+            value: 12
+          },
+          {
+            label: '13',
+            value: 13
+          },
+          {
+            label: '14',
+            value: 14
+          },
+          {
+            label: '15',
+            value: 15
+          },
+          {
+            label: '16',
+            value: 16
+          },
+          {
+            label: '17',
+            value: 17
+          },
+          {
+            label: '18',
+            value: 18
+          },
+          {
+            label: '19',
+            value: 19
+          },
+          {
+            label: '20',
+            value: 20
+          },
+          {
+            label: '21',
+            value: 21
+          },
+          {
+            label: '22',
+            value: 22
+          },
+          {
+            label: '23',
+            value: 23
+          },
+          {
+            label: '24',
+            value: 24
+          },
+          {
+            label: '25',
+            value: 25
+          },
+          {
+            label: '26',
+            value: 26
+          },
+          {
+            label: '27',
+            value: 27
+          },
+          {
+            label: '28',
+            value: 28
+          },
+          {
+            label: '29',
+            value: 29
+          },
+          {
+            label: '30',
+            value: 30
+          },
+          {
+            label: '31',
+            value: 31
+          },
+          {
+            label: '32',
+            value: 32
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A'
+          },
+          {
+            label: 'L1-P',
+            value: 'L1-P'
+          },
+          {
+            label: 'L2-C/A',
+            value: 'L2-C/A'
+          },
+          {
+            label: 'L2-P',
+            value: 'L2-P'
+          },
+          {
+            label: 'L5',
+            value: 'L5'
+          }
+        ]
+      },
+      {
+        name: 'bds',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          },
+          {
+            label: '6',
+            value: 6
+          },
+          {
+            label: '7',
+            value: 7
+          },
+          {
+            label: '8',
+            value: 8
+          },
+          {
+            label: '9',
+            value: 9
+          },
+          {
+            label: '10',
+            value: 10
+          },
+          {
+            label: '11',
+            value: 11
+          },
+          {
+            label: '12',
+            value: 12
+          },
+          {
+            label: '13',
+            value: 13
+          },
+          {
+            label: '14',
+            value: 14
+          },
+          {
+            label: '15',
+            value: 15
+          },
+          {
+            label: '16',
+            value: 16
+          },
+          {
+            label: '17',
+            value: 17
+          },
+          {
+            label: '18',
+            value: 18
+          },
+          {
+            label: '19',
+            value: 19
+          },
+          {
+            label: '20',
+            value: 20
+          },
+          {
+            label: '21',
+            value: 21
+          },
+          {
+            label: '22',
+            value: 22
+          },
+          {
+            label: '23',
+            value: 23
+          },
+          {
+            label: '24',
+            value: 24
+          },
+          {
+            label: '25',
+            value: 25
+          },
+          {
+            label: '26',
+            value: 26
+          },
+          {
+            label: '27',
+            value: 27
+          },
+          {
+            label: '28',
+            value: 28
+          },
+          {
+            label: '29',
+            value: 29
+          },
+          {
+            label: '30',
+            value: 30
+          },
+          {
+            label: '31',
+            value: 31
+          },
+          {
+            label: '32',
+            value: 32
+          }
+        ],
+        track: [
+          {
+            label: 'B1',
+            value: 'B1'
+          },
+          {
+            label: 'B2',
+            value: 'B2'
+          },
+          {
+            label: 'B3',
+            value: 'B3'
+          }
+        ]
+      },
+      {
+        name: 'sbas',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          },
+          {
+            label: '6',
+            value: 6
+          },
+          {
+            label: '7',
+            value: 7
+          },
+          {
+            label: '8',
+            value: 8
+          },
+          {
+            label: '9',
+            value: 9
+          },
+          {
+            label: '10',
+            value: 10
+          },
+          {
+            label: '11',
+            value: 11
+          },
+          {
+            label: '12',
+            value: 12
+          },
+          {
+            label: '13',
+            value: 13
+          },
+          {
+            label: '14',
+            value: 14
+          },
+          {
+            label: '15',
+            value: 15
+          },
+          {
+            label: '16',
+            value: 16
+          },
+          {
+            label: '17',
+            value: 17
+          },
+          {
+            label: '18',
+            value: 18
+          },
+          {
+            label: '19',
+            value: 19
+          },
+          {
+            label: '20',
+            value: 20
+          },
+          {
+            label: '21',
+            value: 21
+          },
+          {
+            label: '22',
+            value: 22
+          },
+          {
+            label: '23',
+            value: 23
+          },
+          {
+            label: '24',
+            value: 24
+          },
+          {
+            label: '25',
+            value: 25
+          },
+          {
+            label: '26',
+            value: 26
+          },
+          {
+            label: '27',
+            value: 27
+          },
+          {
+            label: '28',
+            value: 28
+          },
+          {
+            label: '29',
+            value: 29
+          },
+          {
+            label: '30',
+            value: 30
+          },
+          {
+            label: '31',
+            value: 31
+          },
+          {
+            label: '32',
+            value: 32
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A'
+          },
+          {
+            label: 'L5',
+            value: 'L5'
+          }
+        ]
+      },
+      {
+        name: 'qzss',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A'
+          },
+          {
+            label: 'L1-SAIF',
+            value: 'L1-SAIF'
+          },
+          {
+            label: 'L2-C',
+            value: 'L2-C'
+          },
+          {
+            label: 'L5',
+            value: 'L5'
+          }
+        ]
+      },
+      {
+        name: 'glonass',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          },
+          {
+            label: '6',
+            value: 6
+          },
+          {
+            label: '7',
+            value: 7
+          },
+          {
+            label: '8',
+            value: 8
+          },
+          {
+            label: '9',
+            value: 9
+          },
+          {
+            label: '10',
+            value: 10
+          },
+          {
+            label: '11',
+            value: 11
+          },
+          {
+            label: '12',
+            value: 12
+          },
+          {
+            label: '13',
+            value: 13
+          },
+          {
+            label: '14',
+            value: 14
+          },
+          {
+            label: '15',
+            value: 15
+          },
+          {
+            label: '16',
+            value: 16
+          },
+          {
+            label: '17',
+            value: 17
+          },
+          {
+            label: '18',
+            value: 18
+          },
+          {
+            label: '19',
+            value: 19
+          },
+          {
+            label: '20',
+            value: 20
+          },
+          {
+            label: '21',
+            value: 21
+          },
+          {
+            label: '22',
+            value: 22
+          },
+          {
+            label: '23',
+            value: 23
+          },
+          {
+            label: '24',
+            value: 24
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A'
+          },
+          {
+            label: 'L1-P',
+            value: 'L1-P'
+          },
+          {
+            label: 'L2-C/A',
+            value: 'L2-C/A'
+          },
+          {
+            label: 'L2-P',
+            value: 'L2-P'
+          },
+          {
+            label: 'L3',
+            value: 'L3'
+          }
+        ]
+      },
+      {
+        name: 'galileo',
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1
+          },
+          {
+            label: '2',
+            value: 2
+          },
+          {
+            label: '3',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4
+          },
+          {
+            label: '5',
+            value: 5
+          },
+          {
+            label: '6',
+            value: 6
+          },
+          {
+            label: '7',
+            value: 7
+          },
+          {
+            label: '8',
+            value: 8
+          },
+          {
+            label: '9',
+            value: 9
+          },
+          {
+            label: '10',
+            value: 10
+          },
+          {
+            label: '11',
+            value: 11
+          },
+          {
+            label: '12',
+            value: 12
+          },
+          {
+            label: '13',
+            value: 13
+          },
+          {
+            label: '14',
+            value: 14
+          },
+          {
+            label: '15',
+            value: 15
+          },
+          {
+            label: '16',
+            value: 16
+          },
+          {
+            label: '17',
+            value: 17
+          },
+          {
+            label: '18',
+            value: 18
+          },
+          {
+            label: '19',
+            value: 19
+          },
+          {
+            label: '20',
+            value: 20
+          },
+          {
+            label: '21',
+            value: 21
+          },
+          {
+            label: '22',
+            value: 22
+          },
+          {
+            label: '23',
+            value: 23
+          },
+          {
+            label: '24',
+            value: 24
+          },
+          {
+            label: '25',
+            value: 25
+          },
+          {
+            label: '26',
+            value: 26
+          },
+          {
+            label: '27',
+            value: 27
+          },
+          {
+            label: '28',
+            value: 28
+          },
+          {
+            label: '29',
+            value: 29
+          },
+          {
+            label: '30',
+            value: 30
+          },
+          {
+            label: '31',
+            value: 31
+          },
+          {
+            label: '32',
+            value: 32
+          },
+          {
+            label: '33',
+            value: 33
+          },
+          {
+            label: '34',
+            value: 34
+          },
+          {
+            label: '35',
+            value: 35
+          },
+          {
+            label: '36',
+            value: 36
+          }
+        ],
+        track: [
+          {
+            label: 'E1',
+            value: 'E1'
+          },
+          {
+            label: 'E5',
+            value: 'E5'
+          },
+          {
+            label: 'E6',
+            value: 'E6'
+          },
+          {
+            label: 'E5-ALIBOC',
+            value: 'E5-ALIBOC'
+          }
+        ]
+      }
+    ],
+    currentSatellite: {
+      name: '',
+      SatelliteNumber: [],
+      track: []
+    },
+    currentSatelliteName: ''
   },
 
   methods: {
@@ -860,18 +1626,20 @@ var vm = new Vue({
 	        _this.checkboxModel.push(item.id);
 	      });
 	    }
-	  }
-  },
-  wacth: {
-	 'checkboxModel': {
-      handler: function (val, oldVal) {
-        if (this.checkboxModel.length === this.checkboxData.length) {
-          this.checked = true;
-        } else {
-          this.checked = false;
-        }
-      },
-      deep: true
+    },
+    setSatelliteNum: function (index) {
+      console.log(index);
+      this.currentSatellite = this.Satellite[index];
+      this.currentSatelliteName = this.currentSatellite.name;
+      console.log(JSON.stringify(this.currentSatellite));
+      mui('#SetSatelliteNum').popover('toggle');
+    },
+    settrack: function (index) {
+      console.log(index);
+      this.currentSatellite = this.Satellite[index];
+      this.currentSatelliteName = this.currentSatellite.name;
+      console.log(JSON.stringify(this.currentSatellite));
+      mui('#setTrack').popover('toggle');
     }
   },
   created: function () {
@@ -895,5 +1663,26 @@ var vm = new Vue({
         .getElementById('item4mobile')
         .setAttribute('style', 'height:' + resolutionHeight + 'px;');
     });
+  },
+  computed: {
+    allChecked: {
+      get: function () {
+        return this.checkedCount === this.SatelliteNumber.gps.length;
+      },
+      set: function (value) {
+        if (value) {
+          this.gpsChecked = this.SatelliteNumber.gps.map(function (item) {
+            return item.value;
+          });
+        } else {
+          this.gpsChecked = [];
+        }
+      }
+    },
+    checkedCount: {
+      get: function () {
+        return this.gpsChecked.length;
+      }
+    }
   }
 });

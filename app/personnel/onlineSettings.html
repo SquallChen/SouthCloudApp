@@ -471,6 +471,29 @@
 						<!--**************************tab3****************************-->
 						<div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
 							<ul>
+								<li v-for="(item,index) in Satellite">
+									<span class="satellite-title">卫星系统</span>
+									<div class="satellite-set">
+										<span>{{item.name}}</span>
+										<div>
+											<div class="mui-switch mui-active">
+												<div class="mui-switch-handle"></div>
+											</div>
+											<a @click="setSatelliteNum(index)">设置卫星号</a>
+										</div>
+									</div>
+									<span class="satellite-title">跟踪状态</span>
+									<div class="tracking-status">
+										<span>L1-C/A|L1-P|L2-C/A|L5</span>
+										<a @click="settrack(index)">修改跟踪频段</a>
+										<!-- <a href="#gps-track">修改跟踪频段</a> -->
+									</div>
+								</li>
+								<button class="ClearEphemeris">清除星历</button>
+							</ul>
+						</div>
+						<!-- <div id="item3mobile" class="mui-slider-item mui-control-content mui-active">
+							<ul>
 								<li>
 									<span class="satellite-title">卫星系统</span>
 									<div class="satellite-set">
@@ -573,10 +596,9 @@
 										<a href="#galileo-track">修改跟踪频段</a>
 									</div>
 								</li>
-
 								<button class="ClearEphemeris">清除星历</button>
 							</ul>
-						</div>
+						</div> -->
 						<!--**************************tab4****************************-->
 						<div id="item4mobile" class="mui-slider-item mui-control-content">
 							<ul class="mui-table-view">
@@ -590,7 +612,29 @@
 			</div>
 
 			<!--**************************设置卫星号弹窗****************************-->
-			<div id="gps" class="mui-popover Satellite">
+			<div id="SetSatelliteNum" class="mui-popover Satellite">
+				<div class="content">
+					<span>设置{{currentSatelliteName}}卫星号
+				</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+						<label>全选</label>
+						<input type="checkbox" v-model="allChecked">
+					</div>
+					<hr>
+					<ul>
+						<li>
+							<div class="mui-input-row mui-checkbox mui-left" v-for="data in currentSatellite.SatelliteNumber">
+								<label>{{data.label}}</label>
+								<input name="checkbox" type="checkbox" :value="data.value" v-model="gpsChecked">
+							</div>
+						</li>
+					</ul>
+					<div class="btn">
+						<button>取消</button><button>确认</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="gps" class="mui-popover Satellite">
 				<div class="content">
 					<span>设置GPS卫星号
 				</span>
@@ -717,10 +761,31 @@
 						<button>取消</button><button>确认</button>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 			<!--**************************设置跟踪频段****************************-->
-			<div id="gps-track" class="mui-popover track">
+			<div id="setTrack" class="mui-popover track">
+				<div class="content">
+					<span>修改{{currentSatelliteName}}跟踪频段</span>
+					<div class="mui-input-row mui-checkbox mui-left selectAll">
+						<label>全选</label>
+						<input name="checkbox" value="item.value" type="checkbox">
+					</div>
+					<hr>
+					<ul>
+						<li>
+							<div class="mui-input-row mui-checkbox mui-left" v-for="item in currentSatellite.track">
+								<label>{{item.label}}</label>
+								<input name="checkbox" value="item.value" type="checkbox">
+							</div>
+						</li>
+					</ul>
+					<div class="btn">
+						<button>取消</button><button>确认</button>
+					</div>
+				</div>
+			</div>
+			<!-- <div id="gps-track" class="mui-popover track">
 				<div class="content">
 					<span>修改GPS跟踪频段</span>
 					<div class="mui-input-row mui-checkbox mui-left selectAll">
@@ -845,7 +910,7 @@
 						<button>取消</button><button>确认</button>
 					</div>
 				</div>
-			</div>
+			</div> -->
 
 		</div>
 		<script src="../../js/mui.min.js"></script>
