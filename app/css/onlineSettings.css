@@ -275,7 +275,44 @@
 				margin-right: 20px;
 				text-align:center;
 			}
-
+			.Satellite .btn,.track .btn{
+				display: flex;
+			}
+			.Satellite .btn button,.track .btn button{
+				color:black;
+			}
+			.track {
+				top: 50% !important;
+				left: 50% !important;
+				width: 290px;
+				position: fixed;
+				transform: translate(-50%, -50%);
+				-webkit-transform: translate(-50%, -50%);
+			}
+			.track ul li {
+				width:100%;
+				display: block;
+				padding-left: 10px;
+			}
+			.track ul li div{
+				width:100%;
+				text-align: left;
+			}
+			.track ul li div:after{
+				width: 100%;
+				height: 1px;
+				content: '';
+				position: relative;
+				display: block;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
+			}
+			.track div>span{
+				display: block;
+				padding: 10px;
+				
+			}
 			.mui-scroll {
 				background: white;
 			}

@@ -1,5 +1,26 @@
 var vm = new Vue({
   el: '#app',
+  computed: {
+    allChecked: {
+      get: function () {
+        return this.checkedCount === this.SatelliteNumber.gps.length;
+      },
+      set: function (value) {
+        if (value) {
+          this.gpsChecked = this.SatelliteNumber.gps.map(function (item) {
+            return item.value;
+          });
+        } else {
+          this.gpsChecked = [];
+        }
+      }
+    },
+    checkedCount: {
+      get: function () {
+        return this.gpsChecked.length;
+      }
+    }
+  },
   data: {
     deviceID: 'SG607A117233388',
     mode: 0,
@@ -36,6 +57,7 @@ var vm = new Vue({
     powerPositionValue: 'high',
     baudRateValue: '9600',
     protocolValue: 0,
+    gpsChecked: [],
     differenceFormat: [
       {
         label: 'RTCA',
@@ -826,6 +848,30 @@ var vm = new Vue({
     },
     changeLink: function (index) {
       this.linktypevalue = index;
+    },
+ 		checkedAll: function () {
+	    var _this = this;
+	    console.log(_this.checkboxModel);
+	    if (this.checked) { // 实现反选
+	      _this.checkboxModel = [];
+	    } else { // 实现全选
+	      _this.checkboxModel = [];
+	      _this.checkboxData.forEach(function (item) {
+	        _this.checkboxModel.push(item.id);
+	      });
+	    }
+	  }
+  },
+  wacth: {
+	 'checkboxModel': {
+      handler: function (val, oldVal) {
+        if (this.checkboxModel.length === this.checkboxData.length) {
+          this.checked = true;
+        } else {
+          this.checked = false;
+        }
+      },
+      deep: true
     }
   },
   created: function () {
