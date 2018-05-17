@@ -1595,6 +1595,14 @@ var vm = new Vue({
         ]
       }
     ],
+    language:[
+        {name:'中文',value:'chinese'},
+        {name:'英文',value:'english'},
+        {name:'俄文',value:'russian'},
+        {name:'西班牙文',value:'spanish'},
+        {name:'韩文',value:'korean'},
+        {name:'葡萄牙文',value:'portuguese'}
+        ],
     currentSatellite: {
       name: '',
       SatelliteNumber: [],

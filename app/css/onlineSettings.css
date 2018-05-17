@@ -366,7 +366,113 @@
 				margin-bottom: 10px;
 				font-size: 20px;
 			}
-
+			#item4mobile ul{
+				padding-top: 10px;
+			}
+			#item4mobile ul li{
+				padding: 0;
+				flex-wrap: wrap;
+			}
+			#item4mobile>ul>li:nth-child(3){
+				align-items: flex-start;
+			}
+			#item4mobile .otherTitle{
+				text-align: right;
+				display: inline-block;
+				width: 25%;
+				padding: 12px 15px 12px 15px;
+				font-size: 15px;
+				font-weight: 500;
+			}
+			#item4mobile .otherContent{
+				width:74%;
+				position: relative;
+				margin-right: 0;
+			}
+			#item4mobile .btn {
+				padding-top: 10px;;
+				font-size: 11px;
+				display: flex;
+				justify-content: space-between;
+				text-align: center;
+			}
+			#item4mobile .btn div{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+				width: 25%;
+			}
+			#item4mobile .btn a{
+				display:block;
+				width:48px;
+				height: 48px;
+				background: #ddd;
+				margin-bottom: 2px;
+			}
+			#item4mobile ul li .positionAdjust{
+				position: relative;
+				top:-24px;
+			}
+			#item4mobile select{
+				padding: 6px 12px;
+			}
+			#item4mobile .select .down {
+				width: 10px;
+				height: 7px;
+				position: absolute;
+				top: 16px;
+				right: 15px;
+			}
+			#item4mobile .radioModule li{
+				border-bottom: 1px solid #ddd;
+				border-left: 1px solid #ddd;
+				border-right: 1px solid #ddd;
+				padding: 4px 0;
+				margin-bottom: 0;
+				height: 46px;
+			}
+			#item4mobile .radioModule li:nth-child(1){
+				border-top: 1px solid #ddd;
+				font-weight: 500;
+			}
+			#item4mobile .radioModule li span{
+				display: inline-block;
+				width: 33.3%;
+				text-align: center;
+			}
+			#item4mobile .otherContent .mainTitle{
+				margin-right: 10px;
+				text-align: right;
+			}
+			#item4mobile .otherContent .deadline{
+				color:green;
+				font-weight: 500;
+			}
+			#item4mobile .update{
+				position: relative;
+				margin-left:25% ;
+				top:-6px;
+				display: flex;
+				align-items: center;
+			}
+			#item4mobile .remoteUpdate{
+				position: relative;
+				display: flex;
+				align-items: center;
+			}
+			#item4mobile .update .mainTitle,#item4mobile .remoteUpdate .mainTitle{
+				width:70px;
+			}
+			#item4mobile .update button,#item4mobile .remoteUpdate button{
+				54px;
+			}
+			#item4mobile .update input,#item4mobile .remoteUpdate input{
+				flex: 1;
+				padding: 6px 8px;
+				height: 36px;
+				margin-right: 8px;
+			}
 			#item1mobile,
 			#item2mobile,
 			#item3mobile,
@@ -449,4 +555,33 @@
 			.mui-bar-nav.mui-bar .mui-icon {
 				padding-top: 24px;
 				padding-bottom: 25px;
+			}
+			/*滑块开关样式重置*/
+			.mui-switch{
+				width: 56px;
+				height: 24px;
+			}
+			.mui-switch .mui-switch-handle {
+				top: -2px;
+				left: -8px;
+				width: 23px;
+				height: 23px;
+				}
+			.mui-switch.mui-active:before {
+				left: 10px;
+				content: 'On';
+				}
+			.mui-switch:before {
+				top: 1px;
+				right: 6px;
+				content: 'Off';
+				}
+			.mui-switch.mui-active .mui-switch-handle {
+				-webkit-transform: translate(43px,0) !important;
+				transform: translate(43px,0) !important;
+				}
+			
+
+			.mui-table-view-cell:after{
+				height: 0;
 			}
