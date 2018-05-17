@@ -32,9 +32,12 @@
 			}
 			
 			.filter{
+				height: 125px;
 				margin-bottom: 20px;
-				padding-top: 20px;
-				padding-left: 20px;
+				padding-top: 28px;
+				padding-left: 25px;
+				background: url('../../public/img/me_bg.png') no-repeat;
+				background-size: 100% 125px;
 			}
 			.filter ul li{
 				display: flex;
@@ -43,16 +46,21 @@
 				flex-wrap: wrap;
 			}
 			.filter ul li img{
-				width: 68px;
-				height: 68px;
+				width: 40px;
+				height: 40px;
+				border-radius: 4px;
+				border: 1px solid #0547ab;
 			}
 			.filter ul li span{
+				color: white;
+				font-size: 13px;
 				display: block;
-				height: 23px;
+				line-height: 18px;
 			}
 			.filter ul li div{
 				padding-left: 10px;
 				font-size: 14px;
+				margin-right: 15px;
 			}
 			.filter .userentry {
 				border-bottom: 1px solid #ccc;
@@ -70,20 +78,14 @@
 			}
 			
 			.mui-bar-nav.mui-bar .mui-icon {
-				margin-right: -10px;
+				/*margin-right: -10px;
 				margin-left: -10px;
 				padding-right: 10px;
 				padding-left: 10px;
 				padding-top: 23px;
 				padding-bottom: 10px;
 				font-weight: bold;
-				font-size: 40px;
-			}
-			
-			.mui-bar .mui-title {
-				right: 50px;
-				left: 50px;
-				
+				font-size: 40px;*/
 			}
 			
 			.mui-content {
@@ -269,6 +271,12 @@
 			.mui-popover .mui-popover-arrow:after{
 				background: white;
 			}
+			.mui-bar-nav{
+				box-shadow: none;
+			}
+			.mui-bar-nav~.mui-content{
+				padding-top: 73px;
+			}
 			#topPopover .mui-table-view-cell a span{
 				display: inline-block;
 				width: 100%;
@@ -276,16 +284,35 @@
 			}
 			.btn a{
 				width:100%;
-				font-size: 20px;
+				font-size: 13px;
 				display: block;
-				padding: 16px 16px;
+				padding: 9px 0;
 				position: relative;
+				color: #333;
+				/*border-top:1px solid #ccc;
+				border-bottom:1px solid #ccc;*/
+				background: #f2f2f2;
+				line-height: 20px;
+			}
+			.btn a:after{
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				top: 10px;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+				z-index: 1;
 			}
 			.btn a span{
-				font-size: 18px;
+				font-size: 12px;
 				color: #999;
 				position: absolute;
-				right:20px;
+				right:15px;
+				line-height: 20px;
 			}
 		</style>
 	</head>
@@ -293,7 +320,7 @@
 	<body>
 		<div id="vm">
 			<header class="mui-bar mui-bar-nav">
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right" href="#topPopover"></a>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
 				<h1 class="mui-title">南方云</h1>
 			</header>
 			<div class="mui-content">
@@ -302,20 +329,20 @@
 						<li href="../personnel/userinfo.html" class="filter-li">
 							<img src="../../public/img/01.jpg" alt="" class="img" />
 							<div>
-								<span>张三</span>
+								<span>南方云</span>
 								<span>zhangsan</span>
-								<span>白云组</span>
+							</div>
+							<div>
+								<span>天河组</span>
 							</div>
 						</li>
 					</ul>
 				</div>
-				<div class="usertitle"></div>
 				<div class="btn">
 					<a>关联设备
 					<span>点击检测关联设备</span>
 					</a>
 				</div>
-				<div class="usertitle"></div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in userdata">

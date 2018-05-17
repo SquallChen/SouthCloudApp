@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'icomoon';
-  src:  url('../fonts/icomoon.eot?x6cwra');
-  src:  url('../fonts/icomoon.eot?x6cwra#iefix') format('embedded-opentype'),
-    url('../fonts/icomoon.ttf?x6cwra') format('truetype'),
-    url('../fonts/icomoon.woff?x6cwra') format('woff'),
-    url('../fonts/icomoon.svg?x6cwra#icomoon') format('svg');
+  src:  url('../fonts/icomoon.eot?7ei537');
+  src:  url('../fonts/icomoon.eot?7ei537#iefix') format('embedded-opentype'),
+    url('../fonts/icomoon.ttf?7ei537') format('truetype'),
+    url('../fonts/icomoon.woff?7ei537') format('woff'),
+    url('../fonts/icomoon.svg?7ei537#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -24,14 +24,17 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-edit:before {
+  content: "\e908";
+}
 .icon-map-selected:before {
   content: "\e904";
 }
-.icon-user-selected:before {
-  content: "\e905";
-}
 .icon-equipment-selected:before {
   content: "\e906";
+}
+.icon-user-selected:before {
+  content: "\e905";
 }
 .icon-userlist-selected:before {
   content: "\e907";
@@ -48,4 +51,3 @@
 .icon-userlist:before {
   content: "\e903";
 }
-

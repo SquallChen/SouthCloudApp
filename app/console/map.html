@@ -23,19 +23,32 @@
 				margin: 0;
 			}
 			.mui-bar-nav.mui-bar .mui-icon {
-				width: 40px;
+				/*width: 40px;
 				height: 73px;
 				display: flex;
 				align-items: center;
 				justify-content: flex-end;
 				margin: 0;
 				padding-left: 0;
-				padding-right: 0;
+				padding-right: 0;*/
 			}
 			.mui-bar-nav.mui-bar :nth-child(1){
-				font-size: 40px;
+				/*font-size: 40px;*/
 				position: relative;
-				left:8px;
+				/*right:10px;*/
+			}
+			.mui-bar-nav.mui-bar :nth-child(2){
+				font-size: 20px;
+				padding:10px 10px;
+				position:relative;
+				top:26px;
+				left:-10px;
+			}
+			#topPopover1 .mui-popover-arrow{
+				left:146px !important;
+			}
+			#topPopover2 .mui-popover-arrow{
+				left:205px !important;
 			}
 			.s-map-wrap{
 				padding-top: 73px;
@@ -151,7 +164,7 @@
 	<body>
 		<div id="app">
 			<header class="mui-bar mui-bar-nav">
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right" href="#topPopover1"></a>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>
 				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover2"></a>
 				<h1 class="mui-title">南方云</h1>
 			</header>
