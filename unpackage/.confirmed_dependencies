@@ -1488,7 +1488,8 @@
 			"app/equipment/equipmentFilter.html",
 			"app/personnel/realTimeTrack.html",
 			"app/personnel/historicalTrack.html",
-			"app/personnel/currentLocation.html"
+			"app/personnel/currentLocation.html",
+			"app/personnel/onlineSettings.html"
 		]
 	},
 	"app/console/me.html": {

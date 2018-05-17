@@ -78,6 +78,7 @@
 			.equipmentTitle {
 				text-align: center;
 				line-height: 60px;
+				height: 60px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -478,6 +479,7 @@
 			#item3mobile,
 			#item4mobile {
 				overflow: auto;
+				padding-bottom: 30px;
 			}
 
 			.active {
@@ -493,12 +495,24 @@
 			.mui-content {
 				background: white;
 				position: relative;
+				display: flex;
+				flex-direction: column;
 			}
-
+			.mui-slider{
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+			}
 			.mui-control-content {
 				background-color: white;
 			}
-
+			.mui-slider .mui-slider-group{
+				flex: 1;
+			}
+			.mui-slider .mui-slider-group>div{
+				height: 100%;
+				overflow: auto;
+			}
 			.mui-control-content .mui-loading {
 				margin-top: 50px;
 			}
