@@ -36,7 +36,8 @@ var vm = new Vue({
     powerPositionValue: 'high',
     baudRateValue: '9600',
     protocolValue: 0,
-    gpsChecked: [],
+    satelliteChecked: [],
+    channelsChecked:[],
     currentIndex: '',
     differenceFormat: [
       {
@@ -1615,6 +1616,7 @@ var vm = new Vue({
     changeLink: function (index) {
       this.linktypevalue = index;
     },
+    // 全选方法
  		checkedAll: function () {
 	    var _this = this;
 	    console.log(_this.checkboxModel);
@@ -1627,13 +1629,16 @@ var vm = new Vue({
 	      });
 	    }
     },
+    // 点击按钮动态加载对应的数据再渲染页面
     setSatelliteNum: function (index) {
       console.log(index);
       this.currentSatellite = this.Satellite[index];
       this.currentSatelliteName = this.currentSatellite.name;
       console.log(JSON.stringify(this.currentSatellite));
+      // 控制打开遮罩层
       mui('#SetSatelliteNum').popover('toggle');
     },
+    // 点击按钮动态加载对应的数据再渲染页面
     settrack: function (index) {
       console.log(index);
       this.currentSatellite = this.Satellite[index];
@@ -1665,24 +1670,49 @@ var vm = new Vue({
     });
   },
   computed: {
-    allChecked: {
+    // 设置卫星号复选框全选方法
+    satelliteAllChecked: {
       get: function () {
-        return this.checkedCount === this.SatelliteNumber.gps.length;
+      	//当前选中的数据长度等于该数据的总长度（全选状态）
+        return this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length;
       },
       set: function (value) {
         if (value) {
-          this.gpsChecked = this.SatelliteNumber.gps.map(function (item) {
+          this.satelliteChecked = this.currentSatellite.SatelliteNumber.map(function (item) {
             return item.value;
           });
         } else {
-          this.gpsChecked = [];
+          this.satelliteChecked = [];
         }
       }
     },
-    checkedCount: {
+    satelliteCheckedCount: {
       get: function () {
-        return this.gpsChecked.length;
+      	//返回选中的数据总长度
+        return this.satelliteChecked.length;
       }
-    }
+    },
+    // 修改跟踪频段复选框全选方法
+    channelsAllChecked: {
+      get: function () {
+      	//当前选中的数据长度等于该数据的总长度（全选状态）
+        return this.channelsCheckedCount === this.currentSatellite.track.length;
+      },
+      set: function (value) {
+        if (value) {
+          this.channelsChecked = this.currentSatellite.track.map(function (item) {
+            return item.value;
+          });
+        } else {
+          this.channelsChecked = [];
+        }
+      }
+    },
+    channelsCheckedCount: {
+      get: function () {
+      	//返回选中的数据总长度
+        return this.channelsChecked.length;
+      }
+    },
   }
 });

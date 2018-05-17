@@ -618,14 +618,14 @@
 				</span>
 					<div class="mui-input-row mui-checkbox mui-left selectAll">
 						<label>全选</label>
-						<input type="checkbox" v-model="allChecked">
+						<input type="checkbox" v-model="satelliteAllChecked">
 					</div>
 					<hr>
 					<ul>
 						<li>
 							<div class="mui-input-row mui-checkbox mui-left" v-for="data in currentSatellite.SatelliteNumber">
 								<label>{{data.label}}</label>
-								<input name="checkbox" type="checkbox" :value="data.value" v-model="gpsChecked">
+								<input name="checkbox" type="checkbox" :value="data.value" v-model="satelliteChecked">
 							</div>
 						</li>
 					</ul>
@@ -769,14 +769,14 @@
 					<span>修改{{currentSatelliteName}}跟踪频段</span>
 					<div class="mui-input-row mui-checkbox mui-left selectAll">
 						<label>全选</label>
-						<input name="checkbox" value="item.value" type="checkbox">
+						<input name="checkbox" value="item.value" type="checkbox" v-model="channelsAllChecked"> 
 					</div>
 					<hr>
 					<ul>
 						<li>
 							<div class="mui-input-row mui-checkbox mui-left" v-for="item in currentSatellite.track">
 								<label>{{item.label}}</label>
-								<input name="checkbox" value="item.value" type="checkbox">
+								<input name="checkbox" :value="item.value" type="checkbox" v-model="channelsChecked">
 							</div>
 						</li>
 					</ul>
