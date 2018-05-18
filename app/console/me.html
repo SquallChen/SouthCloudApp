@@ -20,7 +20,7 @@
 				color: #000;
 			}
 			.filter{
-				width:100%;usertitle
+				width:100%;
 			}
 			.filter a {
 				display: block;
@@ -39,6 +39,7 @@
 				background: url('../../public/img/me_bg.png') no-repeat;
 				background-size: 100% 125px;
 			}
+
 			.filter ul li{
 				display: flex;
 				align-items: center;
@@ -284,24 +285,33 @@
 			}
 			.btn a{
 				width:100%;
-				font-size: 13px;
+				font-size: 14px;
 				display: block;
-				padding: 9px 0;
+				padding: 9px 0 9px 10px;
 				position: relative;
 				color: #333;
-				/*border-top:1px solid #ccc;
-				border-bottom:1px solid #ccc;*/
 				background: #f2f2f2;
 				line-height: 20px;
 			}
-			.btn a:after{
+			.btn:after{
 				width: 100%;
 				height: 1px;
 				content: '';
 				display: block;
 				padding: 0;
 				position: relative;
-				top: 10px;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+				z-index: 1;
+			}
+			.btn:before{
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
 				-webkit-transform: scaleY(.5);
 				transform: scaleY(.5);
 				background-color: #ccc;
