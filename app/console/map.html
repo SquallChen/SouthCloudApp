@@ -1,342 +1,535 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>南方云</title>
-		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
-		<link href="../../css/ol.css" rel="stylesheet" />
-		<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
-		<link href="../../css/map.css" rel="stylesheet" />
-		<script src="../js/jquery.js"></script>
-		<style>
-			body {
-				background: #fff;
-				font-size: 20px;
-			}
-			ul{
-				list-style: none;
-				padding: 0;
-				margin: 0;
-			}
-			.mui-bar-nav.mui-bar .mui-icon {
-				/*width: 40px;
-				height: 73px;
-				display: flex;
-				align-items: center;
-				justify-content: flex-end;
-				margin: 0;
-				padding-left: 0;
-				padding-right: 0;*/
-			}
-			.mui-bar-nav.mui-bar :nth-child(1){
-				/*font-size: 40px;*/
-				position: relative;
-				/*right:10px;*/
-			}
-			.mui-bar-nav.mui-bar :nth-child(2){
-				font-size: 20px;
-				padding:10px 10px;
-				position:relative;
-				top:26px;
-				left:-10px;
-			}
-			#topPopover1 .mui-popover-arrow{
-				left:146px !important;
-			}
-			#topPopover2 .mui-popover-arrow{
-				left:205px !important;
-			}
-			.s-map-wrap{
-				padding-top: 73px;
-			}
-			
-						#topPopover .mui-table-view-cell a {
-				display: flex;
-				align-items: center;
-				font-size: 20px;
-			}
-			
-			#topPopover .mui-table-view-cell a img {
-				margin-right: 20px;
-			}
-			
-			#topPopover .mui-table-view-cell {
-				border-bottom: 1px solid #706f71;
-			}
-			
-			.mui-popover {
-				height: 300px;
-			}
-			
-			.mui-popover {
-				width: 180px;
-				height: 166px;
-				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-				background: white;
-			}
-			#topPopover2{
-				width: 280px;
-				height: 278px;
-			}
-			#topPopover2 .mui-scroll-wrapper,#topPopover2 .mui-scroll-wrapper .mui-table-view-cell{
-				background: white;
-			}
-			#topPopover2 ul li{
-				padding: 0;
-				border-bottom: 1px solid #ccc;
-			}
-			#topPopover2 ul :nth-child(4){
-				display: flex;
-				padding-top:60px;
-			}
-			#topPopover2 ul li span{
-				display: block;
-			}
-			#topPopover2 ul li div{
-				text-align: center;
-			}
-			#topPopover2 ul li div button,#topPopover2 ul li button{
-				margin-right: 15px;
-				background: #ccc;
-				color:white;
-				width:80px;
-				margin-bottom: 10px;
-			}
-			#topPopover2 ul li>button{
-				height: 46px;
-				width: 50%;
-				margin:0;
-				border-radius: 0;
-				border: none;
-			}
-			#topPopover2 ul li div .active,	#topPopover2 ul li .active{
-				background: #0b60de;
-			}
-			#topPopover2 .group_title{
-				font-size: 13px;
-				color:#999;
-				padding-left: 5px;
-				padding-top: 2px;
-			}
-			#topPopover2 .group{
-				padding-left: 20px;
-				padding-top: 2px;
-				padding-bottom: 6px;
-			}
-			#topPopover2 .mui-scroll-wrapper{
-				border-radius: 0;
-			}
-			.mui-popover .mui-table-view{
-				background: white;;
-			}
-			.mui-backdrop {
-				background: transparent;
-			}
-			
-			.mui-popover .mui-scroll-wrapper {
-				margin: 0;
-			}
-			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
-			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
-			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
-			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
-				border-bottom-left-radius: 0;
-				border-bottom-right-radius: 0;
-				border-top-left-radius: 0;
-				border-top-right-radius: 0;
-			}
-			.mui-popover .mui-popover-arrow:after{
-				background: white;
-			}
-			#topPopover1 .mui-table-view-cell {
-				border-bottom: 1px solid #ddd;
-			}
-			.mui-popover .mui-table-view{
-				border-radius: 0;
-			}
-		</style>
-	</head>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>南方云</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<link href="../../css/input.css" rel="stylesheet" />
+	<link href="../../css/ol.css" rel="stylesheet" />
+	<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
+	<link href="../../css/map.css" rel="stylesheet" />
+	<script src="../js/jquery.js"></script>
+	<style>
+		body {
+			background: #fff;
+			font-size: 20px;
+		}
 
-	<body>
-		<div id="app">
-			<header class="mui-bar mui-bar-nav">
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover2"></a>
-				<h1 class="mui-title">南方云</h1>
-			</header>
-			<div class="mui-content">
-				<div class="s-map-wrap">
-					
-					<div style="height: 100%;" id="map" class="map"> </div>
-				</div>
+		ul {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+
+		.mui-bar-nav.mui-bar :nth-child(1) {
+			position: relative;
+		}
+
+		.mui-bar-nav.mui-bar :nth-child(2) {
+			font-size: 20px;
+			padding: 10px 10px;
+			position: relative;
+			top: 26px;
+			left: -10px;
+		}
+
+		#topPopover1 .mui-popover-arrow {
+			left: 146px !important;
+		}
+
+		#topPopover2 .mui-popover-arrow {
+			left: 205px !important;
+		}
+
+		.s-map-wrap {
+			padding-top: 73px;
+		}
+
+		#topPopover .mui-table-view-cell a {
+			display: flex;
+			align-items: center;
+			font-size: 20px;
+		}
+
+		#topPopover .mui-table-view-cell a img {
+			margin-right: 20px;
+		}
+
+		#topPopover .mui-table-view-cell {
+			border-bottom: 1px solid #706f71;
+		}
+
+		.mui-popover {
+			height: 300px;
+		}
+
+		.mui-popover {
+			width: 180px;
+			height: 166px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+			background: white;
+		}
+
+		#topPopover2 {
+			width: 280px;
+			height: 278px;
+		}
+
+		#topPopover2 .mui-scroll-wrapper,
+		#topPopover2 .mui-scroll-wrapper .mui-table-view-cell {
+			background: white;
+		}
+
+		#topPopover2 ul li {
+			padding: 0;
+			border-bottom: 1px solid #ccc;
+		}
+
+		#topPopover2 ul :nth-child(4) {
+			display: flex;
+			padding-top: 60px;
+		}
+
+		#topPopover2 ul li span {
+			display: block;
+		}
+
+		#topPopover2 ul li div {
+			text-align: center;
+		}
+
+		#topPopover2 ul li div button,
+		#topPopover2 ul li button {
+			margin-right: 15px;
+			background: #ccc;
+			color: white;
+			width: 80px;
+			margin-bottom: 10px;
+		}
+
+		#topPopover2 ul li>button {
+			height: 46px;
+			width: 50%;
+			margin: 0;
+			border-radius: 0;
+			border: none;
+		}
+
+		#topPopover2 ul li div .active,
+		#topPopover2 ul li .active {
+			background: #0b60de;
+		}
+
+		#topPopover2 .group_title {
+			font-size: 13px;
+			color: #999;
+			padding-left: 5px;
+			padding-top: 2px;
+		}
+
+		#topPopover2 .group {
+			padding-left: 20px;
+			padding-top: 2px;
+			padding-bottom: 6px;
+		}
+
+		#topPopover2 .mui-scroll-wrapper {
+			border-radius: 0;
+		}
+
+		.mui-popover .mui-table-view {
+			background: white;
+			;
+		}
+
+		.mui-backdrop {
+			background: transparent;
+		}
+
+		.mui-popover .mui-scroll-wrapper {
+			margin: 0;
+		}
+
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+		.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.mui-popover .mui-popover-arrow:after {
+			background: white;
+		}
+
+		#topPopover1 .mui-table-view-cell {
+			border-bottom: 1px solid #ddd;
+		}
+
+		.mui-popover .mui-table-view {
+			border-radius: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app">
+		<header class="mui-bar mui-bar-nav">
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>
+			<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover2"></a>
+			<h1 class="mui-title">南方云</h1>
+		</header>
+		<div class="mui-content">
+			<div class="s-map-wrap">
+				<div style="height: 100%;" id="map" class="map"> </div>
 			</div>
-			
-			<!--右上角弹出菜单1-->
-			<div id="topPopover1" class="mui-popover">
-				<div class="mui-popover-arrow" style="left:130px"></div>
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
-								<a href="#">
-									<img src="../../public/img/related.png" alt="" />
-									<span>设备关联</span></a>
-							</li>
-						</ul>
-					</div>
-				</div>
-			</div>
-			<!--右上角弹出菜单2-->
-			<div id="topPopover2" class="mui-popover">
-				<div class="mui-popover-arrow"></div>
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul>
-							<li>
-								<span class="group_title">工作组</span>
-								<span class="group">白云组</span>
-							</li>
-							<li>
-								<span class="group_title">机身号</span>
-								<span class="group">5468456565465</span>
-							</li>
-							<li>
-								<span class="group_title">状态</span>
-								<div>
-									<button class="active">在线</button>
-									<button>离线</button>
-								</div>
-								
-							</li>
-							<li>
-									<button>重置</button>
-									<button class="active">完成</button>
-							</li>
-						</ul>
-					</div>
+		</div>
+
+		<!--右上角弹出菜单1-->
+		<div id="topPopover1" class="mui-popover">
+			<div class="mui-popover-arrow" style="left:130px"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" href="../personnel/userEntry.html">
+							<a href="#">
+								<img src="../../public/img/related.png" alt="" />
+								<span>设备关联</span>
+							</a>
+						</li>
+					</ul>
 				</div>
 			</div>
 		</div>
-		<script src="../../js/datetimepicker/datetimepicker.min.js"></script>
-		<script src="../../js/ol.js"></script>
-		<script src="../../js/ol3-layerswitcher.js"></script>
-		<script src="../js/rtkmap.js"></script>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/app.js"></script>
-		<script src="../../js/url.js"></script>
-		<script src="../../js/vue.min.js"></script>
-		<script>
-			var vm = new Vue({
-				el: '#app',
-				data: {
-					isActive: false,
-					mode: 0,
-					modetype: [{
-						name: '轨迹',
-					}, {
-						name: '坐标点',
-					}],
-				},
-				methods: {
-					changestatus: function() {
-						vm.isActive = !vm.isActive
-					},
-					changeMode: function(index) {
-						this.mode = index;
-					},
-				},
-				created: function() {}
-			});
+		<!--右上角弹出菜单2-->
+		<div id="topPopover2" class="mui-popover">
+			<div class="mui-popover-arrow"></div>
+			<div class="mui-scroll-wrapper">
+				<div class="mui-scroll">
+					<ul>
+						<li>
+							<span class="group_title">工作组</span>
+							<span class="group">白云组</span>
+						</li>
+						<li>
+							<span class="group_title">机身号</span>
+							<span class="group">5468456565465</span>
+						</li>
+						<li>
+							<span class="group_title">状态</span>
+							<div>
+								<button class="active">在线</button>
+								<button>离线</button>
+							</div>
 
-			mui.init({
-				beforeback: function() {
-					//plus.webview.getLaunchWebview().show();
-				}
-			});
-			var identify_code, user_name, token;
-			mui.plusReady(function() {
-				var self = plus.webview.currentWebview();
-				identify_code = self.identify_code;
-				user_name = plus.storage.getItem("user_name");
-				token = plus.storage.getItem("token");
-			});
+						</li>
+						<li>
+							<button>重置</button>
+							<button class="active">完成</button>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/datetimepicker/datetimepicker.min.js"></script>
+	<script src="../../js/ol.js"></script>
+	<script src="../../js/ol3-layerswitcher.js"></script>
+	<script src="../js/rtkmap.js"></script>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    isActive: false,
+		    mode: 0,
+		    date: '',
+		    modetype: [{
+		      name: '轨迹'
+		    }, {
+		      name: '坐标点'
+		    }]
+		  },
+		  methods: {
+		    changestatus: function () {
+		      vm.isActive = !vm.isActive;
+		    },
+		    changeMode: function (index) {
+		      this.mode = index;
+		    }
+		  },
+		  created: function () {
+		  }
+		});
 
-			var map; //地图变量
-			var L = 110.017334; //经度
-			var B = 35.29936; //纬度
-			var Z = 4; //缩放级别
-			var Zoom = 18; //最大缩放级别
-			var raster2Url = 'http://t{0-7}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'; /*地图图层url服务*/
-			var layersUrl1 = 'http://t{0-7}.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}';
-			var layersUrl2 = 'http://t{0-7}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}';
+		mui.init({
+		  beforeback: function () {
+		    // plus.webview.getLaunchWebview().show();
+		  }
+		});
 
-			var raster2 = new ol.layer.Tile({
-				source: new ol.source.XYZ({
-					url: raster2Url
-				})
-			}); //创建文字标注图层
-			var layers = new ol.layer.Group({
-				'title': '选择图层',
-				layers: [
-					new ol.layer.Tile({
-						title: '卫星影像',
-						type: 'base',
-						visible: false,
-						source: new ol.source.XYZ({
-							url: layersUrl1
-						})
-					}),
-					new ol.layer.Tile({
-						title: '地图',
-						type: 'base',
-						visible: true,
-						source: new ol.source.XYZ({
-							url: layersUrl2
-						})
-					}),
-				]
-			}); //创建图层组使用图层控件实现可以切换图层
+		mui.plusReady(function () {
+		  var self = plus.webview.currentWebview();
+		  identify_code = self.identify_code;
+		  user_name = plus.storage.getItem('user_name');
+		  token = plus.storage.getItem('token');
+		});
 
-			var arr = [layers, raster2]; //图层名称数组，初始化地图时加载
-			/**
-			 * [LoadMap ：实例化并加载地图]
-			 * @param  L :经度
-			 * @param  B :纬度
-			 * @param  Z :中心级别
-			 */
-			LoadMap(L, B, Z, Zoom);
+// ***********************************地图坐标数据(点、线)渲染模块******************************************
 
-			function LoadMap(L, B, Z, Zoom) {
-				map = new ol.Map({
-					layers: arr,
-					target: document.getElementById('map'),
-					view: new ol.View({
-						projection: 'EPSG:4326',
-						/* extent: [70, 18, 135, 51],*/
-						center: [L, B],
-						zoom: Z,
-						minZoom: Z,
-						maxZoom: Zoom
-					})
-				});
-			}
+// 定义‘点’的通用样式
+var image = new ol.style.Circle({
+		  radius: 5,
+		  fill: new ol.style.Fill({
+		    color: 'rgba(0, 0, 255, .5)'
+		  })
+		});
+// 设置点、线的样式，并引用通用样式类
+		var styles = {
+		  'Point': new ol.style.Style({
+		    image: image
+		  }),
+		  'GeometryCollection': [new ol.style.Style({
+		    stroke: new ol.style.Stroke({
+		      color: 'magenta',
+		      width: 1
+		    }),
+		    fill: new ol.style.Fill({
+		      color: 'magenta'
+		    })
+		  })]
+		};
 
-			/*map.addControl(new ol.control.ZoomSlider({})); //缩放下拉条*/
-			map.addControl(new ol.control.ScaleLine()); //比例尺控件
-			/* map.addControl(new ol.control.FullScreen());//全屏控件*/
+var styleFunction = function (feature, resolution) {
+		  return styles[feature.getGeometry().getType()];
+		};
 
-			var layerSwitcher = new ol.control.LayerSwitcher({
-				tipLabel: 'Légende'
-			});
-			map.addControl(layerSwitcher); //自定义选择图层控件
-			/*添加悬窗*/
-			/* var viewport = map.getViewport();
-      		$(viewport).append('<div id="share" class="share"></div>');*/
-		</script>
-	</body>
+// 渲染的数据来源
+var geojsonObject = {
+  'type': 'FeatureCollection',
+  'crs': {
+		    'type': 'name',
+		    'properties': {
+		      'name': 'EPSG:4326'
+		    }
+  },
+  'features': [
+		    {
+		      'type': 'Feature',
+		      'geometry': {
+		        'type': 'GeometryCollection',
+		        'geometries': [
+		          {
+		            'type': 'LineString',
+		            'coordinates': [[119.611913412, 25.878231142], [119.6129562765, 25.877398667], [119.610062765, 25.877398667]]
+		          }
+		        ]
+		      }
+		    },
+		    {
+		      'type': 'Feature',
+		      'geometry': {
+		        'type': 'Point',
+		        'coordinates': [119.611913412, 25.878231142]
+		      }
+		    },
+		    {
+		      'type': 'Feature',
+		      'geometry': {
+		        'type': 'Point',
+		        'coordinates': [119.6129562765, 25.877398667]
+		      }
+		    },
+		    {
+		      'type': 'Feature',
+		      'geometry': {
+		        'type': 'Point',
+		        'coordinates': [119.610062765, 25.877398667]
+		      }
+		    }
+  ]
+};
+var dataObj = {
+		  'type': 'FeatureCollection',
+		  'crs': {
+		    'type': 'name',
+		    'properties': {
+		      'name': 'EPSG:4326'
+		    }
+		  },
+		  features: [
+		    {
+		      type: 'Feature',
+		      id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aed',
+		      geometry: {
+		        type: 'Point',
+		        coordinates: [
+		          106.11997857,
+		          28.89974764
+		        ]
+		      },
+		      geometry_name: 'the_location',
+		      properties: {
+		        id: '67fd63075dca4f30b42d1d3ec07b4807',
+		        machine_id: 'abd89d6277434c3ea55f81690a9b4932',
+		        identify_code: 'SG607A117233721',
+		        longitude: 106.1199785685,
+		        latitude: 28.899747635833332,
+		        altitude: 416.6692,
+		        solution_type: 'ST_RTK_FIX',
+		        sat_in_view: 22,
+		        sat_in_lock: 20,
+		        track_time: '2018-05-17T18:12:00Z',
+		        local_time: '2018-05-18T02:11:20Z',
+		        create_time: '2018-05-18T02:17:09.558Z',
+		        rand_uuid: '710a5844-3583-48a8-b40e-c0d02b3630f0'
+		      }
+		    },
+		    {
+      type: 'Feature',
+      id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aeb',
+      geometry: {
+        type: 'Point',
+        coordinates: [
+          106.1507917,
+          28.88538148
+        ]
+      },
+      geometry_name: 'the_location',
+      properties: {
+        id: '873997842bf946bfb337395d7029f767',
+        machine_id: 'abd89d6277434c3ea55f81690a9b4932',
+        identify_code: 'SG607A117233721',
+        longitude: 106.157791703,
+        latitude: 28.985381484666667,
+        altitude: 342.4473,
+        solution_type: 'ST_RTK_FIX',
+        sat_in_view: 17,
+        sat_in_lock: 6,
+        track_time: '2018-05-17T21:12:05Z',
+        local_time: '2018-05-18T05:11:25Z',
+        create_time: '2018-05-18T05:13:32.323Z',
+        rand_uuid: 'f243f532-6368-4512-bc77-ae4f2cfc1e9d'
+      }
+    }
+		  ]
+};
+// 设置数据来源
+var vectorSource = new ol.source.Vector({
+  features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)
+});
+// 引用设置的数据
+var vectorLayer = new ol.layer.Vector({
+  source: vectorSource,
+  style: styleFunction
+});
+
+// 挂载到页面dom上
+new ol.Map({
+  layers: [
+		    new ol.layer.Tile({
+		      source: new ol.source.OSM()
+		    }),
+		    vectorLayer
+  ],
+  view: new ol.View({
+		    // 设置地图限制范围
+		    // extent: [102, 29, 104, 31],
+		    // 设置地图中心
+		    center: [119.614, 25.88],
+		    projection: 'EPSG:4326',
+		    zoom: 14
+  }),
+  target: 'map',
+  controls: ol.control.defaults({
+		    attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+		      collapsible: false
+		    })
+  })
+});
+
+// 地图图层切换功能
+var map; // 地图变量
+var L = 110.017334; // 经度
+var B = 35.29936; // 纬度
+var Z = 4; // 缩放级别
+var Zoom = 18; // 最大缩放级别
+var raster2Url = 'http://t{0-7}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'; /* 地图图层url服务*/
+var layersUrl1 = 'http://t{0-7}.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}';
+var layersUrl2 = 'http://t{0-7}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}';
+
+var raster2 = new ol.layer.Tile({
+  source: new ol.source.XYZ({
+		    url: raster2Url
+  })
+}); // 创建文字标注图层
+var layers = new ol.layer.Group({
+  'title': '选择图层',
+  layers: [
+		    new ol.layer.Tile({
+		      title: '卫星影像',
+		      type: 'base',
+		      visible: false,
+		      source: new ol.source.XYZ({
+		        url: layersUrl1
+		      })
+		    }),
+		    new ol.layer.Tile({
+		      title: '地图',
+		      type: 'base',
+		      visible: true,
+		      source: new ol.source.XYZ({
+		        url: layersUrl2
+		      })
+		    })
+  ]
+}); // 创建图层组使用图层控件实现可以切换图层
+
+var arr = [layers, raster2]; // 图层名称数组，初始化地图时加载
+/**
+		 * [LoadMap ：实例化并加载地图]
+		 * @param  L :经度
+		 * @param  B :纬度
+		 * @param  Z :中心级别
+		 */
+LoadMap(L, B, Z, Zoom);
+
+function LoadMap(L, B, Z, Zoom) {
+  map = new ol.Map({
+		    layers: arr,
+		    target: document.getElementById('map'),
+		    view: new ol.View({
+		      projection: 'EPSG:4326',
+		      /* extent: [70, 18, 135, 51],*/
+		      center: [L, B],
+		      zoom: Z,
+		      minZoom: Z,
+		      maxZoom: Zoom
+		    })
+  });
+}
+
+/* map.addControl(new ol.control.ZoomSlider({})); //缩放下拉条*/
+map.addControl(new ol.control.ScaleLine()); // 比例尺控件
+/* map.addControl(new ol.control.FullScreen());//全屏控件*/
+
+var layerSwitcher = new ol.control.LayerSwitcher({
+  tipLabel: 'Légende'
+});
+map.addControl(layerSwitcher); // 自定义选择图层控件
+/* 添加悬窗*/
+/* var viewport = map.getViewport();
+			$(viewport).append('<div id="share" class="share"></div>');*/
+
+	</script>
+</body>
 
 </html>

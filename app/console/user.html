@@ -21,7 +21,7 @@
 			}
 			
 			a {
-				color: #000;
+				color: #333;
 			}
 			
 			.filter {
@@ -88,17 +88,6 @@
 				font-size: 32px;
 			}
 			
-			.mui-bar-nav.mui-bar .mui-icon {
-				/*margin-right: -10px;
-				margin-left: -10px;
-				padding-right: 10px;
-				padding-left: 10px;
-				padding-top: 23px;
-				padding-bottom: 10px;
-				font-weight: bold;
-				font-size: 40px;*/
-			}
-			
 			.mui-bar .mui-title {
 				right: 50px;
 				left: 50px;
@@ -145,7 +134,7 @@
 			
 			.personnelInfo .main-content {
 				flex: 1;
-				/*width: 75%;*/
+				color:#333;
 				padding-top: 12px;
 			}
 			
@@ -313,6 +302,9 @@
 			.mui-popover .mui-popover-arrow:after {
 				background: white;
 			}
+			[v-cloak] {
+			  display: none;
+			}
 		</style>
 	</head>
 
@@ -355,7 +347,7 @@
 									<div class="img-content">
 										<img src="../../public/img/01.jpg" alt="" class="img" />
 									</div>
-									<div class="main-content">
+									<div class="main-content" v-cloak>
 										<div><span class="name">{{item.name}}</span><span class="status" :class="{active:item.status===0}"></span></div>
 										<div><span class="pinyin">{{item.pinyin}}</span><span class="group">{{item.group}}</span></div>
 									</div>

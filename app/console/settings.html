@@ -20,11 +20,11 @@
 				color: #fff;
 				font-size: 30px;
 			}
-			
+
 			.slider-heaer>.mui-icon-contact {
 				font-size: 50px;
 			}
-			
+
 			.slider-content {
 				margin-top: 24px;
 				border: none;
@@ -33,7 +33,7 @@
 				width: 100%;
 				padding: 0
 			}
-			
+
 			.slider-content li {
 				display: block;
 				height: 50px;
@@ -46,12 +46,12 @@
 				font-size: 18px;
 				color: #fff;
 			}
-			
+
 			.slider-content li i {
 				margin-right: 14px;
 				margin-top: 12px;
 			}
-			
+
 			.slider-content .logout {
 				margin-top: 60px;
 				background-color: #e36a42;
@@ -59,23 +59,23 @@
 				padding: 0;
 				text-align: center;
 			}
-			
+
 			.container {
 				margin-top: 48px;
 				height: 100%;
 				background-color: #135280;
 			}
-			
+
 			.container .mui-table-view-cell:after {
 				height: 0;
 			}
-			
+
 			.container .mui-icon-arrowright:before {
 				content: '\e583';
 				position: relative;
 				top: -10px;
 			}
-			
+
 			.slider-content .logout {
 				margin-top: 40px;
 				background-color: #e36a42;
@@ -119,108 +119,107 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#container',
-				data: {
-					user_name: '',
-					token: '',
-					local_version: '',
-				},
+			  el: '#container',
+			  data: {
+			    user_name: '',
+			    token: '',
+			    local_version: ''
+			  },
 
-				methods: {},
-				created: function() {
-					mui.plusReady(function() {
-						mui.init({});
-						if(mui.os.stream || plus.os.name !== 'Android') {
-							document.getElementById('update').style.display = 'none';
-						}
+			  methods: {},
+			  created: function () {
+			    mui.plusReady(function () {
+			      mui.init({});
+			      if (mui.os.stream || plus.os.name !== 'Android') {
+			        document.getElementById('update').style.display = 'none';
+			      }
 
-						mui('.mui-scroll-wrapper').scroll({
-							bounce: false,
-							indicators: true // 是否显示滚动条
-						});
+			      mui('.mui-scroll-wrapper').scroll({
+			        bounce: false,
+			        indicators: true // 是否显示滚动条
+			      });
 
-						mui('.mui-grid-view').on('tap', '.mui-table-view-cell', function(e) {
-							var url = this.getAttribute('href');
-							mui.openWindow({
-								url: url,
-								id: url
-							});
-						});
-						
-						vm.user_name = plus.storage.getItem('user_name');
-						vm.token = plus.storage.getItem('token');
-						
-						document.getElementById('logout').addEventListener('tap', function() {
-							mui('#logout').button('loading');
-							var lauchFlag = plus.storage.getItem('lauchFlag');
-							plus.storage.clear();
-							plus.storage.setItem('lauchFlag', lauchFlag);
+			      mui('.mui-grid-view').on('tap', '.mui-table-view-cell', function (e) {
+			        var url = this.getAttribute('href');
+			        mui.openWindow({
+			          url: url,
+			          id: url
+			        });
+			      });
 
-							mui('#logout').button('reset');
+			      vm.user_name = plus.storage.getItem('user_name');
+			      vm.token = plus.storage.getItem('token');
 
-							mui.ajax(apiUrl.logout, {
-								data: {
-									user_name: vm.user_name,
-									token: vm.token
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) {
-									if(data.status === 0 || data.status === 40004) {
-										mui.openWindow({
-											url: '../../login.html',
-											id: 'login'
-										});
-										
-										var lauchFlag = plus.storage.getItem('lauchFlag');
-										plus.storage.clear();
-										plus.storage.setItem('lauchFlag', lauchFlag);
-									}
-									mui('#logout').button('reset');
-								},
-								error: function(xhr, type, errorThrown) {
-									onNetChange();
-									mui('#logout').button('reset');
-								}
-							});
-						});
+			      document.getElementById('logout').addEventListener('tap', function () {
+			        mui('#logout').button('loading');
+			        var lauchFlag = plus.storage.getItem('lauchFlag');
+			        plus.storage.clear();
+			        plus.storage.setItem('lauchFlag', lauchFlag);
 
-						document.getElementById('update').addEventListener('tap', function() {
-							mui.ajax(apiUrl.latest_version, {
-								data: {
-									app_name: 'south_cloud_app',
-									local_version: vm.local_version
-									// local_version: 1.1
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) {
-									if(data.status === 0 && data.version !== '') {
-										var version = data.version;
-										mui.confirm(data.description, 'SouthCloud', ['取消', '更新'], function(e) {
-											if(e.index === 1) {
-												plus.runtime.openURL(apiUrl.download_app + '?app_name=south_cloud_app&version=' + version);
-											}
-										}, 'div');
-									} else if(data.status === 40004) {
-										mui.openWindow({
-											url: '../../login.html',
-											id: 'login'
-										});
-									} else {
-										mui.alert('', '当前已是最新版本!', '确定', function(e) {}, 'div');
-									}
-								},
-								error: function() {
-									mui.toast('网络发生错误，请稍后再试！');
-								}
-							});
-						});
-						
-					});
-				}
+			        mui('#logout').button('reset');
+
+			        mui.ajax(apiUrl.logout, {
+			          data: {
+			            user_name: vm.user_name,
+			            token: vm.token
+			          },
+			          dataType: 'json',
+			          type: 'post',
+			          timeout: 10000,
+			          success: function (data) {
+			            if (data.status === 0 || data.status === 40004) {
+			              mui.openWindow({
+			                url: '../../login.html',
+			                id: 'login'
+			              });
+
+			              var lauchFlag = plus.storage.getItem('lauchFlag');
+			              plus.storage.clear();
+			              plus.storage.setItem('lauchFlag', lauchFlag);
+			            }
+			            mui('#logout').button('reset');
+			          },
+			          error: function (xhr, type, errorThrown) {
+			            onNetChange();
+			            mui('#logout').button('reset');
+			          }
+			        });
+			      });
+
+			      document.getElementById('update').addEventListener('tap', function () {
+			        mui.ajax(apiUrl.latest_version, {
+			          data: {
+			            app_name: 'south_cloud_app',
+			            local_version: vm.local_version
+			            // local_version: 1.1
+			          },
+			          dataType: 'json',
+			          type: 'post',
+			          timeout: 10000,
+			          success: function (data) {
+			            if (data.status === 0 && data.version !== '') {
+			              var version = data.version;
+			              mui.confirm(data.description, 'SouthCloud', ['取消', '更新'], function (e) {
+			                if (e.index === 1) {
+			                  plus.runtime.openURL(apiUrl.download_app + '?app_name=south_cloud_app&version=' + version);
+			                }
+			              }, 'div');
+			            } else if (data.status === 40004) {
+			              mui.openWindow({
+			                url: '../../login.html',
+			                id: 'login'
+			              });
+			            } else {
+			              mui.alert('', '当前已是最新版本!', '确定', function (e) {}, 'div');
+			            }
+			          },
+			          error: function () {
+			            mui.toast('网络发生错误，请稍后再试！');
+			          }
+			        });
+			      });
+			    });
+			  }
 			});
 		</script>
 	</body>

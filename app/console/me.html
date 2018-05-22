@@ -30,7 +30,7 @@
 				font-size: 13px;
 				padding-left: 20px;
 			}
-			
+
 			.filter{
 				height: 125px;
 				margin-bottom: 20px;
@@ -77,18 +77,7 @@
 			.mui-bar .mui-icon {
 				font-size: 32px;
 			}
-			
-			.mui-bar-nav.mui-bar .mui-icon {
-				/*margin-right: -10px;
-				margin-left: -10px;
-				padding-right: 10px;
-				padding-left: 10px;
-				padding-top: 23px;
-				padding-bottom: 10px;
-				font-weight: bold;
-				font-size: 40px;*/
-			}
-			
+
 			.mui-content {
 				background: white;
 				display: flex;
@@ -111,14 +100,14 @@
 			.personnelInfo .mui-table-cell {
 				display: flex;
 			}
-			
+
 			.personnelInfo .img-content {
 				width: 25%;
 				display: flex;
 				align-items: center;
 				height: 60px;
 			}
-			
+
 			.personnelInfo .main-content {
 				width: 75%;
 				padding-top: 12px;
@@ -142,14 +131,14 @@
 				border-radius: 5px;
 				position: relative;
 				border: 1px solid #0b60de;
-				
+
 			}
-			
+
 			.personnelInfo .main-content div {
 				display: flex;
 				justify-content: space-between;
 			}
-			
+
 			.personnelInfo .status {
 				position: relative;
 				top: -3px;
@@ -160,73 +149,73 @@
 				border: 1px solid white;
 				box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, .25);
 			}
-			
+
 			.personnelInfo .main-content .active {
 				background: linear-gradient(to bottom,#39e131,#31bd2a);
 				top:-2px;
 			}
-			
+
 			.personnelInfo .mui-slider-right a:nth-child(1) {
 				background: #00cc66;
 			}
-			
+
 			.personnelInfo .mui-slider-right a:nth-child(2) {
 				background: #ff9966;
 			}
-			
+
 			.personnelInfo .mui-slider-right a:nth-child(3) {
 				background: #0099ff;
 			}
-			
+
 			.personnelInfo .mui-table-view-cell {
 				padding: 0 10px;
 			}
-			
+
 			.mui-table-view-cell:after {
 				left:0;
 				background-color: #ccc;
 			}
-			
+
 			#topPopover .mui-table-view-cell a {
 				display: flex;
 				align-items: center;
 				font-size: 20px;
 			}
-			
+
 			#topPopover .mui-table-view-cell a img {
 				margin-right: 20px;
 			}
-			
+
 			#topPopover .mui-table-view-cell {
 				border-bottom: 1px solid #ddd;
 			}
-			
+
 			.mui-popover {
 				height: 300px;
 			}
-			
+
 			.mui-popover {
 				width: 180px;
 				height: 166px;
 				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
 				background: white;
 			}
-			
+
 			.mui-backdrop {
 				background: transparent;
 			}
-			
+
 			.mui-scroll-wrapper,
 			.mui-popover .mui-popover-arrow:after,
 			.mui-scroll-wrapper .mui-table-view-cell {
 				/*background: #49484a;
 				color: white;*/
 			}
-			
+
 			.mui-popover .mui-scroll-wrapper {
 				margin: 0;
 			}
-			
+
 			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
 			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
 			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
@@ -349,7 +338,7 @@
 					</ul>
 				</div>
 				<div class="btn">
-					<a>关联设备
+					<a v-on:tap="test">关联设备
 					<span>点击检测关联设备</span>
 					</a>
 				</div>
@@ -385,160 +374,162 @@
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
 			mui.init({
-				beforeback: function() {},
+			  beforeback: function () {}
 			});
-			mui.plusReady(function() {});
+			mui.plusReady(function () {});
 			var vm = new Vue({
-				el: '#vm',
-				data: {
-					token:'',
-					user_name:'',
-					rtkCount:'',
-					onlineRtkCount:'',
-					mapRtk:'',
-					userdata: [{
-							name: '张三',
-							pinyin: 'zhangsan',
-							group: '南方卫星导航',
-							status: 0
-						},
-						{
-							name: '李四',
-							pinyin: 'lisi',
-							group: '南方卫星导航',
-							status: 0
-						},
-						{
-							name: '姚明',
-							pinyin: 'yaoming',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '王五',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '王五',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '姚明',
-							pinyin: 'yaoming',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '王五',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '王五',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						}
-					],
-				},
-				methods: {
-					openpage: function() {
-						var data_url = event.target.dataset.href;
-						mui.openWindow({
-								url: data_url,
-								id: data_url
-							});
-					}
-				},
-				created: function() {
-					mui.plusReady(function() {
-						mui.init({});
-						//页面顶部筛选按钮跳转
-						mui('.filter-ul').on('tap', '.filter-li', function(e) {
-							var url = this.getAttribute('href');
-							mui.openWindow({
-								url: url,
-								id: url
-							});
-						});
-						//右上角弹出窗链接跳转
-						mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
-							var url = this.getAttribute('href');
-							mui.openWindow({
-								url: url,
-								id: url
-							});
-							document.querySelector('#topPopover').style.display = "none";
-							document.querySelector('.mui-backdrop').style.display = "none";
-							document.querySelector('#topPopover').className ='mui-popover';
-						});
-						
-						//登陆时存放到本地的数据
-						vm.token = plus.storage.getItem('token');
-						vm.user_name = plus.storage.getItem('user_name');
-						vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
-						vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
-						vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
-						
-						
-						document.getElementById('logout').addEventListener('tap', function() {
-							mui('#logout').button('loading');
-							var lauchFlag = plus.storage.getItem('lauchFlag');
-							plus.storage.clear();
-							plus.storage.setItem('lauchFlag', lauchFlag);
+			  el: '#vm',
+			  data: {
+			    token: '',
+			    user_name: '',
+			    rtkCount: '',
+			    onlineRtkCount: '',
+			    mapRtk: '',
+			    userdata: [{
+			      name: '张三',
+			      pinyin: 'zhangsan',
+			      group: '南方卫星导航',
+			      status: 0
+			    },
+			    {
+			      name: '李四',
+			      pinyin: 'lisi',
+			      group: '南方卫星导航',
+			      status: 0
+			    },
+			    {
+			      name: '姚明',
+			      pinyin: 'yaoming',
+			      group: '南方卫星导航',
+			      status: 1
+			    },
+			    {
+			      name: '王五',
+			      pinyin: 'wangwu',
+			      group: '南方卫星导航',
+			      status: 1
+			    },
+			    {
+			      name: '王五',
+			      pinyin: 'wangwu',
+			      group: '南方卫星导航',
+			      status: 1
+			    },
+			    {
+			      name: '姚明',
+			      pinyin: 'yaoming',
+			      group: '南方卫星导航',
+			      status: 1
+			    },
+			    {
+			      name: '王五',
+			      pinyin: 'wangwu',
+			      group: '南方卫星导航',
+			      status: 1
+			    },
+			    {
+			      name: '王五',
+			      pinyin: 'wangwu',
+			      group: '南方卫星导航',
+			      status: 1
+			    }
+			    ]
+			  },
+			  methods: {
+			    openpage: function () {
+			      var data_url = event.target.dataset.href;
+			      mui.openWindow({
+			        url: data_url,
+			        id: data_url
+			      });
+			    },
+			    test:function(){
+			    	 mui.toast('此处调用关联设备接口....');
+			    }
+			  },
+			  created: function () {
+			    mui.plusReady(function () {
+			      mui.init({});
+			      // 页面顶部筛选按钮跳转
+			      mui('.filter-ul').on('tap', '.filter-li', function (e) {
+			        var url = this.getAttribute('href');
+			        mui.openWindow({
+			          url: url,
+			          id: url
+			        });
+			      });
+			      // 右上角弹出窗链接跳转
+			      mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function (e) {
+			        var url = this.getAttribute('href');
+			        mui.openWindow({
+			          url: url,
+			          id: url
+			        });
+			        document.querySelector('#topPopover').style.display = 'none';
+			        document.querySelector('.mui-backdrop').style.display = 'none';
+			        document.querySelector('#topPopover').className = 'mui-popover';
+			      });
 
-							mui('#logout').button('reset');
+			      // 登陆时存放到本地的数据
+			      vm.token = plus.storage.getItem('token');
+			      vm.user_name = plus.storage.getItem('user_name');
+			      vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
+			      vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
+			      vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
 
-							mui.ajax(apiUrl.logout, {
-								data: {
-									user_name: vm.user_name,
-									token: vm.token
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) {
-									if(data.status === 0 || data.status === 40004) {
-										mui.openWindow({
-											url: '../../login.html',
-											id: 'login'
-										});
-										
-										var lauchFlag = plus.storage.getItem('lauchFlag');
-										plus.storage.clear();
-										plus.storage.setItem('lauchFlag', lauchFlag);
-									}
-									mui('#logout').button('reset');
-								},
-								error: function(xhr, type, errorThrown) {
-									onNetChange();
-									mui('#logout').button('reset');
-								}
-							});
-						});
-					});
-				}
+			      document.getElementById('logout').addEventListener('tap', function () {
+			        mui('#logout').button('loading');
+			        var lauchFlag = plus.storage.getItem('lauchFlag');
+			        plus.storage.clear();
+			        plus.storage.setItem('lauchFlag', lauchFlag);
+
+			        mui('#logout').button('reset');
+
+			        mui.ajax(apiUrl.logout, {
+			          data: {
+			            user_name: vm.user_name,
+			            token: vm.token
+			          },
+			          dataType: 'json',
+			          type: 'post',
+			          timeout: 10000,
+			          success: function (data) {
+			            if (data.status === 0 || data.status === 40004) {
+			              mui.openWindow({
+			                url: '../../login.html',
+			                id: 'login'
+			              });
+
+			              var lauchFlag = plus.storage.getItem('lauchFlag');
+			              plus.storage.clear();
+			              plus.storage.setItem('lauchFlag', lauchFlag);
+			            }
+			            mui('#logout').button('reset');
+			          },
+			          error: function (xhr, type, errorThrown) {
+			            onNetChange();
+			            mui('#logout').button('reset');
+			          }
+			        });
+			      });
+			    });
+			  }
 			});
-			function getdata(){
-				mui.ajax(apiUrl.device_list, {
-					data: {
-						user_name: vm.user_name,
-						token: vm.token
-					},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data) {
-						console.log('获取数据成功');
-						console.log(JSON.stringify(data));
-					}
-				});
-			};
+			function getdata() {
+			  mui.ajax(apiUrl.device_list, {
+			    data: {
+			      user_name: vm.user_name,
+			      token: vm.token
+			    },
+			    dataType: 'json',
+			    type: 'post',
+			    timeout: 10000,
+			    success: function (data) {
+			      console.log('获取数据成功');
+			      console.log(JSON.stringify(data));
+			    }
+			  });
+			}
 		</script>
 	</body>
 

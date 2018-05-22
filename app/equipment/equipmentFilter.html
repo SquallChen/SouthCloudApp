@@ -43,7 +43,7 @@
 				text-align: left;
 				padding: 16px 0 17px 0;
 			}
-			
+
 			.mui-content div input {
 				flex: 1;
 				margin-bottom: 0;
@@ -124,7 +124,7 @@
 					<span></span>
 					<!--<img src="../../public/img/dropdown_blue.png" alt="" class="down" />-->
 				</div>
-				<button class="management">确  定</button>
+				<button class="management" v-on:tap="test">确  定</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -133,34 +133,38 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#app',
-				data: {
-					keywords: '',
-					organizationvalue: '0',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					],
-				},
-				methods: {},
-				created: function() {}
+			  el: '#app',
+			  data: {
+			    keywords: '',
+			    organizationvalue: '0',
+			    organization: [{
+			      name: '南方卫星导航',
+			      value: 0
+			    },
+			    {
+			      name: '设备初始激活组织',
+			      value: 1
+			    },
+			    {
+			      name: '南方测绘集团总部',
+			      value: 2
+			    },
+			    {
+			      name: '震源导航',
+			      value: 3
+			    },
+			    {
+			      name: '南方质量追踪',
+			      value: 4
+			    }
+			    ]
+			  },
+			  methods: {
+			    test: function () {
+			      mui.toast('此处调用设备筛选接口....');
+			    }
+			  },
+			  created: function () {}
 			});
 		</script>
 	</body>

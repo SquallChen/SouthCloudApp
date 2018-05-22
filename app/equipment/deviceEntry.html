@@ -15,11 +15,11 @@
 			.select {
 				display: flex;
 			}
-			
+
 			.select div {
 				width: 65%;
 			}
-			
+
 			.select .down {
 				width: 10px;
 				height: 7px;
@@ -27,11 +27,11 @@
 				top: 16px;
 				right: 15px;
 			}
-			
+
 			select {
 				margin-bottom: 0;
 			}
-			
+
 			.management {
 				margin-left: 6%;
 				width: 88%;
@@ -125,107 +125,108 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#app',
-				data: {
-					account: '',
-					userName: '',
-					password: '',
-					password2: '',
-					mobilePhone: '',
-					email: '',
-					mobile: '',
-					organizationvalue: '',
-					rolevalue: '',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					],
-					role: [{
-							name: '管理员',
-							value: 0
-						},
-						{
-							name: '南方管理员',
-							value: 1
-						},
-						{
-							name: '南方外贸管理员',
-							value: 2
-						},
-						{
-							name: '仪器管理员',
-							value: 3
-						},
-					]
-				},
-				methods: {
-					send: function() {
-						console.log('track.......');
-						if(this.account === '') {
-							mui.toast('请输入用户账号!');
-							return;
-						}
-						if(this.userName === '') {
-							mui.toast('请输入用户名称!');
-							return;
-						}
-						if(this.mobilePhone === '') {
-							mui.toast('请输入手机号码！');
-							return;
-						}
-						if(this.password === '') {
-							mui.toast('请输入密码！');
-							return;
-						}
-						if(this.password2 === '') {
-							mui.toast('请再次输入密码！');
-							return;
-						}
-						if(this.password !== this.password2) {
-							mui.toast('两次密码输入不一致！');
-							return;
-						}
-						if(this.email === '') {
-							mui.toast('请输入邮箱！');
-							return;
-						}
-						if(this.mobile === '') {
-							mui.toast('请输入办公电话！');
-							return;
-						}
-						if(this.organizationvalue === '') {
-							mui.toast('请选择组织机构！');
-							return;
-						}
-						if(this.rolevalue === '') {
-							mui.toast('请选择角色！');
-							return;
-						}
-						if(this.accountstatusvalue === '') {
-							mui.toast('请选择账号状态设置！');
-							return;
-						}
-						console.log('信息完整，可以进行下一步')
-					}
-				},
-				created: function() {}
+			  el: '#app',
+			  data: {
+			    account: '',
+			    userName: '',
+			    password: '',
+			    password2: '',
+			    mobilePhone: '',
+			    email: '',
+			    mobile: '',
+			    organizationvalue: '',
+			    rolevalue: '',
+			    organization: [{
+			      name: '南方卫星导航',
+			      value: 0
+			    },
+			    {
+			      name: '设备初始激活组织',
+			      value: 1
+			    },
+			    {
+			      name: '南方测绘集团总部',
+			      value: 2
+			    },
+			    {
+			      name: '震源导航',
+			      value: 3
+			    },
+			    {
+			      name: '南方质量追踪',
+			      value: 4
+			    }
+			    ],
+			    role: [{
+			      name: '管理员',
+			      value: 0
+			    },
+			    {
+			      name: '南方管理员',
+			      value: 1
+			    },
+			    {
+			      name: '南方外贸管理员',
+			      value: 2
+			    },
+			    {
+			      name: '仪器管理员',
+			      value: 3
+			    }
+			    ]
+			  },
+			  methods: {
+			    send: function () {
+			      // console.log('track.......');
+			      // if (this.account === '') {
+			      //   mui.toast('请输入用户账号!');
+			      //   return;
+			      // }
+			      // if (this.userName === '') {
+			      //   mui.toast('请输入用户名称!');
+			      //   return;
+			      // }
+			      // if (this.mobilePhone === '') {
+			      //   mui.toast('请输入手机号码！');
+			      //   return;
+			      // }
+			      // if (this.password === '') {
+			      //   mui.toast('请输入密码！');
+			      //   return;
+			      // }
+			      // if (this.password2 === '') {
+			      //   mui.toast('请再次输入密码！');
+			      //   return;
+			      // }
+			      // if (this.password !== this.password2) {
+			      //   mui.toast('两次密码输入不一致！');
+			      //   return;
+			      // }
+			      // if (this.email === '') {
+			      //   mui.toast('请输入邮箱！');
+			      //   return;
+			      // }
+			      // if (this.mobile === '') {
+			      //   mui.toast('请输入办公电话！');
+			      //   return;
+			      // }
+			      // if (this.organizationvalue === '') {
+			      //   mui.toast('请选择组织机构！');
+			      //   return;
+			      // }
+			      // if (this.rolevalue === '') {
+			      //   mui.toast('请选择角色！');
+			      //   return;
+			      // }
+			      // if (this.accountstatusvalue === '') {
+			      //   mui.toast('请选择账号状态设置！');
+			      //   return;
+			      // }
+			      // console.log('信息完整，可以进行下一步');
+			      mui.toast('此处调用设备录入接口....');
+			    }
+			  },
+			  created: function () {}
 			});
 		</script>
 	</body>

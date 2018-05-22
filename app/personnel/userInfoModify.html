@@ -193,52 +193,53 @@
 				},
 				methods: {
 					send: function() {
-						console.log('track.......');
-						if(this.account === '') {
-							mui.toast('请输入用户账号!');
-							return;
-						}
-						if(this.userName === '') {
-							mui.toast('请输入用户名称!');
-							return;
-						}
-						if(this.mobilePhone === '') {
-							mui.toast('请输入手机号码！');
-							return;
-						}
-						if(this.password === '') {
-							mui.toast('请输入密码！');
-							return;
-						}
-						if(this.password2 === '') {
-							mui.toast('请再次输入密码！');
-							return;
-						}
-						if(this.password !== this.password2) {
-							mui.toast('两次密码输入不一致！');
-							return;
-						}
-						if(this.email === '') {
-							mui.toast('请输入邮箱！');
-							return;
-						}
-						if(this.mobile === '') {
-							mui.toast('请输入办公电话！');
-							return;
-						}
-						if(this.organizationvalue === '') {
-							mui.toast('请选择组织机构！');
-							return;
-						}
-						if(this.rolevalue === '') {
-							mui.toast('请选择角色！');
-							return;
-						}
-						if(this.accountstatusvalue === '') {
-							mui.toast('请选择账号状态设置！');
-							return;
-						}
-						console.log('信息完整，可以进行下一步')
+//						console.log('track.......');
+//						if(this.account === '') {
+//							mui.toast('请输入用户账号!');
+//							return;
+//						}
+//						if(this.userName === '') {
+//							mui.toast('请输入用户名称!');
+//							return;
+//						}
+//						if(this.mobilePhone === '') {
+//							mui.toast('请输入手机号码！');
+//							return;
+//						}
+//						if(this.password === '') {
+//							mui.toast('请输入密码！');
+//							return;
+//						}
+//						if(this.password2 === '') {
+//							mui.toast('请再次输入密码！');
+//							return;
+//						}
+//						if(this.password !== this.password2) {
+//							mui.toast('两次密码输入不一致！');
+//							return;
+//						}
+//						if(this.email === '') {
+//							mui.toast('请输入邮箱！');
+//							return;
+//						}
+//						if(this.mobile === '') {
+//							mui.toast('请输入办公电话！');
+//							return;
+//						}
+//						if(this.organizationvalue === '') {
+//							mui.toast('请选择组织机构！');
+//							return;
+//						}
+//						if(this.rolevalue === '') {
+//							mui.toast('请选择角色！');
+//							return;
+//						}
+//						if(this.accountstatusvalue === '') {
+//							mui.toast('请选择账号状态设置！');
+//							return;
+//						}
+//						console.log('信息完整，可以进行下一步')
+						 mui.toast('此处调用用户信息修改接口....');
 					}
 				},
 				created: function() {}

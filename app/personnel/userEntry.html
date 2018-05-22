@@ -12,15 +12,15 @@
 			[v-cloak] {
 				display: none;
 			}
-			
+
 			.select {
 				display: flex;
 			}
-			
+
 			.select div {
 				width: 65%;
 			}
-			
+
 			.select .down {
 				width: 10px;
 				height: 7px;
@@ -28,11 +28,11 @@
 				top: 16px;
 				right: 15px;
 			}
-			
+
 			select {
 				margin-bottom: 0;
 			}
-			
+
 			.management {
 				margin-left: 6%;
 				width: 88%;
@@ -46,11 +46,11 @@
 				border: none;
 				border-radius: 4px;
 			}
-			
+
 			.management:active {
 				background: #0b5fde !important;
 			}
-			
+
 			.mui-input-row label {
 				padding: 0;
 				height: 40px;
@@ -60,49 +60,45 @@
 				text-align: right;
 				margin-right: 25px;
 			}
-			
+
 			.mui-input-group .mui-input-row {
 				padding-left: 15px;
 				position: relative;
 			}
-			
+
 			input[type=text] {
 				height: 40px;
 			}
-			
-			input::-webkit-input-placeholder {
-				color: #999;
-			}
-			
+
 			.mui-input-row select {
 				height: 40px;
 			}
-			
+
 			.mui-input-row label~input {
 				float: left;
 			}
-			
+
 			.mui-input-group .mui-input-row:after {
 				left: 0;
 				background-color: #ccc;
 			}
-			
+
 			body {
 				background: #f2f2f2;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 73px;
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
 			}
-			
+
 			.back {
 				display: block;
 				width: 10px;
@@ -194,140 +190,120 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#app',
-				user_name:'',
-				token:'',
-				data: {
-					account: '',
-					userName: '',
-					password: '',
-					password2: '',
-					mobilePhone: '',
-					email: '',
-					mobile: '',
-					organizationvalue: '',
-					rolevalue: '',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					],
-					role: [{
-							name: '管理员',
-							value: 0
-						},
-						{
-							name: '南方管理员',
-							value: 1
-						},
-						{
-							name: '南方外贸管理员',
-							value: 2
-						},
-						{
-							name: '仪器管理员',
-							value: 3
-						},
-					]
-				},
-				methods: {
-					send: function() {
-						console.log('track.......');
-						if(this.account === '') {
-							mui.toast('请输入用户账号!');
-							return;
-						}
-						if(this.userName === '') {
-							mui.toast('请输入用户名称!');
-							return;
-						}
-						if(this.mobilePhone === '') {
-							mui.toast('请输入手机号码！');
-							return;
-						}
-						if(this.password === '') {
-							mui.toast('请输入密码！');
-							return;
-						}
-						if(this.password2 === '') {
-							mui.toast('请再次输入密码！');
-							return;
-						}
-						if(this.password !== this.password2) {
-							mui.toast('两次密码输入不一致！');
-							return;
-						}
-						if(this.email === '') {
-							mui.toast('请输入邮箱！');
-							return;
-						}
-						if(this.mobile === '') {
-							mui.toast('请输入办公电话！');
-							return;
-						}
-						if(this.organizationvalue === '') {
-							mui.toast('请选择组织机构！');
-							return;
-						}
-						if(this.rolevalue === '') {
-							mui.toast('请选择角色！');
-							return;
-						}
-						if(this.accountstatusvalue === '') {
-							mui.toast('请选择账号状态设置！');
-							return;
-						}
-						console.log('信息完整，可以进行下一步')
-					},
-					test: function() {
-//						console.log('user_name=' + vm.user_name + '+' + 'token=' + vm.token);
-//						mui.ajax(apiUrl.list_child, {
-//							data: {
-//								user_name: vm.user_name,
-//								token: vm.token,
-//							},
-//							dataType: 'json',
-//							type: 'post',
-//							timeout: 10000,
-//							success: function(data) {
-//								console.log(11111111);
-//								console.log('data+'+JSON.stringify(data));
-//							},
-//							error: function(xhr, type, errorThrown) {
-//								console.log(222222);
-//								console.log(errorThrown);
-//								console.log(JSON.stringify(xhr));
-//								console.log(JSON.stringify(type));
-//								onNetChange();
-//							}
-//						});
-					}
-				},
-				created: function() {}
+			  el: '#app',
+			  user_name: '',
+			  token: '',
+			  data: {
+			    account: '',
+			    userName: '',
+			    password: '',
+			    password2: '',
+			    mobilePhone: '',
+			    email: '',
+			    mobile: '',
+			    organizationvalue: '',
+			    rolevalue: '',
+			    organization: [{
+			      name: '南方卫星导航',
+			      value: 0
+			    },
+			    {
+			      name: '设备初始激活组织',
+			      value: 1
+			    },
+			    {
+			      name: '南方测绘集团总部',
+			      value: 2
+			    },
+			    {
+			      name: '震源导航',
+			      value: 3
+			    },
+			    {
+			      name: '南方质量追踪',
+			      value: 4
+			    }
+			    ],
+			    role: [{
+			      name: '管理员',
+			      value: 0
+			    },
+			    {
+			      name: '南方管理员',
+			      value: 1
+			    },
+			    {
+			      name: '南方外贸管理员',
+			      value: 2
+			    },
+			    {
+			      name: '仪器管理员',
+			      value: 3
+			    }
+			    ]
+			  },
+			  methods: {
+			    send: function () {
+			      console.log('track.......');
+			      if (this.account === '') {
+			        mui.toast('请输入用户账号!');
+			        return;
+			      }
+			      if (this.userName === '') {
+			        mui.toast('请输入用户名称!');
+			        return;
+			      }
+			      if (this.mobilePhone === '') {
+			        mui.toast('请输入手机号码！');
+			        return;
+			      }
+			      if (this.password === '') {
+			        mui.toast('请输入密码！');
+			        return;
+			      }
+			      if (this.password2 === '') {
+			        mui.toast('请再次输入密码！');
+			        return;
+			      }
+			      if (this.password !== this.password2) {
+			        mui.toast('两次密码输入不一致！');
+			        return;
+			      }
+			      if (this.email === '') {
+			        mui.toast('请输入邮箱！');
+			        return;
+			      }
+			      if (this.mobile === '') {
+			        mui.toast('请输入办公电话！');
+			        return;
+			      }
+			      if (this.organizationvalue === '') {
+			        mui.toast('请选择组织机构！');
+			        return;
+			      }
+			      if (this.rolevalue === '') {
+			        mui.toast('请选择角色！');
+			        return;
+			      }
+			      if (this.accountstatusvalue === '') {
+			        mui.toast('请选择账号状态设置！');
+			        return;
+			      }
+			      console.log('信息完整，可以进行下一步');
+			    },
+			    test: function () {
+			      mui.toast('此处调用用户录入接口....');
+			    }
+			  },
+			  created: function () {}
 			});
 
-			mui.plusReady(function() {
-				mui.init({
-					beforeback: function() {}
-				});
-				vm.user_name = plus.storage.getItem('user_name');
-				vm.token = plus.storage.getItem('token');
+			mui.plusReady(function () {
+			  mui.init({
+			    beforeback: function () {}
+			  });
+			  vm.user_name = plus.storage.getItem('user_name');
+			  vm.token = plus.storage.getItem('token');
 			});
 		</script>
 	</body>
