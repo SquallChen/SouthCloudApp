@@ -196,7 +196,7 @@
 							</li>
 							<li v-cloak><span>{{currentCompanyInfo}}</span><span>{{currentIndexUserName}}</span></li>
 							<li v-cloak><span>在线时长:{{currentDayOnlineTime}}</span>
-								<span>作业里程:</span>
+								<span>作业里程:暂无数据</span>
 							</li>
 						</ul>
 						<ul v-show="mode===1">
@@ -256,11 +256,7 @@
 						this.mode = index;
 					}
 				},
-				created: function() {
-					// 获取当前时间，给时间控制器默认显示当天的值
-					// var currentDate = new Date();
-					// this.date = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-				}
+				created: function() {}
 			});
 			mui.init({
 				beforeback: function() {}
@@ -272,11 +268,10 @@
 				vm.currentCompanyInfo = self.upDataCompanyInfo;
 				vm.currentIdentifyCode = self.identifyCode;
 				vm.currenttrackDayId = self.track_day_id;
-				// vm.currentIndex = self.index;
 				// 登陆时存放到本地的数据
 				vm.token = plus.storage.getItem('token');
 				vm.user_name = plus.storage.getItem('user_name');
-
+				//请求指定设备的历史跟踪轨迹数据
 				mui.ajax(apiUrl.track_info_page, {
 					data: {
 						user_name: vm.user_name,
@@ -301,6 +296,79 @@
 						onNetChange();
 						plus.nativeUI.closeWaiting();
 					}
+				});
+			});
+
+			// 日期控件
+			document.getElementById('pickDateBtn').addEventListener('tap', function() {
+				var dDate = new Date();
+				// dDate.setFullYear(2014, 7, 16);
+				var minDate = new Date();
+				minDate.setFullYear(2010, 0, 1);
+				var maxDate = new Date();
+				maxDate.setFullYear(2018, 11, 31);
+				plus.nativeUI.pickDate(function(e) {
+					//如果月份小于10，显示时前面+‘0’
+					var d = e.date;
+					if(d.getMonth() >= 9) {
+						if(d.getDate() >= 9) {
+							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+						} else {
+							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
+						}
+					} else {
+						if(d.getDate() >= 9) {
+							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate();
+						} else {
+							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
+						}
+					}
+
+					for(var i = 0; i < vm.trackData.length; i++) {
+						//如果该设备在被选中的日期中有历史轨迹数据存在 
+						if(vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
+							vm.currentDate = vm.trackData[i].id;
+							//console.log(vm.currentDate)
+							//转换在线总时长的展示方式
+							changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
+							//当选择日期后，发送请求该日期的全部轨迹点数据
+							mui.ajax(apiUrl.track_day_page, {
+								data: {
+									user_name: vm.user_name,
+									token: vm.token,
+									track_day_id: vm.currentDate,
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) {
+									if(data.status === 0) {
+										//console.log(JSON.stringify(data));
+									} else {
+										plus.nativeUI.toast(data.info);
+										setTimeout(function() {
+											plus.nativeUI.closeWaiting();
+										}, 1000);
+									}
+								},
+								error: function(xhr, type, errorThrown) {
+									// 异常处理；
+									onNetChange();
+									plus.nativeUI.closeWaiting();
+								}
+							});
+							return;
+						};
+						//如果该设备在被选中的日期中没有历史轨迹数据存在 
+						if(vm.trackData[i].trackDate.indexOf(vm.date) === -1) {
+							vm.currentDayOnlineTime = '没有在线'
+						}
+					}
+				}, function(e) {}, {
+					title: '请选择日期',
+					date: dDate,
+					minDate: minDate,
+					maxDate: maxDate
 				});
 			});
 
@@ -376,73 +444,7 @@
 			/* var viewport = map.getViewport();
       		$(viewport).append('<div id="share" class="share"></div>');*/
 
-			// 日期控件
-			// var info = document.getElementById('info');
-			document.getElementById('pickDateBtn').addEventListener('tap', function() {
-				var dDate = new Date();
-				// dDate.setFullYear(2014, 7, 16);
-				var minDate = new Date();
-				minDate.setFullYear(2010, 0, 1);
-				var maxDate = new Date();
-				maxDate.setFullYear(2018, 11, 31);
-				plus.nativeUI.pickDate(function(e) {
-					//如果月份小于10，显示时前面+‘0’
-					var d = e.date;
-					if(d.getMonth() >= 9) {
-						if(d.getDate() >= 9) {
-							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-						} else {
-							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
-						}
-					} else {
-						if(d.getDate() >= 9) {
-							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate();
-						}else{
-							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' +'0'+ d.getDate();
-						}
-					}
-
-					for(var i = 0; i < vm.trackData.length; i++) {
-						if(vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
-							vm.currentDate = vm.trackData[i].id;
-							changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
-							//console.log(vm.currentDate);
-							//当选择日期后，发送请求
-							mui.ajax(apiUrl.track_day_page, {
-								data: {
-									user_name: vm.user_name,
-									token: vm.token,
-									track_day_id: vm.currentDate,
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) {
-									if(data.status === 0) {
-										console.log(JSON.stringify(data));
-									} else {
-										plus.nativeUI.toast(data.info);
-										setTimeout(function() {
-											plus.nativeUI.closeWaiting();
-										}, 1000);
-									}
-								},
-								error: function(xhr, type, errorThrown) {
-									// 异常处理；
-									onNetChange();
-									plus.nativeUI.closeWaiting();
-								}
-							});
-						}
-					}
-				}, function(e) {}, {
-					title: '请选择日期',
-					date: dDate,
-					minDate: minDate,
-					maxDate: maxDate
-				});
-			});
-
+			//将在线总时长的秒数展示数据方式转换为时分秒
 			function changeTimeFormat(dayOnlineSeconds) {
 				if(dayOnlineSeconds < 60) {
 					return(vm.currentDayOnlineTime = '0分' + dayOnlineSeconds + '秒');
@@ -454,6 +456,7 @@
 					return(vm.currentDayOnlineTime = Math.floor(dayOnlineSeconds / 3600) + '小时' + Math.floor((dayOnlineSeconds - Math.floor(dayOnlineSeconds / 3600) * 3600) / 60) + '分');
 				};
 			}
+
 		</script>
 	</body>
 
