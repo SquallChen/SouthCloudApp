@@ -17,7 +17,7 @@
 				background: #fff;
 				font-size: 20px;
 			}
-			
+
 			ul {
 				list-style: none;
 				padding-left: 10px;
@@ -25,25 +25,25 @@
 				font-size: 16px;
 				margin-top: 10px;
 			}
-			
+
 			ul li {
 				margin-bottom: 10px;
 			}
-			
+
 			ul li:nth-child(2) span {
 				display: inline-block;
 				width: 50%;
 			}
-			
+
 			ul li:nth-child(3) span {
 				display: inline-block;
 				width: 49%;
 			}
-			
+
 			ul li:nth-child(1) span {
 				display: inline-block;
 			}
-			
+
 			ul li:nth-child(4) a {
 				background: #409eff;
 				color: white;
@@ -55,14 +55,14 @@
 				line-height: 36px;
 				border-radius: 5px;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 73px;
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.dropDown {
 				width: 100%;
 				height: 200px;
@@ -75,12 +75,12 @@
 				-webkit-transform: translateY(0px);
 				-webkit-transition: 0.38s;
 			}
-			
+
 			.active {
 				-webkit-transform: translateY(200px);
 				-webkit-transition: 0.38s;
 			}
-			
+
 			.dropDown a {
 				display: block;
 				width: 70px;
@@ -95,7 +95,7 @@
 				border: 1px solid #ddd;
 				border-bottom: none;
 			}
-			
+
 			.dropDown a span {
 				display: block;
 				width: 50px;
@@ -105,17 +105,17 @@
 				top: 10px;
 				left: 10px;
 			}
-			
+
 			.dropDown a span:nth-child(2) {
 				top: 20px;
 			}
-			
+
 			.dropDown .btn-content {
 				padding-top: 10px;
 				padding-left: 10px;
 				height: 50px;
 			}
-			
+
 			.dropDown .btn-content button {
 				margin-right: 5px;
 				width: 80px;
@@ -124,11 +124,11 @@
 				font-size: 18px;
 				padding: 4px 12px;
 			}
-			
+
 			.dropDown .btn-content .changecolor {
 				background: #409eff;
 			}
-			
+
 			.date {
 				display: inline-block;
 				text-align: center;
@@ -137,7 +137,7 @@
 				padding: 0px;
 				position: relative;
 			}
-			
+
 			.date img {
 				width: 12px;
 				height: 12px;
@@ -145,11 +145,11 @@
 				top: 5px;
 				right: 3px;
 			}
-			
+
 			.Num {
 				width: 49%;
 			}
-			
+
 			#pickDateBtn {
 				width: 120px;
 				height: 20px;
@@ -160,11 +160,11 @@
 				margin: 0;
 				opacity: 0;
 			}
-			
+
 			.s-map-wrap {
 				padding-top: 73px;
 			}
-			
+
 			[v-cloak] {
 				display: none;
 			}
@@ -216,7 +216,6 @@
 				</div>
 			</div>
 		</div>
-		<!--<script src="../../js/datetimepicker/datetimepicker.min.js"></script>-->
 		<script src="../../js/ol.js"></script>
 		<script src="../../js/ol3-layerswitcher.js"></script>
 		<script src="../js/rtkmap.js"></script>
@@ -226,237 +225,332 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#app',
-				data: {
-					user_name: '',
-					token: '',
-					isActive: false,
-					mode: 0,
-					date: '请选择日期',
-					currentData: '',
-					currentIndex: '',
-					currentIndexUserName: '',
-					currentCompanyInfo: '',
-					currentIdentifyCode: '',
-					currenttrackDayId: '',
-					currentDayOnlineTime: '',
-					trackData: '',
-					currentDate: '',
-					modetype: [{
-						name: '轨迹'
-					}, {
-						name: '坐标点'
-					}]
-				},
-				methods: {
-					changestatus: function() {
-						vm.isActive = !vm.isActive;
-					},
-					changeMode: function(index) {
-						this.mode = index;
-					}
-				},
-				created: function() {}
+			  el: '#app',
+			  data: {
+			    user_name: '',
+			    token: '',
+			    isActive: false,
+			    mode: 0,
+			    date: '请选择日期',
+			    currentData: '',
+			    currentIndex: '',
+			    currentIndexUserName: '',
+			    currentCompanyInfo: '',
+			    currentIdentifyCode: '',
+			    currenttrackDayId: '',
+			    currentDayOnlineTime: '',
+			    currentCoordinatePoints: [],
+			    currentGeojsonObject: {
+			      'type': 'FeatureCollection',
+			      'crs': {
+			        'type': 'name',
+			        'properties': {
+			          'name': 'EPSG:4326'
+			        }
+			      },
+			      'features': [{
+			        'type': 'Feature',
+			        'geometry': {
+			          'type': 'GeometryCollection',
+			          'geometries': [{
+			            'type': 'LineString',
+			            'coordinates': []
+			          }]
+			        }
+			      }]
+			    },
+			    trackData: '',
+			    currentDate: '',
+			    modetype: [{
+			      name: '轨迹'
+			    }, {
+			      name: '坐标点'
+			    }]
+			  },
+			  methods: {
+			    changestatus: function () {
+			      vm.isActive = !vm.isActive;
+			    },
+			    changeMode: function (index) {
+			      this.mode = index;
+			    }
+			  },
+			  created: function () {}
 			});
 			mui.init({
-				beforeback: function() {}
+			  beforeback: function () {}
 			});
-			mui.plusReady(function() {
-				// 获取上层页面传递过来的参数
-				var self = plus.webview.currentWebview();
-				vm.currentIndexUserName = self.upDataUserName;
-				vm.currentCompanyInfo = self.upDataCompanyInfo;
-				vm.currentIdentifyCode = self.identifyCode;
-				vm.currenttrackDayId = self.track_day_id;
-				// 登陆时存放到本地的数据
-				vm.token = plus.storage.getItem('token');
-				vm.user_name = plus.storage.getItem('user_name');
-				//请求指定设备的历史跟踪轨迹数据
-				mui.ajax(apiUrl.track_info_page, {
-					data: {
-						user_name: vm.user_name,
-						token: vm.token,
-						filter_identifycode: vm.currentIdentifyCode,
-					},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data) {
-						if(data.status === 0) {
-							vm.trackData = data.recordList;
-						} else {
-							plus.nativeUI.toast(data.info);
-							setTimeout(function() {
-								plus.nativeUI.closeWaiting();
-							}, 1000);
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						// 异常处理；
-						onNetChange();
-						plus.nativeUI.closeWaiting();
-					}
-				});
+			mui.plusReady(function () {
+			  // 获取上层页面传递过来的参数
+			  var self = plus.webview.currentWebview();
+			  vm.currentIndexUserName = self.upDataUserName;
+			  vm.currentCompanyInfo = self.upDataCompanyInfo;
+			  vm.currentIdentifyCode = self.identifyCode;
+			  vm.currenttrackDayId = self.track_day_id;
+			  // 登陆时存放到本地的数据
+			  vm.token = plus.storage.getItem('token');
+			  vm.user_name = plus.storage.getItem('user_name');
+			  // 请求指定设备的历史跟踪轨迹数据
+			  mui.ajax(apiUrl.track_info_page, {
+			    data: {
+			      user_name: vm.user_name,
+			      token: vm.token,
+			      filter_identifycode: vm.currentIdentifyCode
+			    },
+			    dataType: 'json',
+			    type: 'post',
+			    timeout: 10000,
+			    success: function (data) {
+			      if (data.status === 0) {
+			        vm.trackData = data.recordList;
+			      } else {
+			        plus.nativeUI.toast(data.info);
+			        setTimeout(function () {
+			          plus.nativeUI.closeWaiting();
+			        }, 1000);
+			      }
+			    },
+			    error: function (xhr, type, errorThrown) {
+			      // 异常处理；
+			      onNetChange();
+			      plus.nativeUI.closeWaiting();
+			    }
+			  });
 			});
 
 			// 日期控件
-			document.getElementById('pickDateBtn').addEventListener('tap', function() {
-				var dDate = new Date();
-				// dDate.setFullYear(2014, 7, 16);
-				var minDate = new Date();
-				minDate.setFullYear(2010, 0, 1);
-				var maxDate = new Date();
-				maxDate.setFullYear(2018, 11, 31);
-				plus.nativeUI.pickDate(function(e) {
-					//如果月份小于10，显示时前面+‘0’
-					var d = e.date;
-					if(d.getMonth() >= 9) {
-						if(d.getDate() >= 9) {
-							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
-						} else {
-							vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
-						}
-					} else {
-						if(d.getDate() >= 9) {
-							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate();
-						} else {
-							vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
-						}
-					}
+			document.getElementById('pickDateBtn').addEventListener('tap', function () {
+			  var dDate = new Date();
+			  // dDate.setFullYear(2014, 7, 16);
+			  var minDate = new Date();
+			  minDate.setFullYear(2010, 0, 1);
+			  var maxDate = new Date();
+			  maxDate.setFullYear(2018, 11, 31);
+			  plus.nativeUI.pickDate(function (e) {
+			    // 如果月份小于10，显示时前面+‘0’
+			    var d = e.date;
+			    if (d.getMonth() >= 9) {
+			      if (d.getDate() >= 9) {
+			        vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+			      } else {
+			        vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
+			      }
+			    } else {
+			      if (d.getDate() >= 9) {
+			        vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate();
+			      } else {
+			        vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
+			      }
+			    }
 
-					for(var i = 0; i < vm.trackData.length; i++) {
-						//如果该设备在被选中的日期中有历史轨迹数据存在 
-						if(vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
-							vm.currentDate = vm.trackData[i].id;
-							//console.log(vm.currentDate)
-							//转换在线总时长的展示方式
-							changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
-							//当选择日期后，发送请求该日期的全部轨迹点数据
-							mui.ajax(apiUrl.track_day_page, {
-								data: {
-									user_name: vm.user_name,
-									token: vm.token,
-									track_day_id: vm.currentDate,
-								},
-								dataType: 'json',
-								type: 'post',
-								timeout: 10000,
-								success: function(data) {
-									if(data.status === 0) {
-										//console.log(JSON.stringify(data));
-									} else {
-										plus.nativeUI.toast(data.info);
-										setTimeout(function() {
-											plus.nativeUI.closeWaiting();
-										}, 1000);
-									}
-								},
-								error: function(xhr, type, errorThrown) {
-									// 异常处理；
-									onNetChange();
-									plus.nativeUI.closeWaiting();
-								}
-							});
-							return;
-						};
-						//如果该设备在被选中的日期中没有历史轨迹数据存在 
-						if(vm.trackData[i].trackDate.indexOf(vm.date) === -1) {
-							vm.currentDayOnlineTime = '没有在线'
-						}
-					}
-				}, function(e) {}, {
-					title: '请选择日期',
-					date: dDate,
-					minDate: minDate,
-					maxDate: maxDate
-				});
+			    for (var i = 0; i < vm.trackData.length; i++) {
+			      // 如果该设备在被选中的日期中有历史轨迹数据存在
+			      if (vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
+			        vm.currentDate = vm.trackData[i].id;
+			        // console.log(vm.currentDate)
+			        // 转换在线总时长的展示方式
+			        changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
+			        // 当选择日期后，发送请求该日期的全部轨迹点数据
+			        console.log('开始请求数据');
+			        mui.ajax(apiUrl.track_day_page, {
+			          data: {
+			            user_name: vm.user_name,
+			            token: vm.token,
+			            track_day_id: vm.currentDate,
+			            num_per_page: 100
+			          },
+			          dataType: 'json',
+			          type: 'post',
+			          timeout: 10000,
+			          success: function (data) {
+			            if (data.status === 0) {
+			              console.log('开始处理数据');
+			              // console.log(JSON.stringify(data));
+			              var tempTrackData = data.recordList;
+			              var temp1 = [],
+			                temp2 = [];
+			              var tempPointData = [];
+
+			              for (var i = 0; i < tempTrackData.length; i++) {
+			                temp1.push(tempTrackData[i].longitude);
+			                temp1.push(tempTrackData[i].latitude);
+			                temp2.push(temp1);
+			                temp1 = [];
+			              }
+							vm.currentCoordinatePoints = temp2;
+
+			              for (var i = 0; i < vm.currentCoordinatePoints.length; i++) {
+			                // 循环赋值对象必须在循环内声明，否则在外部时由于一直引用同一个对象导致只会输出循环最后的值
+			                var tempPoint = {
+			                  'type': 'Feature',
+			                  'geometry': {
+			                    'type': 'Point',
+			                    'coordinates': []
+			                  }
+			                };
+			                tempPoint.geometry.coordinates = vm.currentCoordinatePoints[i];
+			                tempPointData.push(tempPoint);
+			              }
+			              // console.log(JSON.stringify(tempPointData));
+
+			              var tempgeojsonObject = {
+			                'type': 'FeatureCollection',
+			                'crs': {
+			                  'type': 'name',
+			                  'properties': {
+			                    'name': 'EPSG:4326'
+			                  }
+			                },
+			                'features': [{
+			                  'type': 'Feature',
+			                  'geometry': {
+			                    'type': 'GeometryCollection',
+			                    'geometries': [{
+			                      'type': 'LineString',
+			                      'coordinates': []
+			                    }]
+			                  }
+			                }]
+			              };
+			              // console.log(JSON.stringify(tempgeojsonObject.features[0].geometry.geometries[0].coordinates))
+			              tempgeojsonObject.features[0].geometry.geometries[0].coordinates = vm.currentCoordinatePoints;
+
+			              for (var i = 0; i < tempPointData.length; i++) {
+			                tempgeojsonObject.features.push(tempPointData[i]);
+			              }
+			              // console.log(JSON.stringify(tempgeojsonObject));
+			              vm.currentGeojsonObject = tempgeojsonObject;
+			              // console.log(JSON.stringify(vm.currentGeojsonObject))
+			              coordinateShow(vm.currentGeojsonObject);
+			            } else {
+			              plus.nativeUI.toast(data.info);
+			              setTimeout(function () {
+			                plus.nativeUI.closeWaiting();
+			              }, 1000);
+			            }
+			          },
+			          error: function (xhr, type, errorThrown) {
+			            // 异常处理；
+			            onNetChange();
+			            plus.nativeUI.closeWaiting();
+			          }
+			        });
+			        return;
+			      }
+			//如果该设备在被选中的日期中没有历史轨迹数据存在
+			if (vm.trackData[i].trackDate.indexOf(vm.date) === -1) {
+			        vm.currentDayOnlineTime = '没有在线';
+			        vm.currentGeojsonObject = {
+			          'type': 'FeatureCollection',
+			          'crs': {
+			            'type': 'name',
+			            'properties': {
+			              'name': 'EPSG:4326'
+			            }
+			          },
+			          'features': [{
+			            'type': 'Feature',
+			            'geometry': {
+			              'type': 'GeometryCollection',
+			              'geometries': [{
+			                'type': 'LineString',
+			                'coordinates': []
+			              }]
+			            }
+			          }]
+			        };
+			      }
+			    }
+			  }, function (e) {}, {
+			    title: '请选择日期',
+			    date: dDate,
+			    minDate: minDate,
+			    maxDate: maxDate
+			  });
 			});
+			// ***********************************地图坐标数据(点、线)渲染模块******************************************
+			function coordinateShow(data) {
+			  console.log(JSON.stringify(data));
+			  console.log('开始执行');
+			  // 定义‘点’的通用样式
+			  var image = new ol.style.Circle({
+			    radius: 5,
+			    fill: new ol.style.Fill({
+			      color: 'rgba(0, 0, 255, .5)'
+			    })
+			  });
+			  // 设置点、线的样式，并引用通用样式类
+			  var styles = {
+			    'Point': new ol.style.Style({
+			      image: image
+			    }),
+			    'GeometryCollection': [new ol.style.Style({
+			      stroke: new ol.style.Stroke({
+			        color: 'magenta',
+			        width: 1
+			      }),
+			      fill: new ol.style.Fill({
+			        color: 'magenta'
+			      })
+			    })]
+			  };
 
-			var map; // 地图变量
-			var L = 110.017334; // 经度
-			var B = 35.29936; // 纬度
-			var Z = 4; // 缩放级别
-			var Zoom = 18; // 最大缩放级别
-			var raster2Url = 'http://t{0-7}.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'; /* 地图图层url服务*/
-			var layersUrl1 = 'http://t{0-7}.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}';
-			var layersUrl2 = 'http://t{0-7}.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}';
+			  var styleFunction = function (feature, resolution) {
+			    return styles[feature.getGeometry().getType()];
+			  };
 
-			var raster2 = new ol.layer.Tile({
-				source: new ol.source.XYZ({
-					url: raster2Url
-				})
-			}); // 创建文字标注图层
-			var layers = new ol.layer.Group({
-				'title': '选择图层',
-				layers: [
-					new ol.layer.Tile({
-						title: '卫星影像',
-						type: 'base',
-						visible: false,
-						source: new ol.source.XYZ({
-							url: layersUrl1
-						})
-					}),
-					new ol.layer.Tile({
-						title: '地图',
-						type: 'base',
-						visible: true,
-						source: new ol.source.XYZ({
-							url: layersUrl2
-						})
-					})
-				]
-			}); // 创建图层组使用图层控件实现可以切换图层
+			  // 渲染的数据来源
+			  var geojsonObject = data;
+			  console.log(JSON.stringify(geojsonObject));
+			  console.log('执行中11.....');
+			  // 设置数据来源
+			  var vectorSource = new ol.source.Vector({
+			    features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)
+			  });
+			  // 引用设置的数据
+			  vectorLayer = new ol.layer.Vector({
+			    source: vectorSource,
+			    style: styleFunction
+			  });
 
-			var arr = [layers, raster2]; // 图层名称数组，初始化地图时加载
-			/**
-			 * [LoadMap ：实例化并加载地图]
-			 * @param  L :经度
-			 * @param  B :纬度
-			 * @param  Z :中心级别
-			 */
-			LoadMap(L, B, Z, Zoom);
-
-			function LoadMap(L, B, Z, Zoom) {
-				map = new ol.Map({
-					layers: arr,
-					target: document.getElementById('map'),
-					view: new ol.View({
-						projection: 'EPSG:4326',
-						/* extent: [70, 18, 135, 51],*/
-						center: [L, B],
-						zoom: Z,
-						minZoom: Z,
-						maxZoom: Zoom
-					})
-				});
+			  console.log('执行中22.....');
+			  // 挂载到页面dom上
+			  new ol.Map({
+			    layers: [
+			      new ol.layer.Tile({
+			        source: new ol.source.OSM()
+			      }),
+			      vectorLayer
+			    ],
+			    view: new ol.View({
+			      // 设置地图限制范围
+			      // extent: [102, 29, 104, 31],
+			      // 设置地图中心
+			      center: [113.416, 23.18],
+			      projection: 'EPSG:4326',
+			      zoom: 14
+			    }),
+			    target: 'map',
+			    controls: ol.control.defaults({
+			      attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+			        collapsible: false
+			      })
+			    })
+			  });
 			}
 
-			/* map.addControl(new ol.control.ZoomSlider({})); //缩放下拉条*/
-			map.addControl(new ol.control.ScaleLine()); // 比例尺控件
-			/* map.addControl(new ol.control.FullScreen());//全屏控件*/
-
-			var layerSwitcher = new ol.control.LayerSwitcher({
-				tipLabel: 'Légende'
-			});
-			map.addControl(layerSwitcher); // 自定义选择图层控件
-			/* 添加悬窗*/
-			/* var viewport = map.getViewport();
-      		$(viewport).append('<div id="share" class="share"></div>');*/
-
-			//将在线总时长的秒数展示数据方式转换为时分秒
+			// 将在线总时长的秒数展示数据方式转换为时分秒
 			function changeTimeFormat(dayOnlineSeconds) {
-				if(dayOnlineSeconds < 60) {
-					return(vm.currentDayOnlineTime = '0分' + dayOnlineSeconds + '秒');
-				};
-				if(dayOnlineSeconds < 3600) {
-					return(vm.currentDayOnlineTime = Math.floor(dayOnlineSeconds / 60) + '分' + (dayOnlineSeconds - Math.floor(dayOnlineSeconds / 60) * 60) + '秒');
-				};
-				if(dayOnlineSeconds <= 86400) {
-					return(vm.currentDayOnlineTime = Math.floor(dayOnlineSeconds / 3600) + '小时' + Math.floor((dayOnlineSeconds - Math.floor(dayOnlineSeconds / 3600) * 3600) / 60) + '分');
-				};
-			}
-
+			  if (dayOnlineSeconds < 60) {
+			    return (vm.currentDayOnlineTime = '0分' + dayOnlineSeconds + '秒');
+			  }
+	if (dayOnlineSeconds < 3600) {
+			    return (vm.currentDayOnlineTime = Math.floor(dayOnlineSeconds / 60) + '分' + (dayOnlineSeconds - Math.floor(dayOnlineSeconds / 60) * 60) + '秒');
+			  }
+	if (dayOnlineSeconds <= 86400) {
+			    return (vm.currentDayOnlineTime = Math.floor(dayOnlineSeconds / 3600) + '小时' + Math.floor((dayOnlineSeconds - Math.floor(dayOnlineSeconds / 3600) * 3600) / 60) + '分');
+			  }
+}
 		</script>
 	</body>
 

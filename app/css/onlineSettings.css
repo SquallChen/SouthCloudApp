@@ -312,7 +312,7 @@
 			.track div>span{
 				display: block;
 				padding: 10px;
-				
+
 			}
 			.mui-scroll {
 				background: white;
@@ -594,7 +594,7 @@
 				-webkit-transform: translate(43px,0) !important;
 				transform: translate(43px,0) !important;
 				}
-			
+
 
 			.mui-table-view-cell:after{
 				height: 0;

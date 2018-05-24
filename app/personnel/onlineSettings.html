@@ -50,7 +50,7 @@
 										<span>选择模式</span>
 									</div>
 									<div>
-										<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{active:index===mode}">{{item.name}}</button>
+										<button v-for="(item,index) in modetype" v-on:tap="selectionMode(index)" :class="{active:index===mode}">{{item}}</button>
 									</div>
 								</li>
 							</ul>
@@ -492,7 +492,7 @@
 								<button class="ClearEphemeris">清除星历</button>
 							</ul>
 						</div>
-						
+
 <!--**************************************************************tab4****************************************************************-->
 						<div id="item4mobile" class="mui-slider-item mui-control-content">
 							<ul class="mui-table-view">
@@ -507,7 +507,7 @@
 								<li class="mui-table-view-cell">
 									<span class="otherTitle">选择语言</span>
 									<div class="otherContent select">
-										<select> 
+										<select>
 											<option v-for="item in language" :value="item.value">{{item.name}}</option>
 										</select>
 										<span></span>
@@ -625,7 +625,7 @@
 					<span>修改{{currentSatelliteName}}跟踪频段</span>
 					<div class="mui-input-row mui-checkbox mui-left selectAll">
 						<label>全选</label>
-						<input name="checkbox" value="item.value" type="checkbox" v-model="channelsAllChecked"> 
+						<input name="checkbox" value="item.value" type="checkbox" v-model="channelsAllChecked">
 					</div>
 					<hr>
 					<ul>
@@ -638,6 +638,21 @@
 					</ul>
 					<div class="btn">
 						<button>取消</button><button>确认</button>
+					</div>
+				</div>
+			</div>
+
+			<!--**************************选择模式确认弹窗****************************-->
+			<div id="selectionMode" class="mui-popover track">
+				<div class="content">
+					<span>确认</span>
+					<hr>
+					<div>
+
+						<span>确认切换到{{modetype[currentModeIndex]}}？</span>
+					</div>
+					<div class="btn">
+						<button v-on:tap="closeSelectionMode">取消</button><button v-on:tap="changeMode(currentModeIndex)">确认</button>
 					</div>
 				</div>
 			</div>

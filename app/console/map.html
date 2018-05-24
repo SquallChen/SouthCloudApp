@@ -357,71 +357,71 @@ var geojsonObject = {
 		    }
   ]
 };
-var dataObj = {
-		  'type': 'FeatureCollection',
-		  'crs': {
-		    'type': 'name',
-		    'properties': {
-		      'name': 'EPSG:4326'
-		    }
-		  },
-		  features: [
-		    {
-		      type: 'Feature',
-		      id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aed',
-		      geometry: {
-		        type: 'Point',
-		        coordinates: [
-		          106.11997857,
-		          28.89974764
-		        ]
-		      },
-		      geometry_name: 'the_location',
-		      properties: {
-		        id: '67fd63075dca4f30b42d1d3ec07b4807',
-		        machine_id: 'abd89d6277434c3ea55f81690a9b4932',
-		        identify_code: 'SG607A117233721',
-		        longitude: 106.1199785685,
-		        latitude: 28.899747635833332,
-		        altitude: 416.6692,
-		        solution_type: 'ST_RTK_FIX',
-		        sat_in_view: 22,
-		        sat_in_lock: 20,
-		        track_time: '2018-05-17T18:12:00Z',
-		        local_time: '2018-05-18T02:11:20Z',
-		        create_time: '2018-05-18T02:17:09.558Z',
-		        rand_uuid: '710a5844-3583-48a8-b40e-c0d02b3630f0'
-		      }
-		    },
-		    {
-      type: 'Feature',
-      id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aeb',
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          106.1507917,
-          28.88538148
-        ]
-      },
-      geometry_name: 'the_location',
-      properties: {
-        id: '873997842bf946bfb337395d7029f767',
-        machine_id: 'abd89d6277434c3ea55f81690a9b4932',
-        identify_code: 'SG607A117233721',
-        longitude: 106.157791703,
-        latitude: 28.985381484666667,
-        altitude: 342.4473,
-        solution_type: 'ST_RTK_FIX',
-        sat_in_view: 17,
-        sat_in_lock: 6,
-        track_time: '2018-05-17T21:12:05Z',
-        local_time: '2018-05-18T05:11:25Z',
-        create_time: '2018-05-18T05:13:32.323Z',
-        rand_uuid: 'f243f532-6368-4512-bc77-ae4f2cfc1e9d'
-      }
-    }
-		  ]
-};
+//var dataObj = {
+//		  'type': 'FeatureCollection',
+//		  'crs': {
+//		    'type': 'name',
+//		    'properties': {
+//		      'name': 'EPSG:4326'
+//		    }
+//		  },
+//		  features: [
+//		    {
+//		      type: 'Feature',
+//		      id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aed',
+//		      geometry: {
+//		        type: 'Point',
+//		        coordinates: [
+//		          106.11997857,
+//		          28.89974764
+//		        ]
+//		      },
+//		      geometry_name: 'the_location',
+//		      properties: {
+//		        id: '67fd63075dca4f30b42d1d3ec07b4807',
+//		        machine_id: 'abd89d6277434c3ea55f81690a9b4932',
+//		        identify_code: 'SG607A117233721',
+//		        longitude: 106.1199785685,
+//		        latitude: 28.899747635833332,
+//		        altitude: 416.6692,
+//		        solution_type: 'ST_RTK_FIX',
+//		        sat_in_view: 22,
+//		        sat_in_lock: 20,
+//		        track_time: '2018-05-17T18:12:00Z',
+//		        local_time: '2018-05-18T02:11:20Z',
+//		        create_time: '2018-05-18T02:17:09.558Z',
+//		        rand_uuid: '710a5844-3583-48a8-b40e-c0d02b3630f0'
+//		      }
+//		    },
+//		    {
+//    type: 'Feature',
+//    id: 'rtkonline_history_point_track_admin.fid-1fa2b00d_163821f5a33_-7aeb',
+//    geometry: {
+//      type: 'Point',
+//      coordinates: [
+//        106.1507917,
+//        28.88538148
+//      ]
+//    },
+//    geometry_name: 'the_location',
+//    properties: {
+//      id: '873997842bf946bfb337395d7029f767',
+//      machine_id: 'abd89d6277434c3ea55f81690a9b4932',
+//      identify_code: 'SG607A117233721',
+//      longitude: 106.157791703,
+//      latitude: 28.985381484666667,
+//      altitude: 342.4473,
+//      solution_type: 'ST_RTK_FIX',
+//      sat_in_view: 17,
+//      sat_in_lock: 6,
+//      track_time: '2018-05-17T21:12:05Z',
+//      local_time: '2018-05-18T05:11:25Z',
+//      create_time: '2018-05-18T05:13:32.323Z',
+//      rand_uuid: 'f243f532-6368-4512-bc77-ae4f2cfc1e9d'
+//    }
+//  }
+//		  ]
+//};
 // 设置数据来源
 var vectorSource = new ol.source.Vector({
   features: (new ol.format.GeoJSON()).readFeatures(geojsonObject)

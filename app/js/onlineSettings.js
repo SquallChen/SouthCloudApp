@@ -37,8 +37,9 @@ var vm = new Vue({
     baudRateValue: '9600',
     protocolValue: 0,
     satelliteChecked: [],
-    channelsChecked:[],
+    channelsChecked: [],
     currentIndex: '',
+    currentModeIndex: '',
     differenceFormat: [
       {
         label: 'RTCA',
@@ -151,20 +152,7 @@ var vm = new Vue({
         value: 2
       }
     ],
-    modetype: [
-      {
-        name: '基准站',
-        index: 1
-      },
-      {
-        name: '移动站',
-        index: 2
-      },
-      {
-        name: '静态站',
-        index: 3
-      }
-    ],
+    modetype: ['基准站', '移动站', '静态站'],
     linktype: [
       {
         name: '移动网络',
@@ -1595,14 +1583,14 @@ var vm = new Vue({
         ]
       }
     ],
-    language:[
-        {name:'中文',value:'chinese'},
-        {name:'英文',value:'english'},
-        {name:'俄文',value:'russian'},
-        {name:'西班牙文',value:'spanish'},
-        {name:'韩文',value:'korean'},
-        {name:'葡萄牙文',value:'portuguese'}
-        ],
+    language: [
+      { name: '中文', value: 'chinese' },
+      { name: '英文', value: 'english' },
+      { name: '俄文', value: 'russian' },
+      { name: '西班牙文', value: 'spanish' },
+      { name: '韩文', value: 'korean' },
+      { name: '葡萄牙文', value: 'portuguese' }
+    ],
     currentSatellite: {
       name: '',
       SatelliteNumber: [],
@@ -1620,22 +1608,23 @@ var vm = new Vue({
     },
     changeMode: function (index) {
       this.mode = index;
+      mui('#selectionMode').popover('toggle');
     },
     changeLink: function (index) {
       this.linktypevalue = index;
     },
     // 全选方法
- 		checkedAll: function () {
-	    var _this = this;
-	    console.log(_this.checkboxModel);
-	    if (this.checked) { // 实现反选
-	      _this.checkboxModel = [];
-	    } else { // 实现全选
-	      _this.checkboxModel = [];
-	      _this.checkboxData.forEach(function (item) {
-	        _this.checkboxModel.push(item.id);
-	      });
-	    }
+    checkedAll: function () {
+      var _this = this;
+      console.log(_this.checkboxModel);
+      if (this.checked) { // 实现反选
+        _this.checkboxModel = [];
+      } else { // 实现全选
+        _this.checkboxModel = [];
+        _this.checkboxData.forEach(function (item) {
+          _this.checkboxModel.push(item.id);
+        });
+      }
     },
     // 点击按钮动态加载对应的数据再渲染页面
     setSatelliteNum: function (index) {
@@ -1653,6 +1642,14 @@ var vm = new Vue({
       this.currentSatelliteName = this.currentSatellite.name;
       console.log(JSON.stringify(this.currentSatellite));
       mui('#setTrack').popover('toggle');
+    },
+    selectionMode: function (index) {
+      console.log(index);
+      this.currentModeIndex = index;
+      mui('#selectionMode').popover('toggle');
+    },
+    closeSelectionMode: function () {
+      mui('#selectionMode').popover('toggle');
     }
   },
   created: function () {
@@ -1681,7 +1678,7 @@ var vm = new Vue({
     // 设置卫星号复选框全选方法
     satelliteAllChecked: {
       get: function () {
-      	//当前选中的数据长度等于该数据的总长度（全选状态）
+      	// 当前选中的数据长度等于该数据的总长度（全选状态）
         return this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length;
       },
       set: function (value) {
@@ -1696,14 +1693,14 @@ var vm = new Vue({
     },
     satelliteCheckedCount: {
       get: function () {
-      	//返回选中的数据总长度
+      	// 返回选中的数据总长度
         return this.satelliteChecked.length;
       }
     },
     // 修改跟踪频段复选框全选方法
     channelsAllChecked: {
       get: function () {
-      	//当前选中的数据长度等于该数据的总长度（全选状态）
+      	// 当前选中的数据长度等于该数据的总长度（全选状态）
         return this.channelsCheckedCount === this.currentSatellite.track.length;
       },
       set: function (value) {
@@ -1718,9 +1715,9 @@ var vm = new Vue({
     },
     channelsCheckedCount: {
       get: function () {
-      	//返回选中的数据总长度
+      	// 返回选中的数据总长度
         return this.channelsChecked.length;
       }
-    },
+    }
   }
 });
