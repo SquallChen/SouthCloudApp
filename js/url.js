@@ -11,18 +11,20 @@ var apiUrl = {
   register: str + '/user/register',
   check_token: str + '/user/check_token',
 
-
   // 设备
   device_list_page: str + '/device/list_page',
   device_list: str + '/device/list_page',
   detail_info: str + '/device/detail_info',
-  doSendConfig: str + '/device/doSendConfig',
+  doSendConfig: str + '/device/do_send_config',
+  // doSendConfig: str + '/device/doSendConfig',
   doRequestConnectStatusMonitor: str + '/device/doRequestConnectStatusMonitor',
-  doGetUniqueIdInfo: str + '/device/doGetUniqueIdInfo',
+  doGetUniqueIdInfo: str + '/device/do_get_uniqueid_Info',
+  // doGetUniqueIdInfo: str + '/device/doGetUniqueIdInfo',
   track_info_page: str + '/device/track_info_page',
   track_day_statistics: str + '/device/track_day_statistics',
   track_day_page: str + '/device/track_day_page',
   map_url: str + '/device/map_url',
+  change_work_mode: str + '/device/change_work_mode',
 
   // 数据
   data_list_page: str + '/data/list_page',

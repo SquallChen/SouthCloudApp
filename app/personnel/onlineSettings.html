@@ -20,7 +20,7 @@
 			<div class="mui-content">
 				<div class="equipmentTitle">
 					<span>设备信息-</span>
-					<span>{{deviceID}}</span>
+					<span>{{currentIdentifyCode}}</span>
 					<button class="refresh">刷新</button>
 				</div>
 				<div id="slider" class="mui-slider">
@@ -74,11 +74,11 @@
 									<div class="radio">
 										<div class="mui-input-row mui-radio mui-left">
 											<label>1S</label>
-											<input name="radio1" type="radio" value=0 v-model="launchTime" :checked="launchTime===0">
+											<input name="radio1" type="radio" value = "0" v-model="launchTime" :checked="launchTime===0">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>2S</label>
-											<input name="radio1" type="radio" value=1 v-model="launchTime" :checked="launchTime===1">
+											<input name="radio1" type="radio" value = "1" v-model="launchTime" :checked="launchTime===1">
 										</div>
 									</div>
 								</li>
@@ -252,23 +252,23 @@
 									<div class="radio radio2">
 										<div class="mui-input-row mui-radio mui-left">
 											<label>直高</label>
-											<input name="radio2" type="radio" value=0 v-model="antennaType" :checked="antennaType===0">
+											<input name="radio2" type="radio" value="4" v-model="antennaType" :checked="antennaType===4">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>斜高</label>
-											<input name="radio2" type="radio" value=1 v-model="antennaType" :checked="antennaType===1">
+											<input name="radio2" type="radio" value="2" v-model="antennaType" :checked="antennaType===2">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>杠高</label>
-											<input name="radio2" type="radio" value=2 v-model="antennaType" :checked="antennaType===2">
+											<input name="radio2" type="radio" value="16" v-model="antennaType" :checked="antennaType===16">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>侧片高</label>
-											<input name="radio2" type="radio" value=3 v-model="antennaType" :checked="antennaType===3">
+											<input name="radio2" type="radio" value="8" v-model="antennaType" :checked="antennaType===8">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>天线相位中心</label>
-											<input name="radio2" type="radio" value=4 v-model="antennaType" :checked="antennaType===4">
+											<input name="radio2" type="radio" value="1" v-model="antennaType" :checked="antennaType===1">
 										</div>
 									</div>
 								</li>
@@ -285,7 +285,7 @@
 										<span>自动记录</span>
 									</div>
 									<div>
-										<div class="mui-switch mui-active">
+										<div class="mui-switch mui-active" id="auto-record">
 											<div class="mui-switch-handle"></div>
 										</div>
 									</div>
@@ -661,6 +661,7 @@
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/app.js"></script>
 		<script src="../../js/url.js"></script>
+		<script src="../../js/socket.io.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script src="../js/onlineSettings.js"></script>
 	</body>

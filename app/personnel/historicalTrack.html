@@ -347,7 +347,7 @@
 			      // 如果该设备在被选中的日期中有历史轨迹数据存在
 			      if (vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
 			        vm.currentDate = vm.trackData[i].id;
-			        // console.log(vm.currentDate)
+			         console.log(vm.currentDate)
 			        // 转换在线总时长的展示方式
 			        changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
 			        // 当选择日期后，发送请求该日期的全部轨迹点数据
@@ -512,10 +512,9 @@
 			    source: vectorSource,
 			    style: styleFunction
 			  });
-
 			  console.log('执行中22.....');
 			  // 挂载到页面dom上
-			  new ol.Map({
+			  var map = new ol.Map({
 			    layers: [
 			      new ol.layer.Tile({
 			        source: new ol.source.OSM()

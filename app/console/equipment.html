@@ -161,7 +161,7 @@
 				top: 4px;
 			}
 
-			.main-content .pinyin {
+			.main-content .upDataUserName {
 				font-size: 11px;
 			}
 
@@ -205,17 +205,21 @@
 			.personnelInfo .mui-slider-right a:nth-child(3) {
 				background: #deaa02;
 			}
+
 			.personnelInfo .mui-slider-right a:nth-child(4) {
 				background: #019bdc;
 			}
+
 			.personnelInfo .mui-table-view-cell {
 				padding: 0 14px 0 10px;
 			}
-			.mui-table-view-cell>.mui-slider-right>.mui-btn{
+
+			.mui-table-view-cell>.mui-slider-right>.mui-btn {
 				padding: 0;
-				width:85px;
+				width: 85px;
 				justify-content: center;
 			}
+
 			.mui-table-view-cell:after {
 				left: 0;
 				background-color: #ccc;
@@ -313,8 +317,9 @@
 				width: 100%;
 				text-align: center;
 			}
+
 			[v-cloak] {
-			  display: none;
+				display: none;
 			}
 		</style>
 	</head>
@@ -358,7 +363,7 @@
 								<div class="mui-table-cell">
 									<div class="main-content" v-cloak>
 										<div><span class="name">{{item.identifyCode}}</span><span class="status" :class="{active:item.onlineStatus!==0}"></span></div>
-										<div><span class="pinyin">{{item.upDataUserName}}</span><span class="group">{{item.upDataCompanyInfo}}</span></div>
+										<div><span class="upDataUserName">{{item.upDataUserName}}</span><span class="group">{{item.upDataCompanyInfo}}</span></div>
 									</div>
 								</div>
 							</div>
@@ -395,31 +400,30 @@
 			  data: {
 			    deviceData: '',
 			    token: '',
-			    test:[1,2,3,4],
+			    test: [1, 2, 3, 4],
 			    user_name: '',
 			    rtkCount: '',
 			    onlineRtkCount: '',
-			    mapRtk: '',
-//			    upDataUserName:'',
-//			    upDataCompanyInfo:'',
-//			    identifyCode:'',
-//			    track_day_id:'',
+			    mapRtk: ''
 			  },
 			  methods: {
 			    openpage: function (index) {
 			      var data_url = event.target.dataset.href;
-			      mui.openWindow({
-			        url: data_url,
-			        id: data_url,
-			        //用extras属性将当前index值传递到即将打开的页面
-			        extras:{
-				        //index:index,
-				        upDataUserName:vm.deviceData[index].upDataUserName,
-				        upDataCompanyInfo:vm.deviceData[index].upDataCompanyInfo,
-				        identifyCode:vm.deviceData[index].identifyCode,
-				        //track_day_id:vm.deviceData[index].id
-				    }
-			      });
+			      // 如果设备离线并且点击的是在线配置的页面
+			      if (vm.deviceData[index].onlineStatus === 0 && data_url === '../personnel/onlineSettings.html') {
+			        mui.toast('设备离线，暂时无法在线配置');
+			      } else {
+			        mui.openWindow({
+			          url: data_url,
+			          id: data_url,
+			          // 用extras属性将当前index值传递到即将打开的页面
+			          extras: {
+			            upDataUserName: vm.deviceData[index].upDataUserName,
+			            upDataCompanyInfo: vm.deviceData[index].upDataCompanyInfo,
+			            identifyCode: vm.deviceData[index].identifyCode
+			          }
+			        });
+			      }
 			    }
 			  },
 			  created: function () {
@@ -464,25 +468,18 @@
 			          if (data.status === 0) {
 			            var tempData = data.recordList;
 			            var tempArray = [];
-			            //当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-			            for(var i=0;i<tempData.length;i++){
-			            	if(tempData[i].onlineStatus===1){
-			            		tempArray.push(tempData[i]);
-			            		tempData.splice(i, 1);
-			            	}
+			            // 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+			            for (var i = 0; i < tempData.length; i++) {
+			              if (tempData[i].onlineStatus === 1) {
+			                tempArray.push(tempData[i]);
+			                tempData.splice(i, 1);
+			              }
 			            }
-			            for(var i=0;i<tempArray.length;i++){
-			            	tempData.unshift(tempArray[i]);
+			            for (var i = 0; i < tempArray.length; i++) {
+			              tempData.unshift(tempArray[i]);
 			            }
-			            //完成排列处理的数组数据添加到页面上渲染
+			            // 完成排列处理的数组数据添加到页面上渲染
 			            vm.deviceData = tempData;
-//			            var a = {
-//			            	b:1,
-//			            	c:''
-//			            }
-//			            var d = [1,2,3,4];
-//			            a.c = d;
-//			            console.log(JSON.stringify(a))
 			          } else if (data.status === 40004) {
 			            mui.openWindow({
 			              url: '../../login.html',
@@ -504,17 +501,15 @@
 
 			      window.addEventListener('refresh', function () {
 			        console.log('要刷新数据了！！！！');
-			       // plus.webview.currentWebview().reload();
-        //							 var h=plus.webview.currentWebview();
-        //							console.log( "当前Webview窗口："+h.getURL() );
-        //							h.reload();
+			        // plus.webview.currentWebview().reload();
+			        //							 var h=plus.webview.currentWebview();
+			        //							console.log( "当前Webview窗口："+h.getURL() );
+			        //							h.reload();
 			        //							console.log('刷新完数据了！！！！');
-
 			      });
 			    });
 			  }
 			});
-
 		</script>
 	</body>
 

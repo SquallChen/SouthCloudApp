@@ -1,7 +1,10 @@
+var url = apiUrl.doSendConfig;
+var currentWebview = null;
+var ERR_NO = 0;
+
 var vm = new Vue({
   el: '#app',
   data: {
-    deviceID: 'SG607A117233388',
     mode: 0,
     linktypevalue: 0,
     isActive: 0,
@@ -40,6 +43,174 @@ var vm = new Vue({
     channelsChecked: [],
     currentIndex: '',
     currentModeIndex: '',
+    currentIdentifyCode: '',
+    workMode: '',
+    clientUUid: '',
+    firstTimer: '',
+    onlyOne: 0,
+    disconnectCount: 0,
+    the_unique_id: '',
+    socketFun: '',
+    socketTip: '',
+    socketTypeModel: '',
+    showWaiting: false,
+    ajaxTimer: '',
+    wActive: 'BASE',
+    wshow: 'BASE',
+    workChecked: 'BASE',
+
+    // 基准
+    bVal: {
+      'rtmRadios': '',
+      'launch': '',
+      'cutangle': '',
+      'pdop': '',
+      'baseLaunch': '',
+      'antenna': '',
+      'latitude': '',
+      'longitude': '',
+      'altitude': '',
+      'show': 'start'
+    },
+
+    baseS: {
+      'rtmRadios': false,
+      'launch': false,
+      'cutangle': false,
+      'pdop': false,
+      'baseLaunch': false,
+      'antenna': false,
+      'latitude': false,
+      'longitude': false,
+      'altitude': false
+    },
+
+    baseE: {
+      'rtmRadios': false,
+      'launch': false,
+      'cutangle': false,
+      'pdop': false,
+      'baseLaunch': false,
+      'antenna': false,
+      'latitude': false,
+      'longitude': false,
+      'altitude': false
+    },
+
+    // 移动
+    rVal: {
+      'cutangle': '',
+      'show': 'break'
+    },
+
+    roverS: {
+      cutangle: false
+    },
+
+    roverE: {
+      cutangle: false
+    },
+
+    // 静态
+    sVal: {
+      'sampling': '',
+      'cutangle': '',
+      'pdop': '',
+      'staticLaunch': '',
+      'antenna': '',
+      'show': 'start'
+    },
+
+    staticS: {
+      'sampling': false,
+      'cutangle': false,
+      'pdop': false,
+      'staticLaunch': false,
+      'antenna': false,
+      'record': false
+    },
+
+    staticE: {
+      'sampling': false,
+      'cutangle': false,
+      'pdop': false,
+      'staticLaunch': false,
+      'antenna': false,
+      'record': false
+    },
+
+    nVal: {
+      'ip': '',
+      'port': '',
+      'account': '',
+      'pw': '',
+      'linkMobileModel': '',
+      'linkAccessPoint': '',
+      'apnSrver': '',
+      'apnUser': '',
+      'apnPassword': ''
+    },
+
+    netS: {
+      'ip': false,
+      'port': false,
+      'account': false,
+      'pw': false,
+      'linkMobileModel': false,
+      'linkAccessPoint': false,
+      'apnSrver': false,
+      'apnUser': false,
+      'apnPassword': false
+    },
+
+    netE: {
+      'ip': false,
+      'port': false,
+      'account': false,
+      'pw': false,
+      'linkMobileModel': false,
+      'linkAccessPoint': false,
+      'apnSrver': false,
+      'apnUser': false,
+      'apnPassword': false
+    },
+
+    uVal: {
+      'link_channel': '',
+      'UHFPowerRadios': '',
+      'braundrateAir': '',
+      'link_UHF_protocol': ''
+    },
+
+    uhfS: {
+      'link_channel': false,
+      'UHFPowerRadios': false,
+      'braundrateAir': false,
+      'link_UHF_protocol': false
+    },
+
+    uhfE: {
+      'link_channel': false,
+      'UHFPowerRadios': false,
+      'braundrateAir': false,
+      'link_UHF_protocol': false
+    },
+
+    oVal: {
+      language: '',
+      regday: '',
+      oldLanCheck: 'CHINESE',
+      regCode: '',
+      notSend: 0,
+      oemcheck: '无动作',
+      uhfcheck: '无动作',
+      netcheck: '无动作',
+      wificheck: '无动作',
+      oemcheckTip: false,
+      uhfcheckTip: false,
+      netcheckTip: false,
+      wificheckTip: false
+    },
     differenceFormat: [
       {
         label: 'RTCA',
@@ -1584,12 +1755,30 @@ var vm = new Vue({
       }
     ],
     language: [
-      { name: '中文', value: 'chinese' },
-      { name: '英文', value: 'english' },
-      { name: '俄文', value: 'russian' },
-      { name: '西班牙文', value: 'spanish' },
-      { name: '韩文', value: 'korean' },
-      { name: '葡萄牙文', value: 'portuguese' }
+      {
+        name: '中文',
+        value: 'chinese'
+      },
+      {
+        name: '英文',
+        value: 'english'
+      },
+      {
+        name: '俄文',
+        value: 'russian'
+      },
+      {
+        name: '西班牙文',
+        value: 'spanish'
+      },
+      {
+        name: '韩文',
+        value: 'korean'
+      },
+      {
+        name: '葡萄牙文',
+        value: 'portuguese'
+      }
     ],
     currentSatellite: {
       name: '',
@@ -1606,7 +1795,65 @@ var vm = new Vue({
         id: 'deviceStatus.html'
       });
     },
+    // 工作模式切换
     changeMode: function (index) {
+      switch (index) {
+        case 0:
+          vm.workMode = 'BASE';
+          break;
+        case 1:
+          vm.workMode = 'ROVER';
+          break;
+        case 2:
+          vm.workMode = 'STATIC';
+          break;
+        default:
+      }
+      console.log(vm.user_name);
+      console.log(vm.token);
+      console.log(vm.workMode);
+      console.log(vm.currentIdentifyCode);
+      console.log(vm.clientUUid);
+      plus.nativeUI.showWaiting('读取设置中...', {
+        height: '100px',
+        width: '150px'
+      });
+      mui.ajax(url, {
+        data: {
+          user_name: vm.user_name,
+          token: vm.token,
+          workMode: vm.workMode,
+          identifyCode: vm.currentIdentifyCode,
+          clientUUid: vm.clientUUid,
+          requestType: 'getChangeWorkMode'
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 10000,
+        success: function callback(data) {
+          console.log(JSON.stringify(data));
+          if (data.status === ERR_NO) {
+            timeFun(
+              data,
+              getConfigWorkModePageInfo,
+              '工作模式切换失败',
+              'workModel'
+            );
+          } else {
+            mui.toast(data.info);
+            plus.nativeUI.closeWaiting();
+          }
+          plus.nativeUI.closeWaiting();
+        },
+        error: function (xhr, type, errorThrown) {
+          console.log('更改模式不成功.....');
+          console.log(JSON.stringify(xhr));
+          console.log(JSON.stringify(type));
+          console.log(JSON.stringify(errorThrown));
+          plus.nativeUI.closeWaiting();
+        }
+      });
+
       this.mode = index;
       mui('#selectionMode').popover('toggle');
     },
@@ -1617,9 +1864,11 @@ var vm = new Vue({
     checkedAll: function () {
       var _this = this;
       console.log(_this.checkboxModel);
-      if (this.checked) { // 实现反选
+      if (this.checked) {
+        // 实现反选
         _this.checkboxModel = [];
-      } else { // 实现全选
+      } else {
+        // 实现全选
         _this.checkboxModel = [];
         _this.checkboxData.forEach(function (item) {
           _this.checkboxModel.push(item.id);
@@ -1652,9 +1901,133 @@ var vm = new Vue({
       mui('#selectionMode').popover('toggle');
     }
   },
+
   created: function () {
-    // 获取屏幕高度减去上面title等占用的高度,剩余高度全部赋予tab内容页，自适应不同屏幕尺寸
     mui.plusReady(function () {
+      mui.init({});
+      currentWebviewcurrentWebview = plus.webview.currentWebview();
+      //    currentWebview.setStyle({
+      //      softinputMode: 'adjustResize'
+      //    });
+
+      // 获取上层页面传递过来的参数
+      var self = plus.webview.currentWebview();
+      vm.currentIdentifyCode = self.identifyCode;
+      // console.log(vm.currentIdentifyCode);
+
+      // 登陆时存放到本地的数据
+      vm.token = plus.storage.getItem('token');
+      vm.user_name = plus.storage.getItem('user_name');
+      plus.nativeUI.showWaiting('正在初始化设置中...', {
+        height: '100px',
+        width: '180px'
+      });
+
+      // 第一次请求
+      vm.firstTimer = setTimeout(function () {
+        vm.onlyOne = 1;
+        getSicVersion();
+      }, 3000);
+
+      var socket = io.connect(
+        'http://' + '119.23.161.165:9110' + '/rtkTransferWeb'
+      );
+      // var socket = io.connect('http://119.231.161.165:9010/rtkuniqueid');
+      socket.on('connect', function () {
+        vm.clientUUid = socket.id;
+        vm.disconnectCount = 0;
+        // console.log('socket is ok :' + vm.clientUUid);
+        clearTimeout(vm.firstTimer);
+        rtknote();
+        if (++vm.onlyOne === 1) {
+        	console.log('运行到这里1111');
+          getSicVersion();
+        }
+      });
+
+      socket.on('connect_failed', function () {
+        // 连接并赋值socketID
+        vm.disconnectCount++;
+        if (++onlyOne === 1) {
+          getSicVersion();
+        }
+      });
+
+      // 监听数据返并做逻辑处理
+      socket.on('uniqueIdData', function (replyData) {
+        jsonObj = eval('(' + replyData.data + ')');
+        console.log(jsonObj);
+        if (jsonObj.uniqueId === vm.the_unique_id) {
+          clearTimeout(vm.ajaxTimer);
+          if (
+            jsonObj.errorId === 'ERROR_NULL' && jsonObj.hitSicDataReply !== undefined
+          ) {
+            // sure(vm.socketTypeModel);
+            vm.socketFun(jsonObj.hitSicDataReply);
+          } else if (jsonObj.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
+            sure(vm.socketTypeModel);
+            mui.confirm(
+              '',
+              '设备离线,操作失败!',
+              ['确认'],
+              function (e) {
+                currentWebview.close();
+                mui.openWindow({
+                  url: 'rtklist.html',
+                  id: './app/rtkonline/rtklist.html'
+                });
+              },
+              'div'
+            );
+          } else if (jsonObj.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
+            sure(vm.socketTypeModel);
+            mui.toast('设备操作被中断，请稍后再试!');
+          } else if (jsonObj.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
+            sure(vm.socketTypeModel);
+            mui.toast('设置超时，操作失败！');
+          }
+          if (vm.showWaiting !== true) {
+            plus.nativeUI.closeWaiting();
+            vm.showWaiting = false;
+          }
+          /* jsonObj = ''; */
+        }
+      });
+
+      socket.on('ConnectStatus', function (replyData) {
+        var noteObj = eval('(' + replyData.data + ')');
+        console.log(noteObj);
+        if (noteObj.connectStatus === false) {
+          mui.confirm(
+            '',
+            '设备离线,操作失败!',
+            ['确认'],
+            function (e) {
+              currentWebview.close();
+              mui.openWindow({
+                url: 'rtklist.html',
+                id: './app/rtkonline/rtklist.html'
+              });
+            },
+            'div'
+          );
+        }
+
+        if (noteObj.connectStatus === true) {
+          var backdom = document.getElementsByClassName('mui-popup');
+          var backdrop = document.getElementsByClassName('mui-popup-backdrop');
+          for (var i = 0; i < backdom.length; i++) {
+            backdom[i].parentNode.removeChild(backdom[i]);
+          }
+          for (var j = 0; j < backdrop.length; j++) {
+            removeClass(backdrop[j], 'mui-active');
+          }
+          mui.toast('设备已上线！');
+        }
+        plus.nativeUI.closeWaiting();
+      });
+
+      // 获取屏幕高度减去上面title等占用的高度,剩余高度全部赋予tab内容页，自适应不同屏幕尺寸
       mui('.mui-scroll-wrapper').scroll({
         indicators: true // 是否显示滚动条
       });
@@ -1674,18 +2047,24 @@ var vm = new Vue({
         .setAttribute('style', 'height:' + resolutionHeight + 'px;');
     });
   },
+
   computed: {
     // 设置卫星号复选框全选方法
     satelliteAllChecked: {
       get: function () {
-      	// 当前选中的数据长度等于该数据的总长度（全选状态）
-        return this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length;
+        // 当前选中的数据长度等于该数据的总长度（全选状态）
+        return (
+          this.satelliteCheckedCount ===
+          this.currentSatellite.SatelliteNumber.length
+        );
       },
       set: function (value) {
         if (value) {
-          this.satelliteChecked = this.currentSatellite.SatelliteNumber.map(function (item) {
-            return item.value;
-          });
+          this.satelliteChecked = this.currentSatellite.SatelliteNumber.map(
+            function (item) {
+              return item.value;
+            }
+          );
         } else {
           this.satelliteChecked = [];
         }
@@ -1693,19 +2072,21 @@ var vm = new Vue({
     },
     satelliteCheckedCount: {
       get: function () {
-      	// 返回选中的数据总长度
+        // 返回选中的数据总长度
         return this.satelliteChecked.length;
       }
     },
     // 修改跟踪频段复选框全选方法
     channelsAllChecked: {
       get: function () {
-      	// 当前选中的数据长度等于该数据的总长度（全选状态）
+        // 当前选中的数据长度等于该数据的总长度（全选状态）
         return this.channelsCheckedCount === this.currentSatellite.track.length;
       },
       set: function (value) {
         if (value) {
-          this.channelsChecked = this.currentSatellite.track.map(function (item) {
+          this.channelsChecked = this.currentSatellite.track.map(function (
+            item
+          ) {
             return item.value;
           });
         } else {
@@ -1715,9 +2096,414 @@ var vm = new Vue({
     },
     channelsCheckedCount: {
       get: function () {
-      	// 返回选中的数据总长度
+        // 返回选中的数据总长度
         return this.channelsChecked.length;
       }
     }
   }
 });
+
+// 第一次进入页面时设置时获取SIC版本
+function getSicVersion() {
+  console.log(vm.user_name);
+  console.log(vm.token);
+  console.log(vm.clientUUid);
+  console.log(vm.currentIdentifyCode);
+  mui.ajax(url, {
+    type: 'post',
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      clientUUid: vm.clientUUid,
+      identifyCode: vm.currentIdentifyCode,
+      requestType: 'getSicVersion'
+    },
+    dataType: 'json',
+    timeout: 10000,
+    success: function callback(data) {
+      console.log('第一次进入页面获取的唯一码+' + JSON.stringify(data));
+      if (data.status === ERR_NO) {
+        timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
+      } else {
+        console.log('过期了');
+        mui.toast(data.info);
+      }
+      plus.nativeUI.closeWaiting();
+    },
+    error: function (data) {
+      plus.nativeUI.closeWaiting();
+    }
+  });
+}
+// timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
+// timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
+
+// 根据唯一码判断并获取对应的数据
+function timeFun(data, func, tip, typeModel, timee, showWaiting) {
+  console.log('得到的唯一码数据为+' + JSON.stringify(data));
+  // 对获取唯一码成功的判断
+  var time = arguments[4] ? arguments[4] : 5000;
+  var theunique_id = data.unique_id || data.uniqueId;
+  vm.the_unique_id = data.unique_id || data.uniqueId;
+  vm.socketFun = func;
+  vm.socketTip = tip;
+  vm.socketTypeModel = typeModel;
+  vm.showWaiting = showWaiting;
+  // 如果请求唯一码返回数据成功
+  if (data.status === ERR_NO) {
+    // 生成setTimeout计时器并执行
+    vm.ajaxTimer = setTimeout(function () {
+      // 根据返回得到的唯一码请求相应的数据
+      console.log('当前用于请求的唯一码为+' + data.unique_id);
+      mui.ajax(apiUrl.doGetUniqueIdInfo, {
+        data: {
+          user_name: vm.user_name,
+          token: vm.token,
+          identifyCode: vm.currentIdentifyCode,
+          uniqueId: data.unique_id
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 10000,
+        success: function (data) {
+          console.log('根据唯一码请求得到的数据为+' + JSON.stringify(data));
+          if (data.status === 0) {
+            tip = tip || data.info;
+            var _data = data.data;
+            // 根据返回的errorId进行对应处理，ERROR_NULL代表没有错误产生
+            if (_data !== undefined && _data.errorId === 'ERROR_NULL') {
+              console.log(111111);
+              if (_data.hitSicDataReply !== undefined) {
+                console.log(22222);
+                // 根据模式类型，有数据返回时对应相关处理
+                var hd = _data.hitSicDataReply;
+                func(hd);
+                plus.nativeUI.closeWaiting();
+              } else {
+                console.log(3333333);
+                sure(typeModel);
+                mui.toast(data.info);
+              }
+            } else if (data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
+              sure(typeModel);
+              mui.confirm(
+                '',
+                '设备离线,操作失败!',
+                ['确认'],
+                function (e) {
+                  currentWebview.close();
+                  mui.openWindow({
+                    url: 'equipment.html',
+                    id: './app/console/equipment.html'
+                  });
+                },
+                'div'
+              );
+            } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
+              sure(typeModel);
+              mui.toast('设备操作被中断，请稍后再试!');
+            } else if (data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
+              sure(typeModel);
+              mui.toast('设置超时，操作失败！');
+            } else if (data.uniqueId === theunique_id) {
+              console.log('这里');
+              sure(typeModel);
+              mui.toast('设置超时，操作失败！');
+            } else {
+              sure(typeModel);
+              mui.toast('设置超时，操作失败！');
+            }
+          } else {
+            console.log('这就尴尬了');
+            mui.toast(data.info);
+            plus.nativeUI.closeWaiting();
+          }
+        }
+      });
+    }, time);
+  } else {
+    console.log('到这里了');
+    mui.toast(data.info);
+    plus.nativeUI.closeWaiting();
+  }
+}
+
+/* 获取工作模式页面数据*/
+function getConfigWorkModePageInfo(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].status === true) {
+      if (hd[i].hitSicData === 'GET:DEVICE.RECORD.STATUS') {
+        if (hd[i].value === 'RECORDING' || hd[i].value === 1) {
+          vm.sVal.show = 'break';
+        } else {
+          vm.sVal.show = 'start';
+        }
+      } else if (hd[i].hitSicData === 'GET:DEVICE.RECORD.AUTO_REC') {
+        var autoRecord = $('auto-record');
+        if (hd[i].value === 'ON') {
+          addClass(autoRecord, 'mui-active');
+        } else {
+          removeClass(autoRecord, 'mui-active');
+        }
+      } else if (hd[i].hitSicData === 'GET:DEVICE.RECORD.INTERVAL') {
+        vm.sVal.sampling = hd[i].value;
+      } else if (hd[i].hitSicData === 'GET:GNSS.BASE.START_POSITION') {
+        var data = hd[i].value.split('|');
+        if (data[0] !== ' ') {
+          vm.bVal.latitude = data[0];
+        }
+        if (data[1] !== ' ') {
+          vm.bVal.longitude = data[1];
+        }
+        if (data[2] !== ' ') {
+          vm.bVal.altitude = data[2];
+        }
+      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.METHOD') {
+        vm.bVal.baseLaunch = hd[i].value;
+        vm.sVal.staticLaunch = hd[i].value;
+      } else if (hd[i].hitSicData === 'GET:GNSS.BASE.PDOP') {
+        vm.bVal.pdop = hd[i].value.substring(0, hd[i].value.indexOf('.') + 3);
+        vm.sVal.pdop = hd[i].value.substring(0, hd[i].value.indexOf('.') + 3);
+      } else if (hd[i].hitSicData === 'GET:GNSS.CUTANGLE') {
+        vm.bVal.cutangle = hd[i].value;
+        vm.rVal.cutangle = hd[i].value;
+        vm.sVal.cutangle = hd[i].value;
+      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.HEIGHT') {
+        vm.bVal.antenna = hd[i].value / 1000;
+        vm.sVal.antenna = hd[i].value / 1000;
+      } else if (hd[i].hitSicData === 'GET:GNSS.BASE.DIFFTYPE') {
+        vm.bVal.rtmRadios = hd[i].value;
+      } else if (hd[i].hitSicData === 'GET:GNSS.BASE.INTERVAL') {
+        vm.bVal.launch = hd[i].value;
+      } else if (hd[i].hitSicData === 'GET:GNSS.BASE.STATUS') {
+        if (hd[i].value === 2 || hd[i].value === 1) {
+          vm.bVal.show = 'break';
+        } else {
+          vm.bVal.show = 'start';
+        }
+      } else if (hd[i].hitSicData === 'GET:DEVICE.CUR_SYSMODE') {
+        vm.workChecked = vm.wActive;
+        vm.wActive = hd[i].value;
+        vm.wshow = hd[i].value;
+        mui.ajax(url, {
+          type: 'post',
+          data: {
+            user_name: vm.user_name,
+            token: vm.token,
+            clientUUid: vm.clientUUid,
+            identifyCode: vm.currentIdentifyCode,
+            requestType: 'getDetailWorkModeInfo',
+            workMode: hd[i].value
+          },
+          dataType: 'json',
+          type: 'post',
+          timeout: 10000,
+          success: function callback(data) {
+            if (data.status === ERR_NO) {
+              timeFun(
+                data,
+                getConfigWorkModePageInfo,
+                '读取信息失败',
+                'pagesInfo',
+                5000
+              );
+            } else {
+              mui.toast(data.info);
+              plus.nativeUI.closeWaiting();
+            }
+          },
+          error: function (data) {
+            plus.nativeUI.closeWaiting();
+          }
+        });
+      }
+    }
+  }
+  plus.nativeUI.closeWaiting();
+}
+
+// 申请监控设备在线通知
+function rtknote() {
+  // ****************************接口有问题********************************************
+  mui.ajax(apiUrl.doRequestConnectStatusMonitor, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      identifyCode: vm.currentIdentifyCode,
+      clientUUid: vm.clientUUid
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function (data) {
+      if (data.status === 0) {
+        console.log('listenting rtk');
+      } else {
+        mui.toast(data.info);
+      }
+    },
+    error: function (data) {
+    }
+  });
+}
+
+// 每240秒申请监控通知
+setInterval(function () {
+  rtknote();
+}, 240000);
+
+// 第一次进入页面时设置时获取工作模式数据方法
+function firstGetConfigWorkModePageInfo(showOrhide) {
+  if (showOrhide !== 'closeWaiting') {
+    plus.nativeUI.showWaiting('正在读取设备设置中...', {
+      height: '100px',
+      width: '150px'
+    });
+  }
+  mui.ajax(url, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      identifyCode: vm.currentIdentifyCode,
+      requestType: 'getWorkModeType'
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function (data) {
+      console.log('第一次进入页面时设置时获取工作模式的数据+' + JSON.stringify(data));
+      if (data.status === ERR_NO) {
+        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
+      } else if (data.status === 40004) {
+        plus.storage.clear();
+        mui.openWindow({
+          url: '../../login.html',
+          id: 'login'
+        });
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    }
+  });
+}
+// 判断获取sic的方法
+function getSic(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].status === true) {
+      // 如果返回的data类型是请求DEVICE.SIC_VERSION
+      if (hd[i].hitSicData === 'GET:DEVICE.SIC_VERSION') {
+        // 如果值是SIC_2.0，执行第一次进入页面时设置时获取工作模式数据方法：firstGetConfigWorkModePageInfo
+        if (hd[i].value === 'SIC_2.0') {
+          firstGetConfigWorkModePageInfo('closeWaiting');
+        } else {
+          // 如果以上不成立，先进行判断是否设置SIC_2.0协议，确认时，执行设置SIC_2.0协议的方法setSicVirsion
+          mui.confirm(
+            '',
+            '是否设置SIC_2.0协议?',
+            ['取消', '确认'],
+            function (e) {
+              if (e.index === 1) {
+                plus.nativeUI.showWaiting('正在设置中...', {
+                  height: '100px',
+                  width: '150px'
+                });
+                setSicVirsion();
+              }
+            },
+            'div'
+          );
+        }
+      }
+    } else {
+      getSicError('获取设置协议失败!');
+    }
+  }
+}
+// 设置SIC_2.0协议方法
+function setSicVirsion() {
+  mui.ajax(url, {
+    data: {
+      user_name: vm.userName,
+      token: vm.token,
+      clientUUid: vm.clientUUid,
+      identifyCode: vm.identifyCode,
+      requestType: 'setSicVersion'
+    },
+    url: url,
+    type: 'post',
+    dataType: 'JSON',
+    success: function callback(data) {
+      if (data.status === ERR_NO) {
+        timeFun(data, setSic, '设置协议失败!', 'setSic', 3000);
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    },
+    error: function (data) {
+      mui.toast(data.info);
+      plus.nativeUI.closeWaiting();
+    }
+  });
+}
+
+// 根据模式类型，失败时不切换tab
+function sure(typeModel) {
+  /* 工作模式切换*/
+  if (typeModel === 'workModel') {
+    console.log('+++++++++++++');
+    vm.wActive = vm.workChecked;
+    vm.wshow = vm.workChecked;
+  }
+  /* 数据链切换*/
+  else if (typeModel === 'dataLinkModel') {
+    vm.lActive = vm.linkChecked;
+    vm.lhow = vm.linkChecked;
+  }
+  /* 静态站中的开记录*/
+  else if (typeModel === 'staticSet') {
+    mui('#auto-record').switch().toggle();
+  }
+
+  /* 使用语音*/
+  else if (typeModel === 'voice') {
+    switchVoice = 'notSend';
+    mui('#use-voice').switch().toggle();
+    mui.toast('设置失败！');
+  } else if (typeModel === 'pagesInfo') {
+    vm.navActive = vm.pageChecked;
+  }
+  /* 选择语言*/
+  else if (typeModel === 'language') {
+    vm.oVal.notSend = 0;
+    vm.lanCheck = vm.oVal.oldLanCheck;
+    mui.toast('设置语言失败！');
+  } else if (typeModel === 'setSic') {
+    getSicError('设置SIC_2.0协议失败!');
+  } else if (typeModel === 'getSic') {
+    getSicError('获取SIC_2.0协议失败!');
+  } else {
+    mui.toast('自检失败!');
+  }
+  /* else if (typeModel == 'wifiModel') {
+    wififlag = 1;
+    mui("#wifiModel").switch().toggle()
+  } else if (typeModel == 'wifiOn') {
+    wifiOnflag = 1;
+    mui("#wifiOn").switch().toggle()
+  } */
+  plus.nativeUI.closeWaiting();
+}
+
+function getSicError(msg) {
+  mui.confirm('', msg, ['确认'], function (e) {
+    if (e.index === 1) {
+      currentWebview.close();
+      mui.openWindow({
+        url: 'rtklist.html',
+        id: './app/rtkonline/rtklist.html'
+      });
+    }
+  }, 'div');
+}

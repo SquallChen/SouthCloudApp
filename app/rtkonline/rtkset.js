@@ -1034,7 +1034,6 @@ function getSicVersion() {
       requestType: 'getSicVersion'
     },
     dataType: 'json',
-    type: 'post',
     timeout: 10000,
     success: function callback(data) {
       if (data.status === ERR_NO) {

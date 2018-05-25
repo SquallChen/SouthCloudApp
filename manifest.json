@@ -1656,7 +1656,10 @@
 				"priority": 0
 			},
 			"app/console/equipment.html": {
-				"resources": [],
+				"resources": [
+					"public/img/user_icon01.png",
+					"public/img/user_icon02.png"
+				],
 				"refer": [
 					"app/equipment/deviceEntry.html",
 					"app/personnel/userEntry.html",
@@ -1670,12 +1673,21 @@
 				"priority": 0
 			},
 			"app/console/me.html": {
-				"resources": [],
+				"resources": [
+					"fonts/mui.ttf"
+				],
 				"refer": [
 					"app/personnel/userEntry.html",
 					"app/personnel/userinfo.html",
 					"login.html"
 				],
+				"priority": 0
+			},
+			"app/console/map.html": {
+				"resources": [
+					"fonts/mui.ttf"
+				],
+				"refer": [],
 				"priority": 0
 			}
 		},
