@@ -1,0 +1,273 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/custom.css">
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			ul {
+				list-style: none;
+			}
+			
+			.mui-content {
+				background: white;
+			}
+			
+			.equipmentTitle {
+				text-align: center;
+				padding-top: 20px;
+				padding-bottom: 20px;
+				border-bottom: 1px solid #f2f2f2;
+			}
+			
+			.equipmentTitle span:nth-child(2) {
+				margin-right: 14px;
+			}
+			
+			.active {
+				color: #32cd32;
+			}
+			
+			.content {
+				width: 100%;
+				padding: 16px 10px;
+				font-size: 18px;
+				border-bottom: 1px solid #f2f2f2;
+			}
+			
+			.content .title {
+				display: inline-block;
+				margin-bottom: 14px;
+				font-size: 20px;
+				font-weight: 500;
+			}
+			
+			.content ul {
+				display: flex;
+				flex-wrap: wrap;
+			}
+			
+			.content ul li {
+				width: 100%;
+				margin-bottom: 5px;
+			}
+			
+			.content ul li span {
+				display: inline-block;
+			}
+			
+			.content>span:nth-child(2) {
+				display: inline-block;
+				margin-left: 66px;
+				background: #19aa8d;
+				width: 100px;
+				text-align: center;
+				padding: 5px 0;
+				border-radius: 5px;
+				color: white;
+				margin-bottom: 10px;
+			}
+			
+			.content ul li span:nth-child(1) {
+				width: 38%;
+				padding-left: 16px;
+			}
+			
+			.content ul li span:nth-child(2) {
+				width: 62%;
+				padding-left: 30px;
+			}
+			
+			.batteryInfo {
+				width: 100%;
+				position: relative;
+				padding-bottom: 24px;
+				padding-top: 24px;
+				display: flex;
+				justify-content: space-around;
+			}
+			
+			.batteryInfo div:nth-child(1) {
+				margin-right: 10px;
+				position: relative;
+				top: 10px;
+			}
+			
+			.electricity {
+				position: relative;
+				width: 180px;
+				height: 50px;
+				background: url('../../public/img/battery.png') no-repeat;
+				background-size: 180px 50px;
+			}
+			
+			.remainingBattery_Zn {
+				margin-left: 10px;
+			}
+			
+			.remainingBattery {
+				font-size: 34px;
+				position: relative;
+				top: 4px;
+			}
+			
+			.greenBlock {
+				display: block;
+				/*width: 154px;*/
+				top: 7px;
+				height: 36px;
+				background: #19aa8d;
+				position: absolute;
+				right: 9px;
+			}
+			
+			.mui-popover {
+				height: 144px;
+			}
+			
+			.mui-content {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="vbody">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" id="mui-action-back"></a>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-bars mui-pull-right" href="#topPopover"></a>
+				<h1 class="mui-title">设备状态</h1>
+			</header>
+			<div class="mui-content">
+				<div class="equipmentTitle">
+					<span>设备信息-</span><span>{{deviceID}}</span><span :class="{active:status===0}">{{statusvalue}}</span>
+				</div>
+				<div class="content">
+					<span class="title">位置</span>
+					<ul>
+						<li><span class="span1">纬度：</span><span class="span2">28°46'34.4285"</span></li>
+						<li><span>经度：</span><span>106°07'57.2169"</span></li>
+						<li><span>高程：</span><span>610.4958</span></li>
+						<li><span>解算状态：</span><span>{{solvingstatus}}</span></li>
+						<li><span>UTC时间：</span><span>{{UTC}}</span></li>
+						<li><span>航速：</span><span>{{speed}}</span></li>
+						<li><span>方位角：</span><span>{{azimuth}}</span></li>
+						<li><span>空间距离：</span><span>{{spacedistance}}</span></li>
+					</ul>
+				</div>
+				<div class="content">
+					<span class="title">RTK状态</span>
+					<span>{{RTKstatus}}</span>
+					<ul>
+						<li><span class="span1">PDOP：</span><span class="span2">{{PDOP}}</span></li>
+						<li><span>HDOP：</span><span>{{HDOP}}</span></li>
+						<li><span>VDOP：</span><span>{{VDOP}}</span></li>
+						<li><span>差分延时：</span><span>{{differentialdelay}}</span></li>
+						<li><span>水平残差：</span><span>{{horizontalresidual}}</span></li>
+						<li><span>垂直残差：</span><span>{{verticalresidual}}</span></li>
+					</ul>
+				</div>
+				<div class="content">
+					<span class="title">设备信息</span>
+					<ul>
+						<li><span class="span1">工作模式：</span><span class="span2">{{operatingmode}}</span></li>
+						<li><span>数据链：</span><span>{{Datalink}}</span></li>
+						<li><span>注册码期限：</span><span>{{deadline}}</span></li>
+						<li><span>固件版本号：</span><span>{{firmwareversion}}</span></li>
+					</ul>
+					<div class="batteryInfo">
+						<div>
+							<span class="remainingBattery_Zn">剩余电量</span>
+							<span class="remainingBattery">{{remainingbattery}}</span>
+							<span>%</span>
+						</div>
+						<div class="electricity">
+							<span class="greenBlock"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--右上角弹出菜单-->
+			<div id="topPopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a href="userEntry.html">实时轨迹</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="equipmentManagement.html">历史轨迹</a>
+							</li>
+							<li class="mui-table-view-cell">
+								<a href="onlineSettings.html">在线配置</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {},
+			});
+			mui.plusReady(function() {});
+			var vbody = new Vue({
+				el: '#vbody',
+				data: {
+					deviceID: 'SG607A117233388',
+					status: 0,
+					statusvalue: '在线',
+					b: '',
+					l: '',
+					h: '',
+					solvingstatus: '浮点解',
+					UTC: '2018-4-28 06:07:40',
+					speed: 0,
+					azimuth: 0,
+					spacedistance: '16.5349Km',
+					RTKstatus: '浮点解',
+					PDOP: 3.74,
+					HDOP: 1.38,
+					VDOP: 5.62,
+					differentialdelay: 1,
+					horizontalresidual: 0.049960185,
+					verticalresidual: 0.1147,
+					operatingmode: '移动站',
+					Datalink: '内置电台',
+					deadline: 20500101,
+					firmwareversion: '1.07.171030.R865GL',
+					remainingbattery: 70,
+				},
+				methods: {
+					calculateWidth: function() {
+						var greenBlock = document.querySelector('.greenBlock');
+						var result = 154 * (this.remainingbattery / 100);
+						console.log(result);
+						greenBlock.style.width = result + 'px';
+					}
+				},
+				created: function() {
+					this.calculateWidth();
+
+					//var a = 154*(this.width/100);
+					//console.log(a);
+					//greenBlock.style.width = "154px";
+				}
+			});
+		</script>
+	</body>
+
+</html>

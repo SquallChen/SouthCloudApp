@@ -1567,7 +1567,8 @@
 			"app/personnel/onlineSettings.html": {
 				"resources": [],
 				"refer": [
-					"app/personnel/deviceStatus.html"
+					"app/personnel/deviceStatus.html",
+					"login.html"
 				],
 				"priority": 0
 			},

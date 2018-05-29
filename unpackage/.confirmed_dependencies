@@ -1410,7 +1410,8 @@
 	},
 	"app/personnel/onlineSettings.html": {
 		"refer": [
-			"app/personnel/deviceStatus.html"
+			"app/personnel/deviceStatus.html",
+			"login.html"
 		]
 	},
 	"app/console/subpage_chat.html": {

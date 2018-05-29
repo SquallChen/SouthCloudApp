@@ -5,14 +5,17 @@ var ERR_NO = 0;
 var vm = new Vue({
   el: '#app',
   data: {
-    user_name:'',
-    token:'',
     mode: 0,
     linktypevalue: 0,
     isActive: 0,
+    differenceFormatvalue: 5,
+    launchTime: 0,
     antennaType: 0,
     changeFormat: 0,
     checked: true,
+    b: '28.7670271944',
+    l: '105.9634233336',
+    h: '734.306',
     b_degree: '28',
     b_minute: '46',
     b_second: '1.29789984',
@@ -58,21 +61,15 @@ var vm = new Vue({
 
     // 基准
     bVal: {
-      'rtmRadios': 'RTCA',
-      'launch': 1,
+      'rtmRadios': '',
+      'launch': '',
       'cutangle': '',
       'pdop': '',
-      'baseLaunch': '1',
+      'baseLaunch': '',
       'antenna': '',
-      'latitude': '28.7670271944',
-      'longitude': '105.9634233336',
-      'altitude': '734.306',
-      'latitude_degree': '28',
-    	'latitude_minute': '46',
-    	'latitude_second': '1.29789984',
-    	'longitude_degree': '105',
-    	'longitude_minute': '57',
-    	'longitude_second': '48.32400096',
+      'latitude': '',
+      'longitude': '',
+      'altitude': '',
       'show': 'start'
     },
 
@@ -214,50 +211,50 @@ var vm = new Vue({
       netcheckTip: false,
       wificheckTip: false
     },
-    DIFFTYPE: [
+    differenceFormat: [
       {
         label: 'RTCA',
-        value: 'RTCA'
+        value: 0
       },
       {
         label: 'TRCM',
-        value: 'TRCM'
+        value: 1
       },
       {
         label: 'RTCM23',
-        value: 'RTCM23'
+        value: 2
       },
       {
         label: 'RTCM3',
-        value: 'RTCM3'
+        value: 3
       },
       {
         label: 'RTCM30',
-        value: 'RTCM30'
+        value: 4
       },
       {
         label: 'RTCM32',
-        value: 'RTCM32'
+        value: 5
       },
       {
         label: 'RTD',
-        value: 'RTD'
+        value: 6
       },
       {
         label: 'CMR',
-        value: 'CMR'
+        value: 7
       },
       {
         label: 'SCMRX',
-        value: 'SCMRX'
+        value: 8
       },
       {
         label: 'CMRX',
-        value: 'CMRX'
+        value: 9
       },
       {
         label: 'NOVATELX',
-        value: 'NOVATELX'
+        value: 10
       }
     ],
     collectionInterval: [
@@ -1829,9 +1826,13 @@ var vm = new Vue({
         type: 'post',
         timeout: 10000,
         success: function callback(data) {
-          //切换工作模式成功后，请求切换后的对应数据
           if (data.status === ERR_NO) {
-            timeFun( data, getConfigWorkModePageInfo, '工作模式切换失败', 'workModel' );
+            timeFun(
+              data,
+              getConfigWorkModePageInfo,
+              '工作模式切换失败',
+              'workModel'
+            );
           } else {
             mui.toast(data.info);
             plus.nativeUI.closeWaiting();
@@ -1882,100 +1883,6 @@ var vm = new Vue({
     },
     closeSelectionMode: function () {
       mui('#selectionMode').popover('toggle');
-    },
-
-    //设置基准站
-    baseSet: function () {
-      // clear(this.baseS);
-      // clear(this.baseE);
-
-      // if (!vm.identifyCode || vm.bVal.rtmRadios == '' || vm.bVal.launch == '' || vm.bVal.cutangle == '' || vm.bVal.pdop == '' || vm.bVal.baseLaunch == '' || vm.bVal.antenna == '' || vm.bVal.latitude == '' || vm.bVal.longitude == '' || vm.bVal.altitude == '') {
-      //   mui.toast('设置值错误！');
-      //   return false;
-      // }
-
-      // if (b.test(vm.bVal.cutangle) == false) {
-      //   mui.toast('设置值错误！');
-      //   return false;
-      // }
-      // if (!podpReg.test(vm.bVal.pdop)) {
-      //   mui.toast('设置值错误！');
-      //   return false;
-      // }
-      // if (c.test(vm.bVal.antenna) == false) {
-      //   mui.toast('设置值错误！');
-      //   return false;
-      // }
-
-      // var NumReg = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
-      // if (!NumReg.test(vm.bVal.latitude)) {
-      //   mui.toast('坐标值设置错误！');
-      //   return false;
-      // }
-      // if (!NumReg.test(vm.bVal.longitude)) {
-      //   mui.toast('坐标值设置错误！');
-      //   return false;
-      // }
-      // if (!NumReg.test(vm.bVal.altitude)) {
-      //   mui.toast('坐标值设置错误！');
-      //   return false;
-      // }
-			console.log(vm.bVal.rtmRadios)
-			console.log(vm.bVal.launch)
-			console.log(vm.bVal.cutangle)
-			console.log(vm.bVal.pdop)
-			console.log(vm.bVal.baseLaunch)
-			console.log(vm.bVal.antenna * 1000)
-			console.log(vm.bVal.longitude)
-			console.log(vm.bVal.latitude)
-			console.log(vm.bVal.altitude)
-      plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
-      mui.ajax(url, {
-        data: {
-//        user_name: vm.user_name,
-//        token: vm.token,
-//        clientUUid: vm.clientUUid,
-//        identifyCode: vm.currentIdentifyCode,
-//        requestType: 'getConfigBaseStation',
-//        rtm: 'RTCM', // 差分格式
-//        interval: 1, // 发射间隔
-//        cutangle: 46, // 截止角
-//        pdop: 45, // PDOP
-//        antenna_type: 1, // 天线高类型
-//        antenna_height: 3333, // 天线高
-//        longitude: '108.9634233336', // 经度
-//        latitude: '31.7670271944', // 维度
-//        altitude: '746.306' // 高程
-          
-          user_name: vm.user_name,
-          token: vm.token,
-          clientUUid: vm.clientUUid,
-          identifyCode: vm.currentIdentifyCode,
-          requestType: 'getConfigBaseStation',
-          rtm: vm.bVal.rtmRadios, // 差分格式
-          interval: vm.bVal.launch, // 发射间隔
-          cutangle: vm.bVal.cutangle, // 截止角
-          pdop: vm.bVal.pdop, // PDOP
-          antenna_type: vm.bVal.baseLaunch, // 天线高类型
-          antenna_height: vm.bVal.antenna * 1000, // 天线高
-          longitude: vm.bVal.longitude, // 经度
-          latitude: vm.bVal.latitude, // 维度
-          altitude: vm.bVal.altitude // 高程
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          console.log('成功了.......................')
-          if (data.status == 0) {
-            //timeFun(data, baseSet, '设置超时，请稍候再试！');
-            plus.nativeUI.closeWaiting();
-          } else {
-            mui.toast(data.info);
-            plus.nativeUI.closeWaiting();
-          }
-        }
-      });
     }
   },
 
@@ -2048,8 +1955,8 @@ var vm = new Vue({
               function (e) {
                 currentWebview.close();
                 mui.openWindow({
-                  url: '../../login.html',
-                  id: 'login'
+                  url: 'rtklist.html',
+                  id: './app/rtkonline/rtklist.html'
                 });
               },
               'div'
@@ -2080,8 +1987,8 @@ var vm = new Vue({
             function (e) {
               currentWebview.close();
               mui.openWindow({
-                url: '../../login.html',
-                id: 'login'
+                url: 'rtklist.html',
+                id: './app/rtkonline/rtklist.html'
               });
             },
             'div'
@@ -2180,10 +2087,10 @@ var vm = new Vue({
 
 // 第一次进入页面时设置时获取SIC版本
 function getSicVersion() {
-console.log('当前用户：'+vm.user_name);
-console.log('当前登陆码：'+vm.clientUUid);
-console.log( '当前token:'+vm.token);
-console.log('当前机器识别码：'+vm.currentIdentifyCode);
+  console.log('当前用户：'+vm.user_name);
+  console.log('当前登陆码：'+vm.clientUUid);
+  console.log( '当前token:'+vm.token);
+  console.log('当前机器识别码：'+vm.currentIdentifyCode);
   mui.ajax(url, {
     type: 'post',
     data: {
@@ -2200,12 +2107,7 @@ console.log('当前机器识别码：'+vm.currentIdentifyCode);
       if (data.status === ERR_NO) {
         timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
       } else {
-      	//用户登陆过期
-        //mui.toast(data.info);
-        mui.openWindow({
-          url: '../../login.html',
-          id: 'login'
-        });
+        mui.toast(data.info);
       }
       plus.nativeUI.closeWaiting();
     },
@@ -2231,7 +2133,6 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
   vm.showWaiting = showWaiting;
   // 如果请求唯一码返回数据成功
   if (data.status === ERR_NO) {
-    console.log(data.unique_id);
     // 生成setTimeout计时器并执行
     vm.ajaxTimer = setTimeout(function () {
       // 根据返回得到的唯一码请求相应的数据
@@ -2303,103 +2204,16 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
   }
 }
 
-function timeFun2(data, func, tip, typeModel, timee, showWaiting) {
-  console.log('当前唯一码数据为：'+JSON.stringify(data));
-  console.log('当前唯一码为：'+JSON.stringify(data.unique_id));
-  // 对获取唯一码成功的判断
-  var time = arguments[4] ? arguments[4] : 5000;
-  var theunique_id = data.unique_id || data.uniqueId;
-  vm.the_unique_id = data.unique_id || data.uniqueId;
-  vm.socketFun = func;
-  vm.socketTip = tip;
-  vm.socketTypeModel = typeModel;
-  vm.showWaiting = showWaiting;
-  // 如果请求唯一码返回数据成功
-  if (data.status === ERR_NO) {
-    console.log('data.unique_id值为：'+data.unique_id);
-    // 生成setTimeout计时器并执行
-    vm.ajaxTimer = setTimeout(function () {
-      // 根据返回得到的唯一码请求相应的数据
-      // getData(vm.user_name, vm.token, vm.currentIdentifyCode, data.unique_id);
-      mui.ajax(apiUrl.doGetUniqueIdInfo, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          identifyCode: vm.currentIdentifyCode,
-//        uniqueId:data.unique_id
-          uniqueId:data.unique_id
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          console.log('根据唯二码请求获得的数据为：'+JSON.stringify(data));
-          if (data.status === 0) {
-            tip = tip || data.info;
-            var _data = data.data;
-            // 根据返回的errorId进行对应处理，ERROR_NULL代表没有错误产生
-            if (_data !== undefined && _data.errorId === 'ERROR_NULL') {
-              if (_data.hitSicDataReply !== undefined) {
-                // 根据模式类型，有数据返回时对应相关处理
-                var hd = _data.hitSicDataReply;
-                func(hd);
-                plus.nativeUI.closeWaiting();
-              } else {
-                errTip(typeModel);
-                mui.toast(data.info);
-              }
-            } else if (data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
-              errTip(typeModel);
-              mui.confirm(
-                '',
-                '设备离线,操作失败!',
-                ['确认'],
-                function (e) {
-                  currentWebview.close();
-                  mui.openWindow({
-                    url: 'equipment.html',
-                    id: './app/console/equipment.html'
-                  });
-                },
-                'div'
-              );
-            } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
-              errTip(typeModel);
-              mui.toast('设备操作被中断，请稍后再试!');
-            } else if (data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
-              errTip(typeModel);
-              mui.toast('设置超时，操作失败！');
-            } else if (data.uniqueId === theunique_id) {
-              errTip(typeModel);
-              mui.toast('设置超时，操作失败！');
-            } else {
-              errTip(typeModel);
-              mui.toast('设置超时，操作失败！');
-            }
-          } else {
-            mui.toast(data.info);
-            plus.nativeUI.closeWaiting();
-          }
-        }
-      });
-    }, time);
-  } else {
-    mui.toast(data.info);
-    plus.nativeUI.closeWaiting();
-  }
-}
 /* 获取工作模式页面数据*/
 function getConfigWorkModePageInfo(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].status === true) {
-      //静态站启动状态
       if (hd[i].hitSicData === 'GET:DEVICE.RECORD.STATUS') {
         if (hd[i].value === 'RECORDING' || hd[i].value === 1) {
           vm.sVal.show = 'break';
         } else {
           vm.sVal.show = 'start';
         }
-        //自动记录
       } else if (hd[i].hitSicData === 'GET:DEVICE.RECORD.AUTO_REC') {
         var autoRecord = $('auto-record');
         if (hd[i].value === 'ON') {
@@ -2407,10 +2221,8 @@ function getConfigWorkModePageInfo(hd) {
         } else {
           removeClass(autoRecord, 'mui-active');
         }
-        //采集间隔
       } else if (hd[i].hitSicData === 'GET:DEVICE.RECORD.INTERVAL') {
         vm.sVal.sampling = hd[i].value;
-        //经，纬，高程
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.START_POSITION') {
         var data = hd[i].value.split('|');
         if (data[0] !== ' ') {
@@ -2422,38 +2234,29 @@ function getConfigWorkModePageInfo(hd) {
         if (data[2] !== ' ') {
           vm.bVal.altitude = data[2];
         }
-        //天线类型（未确定）
       } else if (hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.METHOD') {
         vm.bVal.baseLaunch = hd[i].value;
         vm.sVal.staticLaunch = hd[i].value;
-        //PDOP
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.PDOP') {
-        //保留3位小数
         vm.bVal.pdop = hd[i].value.substring(0, hd[i].value.indexOf('.') + 3);
         vm.sVal.pdop = hd[i].value.substring(0, hd[i].value.indexOf('.') + 3);
-        //截止角
       } else if (hd[i].hitSicData === 'GET:GNSS.CUTANGLE') {
         vm.bVal.cutangle = hd[i].value;
         vm.rVal.cutangle = hd[i].value;
         vm.sVal.cutangle = hd[i].value;
-        //天线高（未确定）
       } else if (hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.HEIGHT') {
         vm.bVal.antenna = hd[i].value / 1000;
         vm.sVal.antenna = hd[i].value / 1000;
-        //差分格式
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.DIFFTYPE') {
         vm.bVal.rtmRadios = hd[i].value;
-        //发射时间
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.INTERVAL') {
         vm.bVal.launch = hd[i].value;
-        //基准站启动状态
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.STATUS') {
         if (hd[i].value === 2 || hd[i].value === 1) {
           vm.bVal.show = 'break';
         } else {
           vm.bVal.show = 'start';
         }
-        //选择工作模式后请求对应数据（BASE/ROVER/STATIC）
       } else if (hd[i].hitSicData === 'GET:DEVICE.CUR_SYSMODE') {
         vm.workChecked = vm.wActive;
         vm.wActive = hd[i].value;
@@ -2540,7 +2343,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
     success: function (data) {
       console.log('第一次进入页面时设置时获取的工作模式数据为：'+JSON.stringify(data));
       if (data.status === ERR_NO) {
-        timeFun2(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
+        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
       } else if (data.status === 40004) {
         plus.storage.clear();
         mui.openWindow({
@@ -2667,44 +2470,72 @@ function getSicError(msg) {
     if (e.index === 1) {
       currentWebview.close();
       mui.openWindow({
-        url: '../../login.html',
-        id: 'login'
+        url: 'rtklist.html',
+        id: './app/rtkonline/rtklist.html'
       });
     }
   }, 'div');
-};
-
-
-
-function clear(json) {
-  for (v in json) {
-    json[v] = false;
-  }
 }
 
-/*封装的操作函数*/
-function $(elements) {
-  return document.getElementById(elements);
+function getData(user_name, token, identifyCode, uniqueId) {
+  mui.ajax(apiUrl.doGetUniqueIdInfo, {
+    data: {
+      user_name: user_name,
+      token: token,
+      identifyCode: identifyCode,
+      uniqueId: uniqueId
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function (data) {
+      if (data.status === 0) {
+        // tip = tip || data.info;
+        var tip = 'test';
+        var _data = data.data;
+        // 根据返回的errorId进行对应处理，ERROR_NULL代表没有错误产生
+        if (_data !== undefined && _data.errorId === 'ERROR_NULL') {
+          if (_data.hitSicDataReply !== undefined) {
+            // 根据模式类型，有数据返回时对应相关处理
+            var hd = _data.hitSicDataReply;
+            func(hd);
+            plus.nativeUI.closeWaiting();
+          } else {
+            errTip(typeModel);
+            mui.toast(data.info);
+          }
+        } else if (data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
+          errTip(typeModel);
+          mui.confirm(
+            '',
+            '设备离线,操作失败!',
+            ['确认'],
+            function (e) {
+              currentWebview.close();
+              mui.openWindow({
+                url: 'equipment.html',
+                id: './app/console/equipment.html'
+              });
+            },
+            'div'
+          );
+        } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
+          errTip(typeModel);
+          mui.toast('设备操作被中断，请稍后再试!');
+        } else if (data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
+          errTip(typeModel);
+          mui.toast('设置超时，操作失败！');
+        } else if (data.uniqueId === theunique_id) {
+          errTip(typeModel);
+          mui.toast('设置超时，操作失败！');
+        } else {
+          errTip(typeModel);
+          mui.toast('设置超时，操作失败！');
+        }
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    }
+  });
 }
-
-function hasClass(elements, cName) {
-  return !!elements.className.match(new RegExp("(\\s|^)" + cName + "(\\s|$)"));
-}
-
-function addClass(elements, cName) {
-  if (!hasClass(elements, cName)) {
-      elements.className += " " + cName;
-  }
-}
-
-function removeClass(elements, cName) {
-  if (hasClass(elements, cName)) {
-      elements.className = elements.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " ");
-  }
-}
-
-//reg
-var b = /^([0-9]|[1-8][0-9]|90)$/;
-var podpReg = /^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/;
-var c = /^(\d{1,2}(\.\d{1,3})?|100)$/;
-var regIP = /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;
