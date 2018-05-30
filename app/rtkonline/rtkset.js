@@ -1141,7 +1141,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
     timeout: 10000,
     success: function (data) {
       if (data.status === ERR_NO) {
-        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
+        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel',true);
       } else if (data.status === 40004) {
         plus.storage.clear();
         mui.openWindow({
@@ -1159,6 +1159,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
 function timeFun(data, func, tip, typeModel, timee, showWaiting) {
   // 对获取惟一码成功的判断
   var time = arguments[4] ? arguments[4] : 5000;
+  console.log('time:' + time);
   var theunique_id = data.unique_id || data.uniqueId;
   vm.the_unique_id = data.unique_id || data.uniqueId;
   vm.socketFun = func;
