@@ -141,11 +141,11 @@
 										<button>获取坐标</button>
 										<div class="mui-input-row mui-checkbox mui-left">
 											<label>度分秒格式</label>
-											<input name="checkbox" value="0" type="checkbox" v-model="checked">
+											<input name="checkbox" value="0" type="checkbox" v-model="DMSchecked">
 										</div>
 									</div>
 								</li>
-								<li v-show="checked!==true">
+								<li v-show="DMSchecked!==true">
 									<div>
 										<span>纬度</span>
 									</div>
@@ -153,7 +153,7 @@
 										<input type="text" placeholder="取值为0-90整数" v-model="bVal.latitude" />
 									</div>
 								</li>
-								<li v-show="checked!==true">
+								<li v-show="DMSchecked!==true">
 									<div>
 										<span>经度</span>
 									</div>
@@ -161,29 +161,29 @@
 										<input type="text" placeholder="取值为0-90整数" v-model="bVal.longitude" />
 									</div>
 								</li>
-								<li v-show="checked===true" class="changeFormat">
+								<li v-show="DMSchecked===true" class="changeFormat">
 									<div>
 										<span>纬度</span>
 									</div>
 									<div class="content">
-										<input type="text" v-model="bVal.latitude_degree"/>
+										<input type="text" v-model="latitude_degree"/>
 										<span class="symbol">°</span>
-										<input type="text" v-model="bVal.latitude_minute"/>
+										<input type="text" v-model="latitude_minute"/>
 										<span class="symbol">′</span>
-										<input type="text" v-model="bVal.latitude_second"/>
+										<input type="text" v-model="latitude_second"/>
 										<span class="symbol">″</span>
 									</div>
 								</li>
-								<li v-show="checked===true" class="changeFormat">
+								<li v-show="DMSchecked===true" class="changeFormat">
 									<div>
 										<span>经度</span>
 									</div>
 									<div class="content">
-										<input type="text" v-model="bVal.longitude_degree"/>
+										<input type="text" v-model="longitude_degree"/>
 										<span class="symbol">°</span>
-										<input type="text" v-model="bVal.longitude_minute"/>
+										<input type="text" v-model="longitude_minute"/>
 										<span class="symbol">′</span>
-										<input type="text" v-model="bVal.longitude_second"/>
+										<input type="text" v-model="longitude_second"/>
 										<span class="symbol">″</span>
 									</div>
 								</li>
