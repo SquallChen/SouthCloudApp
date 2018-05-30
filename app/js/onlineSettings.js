@@ -2,6 +2,12 @@ var url = apiUrl.doSendConfig;
 var currentWebview = null;
 var ERR_NO = 0;
 
+// reg
+var b = /^([0-9]|[1-8][0-9]|90)$/;
+var podpReg = /^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/;
+var c = /^(\d{1,2}(\.\d{1,3})?|100)$/;
+var regIP = /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;
+
 var vm = new Vue({
 	el: '#app',
 	data: {
@@ -12,7 +18,7 @@ var vm = new Vue({
 		isActive: 0,
 		antennaType: 0,
 		changeFormat: 0,
-		DMSchecked: true,
+		DMSchecked: false,
 		b_degree: '28',
 		b_minute: '46',
 		b_second: '1.29789984',
@@ -62,17 +68,11 @@ var vm = new Vue({
 			'launch': 1,
 			'cutangle': '',
 			'pdop': '',
-			'baseLaunch': '1',
+			'baseLaunch': 2,
 			'antenna': '',
 			'latitude': '28.7670271944',
 			'longitude': '105.9634233336',
 			'altitude': '734.306',
-			'latitude_degree': '28',
-			'latitude_minute': '46',
-			'latitude_second': '1.29789984',
-			'longitude_degree': '105',
-			'longitude_minute': '57',
-			'longitude_second': '48.32400096',
 			'show': 'start'
 		},
 
@@ -119,7 +119,7 @@ var vm = new Vue({
 			'sampling': '',
 			'cutangle': '',
 			'pdop': '',
-			'staticLaunch': '',
+			'staticLaunch': 1,
 			'antenna': '',
 			'show': 'start'
 		},
@@ -261,39 +261,39 @@ var vm = new Vue({
 		],
 		collectionInterval: [{
 				label: '0.02S',
-				value: 0
+				value: 0.02
 			},
 			{
 				label: '0.05S',
-				value: 1
+				value: 0.05
 			},
 			{
 				label: '0.1S',
-				value: 2
+				value: 0.1
 			},
 			{
 				label: '0.2S',
-				value: 3
+				value: 0.2
 			},
 			{
 				label: '0.5S',
-				value: 4
+				value: 0.5
 			},
 			{
 				label: '1S',
-				value: 5
+				value: 1
 			},
 			{
 				label: '2S',
-				value: 6
+				value: 2
 			},
 			{
 				label: '5S',
-				value: 7
+				value: 5
 			},
 			{
 				label: '10S',
-				value: 8
+				value: 10
 			}
 		],
 		accessMode: [{
@@ -1853,49 +1853,40 @@ var vm = new Vue({
 
 		//设置基准站
 		baseSet: function() {
-			// clear(this.baseS);
-			// clear(this.baseE);
+			clear(this.baseS);
+			clear(this.baseE);
+			//前端数据输入判断
+			if (!vm.currentIdentifyCode || vm.bVal.rtmRadios == '' || vm.bVal.launch == '' || vm.bVal.cutangle == '' || vm.bVal.pdop == '' || vm.bVal.baseLaunch == '' || vm.bVal.antenna == '' || vm.bVal.latitude == '' || vm.bVal.longitude == '' || vm.bVal.altitude == '') {
+			  mui.toast('设置值不能为空！');
+			  return false;
+			}
 
-			// if (!vm.identifyCode || vm.bVal.rtmRadios == '' || vm.bVal.launch == '' || vm.bVal.cutangle == '' || vm.bVal.pdop == '' || vm.bVal.baseLaunch == '' || vm.bVal.antenna == '' || vm.bVal.latitude == '' || vm.bVal.longitude == '' || vm.bVal.altitude == '') {
-			//   mui.toast('设置值错误！');
-			//   return false;
-			// }
+			if (b.test(vm.bVal.cutangle) == false) {
+			  mui.toast('截止角数值错误！');
+			  return false;
+			}
+			if (!podpReg.test(vm.bVal.pdop)) {
+			  mui.toast('PDOP数值错误！');
+			  return false;
+			}
+			if (c.test(vm.bVal.antenna) == false) {
+			  mui.toast('天线高值错误！');
+			  return false;
+			}
 
-			// if (b.test(vm.bVal.cutangle) == false) {
-			//   mui.toast('设置值错误！');
-			//   return false;
-			// }
-			// if (!podpReg.test(vm.bVal.pdop)) {
-			//   mui.toast('设置值错误！');
-			//   return false;
-			// }
-			// if (c.test(vm.bVal.antenna) == false) {
-			//   mui.toast('设置值错误！');
-			//   return false;
-			// }
-
-			// var NumReg = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
-			// if (!NumReg.test(vm.bVal.latitude)) {
-			//   mui.toast('坐标值设置错误！');
-			//   return false;
-			// }
-			// if (!NumReg.test(vm.bVal.longitude)) {
-			//   mui.toast('坐标值设置错误！');
-			//   return false;
-			// }
-			// if (!NumReg.test(vm.bVal.altitude)) {
-			//   mui.toast('坐标值设置错误！');
-			//   return false;
-			// }
-			console.log(vm.bVal.rtmRadios)
-			console.log(vm.bVal.launch)
-			console.log(vm.bVal.cutangle)
-			console.log(vm.bVal.pdop)
-			console.log(vm.bVal.baseLaunch)
-			console.log(vm.bVal.antenna * 1000)
-			console.log(vm.bVal.longitude)
-			console.log(vm.bVal.latitude)
-			console.log(vm.bVal.altitude)
+			var NumReg = /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/;
+			if (!NumReg.test(vm.bVal.latitude)) {
+			  mui.toast('纬度坐标设置错误！');
+			  return false;
+			}
+			if (!NumReg.test(vm.bVal.longitude)) {
+			  mui.toast('经度坐标设置错误！');
+			  return false;
+			}
+			if (!NumReg.test(vm.bVal.altitude)) {
+			  mui.toast('高程设置错误！');
+			  return false;
+			}
 			plus.nativeUI.showWaiting('正在设置中...', {
 				height: '100px',
 				width: '150px'
@@ -1921,18 +1912,195 @@ var vm = new Vue({
 				type: 'post',
 				timeout: 10000,
 				success: function(data) {
-					console.log('成功了.......................')
 					if(data.status == 0) {
-						//timeFun(data, baseSet, '设置超时，请稍候再试！');
-						plus.nativeUI.closeWaiting();
-						mui.toast('设置成功！');
+						timeFun(data, baseSet, '设置超时，请稍候再试！');
 					} else {
 						mui.toast(data.info);
 						plus.nativeUI.closeWaiting();
 					}
 				}
 			});
-		}
+		},
+
+		// 基站启动/断开
+		baseStartOrBreak: function (v) {
+      clear(this.baseS);
+      clear(this.baseE);
+
+      var thefun, baseRunTip, baseSwith;
+      if (v == 'start') {
+        thefun = baseStart;
+        baseRunTip = '启动超时,请稍候再试！';
+        baseSwith = 'START';
+      } else {
+        thefun = baseBreak;
+        baseRunTip = '断开失败,请稍候再试！';
+        baseSwith = 'STOP';
+      }
+      plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+      mui.ajax(url, {
+        data: {
+          user_name: vm.user_name,
+          token: vm.token,
+          clientUUid: vm.clientUUid,
+          identifyCode: vm.currentIdentifyCode,
+          requestType: 'getRunStopBaseStation',
+          operationCode: baseSwith
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 10000,
+        success: function (data) {
+          if (data.status == 0) {
+            timeFun(data, thefun, baseRunTip);
+          } else {
+            mui.toast(data.info);
+            plus.nativeUI.closeWaiting();
+          }
+        }
+      });
+		},
+		  // 移动站设置
+			roverSet: function () {
+				clear(this.roverS);
+				clear(this.roverE);
+				if (vm.rVal.cutangle === '') {
+					mui.toast('截止角值不能为空！');
+					return false;
+				}
+
+				if (b.test(vm.rVal.cutangle) === false) {
+					mui.toast('截止角设置值错误！');
+					return false;
+				}
+				plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getConfigRoverStation',
+						cutangle: vm.rVal.cutangle // 截止角
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						if (data.status == 0) {
+							timeFun(data, roverSet, '设置超时，请稍候再试！');
+							plus.nativeUI.closeWaiting();
+							mui.toast('设置值成功！');
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			},
+			// 静态站设置
+			staticSet: function () {
+				clear(this.staticS);
+				clear(this.staticE);
+				if (!vm.currentIdentifyCode || vm.sVal.sampling == '' || vm.sVal.cutangle == '' || vm.sVal.pdop == '' || vm.sVal.staticLaunch == '' || vm.sVal.antenna == '') {
+					mui.toast('设置值不能为空！');
+					return false;
+				}
+
+				if (b.test(vm.sVal.cutangle) == false) {
+					mui.toast('截止角设置值错误！');
+					return false;
+				}
+
+				if (!podpReg.test(vm.sVal.pdop)) {
+					mui.toast('PDOP设置值错误！');
+					return false;
+				}
+
+				if (c.test(vm.sVal.antenna) == false) {
+					mui.toast('天线高设置值错误！');
+					return false;
+				}
+
+				var staticSwitch = 'ON';
+				var isActive = $('auto-record').classList.contains('mui-active');
+				if (isActive) {
+					staticSwitch = 'ON';
+				} else {
+					staticSwitch = 'OFF';
+				}
+				plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getConfigStaticStation',
+						samplingInterval: vm.sVal.sampling, // 采集间隔
+						cutangle: vm.sVal.cutangle, // 截止角
+						pdop: vm.sVal.pdop, // PDOP
+						antennaType: vm.sVal.staticLaunch, // 天线高类型
+						antennaHeigh: vm.sVal.antenna * 1000, // 天线高
+						autoRecord: staticSwitch
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						if (data.status == 0) {
+							timeFun(data, staticSet, '设置超时，请稍候再试！', 'staticSet');
+							plus.nativeUI.closeWaiting();
+							mui.toast('设置值成功！');
+						} else {
+							sure('staticSet');
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					}
+				});
+			},
+			// 静态站启动/断开
+			staticStartOrBreak: function (v) {
+				clear(this.staticS);
+				clear(this.staticE);
+
+				plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+				var thefun, staticRunTip, staticStartOrStop;
+				if (v === 'start') {
+					thefun = staticStart;
+					staticRunTip = '启动超时,请稍候再试！';
+					staticStartOrStop = 'START';
+				} else {
+					thefun = staticBreak;
+					staticRunTip = '断开失败,请稍候再试！';
+					staticStartOrStop = 'STOP';
+				}
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getRunStopStaticStation',
+						operationCode: staticStartOrStop
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						if (data.status == 0) {
+							timeFun(data, thefun, staticRunTip);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					}
+				});
+			},
 	},
 
 	created: function() {
@@ -2235,7 +2403,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 	vm.showWaiting = showWaiting;
 	// 如果请求唯一码返回数据成功
 	if(data.status === ERR_NO) {
-		console.log(data.unique_id);
+		console.log('data.unique_id值为：' + data.unique_id);
 		// 生成setTimeout计时器并执行
 		vm.ajaxTimer = setTimeout(function() {
 			// 根据返回得到的唯一码请求相应的数据
@@ -2680,6 +2848,179 @@ function clear(json) {
 	}
 }
 
+
+/* 基准站启动*/
+function baseStart(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:GNSS.BASE.START_BASE') {
+      if (hd[i].status == true) {
+				vm.bVal.show = 'break';
+				plus.nativeUI.closeWaiting();
+				mui.toast('启动成功!');
+      } else {
+        mui.toast('启动失败');
+      }
+    }
+  }
+}
+
+/* 基准站断开*/
+function baseBreak(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:GNSS.BASE.STOP_BASE') {
+      if (hd[i].status == true) {
+				vm.bVal.show = 'start';
+				plus.nativeUI.closeWaiting();
+				mui.toast('断开成功!');
+      } else {
+        mui.toast('断开失败');
+      }
+    }
+  }
+}
+
+/* 基准站设置*/
+function baseSet(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:GNSS.BASE.DIFFTYPE') {
+      if (hd[i].status == true) {
+        vm.baseS.rtmRadios = true;
+      } else {
+        vm.baseE.rtmRadios = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.BASE.INTERVAL') {
+      if (hd[i].status == true) {
+        vm.baseS.launch = true;
+      } else {
+        vm.baseE.launch = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
+      if (hd[i].status == true) {
+        vm.baseS.cutangle = true;
+      } else {
+        vm.baseE.cutangle = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.BASE.PDOP') {
+      if (hd[i].status == true) {
+        vm.baseS.pdop = true;
+      } else {
+        vm.baseE.pdop = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.METHOD') {
+      if (hd[i].status == true) {
+        vm.baseS.baseLaunch = true;
+      } else {
+        vm.baseE.baseLaunch = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.HEIGHT') {
+      if (hd[i].status == true) {
+        vm.baseS.antenna = true;
+      } else {
+        $vm.baseE.antenna = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.BASE.START_POSITION') {
+      if (hd[i].status == true) {
+        vm.baseS.latitude = true;
+        vm.baseS.longitude = true;
+        vm.baseS.altitude = true;
+      } else {
+        vm.baseE.latitude = true;
+        vm.baseE.longitude = true;
+        vm.baseE.altitude = true;
+      }
+    }
+	}
+	plus.nativeUI.closeWaiting();
+	mui.toast('设置成功！');
+}
+
+/* 移动站设置*/
+function roverSet(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
+      if (hd[i].status == true) {
+        vm.roverS.cutangle = true;
+      } else {
+        vm.roverE.cutangle = true;
+      }
+    }
+  }
+}
+
+/* 静态站设置*/
+function staticSet(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:DEVICE.RECORD.INTERVAL') {
+      if (hd[i].status == true) {
+        vm.staticS.sampling = true;
+      } else {
+        vm.staticE.sampling = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.BASE.PDOP') {
+      if (hd[i].status == true) {
+        vm.staticS.pdop = true;
+      } else {
+        vm.staticE.pdop = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.HEIGHT') {
+      if (hd[i].status == true && hd[i].value != 'NULL') {
+        vm.staticS.antenna = true;
+      } else {
+        vm.staticE.antenna = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
+      if (hd[i].status == true) {
+        vm.staticS.cutangle = true;
+      } else {
+        vm.staticE.cutangle = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.METHOD') {
+      if (hd[i].status == true) {
+        vm.staticS.staticLaunch = true;
+      } else {
+        vm.staticE.staticLaunch = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:DEVICE.RECORD.AUTO_REC') {
+      if (hd[i].status == true) {
+        vm.staticS.record = true;
+      } else {
+        vm.staticE.record = true;
+        vm.sVal.record = !vm.sVal.record;
+      }
+    }
+  }
+}
+
+/* 静态站启动*/
+function staticStart(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:DEVICE.RECORD.START_RECORD') {
+      if (hd[i].value == 'RECORDING' || hd[i].status == true) {
+				vm.sVal.show = 'break';
+				plus.nativeUI.closeWaiting();
+				mui.toast('启动成功！');
+      } else {
+        mui.toast('启动失败！');
+      }
+    }
+  }
+}
+
+/* 静态站断开*/
+function staticBreak(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:DEVICE.RECORD.STOP_RECORD') {
+      if (hd[i].value == 'IDLE' || hd[i].status == true) {
+				vm.sVal.show = 'start';
+				plus.nativeUI.closeWaiting();
+				mui.toast('断开成功！');
+      } else {
+        mui.toast('断开失败！');
+      }
+    }
+  }
+}
+
 /*封装的操作函数*/
 function $(elements) {
 	return document.getElementById(elements);
@@ -2700,9 +3041,3 @@ function removeClass(elements, cName) {
 		elements.className = elements.className.replace(new RegExp("(\\s|^)" + cName + "(\\s|$)"), " ");
 	}
 }
-
-//reg
-var b = /^([0-9]|[1-8][0-9]|90)$/;
-var podpReg = /^0{1}([.]\d{1,2})?$|^[1-9]\d*([.]{1}[0-9]{1,2})?$/;
-var c = /^(\d{1,2}(\.\d{1,3})?|100)$/;
-var regIP = /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])$/;

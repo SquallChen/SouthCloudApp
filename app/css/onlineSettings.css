@@ -148,7 +148,9 @@
 			.btn .start {
 				background: #409eff;
 			}
-
+			.btn .stop {
+				background: #F56C6C;
+			}
 			.changeFormat input {
 				width: 25.63%;
 				border-radius: 3px 0 0 3px;

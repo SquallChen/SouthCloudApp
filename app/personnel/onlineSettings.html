@@ -199,7 +199,10 @@
 									<button class="setting" v-on:tap="baseSet">设 置</button>
 								</li>
 								<li class="btn">
-									<button class="start">启 动</button>
+									<button class="start" v-show="bVal.show === 'start'"  v-on:tap="baseStartOrBreak('start')">启 动</button>
+								</li>
+								<li class="btn" v-show="bVal.show !== 'start'"  v-on:tap="baseStartOrBreak('break')">
+									<button class="stop">断 开</button>
 								</li>
 							</ul>
 							<!--*********************移动站**********************-->
@@ -209,11 +212,11 @@
 										<span>截止角</span>
 									</div>
 									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+										<input type="text" placeholder="取值为0-90整数" v-model="rVal.cutangle" />
 									</div>
 								</li>
 								<li class="btn">
-									<button class="setting">设 置</button>
+									<button class="setting" v-on:tap="roverSet()">设 置</button>
 								</li>
 							</ul>
 							<!--*********************静态站**********************-->
@@ -223,7 +226,7 @@
 										<span>采集间隔</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="collectionIntervalvalue">
+										<select name="" v-model="sVal.sampling">
 											<option v-for="item in collectionInterval" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
@@ -234,7 +237,7 @@
 										<span>截止角</span>
 									</div>
 									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="cut_angle" />
+										<input type="text" placeholder="取值为0-90整数" v-model="sVal.cutangle" />
 									</div>
 								</li>
 								<li>
@@ -242,7 +245,7 @@
 										<span>PDOP</span>
 									</div>
 									<div>
-										<input type="text" placeholder="取值为0-90整数" v-model="pdop" />
+										<input type="text" placeholder="取值为0-90整数" v-model="sVal.pdop" />
 									</div>
 								</li>
 								<li>
@@ -252,23 +255,23 @@
 									<div class="radio radio2">
 										<div class="mui-input-row mui-radio mui-left">
 											<label>直高</label>
-											<input name="radio2" type="radio" value="4" v-model="antennaType" :checked="antennaType===4">
+											<input name="radio3" type="radio" value="4" v-model="sVal.staticLaunch" :checked="sVal.staticLaunch===4">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>斜高</label>
-											<input name="radio2" type="radio" value="2" v-model="antennaType" :checked="antennaType===2">
+											<input name="radio3" type="radio" value="2" v-model="sVal.staticLaunch" :checked="sVal.staticLaunch===2">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>杠高</label>
-											<input name="radio2" type="radio" value="16" v-model="antennaType" :checked="antennaType===16">
+											<input name="radio3" type="radio" value="16" v-model="sVal.staticLaunch" :checked="sVal.staticLaunch===16">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>侧片高</label>
-											<input name="radio2" type="radio" value="8" v-model="antennaType" :checked="antennaType===8">
+											<input name="radio3" type="radio" value="8" v-model="sVal.staticLaunch" :checked="sVal.staticLaunch===8">
 										</div>
 										<div class="mui-input-row mui-radio mui-left">
 											<label>天线相位中心</label>
-											<input name="radio2" type="radio" value="1" v-model="antennaType" :checked="antennaType===1">
+											<input name="radio3" type="radio" value="1" v-model="sVal.staticLaunch" :checked="sVal.staticLaunch===1">
 										</div>
 									</div>
 								</li>
@@ -277,7 +280,7 @@
 										<span>天线高</span>
 									</div>
 									<div>
-										<input type="text" placeholder="0-100，支持3位小数" />
+										<input type="text" placeholder="0-100，支持3位小数" v-model="sVal.antenna" />
 									</div>
 								</li>
 								<li class="autoMark">
@@ -291,10 +294,13 @@
 									</div>
 								</li>
 								<li class="btn">
-									<button class="setting" v-on:tap="baseSet()">设 置</button>
+									<button class="setting" v-on:tap="staticSet()">设 置</button>
 								</li>
-								<li class="btn">
-									<button class="start">启 动</button>
+								<li class="btn" v-show="sVal.show === 'start'">
+									<button class="start" v-on:tap="staticStartOrBreak('start')">启 动</button>
+								</li>
+								<li class="btn" v-show="sVal.show !== 'start'">
+									<button class="stop" v-on:tap="staticStartOrBreak('break')">断 开</button>
 								</li>
 							</ul>
 						</div>
