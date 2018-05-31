@@ -601,3 +601,7 @@
 			.mui-table-view-cell:after{
 				height: 0;
 			}
+
+.mui-segmented-control .mui-control-item{
+	width:25%;
+}

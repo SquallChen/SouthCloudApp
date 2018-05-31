@@ -62,7 +62,8 @@ var vm = new Vue({
 		wActive: 'BASE',
 		wshow: 'BASE',
 		workChecked: 'BASE',
-
+		pageChecked: '',
+		navActive: 'workPage',
 		// 基准
 		bVal: {
 			'rtmRadios': 'RTCA',
@@ -1775,6 +1776,109 @@ var vm = new Vue({
 		refresh:function(){
 			currentWebview.reload();
 		},
+		// 切换工作模式、数据链、其它
+		togglePage: function (v,event) {
+			//plus.nativeUI.showWaiting('读取设置中...', { height: '100px', width: '150px' });
+			this.pageChecked = this.navActive;
+			this.navActive = v;
+			var e = event.currentTarget;
+			var item1 = document.getElementById('item1');
+			var item2 = document.getElementById('item2');
+			if (v === 'dataLinkPage') {
+				if (this.wshow === 'STATIC') {
+					e.href="";
+					// item1.className+=' '+'mui-active';
+					console.log(item2.className);
+					item2.setAttribute("class",'mui-control-item' )
+					console.log(item2.className);
+					this.navActive = this.pageChecked;
+					mui.toast('静态站的模式下不支持数据链设置！');
+					plus.nativeUI.closeWaiting();
+					return false;
+				}
+				console.log(e.className);
+				e.href="#item2mobile";
+				mui.ajax(url, {
+					type: 'post',
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getPageDataLink'
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						if (data.status === ERR_NO) {
+							//timeFun(data, getConfigDataLinkPageInfo, '切换数据链设置失败', 'pagesInfo', 1000);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}else if(v === 'satelliteControl'){
+				e.href="#item3mobile";
+				mui.ajax(url, {
+					type: 'post',
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getSatellitePageInfo'
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						if (data.status === ERR_NO) {
+							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			} else if (v === 'otherPage') {
+				e.href="#item4mobile";
+				mui.ajax(url, {
+					type: 'post',
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getPageOther'
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						if (data.status === ERR_NO) {
+							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			} else {
+				e.href="#item1mobile";
+				//firstGetConfigWorkModePageInfo('closeWaiting');
+			}
+		},
 		// 工作模式切换
 		changeMode: function(index) {
 			switch(index) {
@@ -1809,13 +1913,16 @@ var vm = new Vue({
 					//切换工作模式成功后，请求切换后的对应数据
 					switch(index) {
 						case 0:
-							vm.wActive = 'BASE'
+							vm.wActive = 'BASE';
+							vm.wshow = 'BASE';
 							break;
 						case 1:
 							vm.wActive = 'ROVER';
+							vm.wshow = 'ROVER';
 							break;
 						case 2:
 							vm.wActive = 'STATIC';
+							vm.wshow = 'STATIC';
 							break;
 						default:
 					}

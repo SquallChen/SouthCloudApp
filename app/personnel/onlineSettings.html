@@ -25,16 +25,18 @@
 				</div>
 				<div id="slider" class="mui-slider">
 					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<a class="mui-control-item" href="#item1mobile">
+						<a class="mui-control-item" id="item1" href="" v-on:tap="togglePage('workPage',$event)">
 							工作模式
 						</a>
-						<a class="mui-control-item" href="#item2mobile">
-							数据链
-						</a>
-						<a class="mui-control-item" href="#item3mobile">
+						<!-- 如果处于静态站模式中，切换成span显示元素，让数据链跳转不能点击 -->
+						<span v-show="wshow === 'STATIC'" v-on:tap="mui.toast('静态站的模式下不支持数据链设置！')">数据链</span>
+						<a class="mui-control-item" id="item2" href="" v-show="wshow !== 'STATIC'" v-on:tap="togglePage('dataLinkPage',$event)">
+								数据链
+							</a>
+						<a class="mui-control-item" id="item3" href="" v-on:tap="togglePage('satelliteControl',$event)">
 							卫星控制
 						</a>
-						<a class="mui-control-item" href="#item4mobile">
+						<a class="mui-control-item" id="item4" href="" v-on:tap="togglePage('otherPage',$event)">
 							其他
 						</a>
 					</div>
