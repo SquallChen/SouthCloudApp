@@ -1765,11 +1765,15 @@ var vm = new Vue({
 	},
 
 	methods: {
-		management: function() {
-			mui.openWindow({
-				url: 'deviceStatus.html',
-				id: 'deviceStatus.html'
-			});
+		// management: function() {
+		// 	mui.openWindow({
+		// 		url: 'deviceStatus.html',
+		// 		id: 'deviceStatus.html'
+		// 	});
+		// },
+		//刷新页面
+		refresh:function(){
+			currentWebview.reload();
 		},
 		// 工作模式切换
 		changeMode: function(index) {
@@ -2131,7 +2135,7 @@ var vm = new Vue({
 	created: function() {
 		mui.plusReady(function() {
 			mui.init({});
-			currentWebviewcurrentWebview = plus.webview.currentWebview();
+			currentWebview = plus.webview.currentWebview();
 			//    currentWebview.setStyle({
 			//      softinputMode: 'adjustResize'
 			//    });
@@ -2151,7 +2155,7 @@ var vm = new Vue({
 			vm.firstTimer = setTimeout(function() {
 				vm.onlyOne = 1;
 				getSicVersion();
-			}, 3000);
+			}, 1000);
 
 			var socket = io.connect(
 				'http://' + '119.23.161.165:9110' + '/rtkTransferWeb'
@@ -2386,32 +2390,26 @@ function getSicVersion() {
 		success: function callback(data) {
 			console.log('当前clientUUid请求后的唯一码数据为：' + JSON.stringify(data));
 			if(data.status === ERR_NO) {
-				timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
-				// var a = data.unique_id;
-				// timeFun3(a);
+				timeFun(data, getSic, '获取设备协议失败!', 'getSic', 1000, true);
 			} else {
 				//用户登陆过期
-				//mui.toast(data.info);
 				mui.openWindow({
 					url: '../../login.html',
 					id: 'login'
 				});
 			}
-			//plus.nativeUI.closeWaiting();
 		},
 		error: function(data) {
 			plus.nativeUI.closeWaiting();
 		}
 	});
 }
-// timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
-// timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
 
 // 根据唯一码判断并获取对应的数据
 function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 	console.log('当前唯一码为：' + JSON.stringify(data.unique_id));
 	// 对获取唯一码成功的判断
-	var time = arguments[4] ? arguments[4] : 5000;
+	var time = arguments[4] ? arguments[4] : 1000;
 	console.log('time:' + time);
 	var theunique_id = data.unique_id || data.uniqueId;
 	vm.the_unique_id = data.unique_id || data.uniqueId;
@@ -2583,7 +2581,7 @@ function getConfigWorkModePageInfo(hd) {
 					success: function callback(data) {
 						console.log('请求对应的工作模式数据为：'+JSON.stringify(data));
 						if(data.status === ERR_NO) {
-							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 3000);
+							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 1000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2649,7 +2647,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
 		success: function(data) {
 			console.log('第一次进入页面时设置时获取的工作模式数据为：' + JSON.stringify(data));
 			if(data.status === ERR_NO) {
-				timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', 3000,true);
+				timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', 1000,true);
 			} else if(data.status === 40004) {
 				plus.storage.clear();
 				mui.openWindow({
@@ -2710,7 +2708,7 @@ function setSicVirsion() {
 		dataType: 'JSON',
 		success: function callback(data) {
 			if(data.status === ERR_NO) {
-				timeFun(data, setSic, '设置协议失败!', 'setSic', 3000);
+				timeFun(data, setSic, '设置协议失败!', 'setSic', 1000);
 			} else {
 				mui.toast(data.info);
 				plus.nativeUI.closeWaiting();
