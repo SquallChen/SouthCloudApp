@@ -45,6 +45,7 @@ var vm = new Vue({
 		satelliteChecked: [],
 		channelsChecked: [],
 		currentIndex: '',
+		currentMode:'',
 		currentModeIndex: '',
 		currentIdentifyCode: '',
 		workMode: '',
@@ -322,7 +323,12 @@ var vm = new Vue({
 				value: 2
 			}
 		],
-		modetype: ['基准站', '移动站', '静态站'],
+		// modetype: ['基准站', '移动站', '静态站'],
+		modetype:[
+			{ key: 1, id: 'BASE', name: '基准站' },
+      { key: 2, id: 'ROVER', name: '移动站' },
+      { key: 3, id: 'STATIC', name: '静态站' }
+		],
 		linktype: [{
 				name: '移动网络',
 				index: 1
@@ -1797,6 +1803,18 @@ var vm = new Vue({
 				timeout: 10000,
 				success: function callback(data) {
 					//切换工作模式成功后，请求切换后的对应数据
+					switch(index) {
+						case 0:
+							vm.wActive = 'BASE'
+							break;
+						case 1:
+							vm.wActive = 'ROVER';
+							break;
+						case 2:
+							vm.wActive = 'STATIC';
+							break;
+						default:
+					}
 					if(data.status === ERR_NO) {
 						timeFun(data, getConfigWorkModePageInfo, '工作模式切换失败', 'workModel');
 					} else {
@@ -1845,6 +1863,13 @@ var vm = new Vue({
 		},
 		selectionMode: function(index) {
 			this.currentModeIndex = index;
+			if(index===0){
+				this.currentMode = '基准站';
+			}else if(index===1){
+				this.currentMode = '移动站';
+			}else{
+				this.currentMode = '静态站';
+			}
 			mui('#selectionMode').popover('toggle');
 		},
 		closeSelectionMode: function() {

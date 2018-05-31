@@ -50,12 +50,12 @@
 										<span>选择模式</span>
 									</div>
 									<div>
-										<button v-for="(item,index) in modetype" v-on:tap="selectionMode(index)" :class="{active:index===mode}">{{item}}</button>
+										<button v-for="(item,index) in modetype" :id="item.id" v-on:tap="selectionMode(index)" :class="{active:wActive == item.id}">{{item.name}}</button>
 									</div>
 								</li>
 							</ul>
 							<!--*********************基准站**********************-->
-							<ul v-show="mode === 0">
+							<ul v-show="wActive === 'BASE'">
 								<li>
 									<div>
 										<span>差分格式</span>
@@ -206,7 +206,7 @@
 								</li>
 							</ul>
 							<!--*********************移动站**********************-->
-							<ul v-show="mode === 1">
+							<ul v-show="wActive === 'ROVER'">
 								<li>
 									<div>
 										<span>截止角</span>
@@ -220,7 +220,7 @@
 								</li>
 							</ul>
 							<!--*********************静态站**********************-->
-							<ul v-show="mode === 2">
+							<ul v-show="wActive === 'STATIC'">
 								<li>
 									<div>
 										<span>采集间隔</span>
@@ -655,7 +655,7 @@
 					<hr>
 					<div>
 
-						<span>确认切换到{{modetype[currentModeIndex]}}？</span>
+						<span>确认切换到{{currentMode}}？</span>
 					</div>
 					<div class="btn">
 						<button v-on:tap="closeSelectionMode">取消</button><button v-on:tap="changeMode(currentModeIndex)">确认</button>
