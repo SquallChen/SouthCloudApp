@@ -2111,17 +2111,16 @@ var vm = new Vue({
 			//      softinputMode: 'adjustResize'
 			//    });
 
-			// 获取上层页面传递过来的参数
-			var self = plus.webview.currentWebview();
-			vm.currentIdentifyCode = self.identifyCode;
-
-			// 登陆时存放到本地的用户数据
-			vm.token = plus.storage.getItem('token');
-			vm.user_name = plus.storage.getItem('user_name');
 			plus.nativeUI.showWaiting('正在初始化设置中...', {
 				height: '100px',
 				width: '180px'
 			});
+			// 获取上层页面传递过来的参数
+			var self = plus.webview.currentWebview();
+			vm.currentIdentifyCode = self.identifyCode;
+			// 登陆时存放到本地的用户数据
+			vm.token = plus.storage.getItem('token');
+			vm.user_name = plus.storage.getItem('user_name');
 
 			// 第一次请求
 			vm.firstTimer = setTimeout(function() {
@@ -2230,18 +2229,10 @@ var vm = new Vue({
 			});
 			var resolutionHeight = window.innerHeight;
 			resolutionHeight = resolutionHeight - 149;
-			document
-				.getElementById('item1mobile')
-				.setAttribute('style', 'height:' + resolutionHeight + 'px;');
-			document
-				.getElementById('item2mobile')
-				.setAttribute('style', 'height:' + resolutionHeight + 'px;');
-			document
-				.getElementById('item3mobile')
-				.setAttribute('style', 'height:' + resolutionHeight + 'px;');
-			document
-				.getElementById('item4mobile')
-				.setAttribute('style', 'height:' + resolutionHeight + 'px;');
+			document .getElementById('item1mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+			document .getElementById('item2mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+			document .getElementById('item3mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+			document .getElementById('item4mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 		});
 	},
 
@@ -2381,7 +2372,7 @@ function getSicVersion() {
 					id: 'login'
 				});
 			}
-			plus.nativeUI.closeWaiting();
+			//plus.nativeUI.closeWaiting();
 		},
 		error: function(data) {
 			plus.nativeUI.closeWaiting();
@@ -2393,7 +2384,6 @@ function getSicVersion() {
 
 // 根据唯一码判断并获取对应的数据
 function timeFun(data, func, tip, typeModel, timee, showWaiting) {
-	console.log('当前传递的唯一码数据为：' + JSON.stringify(data));
 	console.log('当前唯一码为：' + JSON.stringify(data.unique_id));
 	// 对获取唯一码成功的判断
 	var time = arguments[4] ? arguments[4] : 5000;
@@ -2406,8 +2396,6 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 	vm.showWaiting = showWaiting;
 	// 如果请求唯一码返回数据成功
 	if(data.status === ERR_NO) {
-		console.log('data.unique_id值为：' + data.unique_id);
-		console.log('data.unique_id类型为：'+typeof(data.unique_id));
 		// 生成setTimeout计时器并执行
 		vm.ajaxTimer = setTimeout(function() {
 			// 根据返回得到的唯一码请求相应的数据
@@ -2432,7 +2420,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 								// 根据模式类型，有数据返回时对应相关处理
 								var hd = _data.hitSicDataReply;
 								func(hd);
-								plus.nativeUI.closeWaiting();
+								//plus.nativeUI.closeWaiting();
 							} else {
 								errTip(typeModel);
 								mui.toast(data.info);
@@ -2477,94 +2465,10 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 	}
 }
 
-// function timeFun2(data, func, tip, typeModel, timee, showWaiting) {
-// 	console.log('当前唯一码数据为：' + JSON.stringify(data));
-// 	console.log('当前唯一码为：' + JSON.stringify(data.unique_id));
-// 	// 对获取唯一码成功的判断
-// 	var time = arguments[4] ? arguments[4] : 5000;
-// 	var theunique_id = data.unique_id || data.uniqueId;
-// 	vm.the_unique_id = data.unique_id || data.uniqueId;
-// 	vm.socketFun = func;
-// 	vm.socketTip = tip;
-// 	vm.socketTypeModel = typeModel;
-// 	vm.showWaiting = showWaiting;
-// 	// 如果请求唯一码返回数据成功
-// 	if(data.status === ERR_NO) {
-// 		console.log('data.unique_id值为：' + data.unique_id);
-// 		console.log('data.unique_id类型为：'+typeof(data.unique_id));
-// 		// 生成setTimeout计时器并执行
-// 		vm.ajaxTimer = setTimeout(function() {
-// 			// 根据返回得到的唯一码请求相应的数据
-// 			mui.ajax(apiUrl.doGetUniqueIdInfo, {
-// 				data: {
-// 					user_name: vm.user_name,
-// 					token: vm.token,
-// 					identifyCode: vm.currentIdentifyCode,
-// 					uniqueId:data.unique_id
-// 					//uniqueId: '218d8a3720e34adba094a10ba45db304'
-// 				},
-// 				dataType: 'json',
-// 				type: 'post',
-// 				timeout: 10000,
-// 				success: function(data) {
-// 					console.log('根据唯二码请求获得的数据为：' + JSON.stringify(data));
-// 					if(data.status === 0) {
-// 						tip = tip || data.info;
-// 						var _data = data.data;
-// 						// 根据返回的errorId进行对应处理，ERROR_NULL代表没有错误产生
-// 						if(_data !== undefined && _data.errorId === 'ERROR_NULL') {
-// 							if(_data.hitSicDataReply !== undefined) {
-// 								// 根据模式类型，有数据返回时对应相关处理
-// 								var hd = _data.hitSicDataReply;
-// 								func(hd);
-// 								plus.nativeUI.closeWaiting();
-// 							} else {
-// 								errTip(typeModel);
-// 								mui.toast(data.info);
-// 							}
-// 						} else if(data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
-// 							errTip(typeModel);
-// 							mui.confirm(
-// 								'',
-// 								'设备离线,操作失败!', ['确认'],
-// 								function(e) {
-// 									currentWebview.close();
-// 									mui.openWindow({
-// 										url: 'equipment.html',
-// 										id: './app/console/equipment.html'
-// 									});
-// 								},
-// 								'div'
-// 							);
-// 						} else if(data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
-// 							errTip(typeModel);
-// 							mui.toast('设备操作被中断，请稍后再试!');
-// 						} else if(data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
-// 							errTip(typeModel);
-// 							mui.toast('设置超时，操作失败！');
-// 						} else if(data.uniqueId === theunique_id) {
-// 							errTip(typeModel);
-// 							mui.toast('设置超时，操作失败！');
-// 						} else {
-// 							errTip(typeModel);
-// 							mui.toast('设置超时，操作失败！');
-// 						}
-// 					} else {
-// 						mui.toast(data.info);
-// 						plus.nativeUI.closeWaiting();
-// 					}
-// 				}
-// 			});
-// 		}, time);
-// 	} else {
-// 		mui.toast(data.info);
-// 		plus.nativeUI.closeWaiting();
-// 	}
-// }
-
 
 /* 获取工作模式页面数据*/
 function getConfigWorkModePageInfo(hd) {
+	plus.nativeUI.closeWaiting();
 	for(var i = 0; i < hd.length; i++) {
 		if(hd[i].status === true) {
 			//静态站启动状态
@@ -2597,8 +2501,8 @@ function getConfigWorkModePageInfo(hd) {
 				if(data[2] !== ' ') {
 					vm.bVal.altitude = data[2];
 				}
-				//天线类型（未确定）
-			} else if(hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.METHOD') {
+				//天线类型
+			} else if(hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.METHOD') {
 				vm.bVal.baseLaunch = hd[i].value;
 				vm.sVal.staticLaunch = hd[i].value;
 				//PDOP
@@ -2611,8 +2515,8 @@ function getConfigWorkModePageInfo(hd) {
 				vm.bVal.cutangle = hd[i].value;
 				vm.rVal.cutangle = hd[i].value;
 				vm.sVal.cutangle = hd[i].value;
-				//天线高（未确定）
-			} else if(hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.HEIGHT') {
+				//天线高
+			} else if(hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.HEIGHT') {
 				vm.bVal.antenna = hd[i].value / 1000;
 				vm.sVal.antenna = hd[i].value / 1000;
 				//差分格式
@@ -2628,8 +2532,13 @@ function getConfigWorkModePageInfo(hd) {
 				} else {
 					vm.bVal.show = 'start';
 				}
+				plus.nativeUI.closeWaiting();
 				//选择工作模式后请求对应数据（BASE/ROVER/STATIC）
 			} else if(hd[i].hitSicData === 'GET:DEVICE.CUR_SYSMODE') {
+				plus.nativeUI.showWaiting('正在读取设备信息...', {
+					height: '100px',
+					width: '180px'
+				});
 				vm.workChecked = vm.wActive;
 				vm.wActive = hd[i].value;
 				vm.wshow = hd[i].value;
@@ -2647,8 +2556,9 @@ function getConfigWorkModePageInfo(hd) {
 					type: 'post',
 					timeout: 10000,
 					success: function callback(data) {
+						console.log('请求对应的工作模式数据为：'+JSON.stringify(data));
 						if(data.status === ERR_NO) {
-							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 5000);
+							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2661,7 +2571,7 @@ function getConfigWorkModePageInfo(hd) {
 			}
 		}
 	}
-	plus.nativeUI.closeWaiting();
+	//plus.nativeUI.closeWaiting();
 }
 
 // 申请监控设备在线通知
