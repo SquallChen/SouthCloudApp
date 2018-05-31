@@ -46,9 +46,12 @@ var vm = new Vue({
 		channelsChecked: [],
 		currentIndex: '',
 		currentMode:'',
+		currentLink:'',
 		currentModeIndex: '',
+		currentLinkIndex:'',
 		currentIdentifyCode: '',
 		workMode: '',
+		linkMode:'',
 		clientUUid: '',
 		firstTimer: '',
 		onlyOne: 0,
@@ -59,11 +62,15 @@ var vm = new Vue({
 		socketTypeModel: '',
 		showWaiting: false,
 		ajaxTimer: '',
+		lActive:'CELLULAR_NET',
+		lshow: 'CELLULAR_NET',
+		linkChecked: 'CELLULAR_NET',
 		wActive: 'BASE',
 		wshow: 'BASE',
 		workChecked: 'BASE',
 		pageChecked: '',
 		navActive: 'workPage',
+
 		// 基准
 		bVal: {
 			'rtmRadios': 'RTCA',
@@ -332,11 +339,13 @@ var vm = new Vue({
 		],
 		linktype: [{
 				name: '移动网络',
-				index: 1
+				index: 1,
+				id: 'CELLULAR_NET'
 			},
 			{
 				name: '内置电台',
-				index: 2
+				index: 2,
+				id: 'UHF'
 			}
 		],
 		channel: [{
@@ -1778,25 +1787,18 @@ var vm = new Vue({
 		},
 		// 切换工作模式、数据链、其它
 		togglePage: function (v,event) {
-			//plus.nativeUI.showWaiting('读取设置中...', { height: '100px', width: '150px' });
+			plus.nativeUI.showWaiting('读取设置中...', { height: '100px', width: '150px' });
 			this.pageChecked = this.navActive;
 			this.navActive = v;
 			var e = event.currentTarget;
-			var item1 = document.getElementById('item1');
-			var item2 = document.getElementById('item2');
 			if (v === 'dataLinkPage') {
 				if (this.wshow === 'STATIC') {
-					e.href="";
-					// item1.className+=' '+'mui-active';
-					console.log(item2.className);
-					item2.setAttribute("class",'mui-control-item' )
-					console.log(item2.className);
 					this.navActive = this.pageChecked;
 					mui.toast('静态站的模式下不支持数据链设置！');
 					plus.nativeUI.closeWaiting();
 					return false;
 				}
-				console.log(e.className);
+				//点击时设置跳转链接
 				e.href="#item2mobile";
 				mui.ajax(url, {
 					type: 'post',
@@ -1811,8 +1813,9 @@ var vm = new Vue({
 					type: 'post',
 					timeout: 10000,
 					success: function callback(data) {
+						console.log('数据链请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
-							//timeFun(data, getConfigDataLinkPageInfo, '切换数据链设置失败', 'pagesInfo', 1000);
+							timeFun(data, getConfigDataLinkPageInfo, '切换数据链设置失败', 'pagesInfo', 1000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -1837,6 +1840,7 @@ var vm = new Vue({
 					type: 'post',
 					timeout: 10000,
 					success: function callback(data) {
+						console.log('卫星设置请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
 							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
 						} else {
@@ -1863,6 +1867,7 @@ var vm = new Vue({
 					type: 'post',
 					timeout: 10000,
 					success: function callback(data) {
+						console.log('其他请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
 							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
 						} else {
@@ -1939,12 +1944,72 @@ var vm = new Vue({
 				}
 			});
 
-			this.mode = index;
+			//this.mode = index;
 			mui('#selectionMode').popover('toggle');
 		},
-		changeLink: function(index) {
-			this.linktypevalue = index;
-		},
+			// 数据链切换
+			changeLink: function(index) {
+				plus.nativeUI.showWaiting('读取设置中...', {
+					height: '100px',
+					width: '150px'
+				});
+				switch(index) {
+					case 0:
+						vm.linkMode = 'CELLULAR_NET';
+						break;
+					case 1:
+						vm.linkMode = 'UHF';
+						break;
+					default:
+				}
+				vm.linkChecked = vm.lActive;
+				vm.lActive = vm.linkMode;
+				vm.lshow = vm.linkMode;
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						workMode: vm.workMode,
+						identifyCode: vm.currentIdentifyCode,
+						clientUUid: vm.clientUUid,
+						requestType: 'getChangeDataLinkMode',
+            dataLinkMode: vm.lActive
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						//切换数据链成功后，请求切换后的对应数据
+						console.log('数据链切换后返回的唯一码数据：'+JSON.stringify(data));
+						mui.toast('数据链切换成功！');
+						switch(index) {
+							case 0:
+								vm.lActive = 'CELLULAR_NET';
+								vm.lshow = 'CELLULAR_NET';
+								break;
+							case 1:
+								vm.lActive = 'UHF';
+								vm.lshow = 'UHF';
+								break;
+							default:
+						}
+						if(data.status === ERR_NO) {
+							timeFun(data, getConfigDataLinkPageInfo, '工作模式切换失败', 'workModel');
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+						plus.nativeUI.closeWaiting();
+					},
+					error: function(xhr, type, errorThrown) {
+						plus.nativeUI.closeWaiting();
+					}
+				});
+				mui('#selectionLink').popover('toggle');
+			},
+		// changeLink: function(index) {
+		// 	this.linktypevalue = index;
+		// },
 		// 全选方法
 		checkedAll: function() {
 			var _this = this;
@@ -1983,8 +2048,20 @@ var vm = new Vue({
 			}
 			mui('#selectionMode').popover('toggle');
 		},
+		selectionLink: function(index) {
+			this.currentLinkIndex = index;
+			if(index===0){
+				this.currentLink = '移动网络';
+			}else{
+				this.currentLink = '内置电台';
+			}
+			mui('#selectionLink').popover('toggle');
+		},
 		closeSelectionMode: function() {
 			mui('#selectionMode').popover('toggle');
+		},
+		closeSelectionLink: function() {
+			mui('#selectionLink').popover('toggle');
 		},
 
 		//设置基准站
@@ -2237,6 +2314,7 @@ var vm = new Vue({
 					}
 				});
 			},
+
 	},
 
 	created: function() {
@@ -3066,6 +3144,37 @@ function staticBreak(hd) {
   }
 }
 
+// /*获取数据链页面数据*/
+function getConfigDataLinkPageInfo(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].status == true) {
+      if (hd[i].hitSicData == 'GET:TRANSPORTATION.NTRIP.WORKPARA') {
+        var workpara = hd[i].value.split('|');
+        vm.nVal.linkMobileModel = workpara[0];
+        vm.nVal.ip = workpara[1];
+        vm.nVal.port = workpara[2];
+        vm.nVal.account = workpara[3];
+        vm.nVal.pw = workpara[4];
+        vm.nVal.linkAccessPoint = workpara[5];
+      } else if (hd[i].hitSicData == 'GET:NETWORK.CELLULAR_NET.APN') {
+        vm.nVal.apnSrver = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:NETWORK.CELLULAR_NET.APN_USER') {
+        vm.nVal.apnUser = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:NETWORK.CELLULAR_NET.APN_PASSWORD') {
+        vm.nVal.apnPassword = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:UHF.PROTOCOL') {
+        vm.uVal.link_UHF_protocol = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:UHF.POWER') {
+        vm.uVal.UHFPowerRadios = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:UHF.BAUDRATE.AIR') {
+        vm.uVal.braundrateAir = hd[i].value;
+      } else if (hd[i].hitSicData == 'GET:UHF.CUR_CHANNEL') {
+        vm.uVal.link_channel = hd[i].value;
+      }
+		}
+    plus.nativeUI.closeWaiting();
+  }
+}
 /*封装的操作函数*/
 function $(elements) {
 	return document.getElementById(elements);

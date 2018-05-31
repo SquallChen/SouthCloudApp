@@ -25,18 +25,18 @@
 				</div>
 				<div id="slider" class="mui-slider">
 					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<a class="mui-control-item" id="item1" href="" v-on:tap="togglePage('workPage',$event)">
+						<a class="mui-control-item" href="" v-on:tap="togglePage('workPage',$event)">
 							工作模式
 						</a>
 						<!-- 如果处于静态站模式中，切换成span显示元素，让数据链跳转不能点击 -->
 						<span v-show="wshow === 'STATIC'" v-on:tap="mui.toast('静态站的模式下不支持数据链设置！')">数据链</span>
-						<a class="mui-control-item" id="item2" href="" v-show="wshow !== 'STATIC'" v-on:tap="togglePage('dataLinkPage',$event)">
+						<a class="mui-control-item" href="" v-show="wshow !== 'STATIC'" v-on:tap="togglePage('dataLinkPage',$event)">
 								数据链
 							</a>
-						<a class="mui-control-item" id="item3" href="" v-on:tap="togglePage('satelliteControl',$event)">
+						<a class="mui-control-item" href="" v-on:tap="togglePage('satelliteControl',$event)">
 							卫星控制
 						</a>
-						<a class="mui-control-item" id="item4" href="" v-on:tap="togglePage('otherPage',$event)">
+						<a class="mui-control-item" href="" v-on:tap="togglePage('otherPage',$event)">
 							其他
 						</a>
 					</div>
@@ -315,12 +315,12 @@
 										<span>选择链路</span>
 									</div>
 									<div>
-										<button v-for="(item,index) in linktype" v-on:tap="changeLink(index)" :class="{active:index===linktypevalue}">{{item.name}}</button>
+										<button v-for="(item,index) in linktype" :id="item.id" v-on:tap="selectionLink(index)" :class="{active:lActive == item.id}">{{item.name}}</button>
 									</div>
 								</li>
 							</ul>
 							<!--*********************移动网络**********************-->
-							<ul v-show="linktypevalue === 0">
+							<ul v-show="lActive === 'CELLULAR_NET'">
 								<li>
 									<div>
 										<span>ip地址</span>
@@ -404,7 +404,7 @@
 								</li>
 							</ul>
 							<!--*********************内置电台**********************-->
-							<ul v-show="linktypevalue === 1">
+							<ul v-show="lActive === 'UHF'">
 								<li>
 									<div>
 										<span>通道设置</span>
@@ -664,6 +664,21 @@
 					</div>
 				</div>
 			</div>
+
+			<!--**************************选择链路确认弹窗****************************-->
+			<div id="selectionLink" class="mui-popover track">
+					<div class="content">
+						<span>确认</span>
+						<hr>
+						<div>
+
+							<span>确认切换到{{currentLink}}？</span>
+						</div>
+						<div class="btn">
+							<button v-on:tap="closeSelectionLink">取消</button><button v-on:tap="changeLink(currentLinkIndex)">确认</button>
+						</div>
+					</div>
+				</div>
 
 		</div>
 		<script src="../../js/mui.min.js"></script>
