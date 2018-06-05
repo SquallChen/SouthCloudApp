@@ -854,7 +854,7 @@ var vm = new Vue({
       }, 3000);
 
       // var socket = io.connect('http://120.25.70.5:9010/rtkuniqueid');
-      var socket = io.connect('http://119.231.161.165:9010/rtkuniqueid');
+      var socket = io.connect('http://119.23.161.165:9010/rtkuniqueid');
       socket.on('connect', function () {
         vm.clientUUid = socket.id;
         vm.disconnectCount = 0;

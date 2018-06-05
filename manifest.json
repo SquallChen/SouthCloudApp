@@ -7,7 +7,7 @@
 	"id": "H54EE62D4",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "SouthCloud",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.2",/*应用版本名称*/
+		"name": "1.2.1",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -171,7 +171,7 @@
 					
 				}
 			},"debug":true
-		},"ads":{"rp":false,"splash":false,"push":false,"spot":false},"adid":""
+		},"ads":{"rp":false,"splash":false,"push":false,"spot":false},"adid":"124994040906"
 	},
 	"dependencies": {
 		"pages": {
@@ -1605,7 +1605,8 @@
 					"app/rtkonline/rtkset.html",
 					"app/rtkonline/rtktrack.html",
 					"app/taskmanager/achievecontent.html",
-					"app/taskmanager/taskmanager.html"
+					"app/taskmanager/taskmanager.html",
+					"index.html"
 				],
 				"priority": 0
 			},

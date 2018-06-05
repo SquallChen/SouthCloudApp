@@ -326,7 +326,7 @@
 										<span>ip地址</span>
 									</div>
 									<div>
-										<input type="text" placeholder="ip地址" v-model="ip" />
+										<input type="text" placeholder="ip地址" v-model="nVal.ip" />
 									</div>
 								</li>
 								<li>
@@ -334,7 +334,7 @@
 										<span>端口号</span>
 									</div>
 									<div>
-										<input type="text" placeholder="端口号" v-model="port" />
+										<input type="text" placeholder="端口号" v-model="nVal.port" />
 									</div>
 								</li>
 								<li>
@@ -342,7 +342,7 @@
 										<span>账户ID</span>
 									</div>
 									<div>
-										<input type="text" placeholder="账户ID" v-model="id" />
+										<input type="text" placeholder="账户ID" v-model="nVal.account" />
 									</div>
 								</li>
 								<li>
@@ -350,7 +350,7 @@
 										<span>密码</span>
 									</div>
 									<div>
-										<input type="text" placeholder="密码" v-model="password" />
+										<input type="text" placeholder="密码" v-model="nVal.pw" />
 									</div>
 								</li>
 								<li>
@@ -358,7 +358,7 @@
 										<span>模式</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="accessModeValue">
+										<select name="" v-model="nVal.linkMobileModel">
 											<option v-for="item in accessMode" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
@@ -368,11 +368,8 @@
 									<div>
 										<span>接入点</span>
 									</div>
-									<div class="select">
-										<select name="" v-model="AccessPointValue">
-											<option v-for="item in AccessPoint" :value="item.value">{{item.label}}</option>
-										</select>
-										<img src="../../public/img/down.png" alt="" class="down" />
+									<div>
+										<input type="text" placeholder="接入点" v-model="nVal.linkAccessPoint" />
 									</div>
 								</li>
 								<li>
@@ -380,7 +377,7 @@
 										<span>ANP服务器</span>
 									</div>
 									<div>
-										<input type="text" placeholder="密码" v-model="anpserver" />
+										<input type="text" placeholder="密码" v-model="nVal.apnSrver" />
 									</div>
 								</li>
 								<li>
@@ -388,7 +385,7 @@
 										<span>ANP用户名</span>
 									</div>
 									<div>
-										<input type="text" placeholder="密码" v-model="anpuser" />
+										<input type="text" placeholder="密码" v-model="nVal.apnUser" />
 									</div>
 								</li>
 								<li>
@@ -396,11 +393,11 @@
 										<span>ANP密码</span>
 									</div>
 									<div>
-										<input type="password" placeholder="密码" v-model="anppassword" />
+										<input type="password" placeholder="密码" v-model="nVal.apnPassword" />
 									</div>
 								</li>
 								<li class="btn" style="margin-bottom: 10px;">
-									<button class="setting">设 置</button>
+									<button class="setting" v-on:tap="netSet()">设 置</button>
 								</li>
 							</ul>
 							<!--*********************内置电台**********************-->
@@ -410,7 +407,7 @@
 										<span>通道设置</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="channelValue">
+										<select name="" v-model="uVal.link_channel">
 											<option v-for="item in channel" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
@@ -444,7 +441,7 @@
 										<span>功率档位</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="powerPositionValue">
+										<select name="" v-model="uVal.UHFPowerRadios">
 											<option v-for="item in powerPosition" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
@@ -455,7 +452,7 @@
 										<span>空中波特率</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="baudRateValue">
+										<select name="" v-model="uVal.braundrateAir">
 											<option v-for="item in baudRate" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
@@ -466,14 +463,14 @@
 										<span>选择协议</span>
 									</div>
 									<div class="select">
-										<select name="" v-model="protocolValue">
+										<select name="" v-model="uVal.link_UHF_protocol">
 											<option v-for="item in protocol" :value="item.value">{{item.label}}</option>
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
 									</div>
 								</li>
 								<li class="btn" style="margin-bottom: 10px;">
-									<button class="setting">设 置</button>
+									<button class="setting" v-on:tap="uhfSet()">设 置</button>
 								</li>
 							</ul>
 						</div>
@@ -485,7 +482,8 @@
 									<div class="satellite-set">
 										<span>{{item.name}}</span>
 										<div>
-											<div class="mui-switch mui-active">
+											<span></span>
+											<div class="mui-switch" :class="{'mui-active':item.status === true}">
 												<div class="mui-switch-handle"></div>
 											</div>
 											<a @click="setSatelliteNum(index)">设置卫星号</a>
@@ -493,7 +491,7 @@
 									</div>
 									<span class="satellite-title">跟踪状态</span>
 									<div class="tracking-status">
-										<span>L1-C/A|L1-P|L2-C/A|L5</span>
+										<span>{{item.trackChecked}}</span>
 										<a @click="settrack(index)">修改跟踪频段</a>
 									</div>
 								</li>
@@ -604,7 +602,7 @@
 
 
 			<!--**************************设置卫星号弹窗****************************-->
-			<div id="SetSatelliteNum" class="mui-popover Satellite">
+			<div id="setSatelliteNum" class="mui-popover Satellite">
 				<div class="content">
 					<span>设置{{currentSatelliteName}}卫星号
 				</span>
@@ -615,14 +613,14 @@
 					<hr>
 					<ul>
 						<li>
-							<div class="mui-input-row mui-checkbox mui-left" v-for="data in currentSatellite.SatelliteNumber">
+							<div class="mui-input-row mui-checkbox mui-left" v-for="(data,index) in currentSatellite.SatelliteNumber">
 								<label>{{data.label}}</label>
 								<input name="checkbox" type="checkbox" :value="data.value" v-model="satelliteChecked">
 							</div>
 						</li>
 					</ul>
 					<div class="btn">
-						<button>取消</button><button>确认</button>
+						<button v-on:tap="closeSetSatellite()">取消</button><button v-on:tap="setSatellite(currentSatelliteIndex)">确认</button>
 					</div>
 				</div>
 			</div>
@@ -645,7 +643,7 @@
 						</li>
 					</ul>
 					<div class="btn">
-						<button>取消</button><button>确认</button>
+						<button v-on:tap="closeSetTrack()">取消</button><button>确认</button>
 					</div>
 				</div>
 			</div>

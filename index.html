@@ -109,14 +109,15 @@ var subpage_style = {
 
 var aniShow = {};
 
-			 // 创建子页面，首个选项卡页面显示，其它均隐藏；
+// 创建子页面，首个选项卡页面显示，其它均隐藏；
 mui.plusReady(function () {
   if (!plus.storage.getItem('token')) {
     mui.openWindow({
       url: './login.html',
       id: 'login'
-    });
-  }
+		});
+		return;
+	}
   var self = plus.webview.currentWebview();
   for (var i = 0; i < 4; i++) {
     var temp = {};

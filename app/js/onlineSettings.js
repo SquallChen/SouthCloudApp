@@ -27,21 +27,8 @@ var vm = new Vue({
 		l_second: '48.32400096',
 		cut_angle: '12',
 		collectionIntervalvalue: '0',
-		accessModeValue: '0',
-		AccessPointValue: '1',
 		pdop: '3.0',
-		ip: '127.0.0.1',
-		port: '3360',
-		id: 'USER123',
-		password: '0',
-		anpserver: 'CMNET',
-		anpuser: 'CARD',
-		anppassword: '123456',
-		channelValue: '6',
 		channelValue1: '463.625',
-		powerPositionValue: 'high',
-		baudRateValue: '9600',
-		protocolValue: 0,
 		satelliteChecked: [],
 		channelsChecked: [],
 		currentIndex: '',
@@ -50,6 +37,7 @@ var vm = new Vue({
 		currentModeIndex: '',
 		currentLinkIndex:'',
 		currentIdentifyCode: '',
+		currentSatelliteIndex:'',
 		workMode: '',
 		linkMode:'',
 		clientUUid: '',
@@ -189,7 +177,7 @@ var vm = new Vue({
 
 		uVal: {
 			'link_channel': '',
-			'UHFPowerRadios': '',
+			'UHFPowerRadios': 'HIGH',
 			'braundrateAir': '',
 			'link_UHF_protocol': ''
 		},
@@ -223,6 +211,45 @@ var vm = new Vue({
 			netcheckTip: false,
 			wificheckTip: false
 		},
+		 //卫星
+		 trackStatus: {
+			gps: '',
+			bds: '',
+			sbas: '',
+			qzss: '',
+			glonass: '',
+			galileo: '',
+			setgps: '设置卫星号',
+			setbds: '设置卫星号',
+			setsbas: '设置卫星号',
+			setqzss: '设置卫星号',
+			setglonass: '设置卫星号',
+			setgalileo: '设置卫星号'
+	},
+		gpsEnable: [],
+		bdsEnable: [],
+		sbasEnable: [],
+		qzssEnable: [],
+		glonassEnable: [],
+		galileoEnable: [],
+
+		gpsTrack: [],
+		bdsTrack: [],
+		sbasTrack: [],
+		qzssTrack: [],
+		glonassTrack: [],
+		galileoTrack: [],
+
+
+		statelliteTitle: '',
+		checked: false,
+		checkArr: [],
+		satelliteArr: [],
+
+		trackTitle: '',
+		checkedTrack: false,
+		checkedTrackArr: [],
+	trackArr: [],
 		DIFFTYPE: [{
 				label: 'RTCA',
 				value: 'RTCA'
@@ -307,30 +334,18 @@ var vm = new Vue({
 		],
 		accessMode: [{
 				label: 'SOUTH',
-				value: 0
+				value: 'SOUTH'
 			},
 			{
 				label: 'NTRIP',
-				value: 1
+				value: 'NTRIP'
 			},
 			{
 				label: 'TCPIP',
-				value: 2
+				value: 'TCPIP'
 			}
 		],
-		AccessPoint: [{
-				label: 'SOUTH',
-				value: 0
-			},
-			{
-				label: 'NTRIP',
-				value: 1
-			},
-			{
-				label: 'TCPIP',
-				value: 2
-			}
-		],
+
 		// modetype: ['基准站', '移动站', '静态站'],
 		modetype:[
 			{ key: 1, id: 'BASE', name: '基准站' },
@@ -419,65 +434,65 @@ var vm = new Vue({
 		],
 		powerPosition: [{
 				label: '高',
-				value: 'high'
+				value: 'HIGH'
 			},
 			{
 				label: '中',
-				index: 'middle'
+				value: 'MIDDLE'
 			},
 			{
 				label: '低',
-				index: 'low'
+				value: 'LOW'
 			}
 		],
 		baudRate: [{
 				label: '9600',
-				value: '9600'
+				value: 9600
 			},
 			{
 				label: '19200',
-				value: '19200'
+				value: 19200
 			},
 			{
 				label: '38400',
-				value: '38400'
+				value: 38400
 			},
 			{
 				label: '57600',
-				value: '57600'
+				value: 57600
 			},
 			{
 				label: '115200',
-				value: '115200'
+				value: 115200
 			}
 		],
 		protocol: [{
 				label: 'TRIMMARKLL',
-				value: 0
+				value: 'TRIMMARKLL'
 			},
 			{
 				label: 'SOUTH',
-				value: 1
+				value: 'SOUTH'
 			},
 			{
 				label: 'TRIMTALK',
-				value: 2
+				value: 'TRIMTALK'
 			},
 			{
 				label: 'SATEL',
-				value: 3
+				value: 'SATEL'
 			},
 			{
 				label: 'TT450S',
-				value: 4
+				value: 'TT450S'
 			},
 			{
 				label: 'TRIMMARK3',
-				value: 5
+				value: 'TRIMMARK3'
 			},
 			{
 				label: 'TRANSEOT',
-				value: 6
+				value: 'TRANSEOT'
 			}
 		],
 		SatelliteNumber: {
@@ -976,771 +991,1007 @@ var vm = new Vue({
 		},
 		Satellite: [{
 				name: 'gps',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'false'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'false'
 					},
 					{
 						label: '3',
-						value: 3
+						value: 3,
+						checked:'true'
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					},
 					{
 						label: '6',
-						value: 6
+						value: 6,
+						checked:'true'
 					},
 					{
 						label: '7',
-						value: 7
+						value: 7,
+						checked:'true'
 					},
 					{
 						label: '8',
-						value: 8
+						value: 8,
+						checked:'true'
 					},
 					{
 						label: '9',
-						value: 9
+						value: 9,
+						checked:'true'
 					},
 					{
 						label: '10',
-						value: 10
+						value: 10,
+						checked:'true'
 					},
 					{
 						label: '11',
-						value: 11
+						value: 11,
+						checked:'true'
 					},
 					{
 						label: '12',
-						value: 12
+						value: 12,
+						checked:'true'
 					},
 					{
 						label: '13',
-						value: 13
+						value: 13,
+						checked:'true'
 					},
 					{
 						label: '14',
-						value: 14
+						value: 14,
+						checked:'true'
 					},
 					{
 						label: '15',
-						value: 15
+						value: 15,
+						checked:'true'
 					},
 					{
 						label: '16',
-						value: 16
+						value: 16,
+						checked:'true'
 					},
 					{
 						label: '17',
-						value: 17
+						value: 17,
+						checked:'true'
 					},
 					{
 						label: '18',
-						value: 18
+						value: 18,
+						checked:'true'
 					},
 					{
 						label: '19',
-						value: 19
+						value: 19,
+						checked:'true'
 					},
 					{
 						label: '20',
-						value: 20
+						value: 20,
+						checked:'true'
 					},
 					{
 						label: '21',
-						value: 21
+						value: 21,
+						checked:'true'
 					},
 					{
 						label: '22',
-						value: 22
+						value: 22,
+						checked:'true'
 					},
 					{
 						label: '23',
-						value: 23
+						value: 23,
+						checked:'true'
 					},
 					{
 						label: '24',
-						value: 24
+						value: 24,
+						checked:'true'
 					},
 					{
 						label: '25',
-						value: 25
+						value: 25,
+						checked:'true'
 					},
 					{
 						label: '26',
-						value: 26
+						value: 26,
+						checked:'true'
 					},
 					{
 						label: '27',
-						value: 27
+						value: 27,
+						checked:'true'
 					},
 					{
 						label: '28',
-						value: 28
+						value: 28,
+						checked:'true'
 					},
 					{
 						label: '29',
-						value: 29
+						value: 29,
+						checked:'true'
 					},
 					{
 						label: '30',
-						value: 30
+						value: 30,
+						checked:'true'
 					},
 					{
 						label: '31',
-						value: 31
+						value: 31,
+						checked:'true'
 					},
 					{
 						label: '32',
-						value: 32
+						value: 32,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'L1-C/A',
-						value: 'L1-C/A'
+						value: 'L1-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L1-P',
-						value: 'L1-P'
+						value: 'L1-P',
+						checked:'true'
 					},
 					{
 						label: 'L2-C/A',
-						value: 'L2-C/A'
+						value: 'L2-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L2-P',
-						value: 'L2-P'
+						value: 'L2-P',
+						checked:'true'
 					},
 					{
 						label: 'L5',
-						value: 'L5'
+						value: 'L5',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:'',
+				chooseNums:'',
+				notChoose:''
 			},
 			{
 				name: 'bds',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'true'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'true'
 					},
 					{
 						label: '3',
-						value: 3
+						value: 3,
+						checked:'true'
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					},
 					{
 						label: '6',
-						value: 6
+						value: 6,
+						checked:'true'
 					},
 					{
 						label: '7',
-						value: 7
+						value: 7,
+						checked:'true'
 					},
 					{
 						label: '8',
-						value: 8
+						value: 8,
+						checked:'true'
 					},
 					{
 						label: '9',
-						value: 9
+						value: 9,
+						checked:'true'
 					},
 					{
 						label: '10',
-						value: 10
+						value: 10,
+						checked:'true'
 					},
 					{
 						label: '11',
-						value: 11
+						value: 11,
+						checked:'true'
 					},
 					{
 						label: '12',
-						value: 12
+						value: 12,
+						checked:'true'
 					},
 					{
 						label: '13',
-						value: 13
+						value: 13,
+						checked:'true'
 					},
 					{
 						label: '14',
-						value: 14
+						value: 14,
+						checked:'true'
 					},
 					{
 						label: '15',
-						value: 15
+						value: 15,
+						checked:'true'
 					},
 					{
 						label: '16',
-						value: 16
+						value: 16,
+						checked:'true'
 					},
 					{
 						label: '17',
-						value: 17
+						value: 17,
+						checked:'true'
 					},
 					{
 						label: '18',
-						value: 18
+						value: 18,
+						checked:'true'
 					},
 					{
 						label: '19',
-						value: 19
+						value: 19,
+						checked:'true'
 					},
 					{
 						label: '20',
-						value: 20
+						value: 20,
+						checked:'true'
 					},
 					{
 						label: '21',
-						value: 21
+						value: 21,
+						checked:'true'
 					},
 					{
 						label: '22',
-						value: 22
+						value: 22,
+						checked:'true'
 					},
 					{
 						label: '23',
-						value: 23
+						value: 23,
+						checked:'true'
 					},
 					{
 						label: '24',
-						value: 24
+						value: 24,
+						checked:'true'
 					},
 					{
 						label: '25',
-						value: 25
+						value: 25,
+						checked:'true'
 					},
 					{
 						label: '26',
-						value: 26
+						value: 26,
+						checked:'true'
 					},
 					{
 						label: '27',
-						value: 27
+						value: 27,
+						checked:'true'
 					},
 					{
 						label: '28',
-						value: 28
+						value: 28,
+						checked:'true'
 					},
 					{
 						label: '29',
-						value: 29
+						value: 29,
+						checked:'true'
 					},
 					{
 						label: '30',
-						value: 30
+						value: 30,
+						checked:'true'
 					},
 					{
 						label: '31',
-						value: 31
+						value: 31,
+						checked:'true'
 					},
 					{
 						label: '32',
-						value: 32
+						value: 32,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'B1',
-						value: 'B1'
+						value: 'B1',
+						checked:'true'
 					},
 					{
 						label: 'B2',
-						value: 'B2'
+						value: 'B2',
+						checked:'true'
 					},
 					{
 						label: 'B3',
-						value: 'B3'
+						value: 'B3',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:''
 			},
 			{
 				name: 'sbas',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'true'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'true'
 					},
 					{
 						label: '3',
+						checked:'true',
 						value: 3
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					},
 					{
 						label: '6',
-						value: 6
+						value: 6,
+						checked:'true'
 					},
 					{
 						label: '7',
-						value: 7
+						value: 7,
+						checked:'true'
 					},
 					{
 						label: '8',
-						value: 8
+						value: 8,
+						checked:'true'
 					},
 					{
 						label: '9',
-						value: 9
+						value: 9,
+						checked:'true'
 					},
 					{
 						label: '10',
-						value: 10
+						value: 10,
+						checked:'true'
 					},
 					{
 						label: '11',
-						value: 11
+						value: 11,
+						checked:'true'
 					},
 					{
 						label: '12',
-						value: 12
+						value: 12,
+						checked:'true'
 					},
 					{
 						label: '13',
-						value: 13
+						value: 13,
+						checked:'true'
 					},
 					{
 						label: '14',
-						value: 14
+						value: 14,
+						checked:'true'
 					},
 					{
 						label: '15',
-						value: 15
+						value: 15,
+						checked:'true'
 					},
 					{
 						label: '16',
-						value: 16
+						value: 16,
+						checked:'true'
 					},
 					{
 						label: '17',
-						value: 17
+						value: 17,
+						checked:'true'
 					},
 					{
 						label: '18',
-						value: 18
+						value: 18,
+						checked:'true'
 					},
 					{
 						label: '19',
-						value: 19
+						value: 19,
+						checked:'true'
 					},
 					{
 						label: '20',
-						value: 20
+						value: 20,
+						checked:'true'
 					},
 					{
 						label: '21',
-						value: 21
+						value: 21,
+						checked:'true'
 					},
 					{
 						label: '22',
-						value: 22
+						value: 22,
+						checked:'true'
 					},
 					{
 						label: '23',
-						value: 23
+						value: 23,
+						checked:'true'
 					},
 					{
 						label: '24',
-						value: 24
+						value: 24,
+						checked:'true'
 					},
 					{
 						label: '25',
-						value: 25
+						value: 25,
+						checked:'true'
 					},
 					{
 						label: '26',
-						value: 26
+						value: 26,
+						checked:'true'
 					},
 					{
 						label: '27',
-						value: 27
+						value: 27,
+						checked:'true'
 					},
 					{
 						label: '28',
-						value: 28
+						value: 28,
+						checked:'true'
 					},
 					{
 						label: '29',
-						value: 29
+						value: 29,
+						checked:'true'
 					},
 					{
 						label: '30',
-						value: 30
+						value: 30,
+						checked:'true'
 					},
 					{
 						label: '31',
-						value: 31
+						value: 31,
+						checked:'true'
 					},
 					{
 						label: '32',
-						value: 32
+						value: 32,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'L1-C/A',
-						value: 'L1-C/A'
+						value: 'L1-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L5',
-						value: 'L5'
+						value: 'L5',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:''
 			},
 			{
 				name: 'qzss',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'true'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'true'
 					},
 					{
 						label: '3',
-						value: 3
+						value: 3,
+						checked:'true'
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'L1-C/A',
-						value: 'L1-C/A'
+						value: 'L1-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L1-SAIF',
-						value: 'L1-SAIF'
+						value: 'L1-SAIF',
+						checked:'true'
 					},
 					{
 						label: 'L2-C',
-						value: 'L2-C'
+						value: 'L2-C',
+						checked:'true'
 					},
 					{
 						label: 'L5',
-						value: 'L5'
+						value: 'L5',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:''
 			},
 			{
 				name: 'glonass',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'true'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'true'
 					},
 					{
 						label: '3',
-						value: 3
+						value: 3,
+						checked:'true'
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					},
 					{
 						label: '6',
-						value: 6
+						value: 6,
+						checked:'true'
 					},
 					{
 						label: '7',
-						value: 7
+						value: 7,
+						checked:'true'
 					},
 					{
 						label: '8',
-						value: 8
+						value: 8,
+						checked:'true'
 					},
 					{
 						label: '9',
-						value: 9
+						value: 9,
+						checked:'true'
 					},
 					{
 						label: '10',
-						value: 10
+						value: 10,
+						checked:'true'
 					},
 					{
 						label: '11',
-						value: 11
+						value: 11,
+						checked:'true'
 					},
 					{
 						label: '12',
-						value: 12
+						value: 12,
+						checked:'true'
 					},
 					{
 						label: '13',
-						value: 13
+						value: 13,
+						checked:'true'
 					},
 					{
 						label: '14',
-						value: 14
+						value: 14,
+						checked:'true'
 					},
 					{
 						label: '15',
-						value: 15
+						value: 15,
+						checked:'true'
 					},
 					{
 						label: '16',
-						value: 16
+						value: 16,
+						checked:'true'
 					},
 					{
 						label: '17',
-						value: 17
+						value: 17,
+						checked:'true'
 					},
 					{
 						label: '18',
-						value: 18
+						value: 18,
+						checked:'true'
 					},
 					{
 						label: '19',
-						value: 19
+						value: 19,
+						checked:'true'
 					},
 					{
 						label: '20',
-						value: 20
+						value: 20,
+						checked:'true'
 					},
 					{
 						label: '21',
-						value: 21
+						value: 21,
+						checked:'true'
 					},
 					{
 						label: '22',
-						value: 22
+						value: 22,
+						checked:'true'
 					},
 					{
 						label: '23',
-						value: 23
+						value: 23,
+						checked:'true'
 					},
 					{
 						label: '24',
-						value: 24
+						value: 24,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'L1-C/A',
-						value: 'L1-C/A'
+						value: 'L1-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L1-P',
-						value: 'L1-P'
+						value: 'L1-P',
+						checked:'true'
 					},
 					{
 						label: 'L2-C/A',
-						value: 'L2-C/A'
+						value: 'L2-C/A',
+						checked:'true'
 					},
 					{
 						label: 'L2-P',
-						value: 'L2-P'
+						value: 'L2-P',
+						checked:'true'
 					},
 					{
 						label: 'L3',
-						value: 'L3'
+						value: 'L3',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:''
 			},
 			{
 				name: 'galileo',
+				status:true,
 				SatelliteNumber: [{
 						label: '1',
-						value: 1
+						value: 1,
+						checked:'true'
 					},
 					{
 						label: '2',
-						value: 2
+						value: 2,
+						checked:'true'
 					},
 					{
 						label: '3',
-						value: 3
+						value: 3,
+						checked:'true'
 					},
 					{
 						label: '4',
-						value: 4
+						value: 4,
+						checked:'true'
 					},
 					{
 						label: '5',
-						value: 5
+						value: 5,
+						checked:'true'
 					},
 					{
 						label: '6',
-						value: 6
+						value: 6,
+						checked:'true'
 					},
 					{
 						label: '7',
-						value: 7
+						value: 7,
+						checked:'true'
 					},
 					{
 						label: '8',
-						value: 8
+						value: 8,
+						checked:'true'
 					},
 					{
 						label: '9',
-						value: 9
+						value: 9,
+						checked:'true'
 					},
 					{
 						label: '10',
-						value: 10
+						value: 10,
+						checked:'true'
 					},
 					{
 						label: '11',
-						value: 11
+						value: 11,
+						checked:'true'
 					},
 					{
 						label: '12',
-						value: 12
+						value: 12,
+						checked:'true'
 					},
 					{
 						label: '13',
-						value: 13
+						value: 13,
+						checked:'true'
 					},
 					{
 						label: '14',
-						value: 14
+						value: 14,
+						checked:'true'
 					},
 					{
 						label: '15',
-						value: 15
+						value: 15,
+						checked:'true'
 					},
 					{
 						label: '16',
-						value: 16
+						value: 16,
+						checked:'true'
 					},
 					{
 						label: '17',
-						value: 17
+						value: 17,
+						checked:'true'
 					},
 					{
 						label: '18',
-						value: 18
+						value: 18,
+						checked:'true'
 					},
 					{
 						label: '19',
-						value: 19
+						value: 19,
+						checked:'true'
 					},
 					{
 						label: '20',
-						value: 20
+						value: 20,
+						checked:'true'
 					},
 					{
 						label: '21',
-						value: 21
+						value: 21,
+						checked:'true'
 					},
 					{
 						label: '22',
-						value: 22
+						value: 22,
+						checked:'true'
 					},
 					{
 						label: '23',
-						value: 23
+						value: 23,
+						checked:'true'
 					},
 					{
 						label: '24',
-						value: 24
+						value: 24,
+						checked:'true'
 					},
 					{
 						label: '25',
-						value: 25
+						value: 25,
+						checked:'true'
 					},
 					{
 						label: '26',
-						value: 26
+						value: 26,
+						checked:'true'
 					},
 					{
 						label: '27',
-						value: 27
+						value: 27,
+						checked:'true'
 					},
 					{
 						label: '28',
-						value: 28
+						value: 28,
+						checked:'true'
 					},
 					{
 						label: '29',
-						value: 29
+						value: 29,
+						checked:'true'
 					},
 					{
 						label: '30',
-						value: 30
+						value: 30,
+						checked:'true'
 					},
 					{
 						label: '31',
-						value: 31
+						value: 31,
+						checked:'true'
 					},
 					{
 						label: '32',
-						value: 32
+						value: 32,
+						checked:'true'
 					},
 					{
 						label: '33',
-						value: 33
+						value: 33,
+						checked:'true'
 					},
 					{
 						label: '34',
-						value: 34
+						value: 34,
+						checked:'true'
 					},
 					{
 						label: '35',
-						value: 35
+						value: 35,
+						checked:'true'
 					},
 					{
 						label: '36',
-						value: 36
+						value: 36,
+						checked:'true'
 					}
 				],
 				track: [{
 						label: 'E1',
-						value: 'E1'
+						value: 'E1',
+						checked:'true'
 					},
 					{
 						label: 'E5',
-						value: 'E5'
+						value: 'E5',
+						checked:'true'
 					},
 					{
 						label: 'E6',
-						value: 'E6'
+						value: 'E6',
+						checked:'true'
 					},
 					{
 						label: 'E5-ALIBOC',
-						value: 'E5-ALIBOC'
+						value: 'E5-ALIBOC',
+						checked:'true'
 					}
-				]
+				],
+				SatelliteNumberChecked:'',
+				trackChecked:''
 			}
 		],
+		SatelliteInfo:{
+			gps:{
+				status:'',
+				enable:'',
+				track:''
+			},
+			bds:{
+				status:'',
+				enable:'',
+				track:''
+			},
+			sbas:{
+				status:'',
+				enable:'',
+				track:''
+			},
+			qzss:{
+				status:'',
+				enable:'',
+				track:''
+			},
+			glonass:{
+				status:'',
+				enable:'',
+				track:''
+			},
+			galileo:{
+				status:'',
+				enable:'',
+				track:''
+			}
+		},
 		language: [{
 				name: '中文',
 				value: 'chinese'
@@ -1842,7 +2093,7 @@ var vm = new Vue({
 					success: function callback(data) {
 						console.log('卫星设置请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
-							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+							timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 1000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2010,26 +2261,77 @@ var vm = new Vue({
 		// changeLink: function(index) {
 		// 	this.linktypevalue = index;
 		// },
-		// 全选方法
-		checkedAll: function() {
-			var _this = this;
-			if(this.checked) {
-				// 实现反选
-				_this.checkboxModel = [];
-			} else {
-				// 实现全选
-				_this.checkboxModel = [];
-				_this.checkboxData.forEach(function(item) {
-					_this.checkboxModel.push(item.id);
-				});
-			}
-		},
+		// // 全选方法
+		// checkedAll: function() {
+		// 	var _this = this;
+		// 	if(this.checked) {
+		// 		// 实现反选
+		// 		_this.checkboxModel = [];
+		// 	} else {
+		// 		// 实现全选
+		// 		_this.checkboxModel = [];
+		// 		_this.checkboxData.forEach(function(item) {
+		// 			_this.checkboxModel.push(item.id);
+		// 		});
+		// 	}
+		// },
 		// 点击按钮动态加载对应的数据再渲染页面
 		setSatelliteNum: function(index) {
 			this.currentSatellite = this.Satellite[index];
 			this.currentSatelliteName = this.currentSatellite.name;
+			vm.currentSatelliteIndex = index;
 			// 控制打开遮罩层
-			mui('#SetSatelliteNum').popover('toggle');
+			mui('#setSatelliteNum').popover('toggle');
+		},
+		//设置卫星号
+		setSatellite: function(index) {
+			var chooseNums,wholeNums,notChoose,satelliteChecked;
+			var currentType = vm.Satellite[index].name;
+			wholeNums = this.currentSatellite.SatelliteNumber.map(
+				function(item) {
+					return item.value;
+				}
+			);
+			if(this.satelliteChecked.length === this.currentSatellite.SatelliteNumber.length){
+				chooseNums = 'ALL';
+				notChoose = '';
+			}else{
+				satelliteChecked = this.satelliteChecked;
+				chooseNums = this.satelliteChecked.join('|');
+				notChoose = wholeNums.filter(function(v){return satelliteChecked.indexOf(v)===-1}).join('|');
+			}
+			mui.ajax(url, {
+				type: 'post',
+				data: {
+					user_name: vm.user_name,
+					token: vm.token,
+					clientUUid: vm.clientUUid,
+					identifyCode: vm.currentIdentifyCode,
+					requestType: 'getEnableSatellite',
+					type:currentType,
+					chooseNums:chooseNums,
+					notChoose:notChoose
+				},
+				dataType: 'json',
+				type: 'post',
+				timeout: 10000,
+				success: function callback(data) {
+					console.log('其他请求的唯一码为：'+JSON.stringify(data));
+					if (data.status === ERR_NO) {
+						plus.nativeUI.closeWaiting();
+						mui.toast('设置卫星号成功！');
+						mui('#setSatelliteNum').popover('toggle');
+						//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+					} else {
+						mui.toast(data.info);
+						plus.nativeUI.closeWaiting();
+					}
+				},
+				error: function (data) {
+					mui.toast('设置卫星号失败！');
+					plus.nativeUI.closeWaiting();
+				}
+			});
 		},
 		// 点击按钮动态加载对应的数据再渲染页面
 		settrack: function(index) {
@@ -2062,6 +2364,12 @@ var vm = new Vue({
 		},
 		closeSelectionLink: function() {
 			mui('#selectionLink').popover('toggle');
+		},
+		closeSetSatellite: function() {
+			mui('#setSatelliteNum').popover('toggle');
+		},
+		closeSetTrack: function() {
+			mui('#setTrack').popover('toggle');
 		},
 
 		//设置基准站
@@ -2315,16 +2623,121 @@ var vm = new Vue({
 				});
 			},
 
+			// 移动网设置
+			netSet: function () {
+				clear(this.netS);
+				clear(this.netE);
+
+				if (!vm.currentIdentifyCode || vm.nVal.ip === '' || vm.nVal.port === '' || vm.nVal.account === '' || vm.nVal.pw === '' || vm.nVal.linkMobileModel === '' || vm.nVal.linkAccessPoint === '' || vm.nVal.apnSrver === '' || vm.nVal.apnUser === '' || vm.nVal.apnPassword === '') {
+					mui.toast('设置值不能为空！');
+					return false;
+				}
+
+				// 判断IP地址
+				if (!regIP.test(vm.nVal.ip)) {
+					mui.toast('IP地址设置值错误！');
+					return false;
+				}
+
+				if (vm.nVal.port < 1024 || vm.nVal.port > 65535 || isNaN(vm.nVal.port) || vm.nVal.port.length > 5) {
+					mui.toast('端口号设置值错误！');
+					return false;
+				}
+
+				plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getConfigCellularNet',
+						ip: vm.nVal.ip,
+						port: vm.nVal.port,
+						username: vm.nVal.account,
+						password: vm.nVal.pw,
+						mode: vm.nVal.linkMobileModel,
+						accessPoint: vm.nVal.linkAccessPoint,
+						apnServer: vm.nVal.apnSrver,
+						apnUser: vm.nVal.apnUser,
+						apnPassword: vm.nVal.apnPassword
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						console.log('请求成功：'+JSON.stringify(data));
+						if (data.status == 0) {
+							timeFun(data, networkSet, '设置超时，请稍候再试！');
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					}
+				});
+			},
+
+			// 内置电台设置
+			uhfSet: function () {
+				clear(this.uhfS);
+				clear(this.uhfE);
+
+				// if (vm.uVal.link_channel == null || vm.uVal.braundrateAir == null || vm.uVal.UHFPowerRadios == null || vm.uVal.link_UHF_protocol == null) {
+				// 	mui.toast('设置值不能为空！');
+				// 	return false;
+				// }
+				if(!vm.currentIdentifyCode){
+					mui.toast('无法识别当前设备！');
+				}else if(vm.uVal.braundrateAir == null){
+					mui.toast('braundrateAir不能为空！');
+				}else if(vm.uVal.UHFPowerRadios == null){
+					mui.toast('UHFPowerRadios不能为空！');
+				}else if(vm.uVal.link_UHF_protocol == null){
+					mui.toast('link_UHF_protocol不能为空！');
+				}
+
+				plus.nativeUI.showWaiting('正在设置中...', { height: '100px', width: '150px' });
+				mui.ajax(url, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getConfigUhf',
+						channel: vm.uVal.link_channel,
+						baudrateAir: vm.uVal.braundrateAir,
+						power: vm.uVal.UHFPowerRadios,
+						protocol: vm.uVal.link_UHF_protocol
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						console.log('设置成功！');
+						if (data.status == 0) {
+							timeFun(data, datalinkUHF, '设置超时，请稍候再试！');
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					}
+				});
+			},
+
+
 	},
 
 	created: function() {
 		mui.plusReady(function() {
 			mui.init({});
+			//禁止tab左右滑动功能
+			mui('.mui-slider').slider().stopped = true;
+
 			currentWebview = plus.webview.currentWebview();
 			//    currentWebview.setStyle({
 			//      softinputMode: 'adjustResize'
 			//    });
-
 			plus.nativeUI.showWaiting('正在初始化设置中...', {
 				height: '100px',
 				width: '180px'
@@ -2342,14 +2755,12 @@ var vm = new Vue({
 				getSicVersion();
 			}, 1000);
 
-			var socket = io.connect(
-				'http://' + '119.23.161.165:9110' + '/rtkTransferWeb'
-			);
-			// var socket = io.connect('http://119.231.161.165:9010/rtkuniqueid');
+			// var socket = io.connect( 'http://' + '119.23.161.165:9110' + '/rtkTransferWeb' );
+			var socket = io.connect('http://119.23.161.165:9010/rtkuniqueid');
 			socket.on('connect', function() {
 				vm.clientUUid = socket.id;
 				vm.disconnectCount = 0;
-				//console.log('socket is ok :' + vm.clientUUid);
+				console.log('socket is ok :' + vm.clientUUid);
 				clearTimeout(vm.firstTimer);
 				rtknote();
 				if(++vm.onlyOne === 1) {
@@ -2447,7 +2858,87 @@ var vm = new Vue({
 			document .getElementById('item2mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 			document .getElementById('item3mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 			document .getElementById('item4mobile') .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+
+			//switch开关设置卫星使能
+			mui('#item3mobile .mui-switch').each(function(index) { //循环所有toggle
+				this.addEventListener('toggle', function(event) {
+					//event.detail.isActive 可直接获取当前状态
+					var currentType = vm.Satellite[index].name;
+					if(event.detail.isActive){
+						plus.nativeUI.showWaiting('正在设置设备中...', {
+							height: '100px',
+							width: '180px'
+						});
+						mui.ajax(url, {
+							type: 'post',
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								clientUUid: vm.clientUUid,
+								identifyCode: vm.currentIdentifyCode,
+								requestType: 'getEnableSatellite',
+								type:currentType,
+								chooseNums:'ALL',
+								notChoose:''
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function callback(data) {
+								console.log('其他请求的唯一码为：'+JSON.stringify(data));
+								if (data.status === ERR_NO) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('启动卫星使能成功！');
+									timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+								} else {
+									mui.toast(data.info);
+									plus.nativeUI.closeWaiting();
+								}
+							},
+							error: function (data) {
+								mui.toast('启动卫星使能失败！');
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}else{
+						plus.nativeUI.showWaiting('正在设置设备中...', {
+							height: '100px',
+							width: '180px'
+						});
+						mui.ajax(url, {
+							type: 'post',
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								clientUUid: vm.clientUUid,
+								identifyCode: vm.currentIdentifyCode,
+								requestType: 'getDisableSatellite',
+								type:currentType,
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function callback(data) {
+								console.log('其他请求的唯一码为：'+JSON.stringify(data));
+								if (data.status === ERR_NO) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('关闭卫星使能成功！');
+									timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+								} else {
+									mui.toast(data.info);
+									plus.nativeUI.closeWaiting();
+								}
+							},
+							error: function (data) {
+								mui.toast('关闭卫星使能失败！');
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}
+				});
+			});
 		});
+
 	},
 
 	computed: {
@@ -2456,8 +2947,7 @@ var vm = new Vue({
 			get: function() {
 				// 当前选中的数据长度等于该数据的总长度（全选状态）
 				return(
-					this.satelliteCheckedCount ===
-					this.currentSatellite.SatelliteNumber.length
+					this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length
 				);
 			},
 			set: function(value) {
@@ -3146,11 +3636,12 @@ function staticBreak(hd) {
 
 // /*获取数据链页面数据*/
 function getConfigDataLinkPageInfo(hd) {
+	console.log('开始处理数据');
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].status == true) {
       if (hd[i].hitSicData == 'GET:TRANSPORTATION.NTRIP.WORKPARA') {
         var workpara = hd[i].value.split('|');
-        vm.nVal.linkMobileModel = workpara[0];
+        vm.nVal.linkMobileModel = workpara[0];    //模式
         vm.nVal.ip = workpara[1];
         vm.nVal.port = workpara[2];
         vm.nVal.account = workpara[3];
@@ -3162,18 +3653,370 @@ function getConfigDataLinkPageInfo(hd) {
         vm.nVal.apnUser = hd[i].value;
       } else if (hd[i].hitSicData == 'GET:NETWORK.CELLULAR_NET.APN_PASSWORD') {
         vm.nVal.apnPassword = hd[i].value;
-      } else if (hd[i].hitSicData == 'GET:UHF.PROTOCOL') {
+      } else if (hd[i].hitSicData == 'GET:UHF.PROTOCOL') {     //UHF协议
         vm.uVal.link_UHF_protocol = hd[i].value;
-      } else if (hd[i].hitSicData == 'GET:UHF.POWER') {
+      } else if (hd[i].hitSicData == 'GET:UHF.POWER') {      //功率档位
         vm.uVal.UHFPowerRadios = hd[i].value;
-      } else if (hd[i].hitSicData == 'GET:UHF.BAUDRATE.AIR') {
+      } else if (hd[i].hitSicData == 'GET:UHF.BAUDRATE.AIR') {    //空中波特率
         vm.uVal.braundrateAir = hd[i].value;
-      } else if (hd[i].hitSicData == 'GET:UHF.CUR_CHANNEL') {
+      } else if (hd[i].hitSicData == 'GET:UHF.CUR_CHANNEL') {     //通道设置
         vm.uVal.link_channel = hd[i].value;
       }
 		}
     plus.nativeUI.closeWaiting();
   }
+}
+
+/* 数据链中的移动网络设置*/
+function networkSet(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:TRANSPORTATION.NTRIP.WORKPARA') {
+      if (hd[i].status == true) {
+        vm.netS.ip = true;
+        vm.netS.port = true;
+        vm.netS.account = true;
+        vm.netS.pw = true;
+        vm.netS.linkMobileModel = true;
+        vm.netS.linkAccessPoint = true;
+      } else {
+        vm.netE.ip = true;
+        vm.netE.port = true;
+        vm.netE.account = true;
+        vm.netE.pw = true;
+        vm.netE.linkMobileModel = true;
+        vm.netE.linkAccessPoint = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN') {
+      if (hd[i].status == true) {
+        vm.netS.apnSrver = true;
+      } else {
+        vm.netE.apnSrver = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN_USER') {
+      if (hd[i].status == true) {
+        vm.netS.apnUser = true;
+      } else {
+        vm.netE.apnUser = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN_PASSWORD') {
+      if (hd[i].status == true) {
+        vm.netS.apnPassword = true;
+      } else {
+        vm.netE.apnPassword = true;
+      }
+    }
+	}
+	plus.nativeUI.closeWaiting();
+	mui.toast('设置成功！')
+}
+
+/* 数据链内置电台的设置*/
+function datalinkUHF(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData == 'SET:UHF.CUR_CHANNEL') {
+      if (hd[i].status == true) {
+        vm.uhfS.link_channel = true;
+      } else {
+        vm.uhfE.link_channel = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:UHF.BAUDRATE.AIR') {
+      if (hd[i].status == true) {
+        vm.uhfS.braundrateAir = true;
+      } else {
+        vm.uhfE.braundrateAir = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:UHF.POWER') {
+      if (hd[i].status == true) {
+        vm.uhfS.UHFPowerRadios = true;
+      } else {
+        vm.uhfE.UHFPowerRadios = true;
+      }
+    } else if (hd[i].hitSicData == 'SET:UHF.PROTOCOL') {
+      if (hd[i].status == true) {
+        vm.uhfS.link_UHF_protocol = true;
+      } else {
+        vm.uhfE.link_UHF_protocol = true;
+      }
+    }
+	}
+	plus.nativeUI.closeWaiting();
+	mui.toast('设置成功！')
+}
+
+// /*获取卫星设置页面数据*/
+// function getConfigSatellitePageInfo(hd) {
+// 	console.log('开始处理数据');
+// 	for (var i = 0; i < hd.length; i++) {
+// 			if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.QZSS") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.qzss = '暂无设置';
+// 									vm.qzssTrack = [];
+// 							} else {
+// 									vm.trackStatus.qzss = hd[i].value;
+// 									vm.qzssTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.qzss = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.QZSS") {
+// 					if (hd[i].value === '') {
+// 							vm.qzssEnable = [];
+// 					} else {
+// 							vm.qzssEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#qzss").attr('data-satallite', hd[i].value);
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.SBAS") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.sbas = '暂无设置';
+// 									vm.sbasTrack = [];
+// 							} else {
+// 									vm.trackStatus.sbas = hd[i].value;
+// 									vm.sbasTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.sbas = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.SBAS") {
+// 					if (hd[i].value === '') {
+// 							vm.sbasEnable = [];
+// 					} else {
+// 							vm.sbasEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#sbas").attr('data-satallite', hd[i].value);
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GLONASS") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.glonass = '暂无设置';
+// 									vm.glonassTrack = [];
+// 							} else {
+// 									vm.trackStatus.glonass = hd[i].value;
+// 									vm.glonassTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.glonass = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GLONASS") {
+// 					if (hd[i].value === '') {
+// 							vm.glonassEnable = [];
+// 					} else {
+// 							vm.glonassEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#glonass").attr('data-satallite', hd[i].value);
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GPS") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.gps = '暂无设置';
+// 									vm.gpsTrack = [];
+// 							} else {
+// 									vm.trackStatus.gps = hd[i].value;
+// 									vm.gpsTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.gps = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GPS") {
+// 					if (hd[i].value === '') {
+// 							vm.gpsEnable = [];
+// 					} else {
+// 							vm.gpsEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#gps").attr('data-satallite', hd[i].value);
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GALILEO") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.galileo = '暂无设置';
+// 									vm.galileoTrack = [];
+// 							} else {
+// 									vm.trackStatus.galileo = hd[i].value;
+// 									vm.galileoTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.galileo = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GALILEO") {
+// 					if (hd[i].value === '') {
+// 							vm.galileoEnable = [];
+// 					} else {
+// 							vm.galileoEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#galileo").attr('data-satallite', hd[i].value);
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.BDS") {
+// 					if (hd[i].status === true) {
+// 							if (hd[i].value === '') {
+// 									vm.trackStatus.bds = '暂无设置';
+// 									vm.bdsTrack = [];
+// 							} else {
+// 									vm.trackStatus.bds = hd[i].value;
+// 									vm.bdsTrack = hd[i].value.split('|');
+// 							}
+// 					} else {
+// 							vm.trackStatus.bds = '不支持';
+// 					}
+// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.BDS") {
+// 					if (hd[i].value === '') {
+// 							vm.bdsEnable = [];
+// 					} else {
+// 							vm.bdsEnable = hd[i].value.split('|');
+// 					}
+// 				//	$("#bds").attr('data-satallite', hd[i].value);
+// 			}
+// 	}
+
+// 	/*初始化卫星使能滑动按键*/
+// 	// $('.satellite-checkbox').each(function () {
+// 	// 		var satelliteId = $(this).attr('id');
+// 	// 		var check = $('#' + satelliteId).data('satallite');
+// 	// 		if (check == '') {
+// 	// 				$('#' + satelliteId).bootstrapSwitch("state", false, true);
+// 	// 		} else if (check === 'NOTSUPPORT') {
+// 	// 				$('#' + satelliteId).bootstrapSwitch("state", false, true);
+// 	// 				$('#' + satelliteId).bootstrapSwitch("disabled", true);
+// 	// 				if (satelliteId === 'gps') {
+// 	// 						vm.trackStatus.setgps = '不支持';
+// 	// 						vm.trackStatus.gps = '不支持';
+// 	// 				} else if (satelliteId === 'bds') {
+// 	// 						vm.trackStatus.setbds = '不支持';
+// 	// 						vm.trackStatus.bds = '不支持';
+// 	// 				} else if (satelliteId === 'sbas') {
+// 	// 						vm.trackStatus.setsbas = '不支持';
+// 	// 						vm.trackStatus.sbas = '不支持';
+// 	// 				} else if (satelliteId === 'qzss') {
+// 	// 						vm.trackStatus.setqzss = '不支持';
+// 	// 						vm.trackStatus.qzss = '不支持';
+// 	// 				} else if (satelliteId === 'glonass') {
+// 	// 						vm.trackStatus.setglonass = '不支持';
+// 	// 						vm.trackStatus.glonass = '不支持';
+// 	// 				} else if (satelliteId === 'galileo') {
+// 	// 						vm.trackStatus.setgalileo = '不支持';
+// 	// 						vm.trackStatus.galileo = '不支持';
+// 	// 				}
+// 	// 		} else {
+// 	// 				$('#' + satelliteId).bootstrapSwitch({"state": true, "size": 'small', 'onText': on, 'offText': off});
+// 	// 		}
+// 	// });
+// 	plus.nativeUI.closeWaiting();
+// }
+
+//获取卫星设置页面数据
+function getConfigSatellitePageInfo(hd) {
+	console.log('获取的卫星数据为：'+JSON.stringify(hd));
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].status === true) {
+      if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GPS') {
+				if(hd[i].value===''){
+					vm.Satellite[0].status = false;
+					//vm.SatelliteInfo.gps.status = false;
+				}else{
+					vm.Satellite[0].status = true;
+					vm.Satellite[0].SatelliteNumberChecked = hd[i].value;
+					//vm.satelliteChecked =
+					// vm.SatelliteInfo.gps.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.BDS') {
+				if(hd[i].value===''){
+					vm.Satellite[1].status = false;
+					// vm.SatelliteInfo.bds.status = false;
+				}else{
+					vm.Satellite[1].status = true;
+					vm.Satellite[1].SatelliteNumberChecked = hd[i].value;
+					// vm.SatelliteInfo.bds.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.SBAS') {
+				if(hd[i].value===''){
+					vm.Satellite[2].status = false;
+					// vm.SatelliteInfo.sbas.status = false;
+				}else{
+					vm.Satellite[2].status = true;
+					vm.Satellite[2].SatelliteNumberChecked = hd[i].value;
+					// vm.SatelliteInfo.sbas.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.QZSS') {
+				if(hd[i].value===''){
+					vm.Satellite[3].status = false;
+					// vm.SatelliteInfo.qzss.status = false;
+				}else{
+					vm.Satellite[3].status = true;
+					vm.Satellite[3].SatelliteNumberChecked = hd[i].value;
+					// vm.SatelliteInfo.qzss.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GLONASS') {
+				if(hd[i].value===''){
+					vm.Satellite[4].status = false;
+					// vm.SatelliteInfo.glonass.status = false;
+				}else{
+					vm.Satellite[4].status = true;
+					vm.Satellite[4].SatelliteNumberChecked = hd[i].value;
+					// vm.SatelliteInfo.glonass.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GALILEO') {
+				if(hd[i].value===''){
+					vm.Satellite[5].status = false;
+					// vm.SatelliteInfo.galileo.status = false;
+				}else{
+					vm.Satellite[5].status = true;
+					vm.Satellite[5].SatelliteNumberChecked = hd[i].value;
+					// vm.SatelliteInfo.galileo.status = true;
+					// vm.SatelliteInfo.gps.enable = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GPS') {
+				if(hd[i].value===''){
+					// vm.SatelliteInfo.gps.track = '暂无设置';
+					vm.Satellite[0].trackChecked = '暂无设置';
+				}else{
+					vm.Satellite[0].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.gps.track = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.BDS') {
+				if(hd[i].value===''){
+					vm.Satellite[1].trackChecked = '暂无设置';
+					// vm.SatelliteInfo.bds.track = '暂无设置';
+				}else{
+					vm.Satellite[1].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.bds.track = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.SBAS') {
+				if(hd[i].value===''){
+					vm.Satellite[2].trackChecked = '暂无设置';
+					// vm.SatelliteInfo.sbas.track = '暂无设置';
+				}else{
+					vm.Satellite[2].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.sbas.track = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.QZSS') {
+				if(hd[i].value===''){
+					vm.Satellite[3].trackChecked = '暂无设置';
+					// vm.SatelliteInfo.qzss.track = '暂无设置';
+				}else{
+					vm.Satellite[3].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.qzss.track = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GLONASS') {
+				if(hd[i].value===''){
+					vm.Satellite[4].trackChecked = '暂无设置';
+					// vm.SatelliteInfo.glonass.track = '暂无设置';
+				}else{
+					vm.Satellite[4].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.glonass.track = hd[i].value;
+				}
+			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GALILEO') {
+				if(hd[i].value===''){
+					vm.Satellite[5].trackChecked = '暂无设置';
+					// vm.SatelliteInfo.galileo.track = '暂无设置';
+				}else{
+					vm.Satellite[5].trackChecked  = hd[i].value;
+					// vm.SatelliteInfo.galileo.track = hd[i].value;
+				}
+			};
+		}
+	}
+	plus.nativeUI.closeWaiting();
 }
 /*封装的操作函数*/
 function $(elements) {
