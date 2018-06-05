@@ -2281,8 +2281,8 @@ var vm = new Vue({
 			this.currentSatellite = this.Satellite[index];
 			this.currentSatelliteName = this.currentSatellite.name;
 			this.SatelliteNumberChecked = this.Satellite[index].SatelliteNumberChecked;
-			console.log(JSON.stringify(this.Satellite[index]));
-			console.log(this.SatelliteNumberChecked);
+		//	console.log(this.SatelliteNumberChecked);
+		//	console.log(JSON.stringify(this.SatelliteNumberChecked));
 			vm.currentSatelliteIndex = index;
 			// 控制打开遮罩层
 			mui('#setSatelliteNum').popover('toggle');
@@ -2302,8 +2302,11 @@ var vm = new Vue({
 			}else{
 				satelliteChecked = this.SatelliteNumberChecked;
 				chooseNums = this.SatelliteNumberChecked.join('|');
-				notChoose = wholeNums.filter(function(v){return satelliteChecked.indexOf(v)===-1}).join('|');
+				 notChoose = wholeNums.filter(function(v){return satelliteChecked.indexOf(v)===-1}).join('|');
+
 			}
+			// console.log(chooseNums);
+			// console.log(notChoose);
 			mui.ajax(url, {
 				type: 'post',
 				data: {
@@ -2949,9 +2952,7 @@ var vm = new Vue({
 		// 设置卫星号复选框全选方法
 		satelliteAllChecked: {
 			get: function() {
-				// 当前选中的数据长度等于该数据的总长度（全选状态）,返回全选状态
-				console.log('当前数据为'+JSON.stringify(this.currentSatellite.SatelliteNumber));
-				console.log('当前数据总长度为'+this.currentSatellite.SatelliteNumber.length);
+				// 当前选中的数据长度等于该数据的总长度（全选状态）,显示按钮选中状态
 				return(
 					this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length
 				);
@@ -2970,8 +2971,7 @@ var vm = new Vue({
 		},
 		satelliteCheckedCount: {
 			get: function() {
-				// 返回选中的数据总长度
-				//console.log(String(this.SatelliteNumberChecked).split('|').length);
+				// 返回选中的数据长度
 				return this.SatelliteNumberChecked.length;
 			}
 		},
@@ -3914,134 +3914,107 @@ function getConfigSatellitePageInfo(hd) {
       if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GPS') {
 				if(hd[i].value===''){
 					vm.Satellite[0].status = false;
-					//vm.SatelliteInfo.gps.status = false;
 				}else{
 					vm.Satellite[0].status = true;
-					//vm.Satellite[0].SatelliteNumberChecked = hd[i].value;
+					//将返回字符串转为数组形式
 					var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[0].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[0].SatelliteNumberChecked);
-					// vm.SatelliteInfo.gps.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.BDS') {
 				if(hd[i].value===''){
 					vm.Satellite[1].status = false;
-					// vm.SatelliteInfo.bds.status = false;
 				}else{
 					vm.Satellite[1].status = true;
-					//vm.Satellite[1].SatelliteNumberChecked = hd[i].value;
 					var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[1].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[1].SatelliteNumberChecked);
-					// vm.SatelliteInfo.bds.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.SBAS') {
 				if(hd[i].value===''){
 					vm.Satellite[2].status = false;
-					// vm.SatelliteInfo.sbas.status = false;
 				}else{
 					vm.Satellite[2].status = true;
-					//vm.Satellite[2].SatelliteNumberChecked = hd[i].value;
 					var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[2].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[2].SatelliteNumberChecked);
-					// vm.SatelliteInfo.sbas.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.QZSS') {
 				if(hd[i].value===''){
 					vm.Satellite[3].status = false;
-					// vm.SatelliteInfo.qzss.status = false;
 				}else{
 					vm.Satellite[3].status = true;
-					//vm.Satellite[3].SatelliteNumberChecked = hd[i].value;
 					var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[3].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[3].SatelliteNumberChecked);
-					// vm.SatelliteInfo.qzss.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GLONASS') {
 				if(hd[i].value===''){
 					vm.Satellite[4].status = false;
-					// vm.SatelliteInfo.glonass.status = false;
 				}else{
 					vm.Satellite[4].status = true;
-				//	vm.Satellite[4].SatelliteNumberChecked = hd[i].value;
 				var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[4].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[4].SatelliteNumberChecked);
-					// vm.SatelliteInfo.glonass.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GALILEO') {
 				if(hd[i].value===''){
 					vm.Satellite[5].status = false;
-					// vm.SatelliteInfo.galileo.status = false;
 				}else{
 					vm.Satellite[5].status = true;
-					//vm.Satellite[5].SatelliteNumberChecked = hd[i].value;
 					var temp = String(hd[i].value).split('|')
+					transformNum(temp);
 					vm.Satellite[5].SatelliteNumberChecked = temp;
-					console.log(vm.Satellite[5].SatelliteNumberChecked);
-					// vm.SatelliteInfo.galileo.status = true;
-					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GPS') {
 				if(hd[i].value===''){
-					// vm.SatelliteInfo.gps.track = '暂无设置';
 					vm.Satellite[0].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[0].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.gps.track = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.BDS') {
 				if(hd[i].value===''){
 					vm.Satellite[1].trackChecked = '暂无设置';
-					// vm.SatelliteInfo.bds.track = '暂无设置';
 				}else{
 					vm.Satellite[1].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.bds.track = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.SBAS') {
 				if(hd[i].value===''){
 					vm.Satellite[2].trackChecked = '暂无设置';
-					// vm.SatelliteInfo.sbas.track = '暂无设置';
 				}else{
 					vm.Satellite[2].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.sbas.track = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.QZSS') {
 				if(hd[i].value===''){
 					vm.Satellite[3].trackChecked = '暂无设置';
-					// vm.SatelliteInfo.qzss.track = '暂无设置';
 				}else{
 					vm.Satellite[3].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.qzss.track = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GLONASS') {
 				if(hd[i].value===''){
 					vm.Satellite[4].trackChecked = '暂无设置';
-					// vm.SatelliteInfo.glonass.track = '暂无设置';
 				}else{
 					vm.Satellite[4].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.glonass.track = hd[i].value;
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GALILEO') {
 				if(hd[i].value===''){
 					vm.Satellite[5].trackChecked = '暂无设置';
-					// vm.SatelliteInfo.galileo.track = '暂无设置';
 				}else{
 					vm.Satellite[5].trackChecked  = hd[i].value;
-					// vm.SatelliteInfo.galileo.track = hd[i].value;
 				}
 			};
 		}
 	}
 	plus.nativeUI.closeWaiting();
 }
+
+//字符串数组转为number数组方法
+function transformNum (array){
+	for(i=0;i<array.length;i++){
+		array[i]=Number(array[i])
+	}
+}
+
 /*封装的操作函数*/
 function $(elements) {
 	return document.getElementById(elements);
