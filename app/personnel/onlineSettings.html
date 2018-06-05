@@ -615,7 +615,8 @@
 						<li>
 							<div class="mui-input-row mui-checkbox mui-left" v-for="(data,index) in currentSatellite.SatelliteNumber">
 								<label>{{data.label}}</label>
-								<input name="checkbox" type="checkbox" :value="data.value" v-model="satelliteChecked">
+								<input name="checkbox" type="checkbox" :value="data.value" v-model="SatelliteNumberChecked">
+								<!-- <input name="checkbox" type="checkbox" :value="data.value" v-model="satelliteChecked"> -->
 							</div>
 						</li>
 					</ul>

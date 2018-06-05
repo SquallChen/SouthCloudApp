@@ -989,6 +989,7 @@ var vm = new Vue({
 				}
 			]
 		},
+		SatelliteNumberChecked:[],
 		Satellite: [{
 				name: 'gps',
 				status:true,
@@ -1179,7 +1180,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[1,2,3],
 				trackChecked:'',
 				chooseNums:'',
 				notChoose:''
@@ -1364,7 +1365,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[2,3,4],
 				trackChecked:''
 			},
 			{
@@ -1542,7 +1543,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1595,7 +1596,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1748,7 +1749,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1956,7 +1957,7 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:'',
+				SatelliteNumberChecked:[],
 				trackChecked:''
 			}
 		],
@@ -2279,6 +2280,9 @@ var vm = new Vue({
 		setSatelliteNum: function(index) {
 			this.currentSatellite = this.Satellite[index];
 			this.currentSatelliteName = this.currentSatellite.name;
+			this.SatelliteNumberChecked = this.Satellite[index].SatelliteNumberChecked;
+			console.log(JSON.stringify(this.Satellite[index]));
+			console.log(this.SatelliteNumberChecked);
 			vm.currentSatelliteIndex = index;
 			// 控制打开遮罩层
 			mui('#setSatelliteNum').popover('toggle');
@@ -2292,12 +2296,12 @@ var vm = new Vue({
 					return item.value;
 				}
 			);
-			if(this.satelliteChecked.length === this.currentSatellite.SatelliteNumber.length){
+			if(this.SatelliteNumberChecked.length === this.currentSatellite.SatelliteNumber.length){
 				chooseNums = 'ALL';
 				notChoose = '';
 			}else{
-				satelliteChecked = this.satelliteChecked;
-				chooseNums = this.satelliteChecked.join('|');
+				satelliteChecked = this.SatelliteNumberChecked;
+				chooseNums = this.SatelliteNumberChecked.join('|');
 				notChoose = wholeNums.filter(function(v){return satelliteChecked.indexOf(v)===-1}).join('|');
 			}
 			mui.ajax(url, {
@@ -2945,27 +2949,30 @@ var vm = new Vue({
 		// 设置卫星号复选框全选方法
 		satelliteAllChecked: {
 			get: function() {
-				// 当前选中的数据长度等于该数据的总长度（全选状态）
+				// 当前选中的数据长度等于该数据的总长度（全选状态）,返回全选状态
+				console.log('当前数据为'+JSON.stringify(this.currentSatellite.SatelliteNumber));
+				console.log('当前数据总长度为'+this.currentSatellite.SatelliteNumber.length);
 				return(
 					this.satelliteCheckedCount === this.currentSatellite.SatelliteNumber.length
 				);
 			},
 			set: function(value) {
 				if(value) {
-					this.satelliteChecked = this.currentSatellite.SatelliteNumber.map(
+					this.SatelliteNumberChecked = this.currentSatellite.SatelliteNumber.map(
 						function(item) {
 							return item.value;
 						}
 					);
 				} else {
-					this.satelliteChecked = [];
+					this.SatelliteNumberChecked = [];
 				}
 			}
 		},
 		satelliteCheckedCount: {
 			get: function() {
 				// 返回选中的数据总长度
-				return this.satelliteChecked.length;
+				//console.log(String(this.SatelliteNumberChecked).split('|').length);
+				return this.SatelliteNumberChecked.length;
 			}
 		},
 		// 修改跟踪频段复选框全选方法
@@ -3910,8 +3917,10 @@ function getConfigSatellitePageInfo(hd) {
 					//vm.SatelliteInfo.gps.status = false;
 				}else{
 					vm.Satellite[0].status = true;
-					vm.Satellite[0].SatelliteNumberChecked = hd[i].value;
-					//vm.satelliteChecked =
+					//vm.Satellite[0].SatelliteNumberChecked = hd[i].value;
+					var temp = String(hd[i].value).split('|')
+					vm.Satellite[0].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[0].SatelliteNumberChecked);
 					// vm.SatelliteInfo.gps.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
@@ -3921,7 +3930,10 @@ function getConfigSatellitePageInfo(hd) {
 					// vm.SatelliteInfo.bds.status = false;
 				}else{
 					vm.Satellite[1].status = true;
-					vm.Satellite[1].SatelliteNumberChecked = hd[i].value;
+					//vm.Satellite[1].SatelliteNumberChecked = hd[i].value;
+					var temp = String(hd[i].value).split('|')
+					vm.Satellite[1].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[1].SatelliteNumberChecked);
 					// vm.SatelliteInfo.bds.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
@@ -3931,7 +3943,10 @@ function getConfigSatellitePageInfo(hd) {
 					// vm.SatelliteInfo.sbas.status = false;
 				}else{
 					vm.Satellite[2].status = true;
-					vm.Satellite[2].SatelliteNumberChecked = hd[i].value;
+					//vm.Satellite[2].SatelliteNumberChecked = hd[i].value;
+					var temp = String(hd[i].value).split('|')
+					vm.Satellite[2].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[2].SatelliteNumberChecked);
 					// vm.SatelliteInfo.sbas.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
@@ -3941,7 +3956,10 @@ function getConfigSatellitePageInfo(hd) {
 					// vm.SatelliteInfo.qzss.status = false;
 				}else{
 					vm.Satellite[3].status = true;
-					vm.Satellite[3].SatelliteNumberChecked = hd[i].value;
+					//vm.Satellite[3].SatelliteNumberChecked = hd[i].value;
+					var temp = String(hd[i].value).split('|')
+					vm.Satellite[3].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[3].SatelliteNumberChecked);
 					// vm.SatelliteInfo.qzss.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
@@ -3951,7 +3969,10 @@ function getConfigSatellitePageInfo(hd) {
 					// vm.SatelliteInfo.glonass.status = false;
 				}else{
 					vm.Satellite[4].status = true;
-					vm.Satellite[4].SatelliteNumberChecked = hd[i].value;
+				//	vm.Satellite[4].SatelliteNumberChecked = hd[i].value;
+				var temp = String(hd[i].value).split('|')
+					vm.Satellite[4].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[4].SatelliteNumberChecked);
 					// vm.SatelliteInfo.glonass.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
@@ -3961,7 +3982,10 @@ function getConfigSatellitePageInfo(hd) {
 					// vm.SatelliteInfo.galileo.status = false;
 				}else{
 					vm.Satellite[5].status = true;
-					vm.Satellite[5].SatelliteNumberChecked = hd[i].value;
+					//vm.Satellite[5].SatelliteNumberChecked = hd[i].value;
+					var temp = String(hd[i].value).split('|')
+					vm.Satellite[5].SatelliteNumberChecked = temp;
+					console.log(vm.Satellite[5].SatelliteNumberChecked);
 					// vm.SatelliteInfo.galileo.status = true;
 					// vm.SatelliteInfo.gps.enable = hd[i].value;
 				}
