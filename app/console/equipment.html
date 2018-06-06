@@ -354,10 +354,10 @@
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
 							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item.upDataUserName, item.upDataCompanyInfom, item.identifyCode)" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item.upDataUserName, item.upDataCompanyInfom, item.identifyCode)" data-href="../personnel/historicalTrack.html">历史轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item.upDataUserName, item.upDataCompanyInfom, item.identifyCode)" data-href="../personnel/currentLocation.html">位置</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item.upDataUserName, item.upDataCompanyInfom, item.identifyCode, item.onlineStatus, item.supportSic20)" data-href="../personnel/onlineSettings.html">在线配置</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/historicalTrack.html">历史轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/currentLocation.html">位置</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/onlineSettings.html">在线配置</a>
 							</div>
 							<div class="mui-slider-handle">
 								<div class="mui-table-cell">
@@ -400,26 +400,29 @@
 			  data: {
 			    deviceData: '',
 			    token: '',
-			    user_name: '',
+			    user_name: ''
 			  },
 			  methods: {
-			    openpage: function (index, upDataUserName, upDataCompanyInfo, identifyCode, onlineStatus, supportSic20) {
+			    openpage: function (index, item) {
 			      var data_url = event.target.dataset.href;
+			      var el = event.target.parentNode.parentNode;
 			      // 如果设备离线并且点击的是在线配置的页面
-			      if (onlineStatus === 0 && data_url === '../personnel/onlineSettings.html') {
+			      if (item.onlineStatus === 0 && data_url === '../personnel/onlineSettings.html') {
 			        mui.toast('设备离线，暂时无法在线配置');
-			      } else if(supportSic20 === 0 ) {
-							mui.toast('设备不支持Sic2.0,不能在线配置');
-						} else {
+			      } else if (item.supportSic20 === 0) {
+			        mui.toast('设备不支持Sic2.0,不能在线配置');
+			      } else {
 			        mui.openWindow({
 			          url: data_url,
 			          id: data_url,
 			          extras: {
-			            upDataUserName: upDataUserName,
-			            upDataCompanyInfo: upDataCompanyInfo,
-			            identifyCode: identifyCode
+			            upDataUserName: item.upDataUserName,
+			            upDataCompanyInfo: item.upDataCompanyInfo,
+			            identifyCode: item.identifyCode,
+			            item: item
 			          }
 			        });
+			        mui.swipeoutClose(el);
 			      }
 			    }
 			  },
@@ -448,12 +451,12 @@
 			      // 登陆时存放到本地的数据
 			      vm.token = plus.storage.getItem('token');
 			      vm.user_name = plus.storage.getItem('user_name');
-						console.log(plus.storage.getItem('token'));
+			      console.log(plus.storage.getItem('token'));
 			      mui.ajax(apiUrl.device_list_page, {
 			        data: {
 			          user_name: plus.storage.getItem('user_name'),
-								token: plus.storage.getItem('token'),
-								num_per_page: 20000
+			          token: plus.storage.getItem('token'),
+			          num_per_page: 20000
 			        },
 			        dataType: 'json',
 			        type: 'post',
@@ -473,7 +476,7 @@
 			              tempData.unshift(tempArray[i]);
 			            }
 			            // 完成排列处理的数组数据添加到页面上渲染
-									vm.deviceData = tempData;
+			            vm.deviceData = tempData;
 			          } else if (data.status === 40004) {
 			            mui.openWindow({
 			              url: '../../login.html',

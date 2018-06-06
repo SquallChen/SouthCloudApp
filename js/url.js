@@ -25,6 +25,7 @@ var apiUrl = {
   track_day_page: str + '/device/track_day_page',
   map_url: str + '/device/map_url',
   change_work_mode: str + '/device/change_work_mode',
+  rtkTrackPointDetail: str + '/device/rtkTrackPointDetail',
 
   // 数据
   data_list_page: str + '/data/list_page',

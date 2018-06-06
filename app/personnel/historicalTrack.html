@@ -168,6 +168,14 @@
 		[v-cloak] {
 			display: none;
 		}
+
+		select {
+			display: inline-block;
+			width: 110px;
+			margin-bottom: 0px;
+			padding: 3px 0;
+			border: 1px solid #ccc !important;
+		}
 	</style>
 </head>
 
@@ -179,49 +187,50 @@
 		</header>
 		<div class="mui-content">
 			<div class="s-map-wrap">
-				<div id="app" class="dropDown" :class="{active:isActive}">
-					<div class="btn-content" v-cloak>
+				<div id="app" class="dropDown" :class="{active:isActive}" v-cloak>
+					<div class="btn-content">
 						<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
 					</div>
 					<ul v-show="mode===0">
-						<li v-cloak>
+						<li>
 							<span class="Num">{{currentIndexUserName}}</span>
 							<span>日期：
+								<select v-model="track" @change="showHistory">
+									<option value="">请选择日期</option>
+									<option :value="v" v-for="(v,k) in trackData" :key="k">{{v.trackDate | filtersDate }}</option>
+								</select>
+							</span>
+							<!-- <span>日期：
 								<span class="date" id="info">{{date}}
 									<img src="../../public/img/down.png" alt="" class="down" />
 									<button id='pickDateBtn' type="button" class="mui-btn mui-btn-block">选择日期</button>
 								</span>
-							</span>
+							</span> -->
 
 						</li>
-						<li v-cloak>
+						<li>
 							<span>{{currentCompanyInfo}}</span>
-							<span>{{currentIndexUserName}}</span>
 						</li>
-						<li v-cloak>
+						<li>
 							<span>在线时长:{{currentDayOnlineTime}}</span>
 							<span>作业里程:暂无数据</span>
 						</li>
 					</ul>
 					<ul v-show="mode===1">
 						<li>
-							<span>时间：2018年4月10日 12:23:56</span>
+							<span>时间：{{ }}</span>
 						</li>
 						<li>
-							<span>状态：固定解</span>
+							<span>状态：{{}}</span>
 						</li>
 						<li>
-							<span>工作模式:移动站</span>
-							<span>数据链:内置电台</span>
+							<span>工作模式:{{}}</span>
+							<span>数据链:{{}}</span>
 						</li>
 						<li>
 							<a href="coordinateDetails.html">查看详情</a>
 						</li>
 					</ul>
-					<a v-on:tap="changestatus">
-						<span></span>
-						<span></span>
-					</a>
 				</div>
 				<div style="height: 100%;" id="map" class="map"> </div>
 			</div>
@@ -245,41 +254,28 @@
 		    token: '',
 		    isActive: false,
 		    mode: 0,
-		    date: '请选择日期',
 		    currentData: '',
 		    currentIndex: '',
 		    currentIndexUserName: '',
 		    currentCompanyInfo: '',
 		    currentIdentifyCode: '',
-		    currenttrackDayId: '',
 		    currentDayOnlineTime: '',
-		    currentCoordinatePoints: [],
-		    currentGeojsonObject: {
-		      'type': 'FeatureCollection',
-		      'crs': {
-		        'type': 'name',
-		        'properties': {
-		          'name': 'EPSG:4326'
-		        }
-		      },
-		      'features': [{
-		        'type': 'Feature',
-		        'geometry': {
-		          'type': 'GeometryCollection',
-		          'geometries': [{
-		            'type': 'LineString',
-		            'coordinates': []
-		          }]
-		        }
-		      }]
-		    },
 		    trackData: '',
 		    currentDate: '',
+		    track: '',
 		    modetype: [{
 		      name: '轨迹'
 		    }, {
 		      name: '坐标点'
-		    }]
+		    }],
+		    basic: '',
+		    gnssLocationData: '',
+		    gnssRefStationData: '',
+		    gnssSateInfoList: '',
+		    deviceData: '',
+		    disance: '-',
+		    powerFree: '-',
+		    appVer: '-'
 		  },
 		  methods: {
 		    changestatus: function () {
@@ -287,10 +283,22 @@
 		    },
 		    changeMode: function (index) {
 		      this.mode = index;
+		    },
+		    showHistory: function () {
+		      this.currentDayOnlineTime = this.track.dayOnlineSeconds;
+		      var timestampBegin = Date.parse(new Date(this.track.trackDate)) / 1000;
+		      var timestampEnd = Date.parse(new Date(this.track.trackDate.split(' ')[0] + ' 23:59:59')) / 1000;
+		      initHistoryVecrtorLayer(lineUrl, pointUrl, this.track.machineId, timestampBegin, timestampEnd, this.track.id);
+		    }
+		  },
+		  filters: {
+		    filtersDate: function (v) {
+		      return v.split(' ')[0];
 		    }
 		  },
 		  created: function () { }
 		});
+
 		mui.init({
 		  beforeback: function () { }
 		});
@@ -300,10 +308,10 @@
 		  vm.currentIndexUserName = self.upDataUserName;
 		  vm.currentCompanyInfo = self.upDataCompanyInfo;
 		  vm.currentIdentifyCode = self.identifyCode;
-		  vm.currenttrackDayId = self.track_day_id;
 		  // 登陆时存放到本地的数据
 		  vm.token = plus.storage.getItem('token');
 		  vm.user_name = plus.storage.getItem('user_name');
+
 		  // 请求指定设备的历史跟踪轨迹数据
 		  mui.ajax(apiUrl.track_info_page, {
 		    data: {
@@ -343,9 +351,6 @@
 		      if (data.status === 0) {
 		        pointUrl = data.history_track_point;
 		        lineUrl = data.history_track_line;
-		        // initHistoryVecrtorLayer(pointUrl, lineUrl, machineId, timestampBegin, timestampEnd, trackAnalyseId);
-		        initHistoryVecrtorLayer('http://lbs.southgnss.com:7070/geoserver/cloud_rtkonline/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cloud_rtkonline:rtkonline_history_point_track_admin&outputFormat=application/json&srsname=EPSG:4326', 'http://lbs.southgnss.com:7070/geoserver/cloud_rtkonline/ows?service=WFS&version=1.0.0&request=GetFeature&typeName=cloud_rtkonline:rtkonline_history_line_track_admin&outputFormat=application/json&srsname=EPSG:4326', 'ca0d52abcf2d4db39a9b466f23e8f33d', '1527782400', '1527868799', '749ae925a125445b9991f0f8e7f20215');
-		        /*  initHistoryVecrtorLayer(pointUrl, lineUrl, 'ca0d52abcf2d4db39a9b466f23e8f33d', '1527782400', '1527868799', '749ae925a125445b9991f0f8e7f20215'); */
 		      } else {
 		        mui.toast(data.info);
 		      }
@@ -356,157 +361,52 @@
 		  });
 		});
 
-		// 日期控件
-		document.getElementById('pickDateBtn').addEventListener('tap', function () {
-		  var dDate = new Date();
-		  // dDate.setFullYear(2014, 7, 16);
-		  var minDate = new Date();
-		  minDate.setFullYear(2010, 0, 1);
-		  var maxDate = new Date();
-		  maxDate.setFullYear(2018, 11, 31);
-		  plus.nativeUI.pickDate(function (e) {
-		    // 如果月份小于10，显示时前面+‘0’
-		    var d = e.date;
-		    if (d.getMonth() >= 9) {
-		      if (d.getDate() >= 9) {
-		        vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate();
+		function getPointInfo(rand_uuid) {
+		  alert(1);
+		  plus.nativeUI.showWaiting();
+		  mui.ajax(apiUrl.rtkTrackPointDetail, {
+		    data: {
+		      user_name: vm.user_name,
+		      token: vm.token,
+		      identifycode: vm.currentIdentifyCode,
+		      randUuid: rand_uuid
+		    },
+		    dataType: 'json',
+		    type: 'post',
+		    timeout: 10000,
+		    success: function (data) {
+		      if (data.status === 0) {
+		        var obj = data.obj;
+		        if (obj.detail) {
+		          vm.gnssLocationData = obj.detail.gnssLocationData;
+		          vm.gnssRefStationData = obj.detail.gnssRefStationData;
+		          vm.appVer = obj.detail.deviceData.deviceInfo.appVer;
+		          vm.powerFree = obj.detail.deviceData.powerFree ? obj.detail.deviceData.powerFree + '%' : '-';
+		          vm.deviceData = obj.detail.deviceData;
+		        } else {
+		          vm.gnssLocationData = '';
+		          vm.gnssRefStationData = '';
+		          vm.deviceData = '';
+		          vm.appVer = '-';
+		          vm.powerFree = '-';
+		        }
+		        if (obj.basic) {
+		          vm.basic = obj.basic;
+		        } else {
+		          vm.basic = '';
+		        }
 		      } else {
-		        vm.date = d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
+		        plus.nativeUI.toast(data.info);
 		      }
-		    } else {
-		      if (d.getDate() >= 9) {
-		        vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + d.getDate();
-		      } else {
-		        vm.date = d.getFullYear() + '-' + '0' + (d.getMonth() + 1) + '-' + '0' + d.getDate();
-		      }
+		      plus.nativeUI.closeWaiting();
+		    },
+		    error: function (xhr, type, errorThrown) {
+		      // 异常处理；
+		      onNetChange();
+		      plus.nativeUI.closeWaiting();
 		    }
-
-		    for (var i = 0; i < vm.trackData.length; i++) {
-		      // 如果该设备在被选中的日期中有历史轨迹数据存在
-		      if (vm.trackData[i].trackDate.indexOf(vm.date) !== -1) {
-		        vm.currentDate = vm.trackData[i].id;
-		        console.log(vm.currentDate);
-		        // 转换在线总时长的展示方式
-		        changeTimeFormat(vm.trackData[i].dayOnlineSeconds);
-		        // 当选择日期后，发送请求该日期的全部轨迹点数据
-		        console.log('开始请求数据');
-		        mui.ajax(apiUrl.track_day_page, {
-		          data: {
-		            user_name: vm.user_name,
-		            token: vm.token,
-		            track_day_id: vm.currentDate,
-		            num_per_page: 100
-		          },
-		          dataType: 'json',
-		          type: 'post',
-		          timeout: 10000,
-		          success: function (data) {
-		            if (data.status === 0) {
-		              console.log('开始处理数据');
-		              // console.log(JSON.stringify(data));
-		              var tempTrackData = data.recordList;
-		              var temp1 = [],
-		                temp2 = [];
-		              var tempPointData = [];
-
-		              for (var i = 0; i < tempTrackData.length; i++) {
-		                temp1.push(tempTrackData[i].longitude);
-		                temp1.push(tempTrackData[i].latitude);
-		                temp2.push(temp1);
-		                temp1 = [];
-		              }
-		              vm.currentCoordinatePoints = temp2;
-
-		              for (var i = 0; i < vm.currentCoordinatePoints.length; i++) {
-		                // 循环赋值对象必须在循环内声明，否则在外部时由于一直引用同一个对象导致只会输出循环最后的值
-		                var tempPoint = {
-		                  'type': 'Feature',
-		                  'geometry': {
-		                    'type': 'Point',
-		                    'coordinates': []
-		                  }
-		                };
-		                tempPoint.geometry.coordinates = vm.currentCoordinatePoints[i];
-		                tempPointData.push(tempPoint);
-		              }
-		              // console.log(JSON.stringify(tempPointData));
-
-		              var tempgeojsonObject = {
-		                'type': 'FeatureCollection',
-		                'crs': {
-		                  'type': 'name',
-		                  'properties': {
-		                    'name': 'EPSG:4326'
-		                  }
-		                },
-		                'features': [{
-		                  'type': 'Feature',
-		                  'geometry': {
-		                    'type': 'GeometryCollection',
-		                    'geometries': [{
-		                      'type': 'LineString',
-		                      'coordinates': []
-		                    }]
-		                  }
-		                }]
-		              };
-		              // console.log(JSON.stringify(tempgeojsonObject.features[0].geometry.geometries[0].coordinates))
-		              tempgeojsonObject.features[0].geometry.geometries[0].coordinates = vm.currentCoordinatePoints;
-
-		              for (var i = 0; i < tempPointData.length; i++) {
-		                tempgeojsonObject.features.push(tempPointData[i]);
-		              }
-		              // console.log(JSON.stringify(tempgeojsonObject));
-		              vm.currentGeojsonObject = tempgeojsonObject;
-		              // console.log(JSON.stringify(vm.currentGeojsonObject))
-		              // coordinateShow(vm.currentGeojsonObject);
-		            } else {
-		              plus.nativeUI.toast(data.info);
-		              setTimeout(function () {
-		                plus.nativeUI.closeWaiting();
-		              }, 1000);
-		            }
-		          },
-		          error: function (xhr, type, errorThrown) {
-		            // 异常处理；
-		            onNetChange();
-		            plus.nativeUI.closeWaiting();
-		          }
-		        });
-		        return;
-		      }
-		      // 如果该设备在被选中的日期中没有历史轨迹数据存在
-		      if (vm.trackData[i].trackDate.indexOf(vm.date) === -1) {
-		        vm.currentDayOnlineTime = '没有在线';
-		        vm.currentGeojsonObject = {
-		          'type': 'FeatureCollection',
-		          'crs': {
-		            'type': 'name',
-		            'properties': {
-		              'name': 'EPSG:4326'
-		            }
-		          },
-		          'features': [{
-		            'type': 'Feature',
-		            'geometry': {
-		              'type': 'GeometryCollection',
-		              'geometries': [{
-		                'type': 'LineString',
-		                'coordinates': []
-		              }]
-		            }
-		          }]
-		        };
-		      }
-		    }
-		  }, function (e) { }, {
-		    title: '请选择日期',
-		    date: dDate,
-		    minDate: minDate,
-		    maxDate: maxDate
 		  });
-		});
-		// ***********************************地图坐标数据(点、线)渲染模块******************************************
+		}
 
 	</script>
 </body>

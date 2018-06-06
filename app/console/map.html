@@ -4,12 +4,13 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title>南方云</title>
+	<title>地图</title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/custom.css" rel="stylesheet" />
 	<link href="../../css/input.css" rel="stylesheet" />
 	<link href="../../css/ol.css" rel="stylesheet" />
 	<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
+	<link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
 	<link href="../../css/map.css" rel="stylesheet" />
 	<script src="../js/jquery.js"></script>
 	<style>
@@ -174,6 +175,15 @@
 		.mui-popover .mui-table-view {
 			border-radius: 0;
 		}
+
+		.popup-info {
+			padding: 6px 6px 0 6px;
+			text-align: left;
+		}
+
+		.popup-info p {
+			color: #fff;
+		}
 	</style>
 </head>
 
@@ -239,7 +249,7 @@
 	</div>
 	<script src="../../js/ol.js"></script>
 	<script src="../../js/ol3-layerswitcher.js"></script>
-	<script src="../js/rtkmap.js"></script>
+	<script src="../../js/overlay/popupoverlay.js"></script>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/app.js"></script>
 	<script src="../../js/url.js"></script>
@@ -354,12 +364,26 @@
 
 		    // 比例尺控件
 		    var scaleLineControl = new ol.control.ScaleLine();
+
+		    /**
+				* 调用外部的JS创建弹出框
+				* Create xiaoJing 2017年11月7日 09:34:25
+				*/
+		    var popup = new ol.Overlay.Popup({
+		      popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
+		      closeBox: true,
+		      positioning: 'auto',
+		      autoPan: true,
+		      autoPanAnimation: { duration: 250 }
+		    });
+
 		    var olMap = new ol.Map({
 		      // 图层
 		      layers: [
 		        tianDiTuMapLayer, tianDiTuAnnotation, device_vector_layer
 		        // tianDiTuOfflineGuangzhowRoadmap, tianDiTuOfflineGuangzhowOverlay_r
 		      ],
+		      overlays: [popup],
 		      target: 'map',
 		      // 禁止在移动端旋转设备
 		      interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
@@ -433,8 +457,30 @@
 		      });
 		      if (feature === null || feature === undefined) return;
 		      // 获取图层信息
-		      console.log(feature.getProperties());
+		      displayDeviceInfoOverlay(feature);
 		    }, device_vector_layer);
+
+		    function displayDeviceInfoOverlay(selectFeature) {
+		      popup.hide();
+		      if (selectFeature === undefined) return;
+		      var deviceItemInfo = selectFeature.getProperties();
+		      if (deviceItemInfo === undefined) return;
+		      var content = '<div class="popup-info">';
+		      content += '<p>设备编号:' + deviceItemInfo.identify_code + '</p>';
+		      if (deviceItemInfo.online_status === 1) {
+		        content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+		      } else {
+		        content += '<p>断开时间:' + timeTrans(deviceItemInfo.disconnect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+		      }
+		      var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
+		      var upDataCompanyInfo = deviceItemInfo.up_data_company_info ? deviceItemInfo.up_data_company_info : '-';
+		      content += '<p>经度:' + formatDegree(deviceItemInfo.longitude) + '</p>';
+		      content += '<p>纬度:' + formatDegree(deviceItemInfo.latitude) + '</p>';
+		      content += '<p>用户名:' + upDataUserName + '</p>';
+		      content += '<p>用户单位:' + upDataCompanyInfo + '</p></div>';
+
+		      popup.show(selectFeature.getGeometry().getCoordinates(), content);
+		    }
 		  }
 		});
 	</script>

@@ -62,15 +62,17 @@ function initHistoryVecrtorLayer(pointUrl, lineUrl, deviceId, beginTime, endTime
   history_point_vector_layer.getSource().clear();
   history_line_vertor_layer.getSource().clear();
   map_to_line = false;
-  var url = pointUrl + '&viewparams=machineId:' + deviceId + ';beginTime:' + beginTime + ';endTime:' + endTime;
+  var params = '&viewparams=machineId:' + deviceId + ';beginTime:' + beginTime + ';endTime:' + endTime;
+  var thePointUrl = pointUrl + params;
+  console.log(thePointUrl);
   history_point_vector_layer.setSource(
     new ol.source.Vector({
       format: new ol.format.GeoJSON(),
-      url: url,
+      url: thePointUrl,
       loader: function (extent, resolution, projection) {
         var proj = projection.getCode();
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', url);
+        xhr.open('GET', thePointUrl);
         var onError = function () {
           history_point_vector_layer.getSource().removeLoadedExtent(extent);
         };
@@ -166,6 +168,7 @@ var olMap = new ol.Map({
     tianDiTuMapLayer, tianDiTuAnnotation, history_line_vertor_layer, history_point_vector_layer, custom_layer
   ],
   target: 'map',
+  interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
   controls: ol.control.defaults({
     attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
       collapsible: false
@@ -315,8 +318,8 @@ olMap.on('singleclick', function (evt) {
     return feature;
   });
   if (feature === null || feature === undefined) return;
-  console.log(feature);
-  // displayTrackPointOverlay(feature);
+  var pointInfo = feature.getProperties();
+  getPointInfo(pointInfo.rand_uuid);
 }, pointLayerSelect);
 
 var moveFeature;

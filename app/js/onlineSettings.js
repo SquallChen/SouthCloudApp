@@ -38,6 +38,7 @@ var vm = new Vue({
 		currentLinkIndex:'',
 		currentIdentifyCode: '',
 		currentSatelliteIndex:'',
+		currentTrackIndex:'',
 		workMode: '',
 		linkMode:'',
 		clientUUid: '',
@@ -58,7 +59,8 @@ var vm = new Vue({
 		workChecked: 'BASE',
 		pageChecked: '',
 		navActive: 'workPage',
-
+		voiceEnable:true,
+		lanCheck: 'CHINESE',
 		// 基准
 		bVal: {
 			'rtmRadios': 'RTCA',
@@ -990,6 +992,7 @@ var vm = new Vue({
 			]
 		},
 		SatelliteNumberChecked:[],
+		channelsChecked:[],
 		Satellite: [{
 				name: 'gps',
 				status:true,
@@ -1180,7 +1183,8 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:[1,2,3],
+				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:'',
 				chooseNums:'',
 				notChoose:''
@@ -1365,7 +1369,8 @@ var vm = new Vue({
 						checked:'true'
 					}
 				],
-				SatelliteNumberChecked:[2,3,4],
+				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1544,6 +1549,7 @@ var vm = new Vue({
 					}
 				],
 				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1597,6 +1603,7 @@ var vm = new Vue({
 					}
 				],
 				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1750,6 +1757,7 @@ var vm = new Vue({
 					}
 				],
 				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:''
 			},
 			{
@@ -1958,6 +1966,7 @@ var vm = new Vue({
 					}
 				],
 				SatelliteNumberChecked:[],
+				channelsChecked:[],
 				trackChecked:''
 			}
 		],
@@ -1995,29 +2004,30 @@ var vm = new Vue({
 		},
 		language: [{
 				name: '中文',
-				value: 'chinese'
+				value: 'CHINESE'
 			},
 			{
 				name: '英文',
-				value: 'english'
+				value: 'ENGLISH'
 			},
 			{
 				name: '俄文',
-				value: 'russian'
+				value: 'RUSSIAN'
 			},
 			{
 				name: '西班牙文',
-				value: 'spanish'
+				value: 'SPANISH'
 			},
 			{
 				name: '韩文',
-				value: 'korean'
+				value: 'KOREAN'
 			},
 			{
 				name: '葡萄牙文',
-				value: 'portuguese'
+				value: 'PORTUGUESE'
 			}
 		],
+		languageType:[],
 		currentSatellite: {
 			name: '',
 			SatelliteNumber: [],
@@ -2067,7 +2077,7 @@ var vm = new Vue({
 					success: function callback(data) {
 						console.log('数据链请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
-							timeFun(data, getConfigDataLinkPageInfo, '切换数据链设置失败', 'pagesInfo', 1000);
+							timeFun(data, getConfigDataLinkPageInfo, '切换数据链设置失败', 'pagesInfo', 3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2094,7 +2104,7 @@ var vm = new Vue({
 					success: function callback(data) {
 						console.log('卫星设置请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
-							timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 1000);
+							timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2121,7 +2131,7 @@ var vm = new Vue({
 					success: function callback(data) {
 						console.log('其他请求的唯一码为：'+JSON.stringify(data));
 						if (data.status === ERR_NO) {
-							//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+							timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2246,7 +2256,7 @@ var vm = new Vue({
 							default:
 						}
 						if(data.status === ERR_NO) {
-							timeFun(data, getConfigDataLinkPageInfo, '工作模式切换失败', 'workModel');
+							timeFun(data, getConfigDataLinkPageInfo, '工作模式切换失败', 'workModel',3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -2259,33 +2269,49 @@ var vm = new Vue({
 				});
 				mui('#selectionLink').popover('toggle');
 			},
-		// changeLink: function(index) {
-		// 	this.linktypevalue = index;
-		// },
-		// // 全选方法
-		// checkedAll: function() {
-		// 	var _this = this;
-		// 	if(this.checked) {
-		// 		// 实现反选
-		// 		_this.checkboxModel = [];
-		// 	} else {
-		// 		// 实现全选
-		// 		_this.checkboxModel = [];
-		// 		_this.checkboxData.forEach(function(item) {
-		// 			_this.checkboxModel.push(item.id);
-		// 		});
-		// 	}
-		// },
+			clearEphemeris:function(){
+				mui.ajax(url, {
+					type: 'post',
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'clearSatellite'
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						console.log('卫星号设置成功返回的唯一码为：'+JSON.stringify(data));
+						if (data.status === ERR_NO) {
+							plus.nativeUI.closeWaiting();
+							mui.toast('清除星历成功！');
+							mui('#clearEphemeris').popover('toggle');
+							timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						mui.toast('清除星历失败！');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			},
+
 		// 点击按钮动态加载对应的数据再渲染页面
 		setSatelliteNum: function(index) {
 			this.currentSatellite = this.Satellite[index];
 			this.currentSatelliteName = this.currentSatellite.name;
 			this.SatelliteNumberChecked = this.Satellite[index].SatelliteNumberChecked;
-		//	console.log(this.SatelliteNumberChecked);
-		//	console.log(JSON.stringify(this.SatelliteNumberChecked));
 			vm.currentSatelliteIndex = index;
 			// 控制打开遮罩层
 			mui('#setSatelliteNum').popover('toggle');
+		},
+		clearEphemerisPage: function(){
+			mui('#clearEphemeris').popover('toggle');
 		},
 		//设置卫星号
 		setSatellite: function(index) {
@@ -2305,8 +2331,6 @@ var vm = new Vue({
 				 notChoose = wholeNums.filter(function(v){return satelliteChecked.indexOf(v)===-1}).join('|');
 
 			}
-			// console.log(chooseNums);
-			// console.log(notChoose);
 			mui.ajax(url, {
 				type: 'post',
 				data: {
@@ -2323,12 +2347,12 @@ var vm = new Vue({
 				type: 'post',
 				timeout: 10000,
 				success: function callback(data) {
-					console.log('其他请求的唯一码为：'+JSON.stringify(data));
+					console.log('卫星号设置成功返回的唯一码为：'+JSON.stringify(data));
 					if (data.status === ERR_NO) {
 						plus.nativeUI.closeWaiting();
 						mui.toast('设置卫星号成功！');
 						mui('#setSatelliteNum').popover('toggle');
-						//timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+						timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
 					} else {
 						mui.toast(data.info);
 						plus.nativeUI.closeWaiting();
@@ -2340,12 +2364,61 @@ var vm = new Vue({
 				}
 			});
 		},
+
+			//设置卫星跟踪频段
+			setTrack: function(index) {
+				var choosedStr,wholeStr,notChoosedStr,channelsChecked;
+				var currentType = vm.Satellite[index].name;
+				wholeStr = this.currentSatellite.track.map(
+					function(item) {
+						return item.value;
+					}
+				);
+				channelsChecked = this.channelsChecked;
+				choosedStr = this.channelsChecked.join('|');
+				notChoosedStr = wholeStr.filter(function(v){return channelsChecked.indexOf(v)===-1}).join('|');
+				mui.ajax(url, {
+					type: 'post',
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						clientUUid: vm.clientUUid,
+						identifyCode: vm.currentIdentifyCode,
+						requestType: 'getConfigTrack',
+						type:currentType,
+						choosedStr:choosedStr,
+						notChoosedStr:notChoosedStr
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function callback(data) {
+						console.log('卫星频段设置成功返回的唯一码为：'+JSON.stringify(data));
+						if (data.status === ERR_NO) {
+							plus.nativeUI.closeWaiting();
+							mui.toast('设置卫星频段成功！');
+							mui('#setTrack').popover('toggle');
+							timeFun(data, getConfigSatellitePageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+						} else {
+							mui.toast(data.info);
+							plus.nativeUI.closeWaiting();
+						}
+					},
+					error: function (data) {
+						mui.toast('设置卫星号失败！');
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			},
 		// 点击按钮动态加载对应的数据再渲染页面
-		settrack: function(index) {
+		settrackNum: function(index) {
 			this.currentSatellite = this.Satellite[index];
 			this.currentSatelliteName = this.currentSatellite.name;
+			this.channelsChecked = this.Satellite[index].channelsChecked;
+			vm.currentTrackIndex = index;
 			mui('#setTrack').popover('toggle');
 		},
+
 		selectionMode: function(index) {
 			this.currentModeIndex = index;
 			if(index===0){
@@ -2366,11 +2439,15 @@ var vm = new Vue({
 			}
 			mui('#selectionLink').popover('toggle');
 		},
+		//关闭弹窗事件
 		closeSelectionMode: function() {
 			mui('#selectionMode').popover('toggle');
 		},
 		closeSelectionLink: function() {
 			mui('#selectionLink').popover('toggle');
+		},
+		closeClearEphemerisPage: function() {
+			mui('#clearEphemeris').popover('toggle');
 		},
 		closeSetSatellite: function() {
 			mui('#setSatelliteNum').popover('toggle');
@@ -2733,6 +2810,12 @@ var vm = new Vue({
 			},
 
 
+    // 自检：
+    selfCheck: function (v) {
+      plus.nativeUI.showWaiting('正在自检中...', { height: '100px', width: '150px' });
+      getSelfCheck(v, 0);
+    },
+
 	},
 
 	created: function() {
@@ -2760,7 +2843,7 @@ var vm = new Vue({
 			vm.firstTimer = setTimeout(function() {
 				vm.onlyOne = 1;
 				getSicVersion();
-			}, 1000);
+			}, 3000);
 
 			// var socket = io.connect( 'http://' + '119.23.161.165:9110' + '/rtkTransferWeb' );
 			var socket = io.connect('http://119.23.161.165:9010/rtkuniqueid');
@@ -2944,6 +3027,82 @@ var vm = new Vue({
 					}
 				});
 			});
+
+			//switch开关设置语音
+			mui('#item4mobile .mui-switch').each(function(index) { //循环所有toggle
+				this.addEventListener('toggle', function(event) {
+					//event.detail.isActive 可直接获取当前状态
+					if(event.detail.isActive){
+						plus.nativeUI.showWaiting('正在打开语音...', {
+							height: '100px',
+							width: '180px'
+						});
+						mui.ajax(url, {
+							type: 'post',
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								clientUUid: vm.clientUUid,
+								identifyCode: vm.currentIdentifyCode,
+								requestType: 'getConfigVoice',
+								status:'ON'
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function callback(data) {
+								console.log('打开语音成功后返回的唯一码为：'+JSON.stringify(data));
+								if (data.status === ERR_NO) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('打开语音使用成功！');
+									timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+								} else {
+									mui.toast(data.info);
+									plus.nativeUI.closeWaiting();
+								}
+							},
+							error: function (data) {
+								mui.toast('打开语音失败！');
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}else{
+						plus.nativeUI.showWaiting('正在关闭语音...', {
+							height: '100px',
+							width: '180px'
+						});
+						mui.ajax(url, {
+							type: 'post',
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								clientUUid: vm.clientUUid,
+								identifyCode: vm.currentIdentifyCode,
+								requestType: 'getConfigVoice',
+								status:'OFF'
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function callback(data) {
+								console.log('关闭语音成功返回的唯一码为：'+JSON.stringify(data));
+								if (data.status === ERR_NO) {
+									plus.nativeUI.closeWaiting();
+									mui.toast('关闭语音成功！');
+									timeFun(data, getConfigOtherPageInfo, '切换其它设置失败!', 'pagesInfo', 3000);
+								} else {
+									mui.toast(data.info);
+									plus.nativeUI.closeWaiting();
+								}
+							},
+							error: function (data) {
+								mui.toast('关闭语音失败！');
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}
+				});
+			});
 		});
 
 	},
@@ -2975,6 +3134,7 @@ var vm = new Vue({
 				return this.SatelliteNumberChecked.length;
 			}
 		},
+
 		// 修改跟踪频段复选框全选方法
 		channelsAllChecked: {
 			get: function() {
@@ -3072,7 +3232,7 @@ function getSicVersion() {
 		success: function callback(data) {
 			console.log('当前clientUUid请求后的唯一码数据为：' + JSON.stringify(data));
 			if(data.status === ERR_NO) {
-				timeFun(data, getSic, '获取设备协议失败!', 'getSic', 1000, true);
+				timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
 			} else {
 				//用户登陆过期
 				mui.openWindow({
@@ -3091,8 +3251,7 @@ function getSicVersion() {
 function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 	console.log('当前唯一码为：' + JSON.stringify(data.unique_id));
 	// 对获取唯一码成功的判断
-	var time = arguments[4] ? arguments[4] : 1000;
-	console.log('time:' + time);
+	var time = arguments[4] ? arguments[4] : 5000;
 	var theunique_id = data.unique_id || data.uniqueId;
 	vm.the_unique_id = data.unique_id || data.uniqueId;
 	vm.socketFun = func;
@@ -3149,12 +3308,15 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 							mui.toast('设备操作被中断，请稍后再试!');
 						} else if(data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
 							errTip(typeModel);
+							console.log(111111);
 							mui.toast('设置超时，操作失败！');
 						} else if(data.uniqueId === theunique_id) {
 							errTip(typeModel);
+							console.log(22222);
 							mui.toast('设置超时，操作失败！');
 						} else {
 							errTip(typeModel);
+							console.log(3333333);
 							mui.toast('设置超时，操作失败！');
 						}
 					} else {
@@ -3263,7 +3425,7 @@ function getConfigWorkModePageInfo(hd) {
 					success: function callback(data) {
 						console.log('请求对应的工作模式数据为：'+JSON.stringify(data));
 						if(data.status === ERR_NO) {
-							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 1000);
+							timeFun(data, getConfigWorkModePageInfo, '读取信息失败', 'pagesInfo', 3000);
 						} else {
 							mui.toast(data.info);
 							plus.nativeUI.closeWaiting();
@@ -3329,7 +3491,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
 		success: function(data) {
 			console.log('第一次进入页面时设置时获取的工作模式数据为：' + JSON.stringify(data));
 			if(data.status === ERR_NO) {
-				timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', 1000,true);
+				timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', 3000,true);
 			} else if(data.status === 40004) {
 				plus.storage.clear();
 				mui.openWindow({
@@ -3390,7 +3552,7 @@ function setSicVirsion() {
 		dataType: 'JSON',
 		success: function callback(data) {
 			if(data.status === ERR_NO) {
-				timeFun(data, setSic, '设置协议失败!', 'setSic', 1000);
+				timeFun(data, setSic, '设置协议失败!', 'setSic', 3000);
 			} else {
 				mui.toast(data.info);
 				plus.nativeUI.closeWaiting();
@@ -3750,162 +3912,6 @@ function datalinkUHF(hd) {
 	mui.toast('设置成功！')
 }
 
-// /*获取卫星设置页面数据*/
-// function getConfigSatellitePageInfo(hd) {
-// 	console.log('开始处理数据');
-// 	for (var i = 0; i < hd.length; i++) {
-// 			if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.QZSS") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.qzss = '暂无设置';
-// 									vm.qzssTrack = [];
-// 							} else {
-// 									vm.trackStatus.qzss = hd[i].value;
-// 									vm.qzssTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.qzss = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.QZSS") {
-// 					if (hd[i].value === '') {
-// 							vm.qzssEnable = [];
-// 					} else {
-// 							vm.qzssEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#qzss").attr('data-satallite', hd[i].value);
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.SBAS") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.sbas = '暂无设置';
-// 									vm.sbasTrack = [];
-// 							} else {
-// 									vm.trackStatus.sbas = hd[i].value;
-// 									vm.sbasTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.sbas = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.SBAS") {
-// 					if (hd[i].value === '') {
-// 							vm.sbasEnable = [];
-// 					} else {
-// 							vm.sbasEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#sbas").attr('data-satallite', hd[i].value);
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GLONASS") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.glonass = '暂无设置';
-// 									vm.glonassTrack = [];
-// 							} else {
-// 									vm.trackStatus.glonass = hd[i].value;
-// 									vm.glonassTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.glonass = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GLONASS") {
-// 					if (hd[i].value === '') {
-// 							vm.glonassEnable = [];
-// 					} else {
-// 							vm.glonassEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#glonass").attr('data-satallite', hd[i].value);
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GPS") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.gps = '暂无设置';
-// 									vm.gpsTrack = [];
-// 							} else {
-// 									vm.trackStatus.gps = hd[i].value;
-// 									vm.gpsTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.gps = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GPS") {
-// 					if (hd[i].value === '') {
-// 							vm.gpsEnable = [];
-// 					} else {
-// 							vm.gpsEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#gps").attr('data-satallite', hd[i].value);
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.GALILEO") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.galileo = '暂无设置';
-// 									vm.galileoTrack = [];
-// 							} else {
-// 									vm.trackStatus.galileo = hd[i].value;
-// 									vm.galileoTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.galileo = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.GALILEO") {
-// 					if (hd[i].value === '') {
-// 							vm.galileoEnable = [];
-// 					} else {
-// 							vm.galileoEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#galileo").attr('data-satallite', hd[i].value);
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.TRACK.BDS") {
-// 					if (hd[i].status === true) {
-// 							if (hd[i].value === '') {
-// 									vm.trackStatus.bds = '暂无设置';
-// 									vm.bdsTrack = [];
-// 							} else {
-// 									vm.trackStatus.bds = hd[i].value;
-// 									vm.bdsTrack = hd[i].value.split('|');
-// 							}
-// 					} else {
-// 							vm.trackStatus.bds = '不支持';
-// 					}
-// 			} else if (hd[i].hitSicData === "GET:GNSS.SATELLITE.ENABLE.BDS") {
-// 					if (hd[i].value === '') {
-// 							vm.bdsEnable = [];
-// 					} else {
-// 							vm.bdsEnable = hd[i].value.split('|');
-// 					}
-// 				//	$("#bds").attr('data-satallite', hd[i].value);
-// 			}
-// 	}
-
-// 	/*初始化卫星使能滑动按键*/
-// 	// $('.satellite-checkbox').each(function () {
-// 	// 		var satelliteId = $(this).attr('id');
-// 	// 		var check = $('#' + satelliteId).data('satallite');
-// 	// 		if (check == '') {
-// 	// 				$('#' + satelliteId).bootstrapSwitch("state", false, true);
-// 	// 		} else if (check === 'NOTSUPPORT') {
-// 	// 				$('#' + satelliteId).bootstrapSwitch("state", false, true);
-// 	// 				$('#' + satelliteId).bootstrapSwitch("disabled", true);
-// 	// 				if (satelliteId === 'gps') {
-// 	// 						vm.trackStatus.setgps = '不支持';
-// 	// 						vm.trackStatus.gps = '不支持';
-// 	// 				} else if (satelliteId === 'bds') {
-// 	// 						vm.trackStatus.setbds = '不支持';
-// 	// 						vm.trackStatus.bds = '不支持';
-// 	// 				} else if (satelliteId === 'sbas') {
-// 	// 						vm.trackStatus.setsbas = '不支持';
-// 	// 						vm.trackStatus.sbas = '不支持';
-// 	// 				} else if (satelliteId === 'qzss') {
-// 	// 						vm.trackStatus.setqzss = '不支持';
-// 	// 						vm.trackStatus.qzss = '不支持';
-// 	// 				} else if (satelliteId === 'glonass') {
-// 	// 						vm.trackStatus.setglonass = '不支持';
-// 	// 						vm.trackStatus.glonass = '不支持';
-// 	// 				} else if (satelliteId === 'galileo') {
-// 	// 						vm.trackStatus.setgalileo = '不支持';
-// 	// 						vm.trackStatus.galileo = '不支持';
-// 	// 				}
-// 	// 		} else {
-// 	// 				$('#' + satelliteId).bootstrapSwitch({"state": true, "size": 'small', 'onText': on, 'offText': off});
-// 	// 		}
-// 	// });
-// 	plus.nativeUI.closeWaiting();
-// }
-
 //获取卫星设置页面数据
 function getConfigSatellitePageInfo(hd) {
 	console.log('获取的卫星数据为：'+JSON.stringify(hd));
@@ -3971,36 +3977,42 @@ function getConfigSatellitePageInfo(hd) {
 					vm.Satellite[0].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[0].trackChecked  = hd[i].value;
+					vm.Satellite[0].channelsChecked =String(hd[i].value).split('|');
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.BDS') {
 				if(hd[i].value===''){
 					vm.Satellite[1].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[1].trackChecked  = hd[i].value;
+					vm.Satellite[1].channelsChecked =String(hd[i].value).split('|');
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.SBAS') {
 				if(hd[i].value===''){
 					vm.Satellite[2].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[2].trackChecked  = hd[i].value;
+					vm.Satellite[2].channelsChecked =String(hd[i].value).split('|');
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.QZSS') {
 				if(hd[i].value===''){
 					vm.Satellite[3].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[3].trackChecked  = hd[i].value;
+					vm.Satellite[3].channelsChecked =String(hd[i].value).split('|');
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GLONASS') {
 				if(hd[i].value===''){
 					vm.Satellite[4].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[4].trackChecked  = hd[i].value;
+					vm.Satellite[4].channelsChecked =String(hd[i].value).split('|');
 				}
 			}else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GALILEO') {
 				if(hd[i].value===''){
 					vm.Satellite[5].trackChecked = '暂无设置';
 				}else{
 					vm.Satellite[5].trackChecked  = hd[i].value;
+					vm.Satellite[5].channelsChecked =String(hd[i].value).split('|');
 				}
 			};
 		}
@@ -4008,6 +4020,188 @@ function getConfigSatellitePageInfo(hd) {
 	plus.nativeUI.closeWaiting();
 }
 
+function timerCheck(type, status, check) {
+  setTimeout(function () {
+    getSelfCheck(type, status, check);
+  }, 3000);
+}
+/* 其它——自检设置*/
+function getSelfCheck(checkType, status, checking) {
+  var checkTime = 5000;
+  if (checkType === 'checkUHF') {
+    checkTime = 15000;
+  }
+  if (checking !== 'loading') {
+    if (checkType === 'checkOEM') {
+      laddVal = 'oemcheck';
+    } else if (checkType === 'checkUHF') {
+      laddVal = 'uhfcheck';
+    } else if (checkType === 'checkNET') {
+      laddVal = 'netcheck';
+    } else if (checkType === 'checkWIFI') {
+      laddVal = 'wificheck';
+    }
+	}
+	mui.ajax(url, {
+    type: 'post',
+    data: {
+			user_name: vm.user_name,
+			token: vm.token,
+			clientUUid: vm.clientUUid,
+			identifyCode: vm.currentIdentifyCode,
+      requestType: 'getConfigSelfCheck',
+      checkType: checkType,
+      checkStatus: status
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function callback(data) {
+      if (data.status === ERR_NO) {
+        timeFun(data, otherSelfCheck, '自检失败!', 'otherSelfCheck', checkTime);
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    },
+    error: function (data) {
+      plus.nativeUI.closeWaiting();
+    }
+	});
+}
+
+var oemFist = 0, uhffirst = 0, netfirst = 0, wififirst = 0;
+/* 其它——自检设置*/
+function otherSelfCheck(hd) {
+  for (var i = 0; i < hd.length; i++) {
+    if (hd[i].hitSicData === 'GET:SELF_CHECK.OEM.STATUS') {
+      if (hd[i].value === 'NOTSUPPORT' || hd[i].value === 'UNRECGNEZED') {
+        vm.oVal.oemcheck = '不支持';
+        plus.nativeUI.closeWaiting();
+      } else if (hd[i].value === 'NOT PREPARED') {
+        oemFist = 1;
+        vm.oVal.oemcheck = hd[i].value;
+        timerCheck('checkOEM', 1, 'loading');
+      } else if (hd[i].value === 'CHECKING') {
+        oemFist = 1;
+        vm.oVal.oemcheck = hd[i].value;
+        timerCheck('checkOEM', 1, 'loading');
+      } else if (hd[i].value === 'SUCCESS' || hd[i].value === 'ALLOEM SUCCESS') {
+        if (oemFist === 0) {
+          oemFist = 1;
+          timerCheck('checkOEM', 0, 'loading');
+        } else {
+          oemFist = 0;
+          vm.oVal.oemcheck = '自检成功';
+          plus.nativeUI.closeWaiting();
+        }
+      } else if (hd[i].value === 'FAIL') {
+        vm.oVal.oemcheck = '自检失败';
+        plus.nativeUI.closeWaiting();
+      }
+    } else if (hd[i].hitSicData === 'GET:SELF_CHECK.UHF.STATUS') {
+      if (hd[i].value === 'NOTSUPPORT' || hd[i].value === 'UNRECGNEZED') {
+        vm.oVal.uhfcheck = '不支持';
+        plus.nativeUI.closeWaiting();
+      } else if (hd[i].value === 'NOT PREPARED') {
+        uhffirst = 1;
+        vm.oVal.uhfcheck = hd[i].value;
+        timerCheck('checkUHF', 1, 'loading');
+      } else if (hd[i].value === 'CHECKING') {
+        uhffirst = 1;
+        vm.oVal.uhfcheck = hd[i].value;
+        timerCheck('checkUHF', 1, 'loading');
+      } else if (hd[i].value === 'SUCCESS' || hd[i].value === 'ALLUHF SUCCESS') {
+        if (uhffirst === 0) {
+          uhffirst = 1;
+          timerCheck('checkUHF', 0, 'loading');
+        } else {
+          uhffirst = 0;
+          vm.oVal.uhfcheck = '自检成功';
+          plus.nativeUI.closeWaiting();
+        }
+      } else if (hd[i].value === 'FAIL') {
+        vm.oVal.uhfcheck = '自检失败';
+        plus.nativeUI.closeWaiting();
+      }
+    } else if (hd[i].hitSicData === 'GET:SELF_CHECK.CELLULAR_NET.STATUS') {
+      if (hd[i].value === 'NOTSUPPORT' || hd[i].value === 'UNRECGNEZED') {
+        vm.oVal.netcheck = '不支持';
+        plus.nativeUI.closeWaiting();
+      } else if (hd[i].value === 'NOT PREPARED') {
+        netfirst = 1;
+        vm.oVal.netcheck = hd[i].value;
+        timerCheck('checkNET', 1, 'loading');
+      } else if (hd[i].value === 'CHECKING') {
+        netfirst = 1;
+        vm.oVal.netcheck = hd[i].value;
+        timerCheck('checkNET', 1, 'loading');
+      } else if (hd[i].value === 'SUCCESS' || hd[i].value === 'ALLUHF SUCCESS') {
+        if (netfirst === 0) {
+          netfirst = 1;
+          timerCheck('checkNET', 0, 'loading');
+        } else {
+          netfirst = 0;
+          vm.oVal.netcheck = '自检成功';
+          plus.nativeUI.closeWaiting();
+        }
+      } else if (hd[i].value === 'FAIL') {
+        vm.oVal.netcheck = '自检失败';
+        plus.nativeUI.closeWaiting();
+      }
+    } else if (hd[i].hitSicData === 'GET:SELF_CHECK.WIFI.STATUS') {
+      if (hd[i].value === 'NOTSUPPORT' || hd[i].value === 'UNRECGNEZED') {
+        vm.oVal.wificheck = '不支持';
+        plus.nativeUI.closeWaiting();
+      } else if (hd[i].value === 'NOT PREPARED') {
+        wififirst = 1;
+        vm.oVal.wificheck = hd[i].value;
+        timerCheck('checkWIFI', 1, 'loading');
+      } else if (hd[i].value === 'CHECKING') {
+        wififirst = 1;
+        vm.oVal.wificheck = hd[i].value;
+        timerCheck('checkWIFI', 1, 'loading');
+      } else if (hd[i].value === 'SUCCESS' || hd[i].value === 'ALLUHF SUCCESS') {
+        if (wififirst === 0) {
+          wififirst = 1;
+          timerCheck('checkWIFI', 0, 'loading');
+        } else {
+          wififirst = 0;
+          vm.oVal.wificheck = '自检成功';
+          plus.nativeUI.closeWaiting();
+        }
+      } else if (hd[i].value === 'FAIL') {
+        vm.oVal.wificheck = '自检失败';
+        plus.nativeUI.closeWaiting();
+      }
+    }
+  }
+}
+
+
+
+
+//其它页面信息
+function getConfigOtherPageInfo(hd) {
+	for (var i = 0; i < hd.length; i++) {
+			if (hd[i].status === true) {
+					if (hd[i].hitSicData === "GET:DEVICE.VOICE_ENABLE") {
+							if (hd[i].value === 'ON') {
+								vm.voiceEnable = true;
+							} else {
+								vm.voiceEnable = false;
+							}
+					} else if (hd[i].hitSicData === "GET:DEVICE.AVAILABLE_LANGUAGE") {
+							vm.oVal.language = hd[i].value.split('|');
+					} else if (hd[i].hitSicData === "GET:DEVICE.CUR_LANGUAGE") {
+							vm.lanCheck = hd[i].value;
+					} else if (hd[i].hitSicData === "GET:DEVICE.EXPIRE_DATE") {
+							vm.oVal.regday = hd[i].value;
+					}
+			}
+	}
+	plus.nativeUI.closeWaiting();
+}
 //字符串数组转为number数组方法
 function transformNum (array){
 	for(i=0;i<array.length;i++){

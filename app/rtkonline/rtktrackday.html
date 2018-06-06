@@ -62,11 +62,11 @@
   var machineId = '';
   mui.plusReady(function () {
     mui.init({
-      beforeback: function () { },
+      beforeback: function () { }
     });
 
-    user_name = plus.storage.getItem("user_name");
-    token = plus.storage.getItem("token");
+    user_name = plus.storage.getItem('user_name');
+    token = plus.storage.getItem('token');
 
     var self = plus.webview.currentWebview();
     document.getElementById('title').innerHTML = self.identify_code + '轨迹';
@@ -79,7 +79,7 @@
     mui.ajax(apiUrl.map_url, {
       data: {
         user_name: user_name,
-        token: token,
+        token: token
       },
       dataType: 'json',
       type: 'post',

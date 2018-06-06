@@ -492,10 +492,10 @@
 									<span class="satellite-title">跟踪状态</span>
 									<div class="tracking-status">
 										<span>{{item.trackChecked}}</span>
-										<a @click="settrack(index)">修改跟踪频段</a>
+										<a @click="settrackNum(index)">修改跟踪频段</a>
 									</div>
 								</li>
-								<button class="ClearEphemeris">清除星历</button>
+								<button class="ClearEphemeris" v-on:tap="clearEphemerisPage()">清除星历</button>
 							</ul>
 						</div>
 
@@ -505,7 +505,7 @@
 								<li class="mui-table-view-cell">
 									<span class="otherTitle">使用语音</span>
 									<div class="otherContent">
-										<div class="mui-switch mui-active">
+										<div class="mui-switch" :class="{'mui-active':voiceEnable === true}">
 											<div class="mui-switch-handle"></div>
 										</div>
 									</div>
@@ -513,7 +513,7 @@
 								<li class="mui-table-view-cell">
 									<span class="otherTitle">选择语言</span>
 									<div class="otherContent select">
-										<select>
+										<select v-model="lanCheck">
 											<option v-for="item in language" :value="item.value">{{item.name}}</option>
 										</select>
 										<span></span>
@@ -531,23 +531,23 @@
 											</li>
 											<li>
 												<span>主板</span>
-												<button>启动自检</button>
-												<span>无动作</span>
+												<button @click="selfCheck('checkOEM')">启动自检</button>
+												<span>{{ oVal.oemcheck }}</span>
 											</li>
 											<li>
 												<span>电台</span>
-												<button>启动自检</button>
-												<span>无动作</span>
+												<button @click="selfCheck('checkUHF')">启动自检</button>
+												<span>{{ oVal.uhfcheck}}</span>
 											</li>
 											<li>
 												<span>网络</span>
-												<button>启动自检</button>
-												<span>无动作</span>
+												<button @click="selfCheck('checkNET')">启动自检</button>
+												<span> {{ oVal.netcheck}}</span>
 											</li>
 											<li>
 												<span>wifi</span>
-												<button>启动自检</button>
-												<span>无动作</span>
+												<button @click="selfCheck('checkWIFI')">启动自检</button>
+												<span>{{ oVal.wificheck}}</span>
 											</li>
 										</ul>
 									</div>
@@ -577,10 +577,10 @@
 									<span class="otherTitle">设备注册</span>
 									<div class="otherContent">
 										<span class="mainTitle">注册码期限</span>
-										<span class="deadline">20180303</span>
+										<span class="deadline">{{oVal.regday}}</span>
 									</div>
 									<div class="otherContent update">
-										<span class="mainTitle">注册码期限</span>
+										<span class="mainTitle">更新注册码</span>
 										<input type="text" />
 										<button>确认</button>
 									</div>
@@ -644,7 +644,7 @@
 						</li>
 					</ul>
 					<div class="btn">
-						<button v-on:tap="closeSetTrack()">取消</button><button>确认</button>
+						<button v-on:tap="closeSetTrack()">取消</button><button v-on:tap="setTrack(currentTrackIndex)">确认</button>
 					</div>
 				</div>
 			</div>
@@ -677,15 +677,29 @@
 							<button v-on:tap="closeSelectionLink">取消</button><button v-on:tap="changeLink(currentLinkIndex)">确认</button>
 						</div>
 					</div>
-				</div>
+			</div>
 
+			<!--**************************清除星历弹窗****************************-->
+			<div id="clearEphemeris" class="mui-popover track">
+				<div class="content">
+					<span>确认</span>
+					<hr>
+					<div>
+
+						<span>确定清除卫星星历？</span>
+					</div>
+					<div class="btn">
+						<button v-on:tap="closeClearEphemerisPage">取消</button><button v-on:tap="clearEphemeris()">确认</button>
+					</div>
+				</div>
+		</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/app.js"></script>
 		<script src="../../js/url.js"></script>
 		<script src="../../js/socket.io.js"></script>
 		<script src="../../js/vue.min.js"></script>
-		<script src="../js/onlineSettings.js"></script>
+		<script src="../js/onlineSettings.js?t=1"></script>
 	</body>
 
 </html>

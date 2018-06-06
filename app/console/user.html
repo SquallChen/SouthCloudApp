@@ -445,10 +445,12 @@
 				methods: {
 					openpage: function() {
 						var data_url = event.target.dataset.href;
+						var el = event.target.parentNode.parentNode;
 						mui.openWindow({
 							url: data_url,
 							id: data_url
 						});
+						mui.swipeoutClose(el);
 					}
 				},
 				created: function() {
@@ -486,6 +488,9 @@
 
 				}
 			});
+			(function($) {
+				
+			})(mui);
 		</script>
 	</body>
 
