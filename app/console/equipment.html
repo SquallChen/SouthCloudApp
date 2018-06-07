@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/custom.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
 		<style>
 			* {
 				padding: 0;
@@ -34,7 +35,7 @@
 				width: 80%;
 				height: 50px;
 				line-height: 50px;
-				font-size: 14px;
+				font-size: 13px;
 				padding-left: 20px;
 			}
 
@@ -58,8 +59,8 @@
 			.filter ul li {
 				display: flex;
 				align-items: center;
-				padding-left: 10px;
-				padding-right: 10px;
+				padding-left: 15px;
+				padding-right: 15px;
 				position: relative;
 				flex-wrap: wrap;
 			}
@@ -292,7 +293,14 @@
 				background-size: 19px 22px;
 				margin-left: 5px;
 			}
-
+			.icon-equipment-entry{
+				font-size: 26px;
+				color:#0b5fde;
+			}
+			.icon-equipment-select{
+				font-size: 26px;
+				color:#0b5fde;
+			}
 			.mui-content .mui-icon {
 				color: #ccc;
 				position: absolute;
@@ -334,13 +342,15 @@
 				<div class="filter">
 					<ul class="filter-ul">
 						<li href="../equipment/deviceEntry.html" class="filter-li">
-							<span class="userEntryImg"></span>
+							<!--<span class="userEntryImg"></span>-->
+							<span class="icon-equipment-entry"></span>
 							<a href="#">设备录入</a>
 							<span class="mui-icon mui-icon-arrowright"></span>
 							<span class="border_bottom"></span>
 						</li>
 						<li href="../equipment/equipmentFilter.html" class="filter-li">
-							<span class="userfilter"></span>
+							<!--<span class="userfilter"></span>-->
+							<span class="icon-equipment-select"></span>
 							<a href="#">设备筛选</a>
 							<span class="mui-icon mui-icon-arrowright"></span>
 							<span class="border_bottom"></span>
@@ -451,7 +461,6 @@
 			      // 登陆时存放到本地的数据
 			      vm.token = plus.storage.getItem('token');
 			      vm.user_name = plus.storage.getItem('user_name');
-			      console.log(plus.storage.getItem('token'));
 			      mui.ajax(apiUrl.device_list_page, {
 			        data: {
 			          user_name: plus.storage.getItem('user_name'),
@@ -496,13 +505,8 @@
 			        }
 			      });
 
-			      window.addEventListener('refresh', function () {
-			        console.log('要刷新数据了！！！！');
-			        // plus.webview.currentWebview().reload();
-			        //							 var h=plus.webview.currentWebview();
-			        //							console.log( "当前Webview窗口："+h.getURL() );
-			        //							h.reload();
-			        //							console.log('刷新完数据了！！！！');
+			      window.addEventListener('refreshDeviceInfo', function () {
+			        console.log('要刷新设备页面数据了！！！！');
 			      });
 			    });
 			  }

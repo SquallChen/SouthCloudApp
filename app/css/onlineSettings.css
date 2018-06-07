@@ -35,7 +35,28 @@
 				width: 78%;
 				margin-right: 6px;
 			}
-
+			.baseContent li>div:nth-child(1) {
+				width: 22%;
+				text-align: right;
+				margin-right: 20px;
+			}
+			/*.baseContent li>div:nth-child(2) {
+				width: 65%;
+				margin-right: 6px;
+			}*/
+			.baseContent li>div:nth-child(2) {
+				width: 78%;
+				margin-right: 6px;
+			}
+			.size{
+				font-size: 20px;
+			}
+			.green{
+				color:green;
+			}
+			.red{
+				color:red;
+			}
 			.modeTitle {
 				margin-top: 15px;
 				margin-bottom: 15px;

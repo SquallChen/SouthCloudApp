@@ -1,7 +1,6 @@
 // 链接url
-// var str = 'http://120.76.223.87:81';
-// var str = 'http://119.23.161.165:81';
-var str = 'http://lbs.southgnss.com:81';
+//var str = 'http://lbs.southgnss.com:81';
+   var str = 'http://192.168.1.100:9090';
 var apiUrl = {
   // 用户
   login: str + '/user/login',
@@ -10,6 +9,10 @@ var apiUrl = {
   module_desc: str + '/user/module_desc',
   register: str + '/user/register',
   check_token: str + '/user/check_token',
+  stuff_lists:str + '/user/stuff_lists',
+  add_stuff:str + '/user/add_stuff',
+  get_depart_info:str + '/user/get_depart_info',
+  get_role_info:str + '/user/get_role_info',
 
   // 设备
   device_list_page: str + '/device/list_page',

@@ -90,6 +90,9 @@
 			.mui-content{
 				background: white;
 			}
+			[v-cloak] {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -102,15 +105,15 @@
 			<div class="mui-content">
 				<div class="info">
 					<div class="pedding_top"></div>
-					<ul>
-						<li>
+					<ul class="filter-ul">
+						<li href="../personnel/userInfoModify.html" class="filter-li">
 							<div class="user_info">
 								<img src="../../public/img/01.jpg" alt="" />
 								<div>
 									<span>{{name}}</span>
 									<span>{{group}}</span>
 								</div>
-								<a href="../personnel/userInfoModify.html">
+								<a href="#">
 									<img src="../../public/img/modify.png" alt=""  class="modify"/>
 								</a>				
 							</div>
@@ -177,7 +180,21 @@
 					],
 				},
 				methods: {},
-				created: function() {}
+				created: function() {
+					 mui.plusReady(function () {
+      					mui.init({});
+      					window.addEventListener('refreshUserInfo', function () {
+						        console.log('要刷新用户页面数据了！！！！');
+						 });
+						 mui('.filter-ul').on('tap', '.filter-li', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
+						});
+      				})
+				}
 			});
 		</script>
 	</body>

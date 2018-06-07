@@ -89,7 +89,8 @@
 
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
-				height: 73px;
+				height:52px;
+				top:21px;
 				display: flex;
 				align-items: center;
 			}
@@ -135,7 +136,11 @@
 					</div>
 					<div class="mui-input-row">
 						<label>用户名称</label>
-						<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户名称">
+						<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户昵称">
+					</div>
+					<div class="mui-input-row">
+						<label>真实姓名</label>
+						<input v-model="realName" id="realName" type="text" class="mui-input-clear mui-input" placeholder="请输入真实姓名">
 					</div>
 					<div class="mui-input-row">
 						<label>密码</label>
@@ -150,7 +155,7 @@
 						<div>
 							<select name="" v-model="organizationvalue">
 								<option value disabled selected>请选择组织机构...</option>
-								<option v-for="item in organization" :value="item.value">{{item.name}}</option>
+								<option v-for="item in organization" :value="item.description">{{item.departname}}</option>
 							</select>
 							<img src="../../public/img/dropdown.png" alt="" class="down" />
 						</div>
@@ -161,7 +166,7 @@
 						<div>
 							<select v-model="rolevalue">
 								<option value disabled selected>请选择角色...</option>
-								<option v-for="item in role" :value="item.value">{{item.name}}</option>
+								<option v-for="item in role" :value="item.rolecode">{{item.rolename}}</option>
 							</select>
 							<span>Selected: {{ role }}</span>
 							<img src="../../public/img/dropdown.png" alt="" class="down" />
@@ -181,7 +186,7 @@
 					</div>
 				</form>
 
-				<button class="management" v-on:tap="test">确  定</button>
+				<button class="management" v-on:tap="userEntry">确  定</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -189,72 +194,75 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script>
+			var user_page = null;
 			var vm = new Vue({
 			  el: '#app',
 			  user_name: '',
 			  token: '',
 			  data: {
-			    account: '',
-			    userName: '',
-			    password: '',
-			    password2: '',
-			    mobilePhone: '',
+			    account: '123456789',
+					userName: 'xiaozhang',
+					realName:'小张',
+			    password: '123456',
+			    password2: '123456',
+			    mobilePhone: '987654321',
 			    email: '',
 			    mobile: '',
 			    organizationvalue: '',
-			    rolevalue: '',
-			    organization: [{
-			      name: '南方卫星导航',
-			      value: 0
-			    },
-			    {
-			      name: '设备初始激活组织',
-			      value: 1
-			    },
-			    {
-			      name: '南方测绘集团总部',
-			      value: 2
-			    },
-			    {
-			      name: '震源导航',
-			      value: 3
-			    },
-			    {
-			      name: '南方质量追踪',
-			      value: 4
-			    }
-			    ],
-			    role: [{
-			      name: '管理员',
-			      value: 0
-			    },
-			    {
-			      name: '南方管理员',
-			      value: 1
-			    },
-			    {
-			      name: '南方外贸管理员',
-			      value: 2
-			    },
-			    {
-			      name: '仪器管理员',
-			      value: 3
-			    }
-			    ]
+					rolevalue: '',
+					organization:[],
+					role:[],
+			    // organization: [{
+			    //   name: '南方卫星导航',
+			    //   value: 0
+			    // },
+			    // {
+			    //   name: '设备初始激活组织',
+			    //   value: 1
+			    // },
+			    // {
+			    //   name: '南方测绘集团总部',
+			    //   value: 2
+			    // },
+			    // {
+			    //   name: '震源导航',
+			    //   value: 3
+			    // },
+			    // {
+			    //   name: '南方质量追踪',
+			    //   value: 4
+			    // }
+			    // ],
+			    // role: [{
+			    //   name: '管理员',
+			    //   value: 0
+			    // },
+			    // {
+			    //   name: '南方管理员',
+			    //   value: 1
+			    // },
+			    // {
+			    //   name: '南方外贸管理员',
+			    //   value: 2
+			    // },
+			    // {
+			    //   name: '仪器管理员',
+			    //   value: 3
+			    // }
+			    // ]
 			  },
 			  methods: {
-			    send: function () {
-			      console.log('track.......');
-			      if (this.account === '') {
+			    userEntry: function () {
+						if (this.account === '') {
 			        mui.toast('请输入用户账号!');
 			        return;
 			      }
 			      if (this.userName === '') {
 			        mui.toast('请输入用户名称!');
 			        return;
-			      }
-			      if (this.mobilePhone === '') {
-			        mui.toast('请输入手机号码！');
+						}
+						if (this.realName === '') {
+			        mui.toast('请输入真实名称!');
 			        return;
 			      }
 			      if (this.password === '') {
@@ -269,14 +277,14 @@
 			        mui.toast('两次密码输入不一致！');
 			        return;
 			      }
-			      if (this.email === '') {
-			        mui.toast('请输入邮箱！');
-			        return;
-			      }
-			      if (this.mobile === '') {
-			        mui.toast('请输入办公电话！');
-			        return;
-			      }
+			      // if (this.email === '') {
+			      //   mui.toast('请输入邮箱！');
+			      //   return;
+			      // }
+			      // if (this.mobile === '') {
+			      //   mui.toast('请输入办公电话！');
+			      //   return;
+			      // }
 			      if (this.organizationvalue === '') {
 			        mui.toast('请选择组织机构！');
 			        return;
@@ -284,18 +292,87 @@
 			      if (this.rolevalue === '') {
 			        mui.toast('请选择角色！');
 			        return;
-			      }
-			      if (this.accountstatusvalue === '') {
-			        mui.toast('请选择账号状态设置！');
+						}
+						if (this.mobilePhone === '') {
+			        mui.toast('请输入手机号码！');
 			        return;
 			      }
-			      console.log('信息完整，可以进行下一步');
-			    },
-			    test: function () {
-			      mui.toast('此处调用用户录入接口....');
+						mui.ajax(apiUrl.add_stuff, {
+			        data: {
+			          user_name: plus.storage.getItem('user_name'),
+								token: plus.storage.getItem('token'),
+								nick_name:vm.userName,
+								real_name:vm.realName,
+								password:vm.password2,
+								org_id:vm.organizationvalue,
+								role_id:vm.rolevalue,
+								mobile_phone:vm.mobilePhone,
+								office_phone:vm.mobile,
+								email:vm.email,
+								depart_name:''
+			        },
+			        dataType: 'json',
+			        type: 'post',
+			        timeout: 10000,
+			        success: function (data) {
+								console.log('创建用户返回信息'+JSON.stringify(data));
+			        },
+			        error: function (xhr, type, errorThrown) {
+			          // 异常处理；
+			          plus.nativeUI.closeWaiting();
+			        }
+						});
+
+			      if (user_page == null) {
+                    user_page = plus.webview.getWebviewById('user.html');
+                  }
+                  mui.fire(user_page, 'refreshUserInfo', {
+                    // 暂时没有需要传的参数
+                  });
+                  //plus.webview.currentWebview().close();
 			    }
 			  },
-			  created: function () {}
+			  created: function () {
+					mui.plusReady(function () {
+						mui.ajax(apiUrl.get_depart_info, {
+			        data: {
+			          user_name: plus.storage.getItem('user_name'),
+								token: plus.storage.getItem('token'),
+			        },
+			        dataType: 'json',
+			        type: 'post',
+			        timeout: 10000,
+			        success: function (data) {
+								console.log('组织信息'+JSON.stringify(data));
+								vm.organization = data.departs;
+								console.log('11111111111+'+JSON.stringify(vm.organization));
+			        },
+			        error: function (xhr, type, errorThrown) {
+			          // 异常处理；
+			          plus.nativeUI.closeWaiting();
+			        }
+						})
+					});
+					mui.plusReady(function () {
+						mui.ajax(apiUrl.get_role_info, {
+			        data: {
+			          user_name: plus.storage.getItem('user_name'),
+								token: plus.storage.getItem('token'),
+			        },
+			        dataType: 'json',
+			        type: 'post',
+			        timeout: 10000,
+			        success: function (data) {
+								console.log('角色信息'+JSON.stringify(data));
+								vm.role = data.role;
+			        },
+			        error: function (xhr, type, errorThrown) {
+			          // 异常处理；
+			          plus.nativeUI.closeWaiting();
+			        }
+						});
+					})
+				}
 			});
 
 			mui.plusReady(function () {

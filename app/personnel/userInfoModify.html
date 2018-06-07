@@ -60,23 +60,24 @@
 			input[type=text] {
 				height: 50px;
 			}
+			
 			.mui-input-row select {
 				height: 50px;
 			}
-			body{
+			
+			body {
 				background: #fff;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:73px;
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 73px;
 				display: flex;
 				align-items: center;
 			}
-			
-			
-			
-
-			
+			[v-cloak] {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -140,6 +141,9 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script>
+			var userinfo_page = null;
+			var me_page = null;
+			var user_page = null;
 			var vm = new Vue({
 				el: '#app',
 				data: {
@@ -193,56 +197,85 @@
 				},
 				methods: {
 					send: function() {
-//						console.log('track.......');
-//						if(this.account === '') {
-//							mui.toast('请输入用户账号!');
-//							return;
-//						}
-//						if(this.userName === '') {
-//							mui.toast('请输入用户名称!');
-//							return;
-//						}
-//						if(this.mobilePhone === '') {
-//							mui.toast('请输入手机号码！');
-//							return;
-//						}
-//						if(this.password === '') {
-//							mui.toast('请输入密码！');
-//							return;
-//						}
-//						if(this.password2 === '') {
-//							mui.toast('请再次输入密码！');
-//							return;
-//						}
-//						if(this.password !== this.password2) {
-//							mui.toast('两次密码输入不一致！');
-//							return;
-//						}
-//						if(this.email === '') {
-//							mui.toast('请输入邮箱！');
-//							return;
-//						}
-//						if(this.mobile === '') {
-//							mui.toast('请输入办公电话！');
-//							return;
-//						}
-//						if(this.organizationvalue === '') {
-//							mui.toast('请选择组织机构！');
-//							return;
-//						}
-//						if(this.rolevalue === '') {
-//							mui.toast('请选择角色！');
-//							return;
-//						}
-//						if(this.accountstatusvalue === '') {
-//							mui.toast('请选择账号状态设置！');
-//							return;
-//						}
-//						console.log('信息完整，可以进行下一步')
-						 mui.toast('此处调用用户信息修改接口....');
+						//						console.log('track.......');
+						//						if(this.account === '') {
+						//							mui.toast('请输入用户账号!');
+						//							return;
+						//						}
+						//						if(this.userName === '') {
+						//							mui.toast('请输入用户名称!');
+						//							return;
+						//						}
+						//						if(this.mobilePhone === '') {
+						//							mui.toast('请输入手机号码！');
+						//							return;
+						//						}
+						//						if(this.password === '') {
+						//							mui.toast('请输入密码！');
+						//							return;
+						//						}
+						//						if(this.password2 === '') {
+						//							mui.toast('请再次输入密码！');
+						//							return;
+						//						}
+						//						if(this.password !== this.password2) {
+						//							mui.toast('两次密码输入不一致！');
+						//							return;
+						//						}
+						//						if(this.email === '') {
+						//							mui.toast('请输入邮箱！');
+						//							return;
+						//						}
+						//						if(this.mobile === '') {
+						//							mui.toast('请输入办公电话！');
+						//							return;
+						//						}
+						//						if(this.organizationvalue === '') {
+						//							mui.toast('请选择组织机构！');
+						//							return;
+						//						}
+						//						if(this.rolevalue === '') {
+						//							mui.toast('请选择角色！');
+						//							return;
+						//						}
+						//						if(this.accountstatusvalue === '') {
+						//							mui.toast('请选择账号状态设置！');
+						//							return;
+						//						}
+						//						console.log('信息完整，可以进行下一步')
+						if(userinfo_page == null) {
+							userinfo_page = plus.webview.getWebviewById('userinfo.html');
+						}
+						if(user_page == null) {
+							user_page = plus.webview.getWebviewById('user.html');
+						}
+						if(me_page == null) {
+							me_page = plus.webview.getWebviewById('me.html');
+						}
+						mui.fire(userinfo_page, 'refreshUserInfo', {
+							// 暂时没有需要传的参数
+						});
+						mui.fire(user_page, 'refreshUserInfo', {
+							// 暂时没有需要传的参数
+						});
+						mui.fire(me_page, 'mePageInfo', {
+							// 暂时没有需要传的参数
+						});
+						mui.toast('此处调用用户信息修改接口....');
+						plus.webview.currentWebview().close();
+						
 					}
 				},
-				created: function() {}
+				created: function() {
+					mui.plusReady(function () {
+						mui.init({
+//							 preloadPages: [{
+//					          id: 'userinfo.html',
+//					          url: './userinfo.html'
+//						     }]
+						})
+					})
+				}
 			});
 		</script>
 	</body>

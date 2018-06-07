@@ -93,7 +93,8 @@
 			}
 			.mui-bar-nav.mui-bar .mui-icon{
 				width:73px;
-				height:73px;
+				height:52px;
+				top:21px;
 				display: flex;
 				align-items: center;
 			}
@@ -133,6 +134,9 @@
 			}input[type=text]:focus{
 				border:1px solid #0b60de;
 			}
+			[v-cloak] {
+				display: none;
+			}
 		</style>
 	</head>
 
@@ -166,6 +170,7 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script>
+			var user_page = null;
 			var vm = new Vue({
 			  el: '#app',
 			  data: {
@@ -195,7 +200,14 @@
 			  },
 			  methods: {
 			    test: function () {
-			      mui.toast('此处调用用户筛选接口....');
+		    	 if (user_page == null) {
+                    user_page = plus.webview.getWebviewById('user.html');
+                  }
+                  mui.fire(user_page, 'refreshUserInfo', {
+                    // 暂时没有需要传的参数
+                  });
+  			      mui.toast('此处调用用户筛选接口....');
+                  plus.webview.currentWebview().close();
 			    }
 			  },
 			  created: function () {}

@@ -547,7 +547,10 @@
 					"app/index/forgetpw.html",
 					"index.html",
 					"app/index/register.html",
-					"app/console/equipment.html"
+					"app/console/equipment.html",
+					"app/console/user.html",
+					"app/personnel/userinfo.html",
+					"app/console/me.html"
 				],
 				"priority": 0
 			},
@@ -1690,6 +1693,13 @@
 					"fonts/mui.ttf"
 				],
 				"refer": [],
+				"priority": 0
+			},
+			"app/equipment/deviceEntry.html": {
+				"resources": [],
+				"refer": [
+					"app/console/equipment.html"
+				],
 				"priority": 0
 			}
 		},

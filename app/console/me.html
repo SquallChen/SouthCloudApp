@@ -473,9 +473,6 @@
 			      // 登陆时存放到本地的数据
 			      vm.token = plus.storage.getItem('token');
 			      vm.user_name = plus.storage.getItem('user_name');
-			      vm.rtkCount = plus.storage.getItem('rtkCount') || 0;
-			      vm.onlineRtkCount = plus.storage.getItem('onlineRtkCount') || 0;
-			      vm.mapRtk = plus.storage.getItem('mapRtk') || 0;
 
 			      document.getElementById('logout').addEventListener('tap', function () {
 			        mui('#logout').button('loading');
@@ -512,6 +509,9 @@
 			          }
 			        });
 			      });
+			      window.addEventListener('mePageInfo', function () {
+			        	console.log('刷新我的页面数据！！！！');
+				    });
 			    });
 			  }
 			});

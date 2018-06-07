@@ -39,6 +39,7 @@ var vm = new Vue({
 		currentIdentifyCode: '',
 		currentSatelliteIndex:'',
 		currentTrackIndex:'',
+		currentTabIndex:1,
 		workMode: '',
 		linkMode:'',
 		clientUUid: '',
@@ -61,6 +62,7 @@ var vm = new Vue({
 		navActive: 'workPage',
 		voiceEnable:true,
 		lanCheck: 'CHINESE',
+		baseSetStatus:1,
 		// 基准
 		bVal: {
 			'rtmRadios': 'RTCA',
@@ -2143,7 +2145,7 @@ var vm = new Vue({
 				});
 			} else {
 				e.href="#item1mobile";
-				//firstGetConfigWorkModePageInfo('closeWaiting');
+				firstGetConfigWorkModePageInfo('closeWaiting');
 			}
 		},
 		// 工作模式切换
@@ -2518,8 +2520,9 @@ var vm = new Vue({
 				timeout: 10000,
 				success: function(data) {
 					if(data.status == 0) {
-						timeFun(data, baseSet, '设置超时，请稍候再试！');
+						timeFun(data, baseSet, '设置基准站超时，请稍候再试！');
 					} else {
+						vm.baseSetStatus = 2;
 						mui.toast(data.info);
 						plus.nativeUI.closeWaiting();
 					}
@@ -3290,6 +3293,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 								mui.toast(data.info);
 							}
 						} else if(data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
+							isSetSuccess(vm.socketTip);
 							errTip(typeModel);
 							mui.confirm(
 								'',
@@ -3304,22 +3308,24 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 								'div'
 							);
 						} else if(data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
+							isSetSuccess(vm.socketTip);
 							errTip(typeModel);
 							mui.toast('设备操作被中断，请稍后再试!');
 						} else if(data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
+							isSetSuccess(vm.socketTip);
 							errTip(typeModel);
-							console.log(111111);
 							mui.toast('设置超时，操作失败！');
 						} else if(data.uniqueId === theunique_id) {
+							isSetSuccess(vm.socketTip);
 							errTip(typeModel);
-							console.log(22222);
 							mui.toast('设置超时，操作失败！');
 						} else {
+							isSetSuccess(vm.socketTip);
 							errTip(typeModel);
-							console.log(3333333);
 							mui.toast('设置超时，操作失败！');
 						}
 					} else {
+						isSetSuccess(vm.socketTip);
 						mui.toast(data.info);
 						plus.nativeUI.closeWaiting();
 					}
@@ -3327,6 +3333,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
 			});
 		}, time);
 	} else {
+		isSetSuccess(vm.socketTip);
 		mui.toast(data.info);
 		plus.nativeUI.closeWaiting();
 	}
@@ -3438,6 +3445,7 @@ function getConfigWorkModePageInfo(hd) {
 			}
 		}
 	}
+	vm.currentTabIndex = 1;
 	//plus.nativeUI.closeWaiting();
 }
 
@@ -3712,6 +3720,7 @@ function baseSet(hd) {
       }
     }
 	}
+  	vm.baseSetStatus = 1;
 	plus.nativeUI.closeWaiting();
 	mui.toast('设置成功！');
 }
@@ -3834,6 +3843,7 @@ function getConfigDataLinkPageInfo(hd) {
 		}
     plus.nativeUI.closeWaiting();
   }
+  vm.currentTabIndex = 2;
 }
 
 /* 数据链中的移动网络设置*/
@@ -4017,6 +4027,7 @@ function getConfigSatellitePageInfo(hd) {
 			};
 		}
 	}
+  	vm.currentTabIndex = 3;
 	plus.nativeUI.closeWaiting();
 }
 
@@ -4200,6 +4211,7 @@ function getConfigOtherPageInfo(hd) {
 					}
 			}
 	}
+	vm.currentTabIndex = 4;
 	plus.nativeUI.closeWaiting();
 }
 //字符串数组转为number数组方法
@@ -4209,6 +4221,11 @@ function transformNum (array){
 	}
 }
 
+function isSetSuccess(v){
+	if(v==='设置基准站超时，请稍候再试！'){
+		vm.baseSetStatus = 2;
+	}
+}
 /*封装的操作函数*/
 function $(elements) {
 	return document.getElementById(elements);
