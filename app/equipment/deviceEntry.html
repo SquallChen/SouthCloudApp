@@ -12,14 +12,15 @@
 			[v-cloak] {
 				display: none;
 			}
+			
 			.select {
 				display: flex;
 			}
-
+			
 			.select div {
 				width: 65%;
 			}
-
+			
 			.select .down {
 				width: 10px;
 				height: 7px;
@@ -27,14 +28,16 @@
 				top: 16px;
 				right: 15px;
 			}
-
+			
 			select {
 				margin-bottom: 0;
 			}
-			.padding_top{
-				height:21px;
+			
+			.padding_top {
+				height: 21px;
 				background: #f2f2f2;
 			}
+			
 			.management {
 				width: 100%;
 				height: 50px;
@@ -43,78 +46,99 @@
 				color: white;
 				font-size: 20px;
 				margin-top: 30px;
-				border:none;
+				border: none;
 				border-radius: 4px;
 			}
-			.management:active{
+			
+			.management:active {
 				background: #0b5fde !important;
 			}
+			
 			.mui-input-row label {
 				padding: 0 15px 0 0;
 				height: 36px;
 				line-height: 36px;
 				color: #333;
-				width:25%;
+				width: 25%;
 				text-align: right;
 				/*margin-right: 25px;*/
 			}
-			.mui-input-group .mui-input-row{
+			
+			.mui-input-group .mui-input-row {
 				margin-top: 20px;
 				position: relative;
 				display: flex;
 			}
+			
 			input[type=text] {
 				height: 40px;
 			}
-			input::-webkit-input-placeholder{
-				color:#999;
+			
+			input::-webkit-input-placeholder {
+				color: #999;
 			}
+			
 			.mui-input-row select {
 				height: 40px;
 			}
-			.mui-input-row label~input{
+			
+			.mui-input-row label~input {
 				padding-left: 10px;
 				float: left;
-				width:79%;
-				border:1px solid #ccc;
+				width: 79%;
+				border: 1px solid #ccc;
 				border-radius: 4px;
 				height: 36px;
 			}
-			.mui-input-group .mui-input-row:after{
-				left:0;
+			
+			.mui-input-group .mui-input-row:after {
+				left: 0;
 				background-color: #ccc;
 			}
-			.mui-input-group .mui-input-row{
+			
+			.mui-input-group .mui-input-row {
 				height: 36px;
 			}
-			body{
+			
+			body {
 				background: #f2f2f2;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:52px;
-				top:21px;
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
 				display: flex;
 				align-items: center;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before{
-				content:'';
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
 			}
-			.back{
+			
+			.back {
 				display: block;
 				width: 10px;
 				height: 16px;
-				background:url('../../public/img/back.png') no-repeat;
+				background: url('../../public/img/back.png') no-repeat;
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			.mui-input-group{
+			
+			.mui-input-group {
 				padding: 0 20px;
 			}
-			body,.mui-content{
-				background: white;;
+			
+			body,
+			.mui-content {
+				background: white;
+				;
 			}
-			.mui-input-group:before,.mui-input-group:after,.mui-input-group .mui-input-row:after{
+			
+			.mui-input-group:before,
+			.mui-input-group:after,
+			.mui-input-group .mui-input-row:after {
 				height: 0;
 			}
 		</style>
@@ -133,11 +157,11 @@
 				<form class="mui-input-group">
 					<div class="mui-input-row">
 						<label>机身号:</label>
-						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" placeholder="请输入机身号">
+						<input v-model="deviceId" id="deviceId" type="text" class="mui-input-clear mui-input" placeholder="请输入机身号">
 					</div>
 				</form>
 				<div style="width:100%;padding: 0 20px;">
-					<button class="management" v-on:tap="send">完  成</button>
+					<button class="management" v-on:tap="diviceEntry">完  成</button>
 				</div>
 			</div>
 		</div>
@@ -145,124 +169,76 @@
 		<script src="../../js/app.js"></script>
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
-		<script> 
+		<script>
 			var equipment_page = null;
 			var vm = new Vue({
-			  el: '#app',
-			  data: {
-			    account: '',
-			    userName: '',
-			    password: '',
-			    password2: '',
-			    mobilePhone: '',
-			    email: '',
-			    mobile: '',
-			    organizationvalue: '',
-			    rolevalue: '',
-			    organization: [{
-			      name: '南方卫星导航',
-			      value: 0
-			    },
-			    {
-			      name: '设备初始激活组织',
-			      value: 1
-			    },
-			    {
-			      name: '南方测绘集团总部',
-			      value: 2
-			    },
-			    {
-			      name: '震源导航',
-			      value: 3
-			    },
-			    {
-			      name: '南方质量追踪',
-			      value: 4
-			    }
-			    ],
-			    role: [{
-			      name: '管理员',
-			      value: 0
-			    },
-			    {
-			      name: '南方管理员',
-			      value: 1
-			    },
-			    {
-			      name: '南方外贸管理员',
-			      value: 2
-			    },
-			    {
-			      name: '仪器管理员',
-			      value: 3
-			    }
-			    ]
-			  },
-			  methods: {
-			    send: function () {
-			      // console.log('track.......');
-			      // if (this.account === '') {
-			      //   mui.toast('请输入用户账号!');
-			      //   return;
-			      // }
-			      // if (this.userName === '') {
-			      //   mui.toast('请输入用户名称!');
-			      //   return;
-			      // }
-			      // if (this.mobilePhone === '') {
-			      //   mui.toast('请输入手机号码！');
-			      //   return;
-			      // }
-			      // if (this.password === '') {
-			      //   mui.toast('请输入密码！');
-			      //   return;
-			      // }
-			      // if (this.password2 === '') {
-			      //   mui.toast('请再次输入密码！');
-			      //   return;
-			      // }
-			      // if (this.password !== this.password2) {
-			      //   mui.toast('两次密码输入不一致！');
-			      //   return;
-			      // }
-			      // if (this.email === '') {
-			      //   mui.toast('请输入邮箱！');
-			      //   return;
-			      // }
-			      // if (this.mobile === '') {
-			      //   mui.toast('请输入办公电话！');
-			      //   return;
-			      // }
-			      // if (this.organizationvalue === '') {
-			      //   mui.toast('请选择组织机构！');
-			      //   return;
-			      // }
-			      // if (this.rolevalue === '') {
-			      //   mui.toast('请选择角色！');
-			      //   return;
-			      // }
-			      // if (this.accountstatusvalue === '') {
-			      //   mui.toast('请选择账号状态设置！');
-			      //   return;
-			      // }
-			      // console.log('信息完整，可以进行下一步');
-			      
-			       if (equipment_page == null) {
-                    equipment_page = plus.webview.getWebviewById('equipment.html');
-                  }
-                  mui.fire(equipment_page, 'refreshDeviceInfo', {
-                    // 暂时没有需要传的参数
-                  });
-                  mui.toast('此处调用设备录入接口....');
-                  plus.webview.currentWebview().close();
-			    }
-			  },
-			  created: function () {
-			  	mui.plusReady(function () {
-			  		mui.init({
-			  		})
-			  	})
-			  }
+				el: '#app',
+				data: {
+					deviceId: '',
+					userName: '',
+					password: '',
+					password2: '',
+					mobilePhone: '',
+					email: '',
+					mobile: '',
+					organizationvalue: '',
+					rolevalue: '',
+				},
+				methods: {
+					diviceEntry: function() {
+						if(equipment_page == null) {
+							equipment_page = plus.webview.getWebviewById('equipment.html');
+						}
+						mui.fire(equipment_page, 'refreshDeviceInfo', {
+							// 暂时没有需要传的参数
+						});
+						mui.toast('设备录入成功....');
+						plus.webview.currentWebview().close();
+						//			    	 if (this.deviceId === '') {
+						//			         mui.toast('机身号不能为空！');
+						//			         return;
+						//			       }
+						//			    	if (/^[A-Z0-9]{10,18}$/.test(this.deviceId)!==true) {
+						//			         mui.toast('设备编号为 10-18 位的大写字母、数字组合！');
+						//			         return;
+						//			       } 
+						//					mui.ajax(apiUrl.deviceMachineAdd, {
+						//				        data: {
+						//				          user_name: plus.storage.getItem('user_name'),
+						//							token: plus.storage.getItem('token'),
+						//							identify_code:vm.deviceId
+						//				        },
+						//				        dataType: 'json',
+						//				        type: 'post',
+						//				        timeout: 10000,
+						//				        success: function (data) {
+						//							console.log('新建设备返回信息'+JSON.stringify(data));
+						//							 if (equipment_page == null) {
+						//			                    equipment_page = plus.webview.getWebviewById('equipment.html');
+						//			                  }
+						//			                  mui.fire(equipment_page, 'refreshDeviceInfo', {
+						//			                    // 暂时没有需要传的参数
+						//			                  });
+						//			                  mui.toast('设备录入成功....');
+						//			                  plus.webview.currentWebview().close();
+						//				        },
+						//			        error: function (xhr, type, errorThrown) {
+						//			          // 异常处理；
+						//			          plus.nativeUI.closeWaiting();
+						//			        }
+						//					});
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({})
+						preloadPages: [{
+								id: 'equipment.html',
+								url: '../app/console/equipment.html'
+							}
+						]
+					})
+				}
 			});
 		</script>
 	</body>

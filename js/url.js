@@ -1,6 +1,6 @@
 // 链接url
-//var str = 'http://lbs.southgnss.com:81';
-   var str = 'http://192.168.1.100:9090';
+var str = 'http://lbs.southgnss.com:81';
+  //  var str = 'http://192.168.1.100:9090';
 var apiUrl = {
   // 用户
   login: str + '/user/login',
@@ -8,11 +8,11 @@ var apiUrl = {
   phone_code: str + '/user/phone_code',
   module_desc: str + '/user/module_desc',
   register: str + '/user/register',
-  check_token: str + '/user/check_token',
-  stuff_lists:str + '/user/stuff_lists',
-  add_stuff:str + '/user/add_stuff',
-  get_depart_info:str + '/user/get_depart_info',
-  get_role_info:str + '/user/get_role_info',
+  check_token: str + '/user/checkk_token',
+  stuff_lists: str + '/user/stuff_lists',
+  add_stuff: str + '/user/add_stuff',
+  get_depart_info: str + '/user/get_depart_info',
+  get_role_info: str + '/user/get_role_info',
 
   // 设备
   device_list_page: str + '/device/list_page',
@@ -20,7 +20,7 @@ var apiUrl = {
   detail_info: str + '/device/detail_info',
   doSendConfig: str + '/device/do_send_config',
   // doSendConfig: str + '/device/doSendConfig',
-  doRequestConnectStatusMonitor: str + '/device/doRequestConnectStatusMonitor',
+  doRequestConnectStatusMonitor: str + '/device/monitor_connect_status',
   doGetUniqueIdInfo: str + '/device/do_get_uniqueid_Info',
   // doGetUniqueIdInfo: str + '/device/doGetUniqueIdInfo',
   track_info_page: str + '/device/track_info_page',
@@ -29,6 +29,7 @@ var apiUrl = {
   map_url: str + '/device/map_url',
   change_work_mode: str + '/device/change_work_mode',
   rtkTrackPointDetail: str + '/device/rtkTrackPointDetail',
+  deviceMachineAdd: str + '/device/deviceMachineAdd',
 
   // 数据
   data_list_page: str + '/data/list_page',

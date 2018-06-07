@@ -16,6 +16,7 @@
 			ul{
 				list-style: none;
 				padding-left: 0;
+				margin-bottom: 30px;
 			}
 			.mui-bar-nav.mui-bar .mui-icon{
 				width:73px;
@@ -24,19 +25,21 @@
 				align-items: center;
 			}
 			.info{
-				padding: 20px 20px 20px 0;
+				padding: 0 20px 20px 20px;
 			}
-
 			.info span{
 				display: inline-block;
+				font-size: 13px;
+				line-height: 36px;
 			}
 			.info span:nth-child(1){
-				margin-bottom: 16px;
-				min-width: 35%;
+				width: 65px;
 				text-align: right;
 			}
 			.info ul li{
 				display: flex;
+				margin-bottom: 10px;
+				height: 36px;
 			}
 			.mui-content{
 				background: white;
@@ -47,11 +50,59 @@
 				border: none;
 				float: right;
 				width: 60px;
-				height: 73px;
+				height: 52px;
+				top: 21px;
 				text-align: center;
 			}
 			.info ul li input{
-				/*width:200px;*/
+				height:36px;
+				flex:1;
+			}
+			.mui-bar-nav.mui-bar .mui-icon{
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			.mui-icon-back:before, .mui-icon-left-nav:before {
+				content: '';
+				}
+			[v-cloak] {
+				display: none;
+			}
+			.padding_top{
+				height:21px;
+				background: #f2f2f2;
+			}
+			.padding_top:after{
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			button{
+				width:100%;
+				height: 36px;
+				background: #3b88fb;
+				color: white;
+				border-radius: 4px;
+			}
+			button:active{
+				color:#0b5fde;
 			}
 		</style>
 	</head>
@@ -59,11 +110,13 @@
 	<body>
 		<div id="app" v-cloak>
 			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
 				<h1 class="mui-title">工作组</h1>
-				<button id="determine">完成</button>
 			</header>
 			<div class="mui-content">
+				<div class="padding_top"></div>
 				<div class="info">
 					<div>
 						<ul>
@@ -80,6 +133,7 @@
 								<input type="text" />
 							</li>
 						</ul>
+						<button v-on:tap="changeGroup">完  成</button>
 					</div>
 				</div>
 			</div>
@@ -96,7 +150,12 @@
 					group:'高手组',
 					account: '653685',
 				},
-				methods: {},
+				methods: {
+					changeGroup:function(){
+						mui.toast('修改成功！')
+						plus.webview.currentWebview().close();
+					}
+				},
 				created: function() {}
 			});
 		</script>

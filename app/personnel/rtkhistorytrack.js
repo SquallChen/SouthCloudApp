@@ -319,7 +319,7 @@ olMap.on('singleclick', function (evt) {
   });
   if (feature === null || feature === undefined) return;
   var pointInfo = feature.getProperties();
-  getPointInfo(pointInfo.rand_uuid);
+  getPointInfo(pointInfo.id);
 }, pointLayerSelect);
 
 var moveFeature;

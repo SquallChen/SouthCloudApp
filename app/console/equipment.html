@@ -461,7 +461,62 @@
 			      // 登陆时存放到本地的数据
 			      vm.token = plus.storage.getItem('token');
 			      vm.user_name = plus.storage.getItem('user_name');
-			      mui.ajax(apiUrl.device_list_page, {
+			      getDeviceListData();
+//			      mui.ajax(apiUrl.device_list_page, {
+//			        data: {
+//			          user_name: plus.storage.getItem('user_name'),
+//			          token: plus.storage.getItem('token'),
+//			          num_per_page: 20000
+//			        },
+//			        dataType: 'json',
+//			        type: 'post',
+//			        timeout: 10000,
+//			        success: function (data) {
+//			          if (data.status === 0) {
+//			            var tempData = data.recordList;
+//			            var tempArray = [];
+//			            // 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+//			            for (var i = 0; i < tempData.length; i++) {
+//			              if (tempData[i].onlineStatus === 1) {
+//			                tempArray.push(tempData[i]);
+//			                tempData.splice(i, 1);
+//			              }
+//			            }
+//			            for (var i = 0; i < tempArray.length; i++) {
+//			              tempData.unshift(tempArray[i]);
+//			            }
+//			            // 完成排列处理的数组数据添加到页面上渲染
+//			            vm.deviceData = tempData;
+//			          } else if (data.status === 40004) {
+//			            mui.openWindow({
+//			              url: '../../login.html',
+//			              id: 'login'
+//			            });
+//			          } else {
+//			            plus.nativeUI.toast(data.info);
+//			            setTimeout(function () {
+//			              plus.nativeUI.closeWaiting();
+//			            }, 1000);
+//			          }
+//			        },
+//			        error: function (xhr, type, errorThrown) {
+//			          // 异常处理；
+//			          onNetChange();
+//			          plus.nativeUI.closeWaiting();
+//			        }
+//			      });
+
+			      window.addEventListener('refreshDeviceInfo', function () {
+			        console.log('要刷新设备页面数据了！！！！');
+			        getDeviceListData();
+			      });
+			    });
+			  }
+			});
+			function getDeviceListData (){
+				console.log('换种方法刷新')
+				vm.deviceData= '';
+				mui.ajax(apiUrl.device_list_page, {
 			        data: {
 			          user_name: plus.storage.getItem('user_name'),
 			          token: plus.storage.getItem('token'),
@@ -504,13 +559,7 @@
 			          plus.nativeUI.closeWaiting();
 			        }
 			      });
-
-			      window.addEventListener('refreshDeviceInfo', function () {
-			        console.log('要刷新设备页面数据了！！！！');
-			      });
-			    });
-			  }
-			});
+			}
 		</script>
 	</body>
 

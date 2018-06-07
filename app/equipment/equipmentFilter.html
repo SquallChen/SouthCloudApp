@@ -182,6 +182,7 @@
 			    	if (equipment_page == null) {
                     equipment_page = plus.webview.getWebviewById('equipment.html');
                   }
+					console.log(equipment_page)
 			    	mui.fire(equipment_page, 'refreshDeviceInfo', {
                     // 暂时没有需要传的参数
                   	});

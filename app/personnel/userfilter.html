@@ -200,8 +200,10 @@
 			  },
 			  methods: {
 			    test: function () {
+			    	console.log(111111111111)
 		    	 if (user_page == null) {
                     user_page = plus.webview.getWebviewById('user.html');
+                    console.log(JSON.stringify(user_page))
                   }
                   mui.fire(user_page, 'refreshUserInfo', {
                     // 暂时没有需要传的参数

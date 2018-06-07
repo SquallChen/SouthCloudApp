@@ -228,6 +228,7 @@
 							<span>数据链:{{}}</span>
 						</li>
 						<li>
+							<button @click="test">test</button>
 							<a href="coordinateDetails.html">查看详情</a>
 						</li>
 					</ul>
@@ -278,6 +279,9 @@
 		    appVer: '-'
 		  },
 		  methods: {
+		    test: function () {
+		      getPointInfo('66f19fc4-42bd-44b3-82f3-79f275d595b5');
+		    },
 		    changestatus: function () {
 		      vm.isActive = !vm.isActive;
 		    },
@@ -362,13 +366,12 @@
 		});
 
 		function getPointInfo(rand_uuid) {
-		  alert(1);
 		  plus.nativeUI.showWaiting();
 		  mui.ajax(apiUrl.rtkTrackPointDetail, {
 		    data: {
 		      user_name: vm.user_name,
 		      token: vm.token,
-		      identifycode: vm.currentIdentifyCode,
+		      identifyCode: vm.currentIdentifyCode,
 		      randUuid: rand_uuid
 		    },
 		    dataType: 'json',
@@ -376,13 +379,13 @@
 		    timeout: 10000,
 		    success: function (data) {
 		      if (data.status === 0) {
-		        var obj = data.obj;
+		        console.log(data);
 		        if (obj.detail) {
-		          vm.gnssLocationData = obj.detail.gnssLocationData;
-		          vm.gnssRefStationData = obj.detail.gnssRefStationData;
-		          vm.appVer = obj.detail.deviceData.deviceInfo.appVer;
-		          vm.powerFree = obj.detail.deviceData.powerFree ? obj.detail.deviceData.powerFree + '%' : '-';
-		          vm.deviceData = obj.detail.deviceData;
+		          vm.gnssLocationData = data.detail.gnssLocationData;
+		          vm.gnssRefStationData = data.detail.gnssRefStationData;
+		          vm.appVer = data.detail.deviceData.deviceInfo.appVer;
+		          vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
+		          vm.deviceData = data.detail.deviceData;
 		        } else {
 		          vm.gnssLocationData = '';
 		          vm.gnssRefStationData = '';
@@ -390,8 +393,8 @@
 		          vm.appVer = '-';
 		          vm.powerFree = '-';
 		        }
-		        if (obj.basic) {
-		          vm.basic = obj.basic;
+		        if (data.basic) {
+		          vm.basic = data.basic;
 		        } else {
 		          vm.basic = '';
 		        }

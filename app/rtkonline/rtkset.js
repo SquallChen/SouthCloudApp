@@ -759,7 +759,6 @@ var vm = new Vue({
           regCode: vm.oVal.regCode
         },
         dataType: 'json',
-        type: 'post',
         timeout: 10000,
         success: function callback(data) {
           if (data.status === ERR_NO) {
@@ -1141,7 +1140,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
     timeout: 10000,
     success: function (data) {
       if (data.status === ERR_NO) {
-        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel',true);
+        timeFun(data, getConfigWorkModePageInfo, '获取工作模式失败', 'workModel', true);
       } else if (data.status === 40004) {
         plus.storage.clear();
         mui.openWindow({
@@ -1866,6 +1865,7 @@ function regCodeInfo(hd) {
   } else {
     mui.toast('更新失败！');
   }
+  plus.nativeUI.closeWaiting();
 }
 
 /* 其它——自检设置*/

@@ -9,6 +9,7 @@
 		<link href="../../css/custom.css" rel="stylesheet" />
 		<link href="../../css/input.css" rel="stylesheet" />
 		<link href="../css/onlineSettings.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
 	</head>
 
 	<body>
@@ -204,7 +205,7 @@
 									<div>
 										<input type="text" placeholder="取值为0-90整数" v-model="bVal.longitude" />
 									</div>
-									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1"> 
+									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
 									<div v-show="baseSetStatus === 2&&currentTabIndex===1">
@@ -579,15 +580,15 @@
 								<li class="mui-table-view-cell">
 									<span class="otherTitle">选择语言</span>
 									<div class="otherContent select">
-										<select v-model="lanCheck">
-											<option v-for="item in language" :value="item.value">{{item.name}}</option>
+										<select v-model="lanCheck" name="language" id="language" >
+											<option v-for="v in oVal.language" :value="v">{{v|transLan}}</option>
 										</select>
 										<span></span>
 										<img src="../../public/img/dropdown.png" alt="" class="down" />
 									</div>
 								</li>
 								<li class="mui-table-view-cell">
-									<span class="otherTitle">电台</span>
+									<span class="otherTitle" style="padding-top: 22px;">电台</span>
 									<div class="otherContent">
 										<ul class="radioModule">
 											<li>
@@ -597,44 +598,70 @@
 											</li>
 											<li>
 												<span>主板</span>
-												<button @click="selfCheck('checkOEM')">启动自检</button>
+												<!--<button @click="selfCheck('checkOEM')">启动自检</button>-->
+												<a href="#" @click="selfCheck('checkOEM')">
+													<span class="icon-self-test"></span>
+													启动自检
+												</a>
 												<span>{{ oVal.oemcheck }}</span>
 											</li>
 											<li>
 												<span>电台</span>
-												<button @click="selfCheck('checkUHF')">启动自检</button>
+												<!--<button @click="selfCheck('checkUHF')">启动自检</button>-->
+												<a href="#" @click="selfCheck('checkUHF')">
+													<span class="icon-self-test"></span>
+													启动自检
+												</a>
 												<span>{{ oVal.uhfcheck}}</span>
 											</li>
 											<li>
 												<span>网络</span>
-												<button @click="selfCheck('checkNET')">启动自检</button>
+												<!--<button @click="selfCheck('checkNET')">启动自检</button>-->
+												<a href="#" @click="selfCheck('checkNET')">
+													<span class="icon-self-test"></span>
+													启动自检
+												</a>
 												<span> {{ oVal.netcheck}}</span>
 											</li>
 											<li>
 												<span>wifi</span>
-												<button @click="selfCheck('checkWIFI')">启动自检</button>
+												<!--<button @click="selfCheck('checkWIFI')">启动自检</button>-->
+												<a href="#" @click="selfCheck('checkWIFI')">
+													<span class="icon-self-test"></span>
+													启动自检
+												</a>
 												<span>{{ oVal.wificheck}}</span>
 											</li>
 										</ul>
+										<div class="line1"></div>
+										<div class="line2"></div>
 									</div>
 								</li>
 								<li>
 									<span class="otherTitle positionAdjust">其他设置</span>
 									<div class="otherContent btn">
 										<div>
-											<a></a>
+											<a @click="otherSet('FORMAT')">
+												<span class="icon-format"></span>
+											</a>
 											<span>磁盘格式化</span>
 										</div>
 										<div>
-											<a></a>
+											<a @click="otherSet('RECOVER')">
+												<span class="icon-restore"></span>
+											</a>
 											<span>恢复出厂设置</span>
 										</div>
 										<div>
-											<a></a>
+											<a @click="otherSet('RESET')">
+												<span class="icon-reset"></span>
+											</a>
 											<span>重置</span>
 										</div>
 										<div>
-											<a></a>
+											<a @click="otherSet('POWEROFF')">
+												<span class="icon-close"></span>
+											</a>
 											<span>关闭主机</span>
 										</div>
 									</div>
@@ -647,8 +674,8 @@
 									</div>
 									<div class="otherContent update">
 										<span class="mainTitle">更新注册码</span>
-										<input type="text" />
-										<button>确认</button>
+										<input type="text" v-model="oVal.regCode"/>
+										<button @click="regCode()">确认</button>
 									</div>
 								</li>
 								<li>

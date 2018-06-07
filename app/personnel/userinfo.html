@@ -21,7 +21,8 @@
 			}
 			.mui-bar-nav.mui-bar .mui-icon{
 				width:73px;
-				height:73px;
+				height: 52px;
+				top: 21px;
 				display: flex;
 				align-items: center;
 			}
@@ -90,6 +91,17 @@
 			.mui-content{
 				background: white;
 			}
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			.mui-icon-back:before, .mui-icon-left-nav:before {
+				content: '';
+				}
 			[v-cloak] {
 				display: none;
 			}
@@ -99,7 +111,9 @@
 	<body>
 		<div id="app" v-cloak>
 			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
 				<h1 class="mui-title">个人资料</h1>
 			</header>
 			<div class="mui-content">

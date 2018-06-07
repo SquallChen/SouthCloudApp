@@ -1445,7 +1445,8 @@
 			"app/rtkonline/rtktrack.html",
 			"app/taskmanager/achievecontent.html",
 			"app/taskmanager/taskmanager.html",
-			"index.html"
+			"index.html",
+			"login.html"
 		],
 		"resources": [
 			"public/img/related.png",
@@ -1500,7 +1501,10 @@
 		],
 		"resources": [
 			"public/img/user_icon01.png",
-			"public/img/user_icon02.png"
+			"public/img/user_icon02.png",
+			"js/url.js",
+			"js/mui.min.js",
+			"js/vue.min.js"
 		]
 	},
 	"app/console/me.html": {
@@ -1510,7 +1514,12 @@
 			"login.html"
 		],
 		"resources": [
-			"fonts/mui.ttf"
+			"fonts/mui.ttf",
+			"public/img/me_bg.png",
+			"js/url.js",
+			"public/img/01.jpg",
+			"js/mui.min.js",
+			"js/vue.min.js"
 		]
 	},
 	"app/console/map.html": {

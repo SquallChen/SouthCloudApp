@@ -7,6 +7,7 @@
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/custom.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
 		<style>
 			* {
 				padding: 0;
@@ -179,7 +180,10 @@
 			#topPopover .mui-table-view-cell a {
 				display: flex;
 				align-items: center;
-				font-size: 20px;
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
 			}
 
 			#topPopover .mui-table-view-cell a img {
@@ -187,7 +191,9 @@
 			}
 
 			#topPopover .mui-table-view-cell {
-				border-bottom: 1px solid #ddd;
+				border-bottom: 1px solid #e3e3e3;
+				height: 52px;
+				line-height: 26px;
 			}
 
 			.mui-popover {
@@ -195,14 +201,14 @@
 			}
 
 			.mui-popover {
-				width: 180px;
-				height: 166px;
+				width: 122px;
+				height: 104px;
 				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
 				background: white;
 			}
 
 			.mui-backdrop {
-				background: transparent;
+				background:transparent;
 			}
 
 			.mui-scroll-wrapper,
@@ -271,6 +277,8 @@
 				display: inline-block;
 				width: 100%;
 				text-align: center;
+				font-size: 13px;
+				color: #666;
 			}
 			.btn a{
 				width:100%;
@@ -312,6 +320,16 @@
 				position: absolute;
 				right:15px;
 				line-height: 20px;
+			}
+			.mui-table-view-cell{
+				padding: 11px 20px;
+			}
+			.icon-related,.icon-sign-out{
+				color:#666;
+				width:15px !important;
+				height:22px !important;
+				font-size: 20px !important;
+				margin-right: 10px;
 			}
 		</style>
 	</head>
@@ -356,13 +374,16 @@
 				<div class="mui-scroll-wrapper">
 					<div class="mui-scroll">
 						<ul class="mui-table-view">
-							<li class="mui-table-view-cell" href="../personnel/userEntry.html">
-								<a href="#">
-									<span>设备关联</span></a>
+							<li class="mui-table-view-cell">
+								<a href="#" v-on:tap="test">
+									<span class="icon-related"></span>
+									<span>设备关联</span>
+								</a>
 							</li>
 							<li id="logout" class="mui-table-view-cell">
 								<a href="#">
-									<span>退出帐号</span></a>
+									<span class="icon-sign-out"></span>
+									<span>退出登录</span></a>
 							</li>
 						</ul>
 					</div>
@@ -444,7 +465,8 @@
 			      });
 			    },
 			    test:function(){
-			    	 mui.toast('此处调用关联设备接口....');
+			    	 mui.toast('此处调用关联接口....');
+			    	 mui('#topPopover').popover('hide');
 			    }
 			  },
 			  created: function () {
@@ -502,6 +524,7 @@
 			              plus.storage.setItem('lauchFlag', lauchFlag);
 			            }
 			            mui('#logout').button('reset');
+			            mui('#topPopover').popover('hide');
 			          },
 			          error: function (xhr, type, errorThrown) {
 			            onNetChange();
