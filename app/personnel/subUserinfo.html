@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>用户资料</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/custom.css" rel="stylesheet" />
+		<style>
+			body {
+				background: #fff;
+				font-size: 13px;
+				color: #333;
+			}
+			
+			ul {
+				list-style: none;
+				padding-left: 0;
+				margin: 0;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.info {}
+			
+			.info .pedding_top {
+				height: 20px;
+				background: #f2f2f2;
+				width: 100%;
+			}
+			
+			.info ul li:after {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			
+			.info .user_info {
+				display: flex;
+				position: relative;
+				padding: 0 15px;
+				height: 58px;
+				align-items: center;
+			}
+			
+			.info .user_info span {
+				display: block;
+			}
+			
+			.info .user_info a {
+				position: absolute;
+				top: 20px;
+				right: 15px;
+				width: 17px;
+				height: 16px;
+			}
+			
+			.info .user_info .modify {
+				width: 17px;
+				height: 16px;
+			}
+			
+			.info .user_info>img {
+				width: 38px;
+				height: 38px;
+				border-radius: 50px;
+			}
+			
+			.info .user_info div {
+				padding: 0 10px;
+			}
+			
+			.info span {
+				/*display: inline-block;*/
+			}
+			
+			.info span:nth-child(1) {
+				margin-bottom: 0px;
+			}
+			/*.info ul li{
+				height:36px;
+			}*/
+			.infoDetails span {
+				height: 36px;
+				line-height: 36px;
+			}
+			
+			.infoDetails span:nth-child(1) {
+				padding-left: 15px;
+			}
+			
+			.infoDetails ul li span:nth-child(1) {
+				width: 80px;
+				text-align: right;
+			}
+			
+			.mui-content {
+				background: white;
+			}
+			
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
+				<h1 class="mui-title">用户资料</h1>
+			</header>
+			<div class="mui-content">
+				<div class="info">
+					<div class="pedding_top"></div>
+					<ul class="filter-ul">
+						<li href="../personnel/userInfoModify.html" class="filter-li">
+							<div class="user_info">
+								<img src="../../public/img/01.jpg" alt="" />
+								<div>
+									<span>{{realname}}</span>
+									<span>{{wrok_group}}</span>
+								</div>
+								<a href="#">
+									<img src="../../public/img/modify.png" alt="" class="modify" />
+								</a>
+							</div>
+						</li>
+					</ul>
+					<div class="infoDetails">
+						<ul>
+							<li>
+								<span>账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+								<span>{{subUserName}}</span>
+							</li>
+							<li>
+								<span>角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</span>
+								<span>{{rolename}}</span>
+							</li>
+							<li>
+								<span>电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话：</span>
+								<span>{{mobilephone}}</span>
+							</li>
+							<li>
+								<span>公司号码：</span>
+								<span>{{officephone}}</span>
+							</li>
+							<li>
+								<span>邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱：</span>
+								<span>{{email}}</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					signature: '',
+					userData: '',
+					additionalInfo: '',
+					departInfo: '',
+					wrok_group: '',
+					user_name: '',
+					subUserName:'',
+					realname: '',
+					rolename: '',
+					mobilephone: '',
+					officephone: '',
+					email: '',
+					subId:''
+				},
+				methods: {},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({});
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						var index = self.index;
+						//						vm.wrok_group = self.wrok_group;
+						//						vm.user_name = self.username;
+						//						vm.realname = self.realname;
+						//						vm.rolename = self.rolename;
+						//						vm.mobilephone = self.mobilephone;
+						//						vm.officephone = self.officephone;
+						//						vm.email = self.email;
+
+						//登陆时存放到本地的数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						//请求用户数据
+						mui.ajax(apiUrl.stuff_lists, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								num_per_page: 10000
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) {
+								console.log('用户信息' + JSON.stringify(data));
+								if(data.status === 0) {
+									var tempData = data.recordList;
+									var tempArray = [];
+									// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+									for(var i = 0; i < tempData.length; i++) {
+										if(tempData[i].status === 0) {
+											tempArray.push(tempData[i]);
+											tempData.splice(i, 1);
+										}
+									}
+									for(var i = 0; i < tempArray.length; i++) {
+										tempData.unshift(tempArray[i]);
+									}
+									// 完成排列处理的数组数据添加到页面上渲染
+									vm.deviceData = tempData[index];
+									console.log('当前子用户数据：'+JSON.stringify(vm.deviceData));
+									vm.wrok_group = vm.deviceData.wrok_group;
+									vm.subUserName = vm.deviceData.username;
+									vm.realname = vm.deviceData.realname;
+									vm.rolename = vm.deviceData.rolename;
+									vm.mobilephone = vm.deviceData.mobilephone;
+									vm.officephone = vm.deviceData.officephone;
+									vm.email = vm.deviceData.email;
+									vm.subId = vm.deviceData.id;
+								} else if(data.status === 40004) {
+									mui.openWindow({
+										url: '../../login.html',
+										id: 'login'
+									});
+								} else {
+									plus.nativeUI.toast(data.info);
+									setTimeout(function() {
+										plus.nativeUI.closeWaiting();
+									}, 1000);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
+						window.addEventListener('refreshSubUserInfo', function() {
+							console.log('刷新子用户页面数据....');
+						});
+
+						mui('.filter-ul').on('tap', '.filter-li', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url,
+								//传递到下层页面的数据
+								extras: {
+									realName: vm.realname,
+									workGroup: vm.wrok_group,
+									mobilePhone: vm.mobilephone,
+									mobile: vm.officephone,
+									email: vm.email,
+									userLoginId:vm.subId,
+									parentPage:'subUserinfo'
+								}
+							});
+						});
+					})
+				}
+			});
+		</script>
+	</body>
+
+</html>

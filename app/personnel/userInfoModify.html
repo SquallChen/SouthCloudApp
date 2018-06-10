@@ -40,25 +40,44 @@
 			
 			.management {
 				width: 100%;
-				height: 60px;
-				line-height: 30px;
+				height: 36px;
+				line-height: 18px;
 				border-radius: 0;
-				background: linear-gradient(to bottom, #1d86bf, #1d69bf);
+				background: #3b88fb;
+				border-radius: 4px;
 				color: white;
-				font-size: 20px;
+				font-size: 13px;
 				margin-top: 20px;
+				border: none;
+			}
+			
+			.management:active {
+				background: #0b5fde;
 			}
 			
 			.mui-input-group .mui-input-row {
-				height: 50px;
+				height: 40px;
 			}
 			
 			.mui-input-row label {
-				padding: 16px 15px 17px 15px;
+				padding: 11px 15px 12px 15px;
 			}
 			
-			input[type=text] {
-				height: 50px;
+			input[type=text],
+			input[type=number] {
+				height: 40px;
+			}
+			
+			.mui-input-group .mui-input-row:after {
+				position: absolute;
+				right: 0;
+				bottom: 0;
+				left: 0;
+				height: 1px;
+				content: '';
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #c8c7cc;
 			}
 			
 			.mui-input-row select {
@@ -66,7 +85,7 @@
 			}
 			
 			body {
-				background: #fff;
+				background: #f2f2f2;
 			}
 			
 			.mui-bar-nav.mui-bar .mui-icon {
@@ -75,6 +94,17 @@
 				display: flex;
 				align-items: center;
 			}
+			
+			.btncontent {
+				padding: 0 20px;
+			}
+			
+			.padding_top {
+				width: 100%;
+				height: 21px;
+				background: #f2f2f2;
+			}
+			
 			[v-cloak] {
 				display: none;
 			}
@@ -88,52 +118,33 @@
 				<h1 class="mui-title">用户资料修改</h1>
 			</header>
 			<div class="mui-content" style="padding-top: 70px">
+				<div class="padding_top"></div>
 				<form class="mui-input-group">
 					<div class="mui-input-row">
-						<label>用户账号：</label>
-						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" disabled>
+						<label>用户名称：</label>
+						<input v-model="realName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户名称">
 					</div>
 					<div class="mui-input-row">
-						<label>用户名称：</label>
-						<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户名称">
-					</div>
-					<div class="mui-input-row select">
-						<label>组织机构：</label>
-						<div>
-							<select name="" v-model="organizationvalue">
-								<option value disabled selected>请选择组织机构...</option>
-								<option v-for="item in organization" :value="item.value">{{item.name}}</option>
-							</select>
-							<img src="../../public/img/down.png" alt="" class="down" />
-						</div>
-
-					</div>
-					<div class="mui-input-row select">
-						<label>角&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;色：</label>
-						<div>
-							<select v-model="rolevalue">
-								<option value disabled selected>请选择角色...</option>
-								<option v-for="item in role" :value="item.value">{{item.name}}</option>
-							</select>
-							<span>Selected: {{ role }}</span>
-							<img src="../../public/img/down.png" alt="" class="down" />
-						</div>
+						<label>工作组：</label>
+						<input v-model="workGroup" id="workGroup" type="text" class="mui-input-clear mui-input" placeholder="请输入工作组">
 					</div>
 					<div class="mui-input-row">
 						<label>手机号码：</label>
-						<input v-model="mobilePhone" id="mobilePhone" type="text" class="mui-input-clear mui-input" placeholder="请输入手机号码">
+						<input v-model="mobilePhone" id="mobilePhone" type="number" class="mui-input-clear mui-input" placeholder="请输入手机号码" maxlength="11">
 					</div>
 					<div class="mui-input-row">
 						<label>办公电话：</label>
-						<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话">
+						<input v-model="officephone" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="this.value=this.value.replace(/[^a-z0-9-]/g,'');">
 					</div>
 					<div class="mui-input-row">
 						<label>常用邮箱：</label>
-						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\@\.]/g,'')">
 					</div>
 				</form>
+				<div class="btncontent">
+					<button class="management" v-on:tap="send">确  定</button>
+				</div>
 
-				<button class="management" v-on:tap="send">确  定</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -144,6 +155,7 @@
 			var userinfo_page = null;
 			var me_page = null;
 			var user_page = null;
+			var subUserInfo_page = null;
 			var vm = new Vue({
 				el: '#app',
 				data: {
@@ -151,132 +163,122 @@
 					userName: '张三丰',
 					password: '',
 					password2: '',
-					mobilePhone: '1234567',
-					email: '123456@qq.com',
-					mobile: '123456',
 					organizationvalue: '1',
 					rolevalue: '0',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					],
-					role: [{
-							name: '管理员',
-							value: 0
-						},
-						{
-							name: '南方管理员',
-							value: 1
-						},
-						{
-							name: '南方外贸管理员',
-							value: 2
-						},
-						{
-							name: '仪器管理员',
-							value: 3
-						},
-					]
+					workGroup: '',
+					realName: '',
+					mobilePhone: '',
+					officephone: '',
+					email: '',
+					currentId: '',
+					token: '',
+					user_name: '',
+					parentPage: '',
+					currentAccount: '',
+					index:''
 				},
 				methods: {
 					send: function() {
-						//						console.log('track.......');
-						//						if(this.account === '') {
-						//							mui.toast('请输入用户账号!');
-						//							return;
-						//						}
-						//						if(this.userName === '') {
-						//							mui.toast('请输入用户名称!');
-						//							return;
-						//						}
-						//						if(this.mobilePhone === '') {
-						//							mui.toast('请输入手机号码！');
-						//							return;
-						//						}
-						//						if(this.password === '') {
-						//							mui.toast('请输入密码！');
-						//							return;
-						//						}
-						//						if(this.password2 === '') {
-						//							mui.toast('请再次输入密码！');
-						//							return;
-						//						}
-						//						if(this.password !== this.password2) {
-						//							mui.toast('两次密码输入不一致！');
-						//							return;
-						//						}
-						//						if(this.email === '') {
-						//							mui.toast('请输入邮箱！');
-						//							return;
-						//						}
-						//						if(this.mobile === '') {
-						//							mui.toast('请输入办公电话！');
-						//							return;
-						//						}
-						//						if(this.organizationvalue === '') {
-						//							mui.toast('请选择组织机构！');
-						//							return;
-						//						}
-						//						if(this.rolevalue === '') {
-						//							mui.toast('请选择角色！');
-						//							return;
-						//						}
-						//						if(this.accountstatusvalue === '') {
-						//							mui.toast('请选择账号状态设置！');
-						//							return;
-						//						}
-						//						console.log('信息完整，可以进行下一步')
-						if(userinfo_page == null) {
-							userinfo_page = plus.webview.getWebviewById('userinfo.html');
+						if(this.realName === '') {
+							mui.toast('请输入用户名称!');
+							return;
 						}
-						if(user_page == null) {
-							user_page = plus.webview.getWebviewById('user.html');
+						if(this.workGroup === '') {
+							mui.toast('请输入工作组!');
+							return;
 						}
-						if(me_page == null) {
-							me_page = plus.webview.getWebviewById('me.html');
+						if(this.mobilePhone === '') {
+							mui.toast('请输入手机号码！');
+							return;
 						}
-						mui.fire(userinfo_page, 'refreshUserInfo', {
-							// 暂时没有需要传的参数
+						if(this.mobile === '') {
+							mui.toast('请输入公司号码！');
+							return;
+						}
+						if(this.email === '') {
+							mui.toast('请邮箱！');
+							return;
+						}
+
+						mui.ajax(apiUrl.update_user_additional_info, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								user_id: vm.currentId,
+								real_name: vm.realName,
+								mobile_phone: vm.mobilePhone,
+								office_phone: vm.officephone,
+								work_group: vm.workGroup,
+								email: vm.email
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 20000,
+							success: function(data) {
+								console.log('修改信息请求回来的数据为：' + JSON.stringify(data));
+								mui.toast('修改用户信息成功....');
+								refreshData();
+								plus.webview.currentWebview().close();
+
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
 						});
-						mui.fire(user_page, 'refreshUserInfo', {
-							// 暂时没有需要传的参数
-						});
-						mui.fire(me_page, 'mePageInfo', {
-							// 暂时没有需要传的参数
-						});
-						mui.toast('此处调用用户信息修改接口....');
-						plus.webview.currentWebview().close();
-						
 					}
 				},
 				created: function() {
-					mui.plusReady(function () {
-						mui.init({
-//							 preloadPages: [{
-//					          id: 'userinfo.html',
-//					          url: './userinfo.html'
-//						     }]
-						})
+					mui.plusReady(function() {
+						mui.init({})
+						// 登陆时存放到本地的用户数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.currentAccount = self.currentAccount;
+						vm.realName = self.realName;
+						vm.workGroup = self.workGroup;
+						vm.mobilePhone = self.mobilePhone;
+						vm.officephone = self.officephone;
+						vm.email = self.email;
+						vm.currentId = self.currentId;
+						vm.index = self.index;
 					})
 				}
 			});
+
+			function refreshData() {
+				if(userinfo_page == null) {
+					userinfo_page = plus.webview.getWebviewById('../personnel/userinfo.html');
+				};
+				if(me_page == null) {
+					me_page = plus.webview.getWebviewById('app/console/me.html');
+				}
+				if(user_page == null) {
+					user_page = plus.webview.getWebviewById('app/console/user.html');
+				};
+				if(subUserInfo_page == null) {
+					subUserInfo_page = plus.webview.getWebviewById('../personnel/subUserinfo.html');
+				}
+				//判断父页面进入来源，决定更新成功后调用刷新哪些页面
+				if(vm.currentAccount === 'parentAccount') {
+					mui.fire(userinfo_page, 'refreshUserInfo', {
+						// 暂时没有需要传的参数
+					});
+					mui.fire(me_page, 'refreshMePageInfo', {
+						// 暂时没有需要传的参数
+					});
+				} else if(vm.currentAccount === 'subAccount') {
+					mui.fire(user_page, 'refreshUser', {
+						// 暂时没有需要传的参数
+					});
+					mui.fire(userinfo_page, 'refreshSubUserInfo', {
+						index:vm.index
+					});
+				}
+			}
 		</script>
 	</body>
 

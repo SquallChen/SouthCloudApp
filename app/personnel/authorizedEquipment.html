@@ -130,13 +130,13 @@
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
 					<span class="back"></span>
 				</a>
-				<h1 class="mui-title">张三</h1>
+				<h1 class="mui-title">{{realname}}</h1>
 				<h1 class="mui-title name">授权设备</h1>
 			</header>
 			<div class="mui-content">
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
-						<li class="mui-table-view-cell" v-for="(item,index) in userdata">
+						<li class="mui-table-view-cell" v-for="(item,index) in equipmentInfo">
 							<div class="mui-slider-right mui-disabled">
 								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="realTimeTrack.html">实时轨迹</a>
 								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="historicalTrack.html">历史轨迹</a>
@@ -145,8 +145,8 @@
 							<div class="mui-slider-handle">
 								<div class="mui-table-cell">
 									<div class="main-content">
-										<div><span class="name">{{item.Numbering}}</span><span class="status" :class="{active:item.status===0}"></span></div>
-										<div><span>{{item.name}}</span><span>{{item.group}}</span></div>
+										<div><span class="name">{{item.identifyCode}}</span><span class="status" :class="{active:item.onlineStatus===1}"></span></div>
+										<div><span>{{item.nickName}}</span><span>{{item.createName}}</span></div>
 									</div>
 								</div>
 							</div>
@@ -163,9 +163,14 @@
 				beforeback: function() {},
 			});
 			mui.plusReady(function() {});
-			var vbody = new Vue({
+			var vm = new Vue({
 				el: '#vbody',
 				data: {
+					filterUser:'',
+					user_name:'',
+					token:'',
+					equipmentInfo:'',
+					realname:'',
 					userdata: [{
 							name: '张三',
 							Numbering:'123456',
@@ -236,7 +241,33 @@
 				created: function() {
 					mui.plusReady(function() {
 						mui.init({});
-
+						// 登陆时存放到本地的用户数据
+				        vm.token = plus.storage.getItem('token');
+				        vm.user_name = plus.storage.getItem('user_name');
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.filterUser = self.username;
+						vm.realname = self.realname;
+						mui.ajax(apiUrl.deviceMachineWithUser, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								filter_user:vm.filterUser
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 20000,
+							success: function(data) {
+								console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
+								vm.equipmentInfo = data.list;
+							},
+							error: function(xhr, type, errorThrown) {
+								console.log(33333)
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
 					});
 				}
 			});

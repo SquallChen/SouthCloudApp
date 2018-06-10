@@ -165,9 +165,16 @@
                 plus.webview.close(ws);
                 var token = data.token;
                 var realName = data.realName;
+                var workGroup = data.additionalInfo.wrokGroup;
+                var userLoginId = data.additionalInfo.id;
+                var signature = hex_sha1(vm.password);
                 plus.storage.setItem('token', token);
                 plus.storage.setItem('user_name', vm.userName);
+                plus.storage.setItem('passWord', vm.password);
                 plus.storage.setItem('realName', realName);
+                plus.storage.setItem('workGroup', workGroup);
+                plus.storage.setItem('signature', signature);
+                plus.storage.setItem('userLoginId', userLoginId);
                 var additionalInfo = JSON.stringify(data.additionalInfo);
                 var departInfo = JSON.stringify(data.departInfo[0]);
                 plus.storage.setItem('additionalInfo', additionalInfo);

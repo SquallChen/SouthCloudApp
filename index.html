@@ -108,6 +108,7 @@
 		</a>
 	</nav>
 	<script src="js/mui.min.js"></script>
+	<script src="js/url.js"></script>
 	<script type="text/javascript" charset="utf-8">
 		// mui初始化
 		mui.init();
@@ -131,10 +132,33 @@
 
 		  var exist = plus.webview.getWebviewById('app/console/user.html');
 		  var equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
-		  console.log(equipment_page);
 		  if (exist) {
 		    plus.webview.hide(plus.webview.getWebviewById('app/console/me.html'));
 		    plus.webview.show(exist, 'fade-in', 300);
+
+		    mui.ajax(apiUrl.map_url, {
+		      data: {
+		        user_name: plus.storage.getItem('user_name'),
+		        token: plus.storage.getItem('token')
+		      },
+		      dataType: 'json',
+		      type: 'post',
+		      timeout: 10000,
+		      success: function (data) {
+		        if (data.status === 0) {
+		          plus.storage.setItem('point', data.history_track_line);
+		          plus.storage.setItem('line', data.history_track_point);
+		          plus.storage.setItem('prefix', data.map_id_prefix);
+		          plus.storage.setItem('monitor', data.map_monitor);
+		        } else {
+		          mui.toast(data.info);
+		        }
+		      },
+		      error: function (xhr, type, errorThrown) {
+		        onNetChange();
+		      }
+		    });
+
 		    return;
 		  }
 		  var self = plus.webview.currentWebview();

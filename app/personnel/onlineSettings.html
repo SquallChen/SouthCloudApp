@@ -26,7 +26,7 @@
 				</div>
 				<div id="slider" class="mui-slider">
 					<div id="sliderSegmentedControl" class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted">
-						<a class="mui-control-item" href="" v-on:tap="togglePage('workPage',$event)">
+						<a class="mui-control-item mui-active" href="" v-on:tap="togglePage('workPage',$event)">
 							工作模式
 						</a>
 						<!-- 如果处于静态站模式中，切换成span显示元素，让数据链跳转不能点击 -->
@@ -42,10 +42,10 @@
 						</a>
 					</div>
 					<!--滚动横线-->
-					<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>
+					<!--<div id="sliderProgressBar" class="mui-slider-progress-bar mui-col-xs-4"></div>-->
 					<div class="mui-slider-group">
 <!--**************************************************************tab1****************************************************************-->
-						<div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+						<div id="item1mobile" class="mui-slider-item mui-control-content  mui-active">
 							<!--模式选择-->
 							<ul>
 								<li class="modeTitle">
@@ -69,6 +69,7 @@
 										</select>
 										<img src="../../public/img/down.png" alt="" class="down" />
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -90,6 +91,7 @@
 											<input name="radio1" type="radio" value = "2" v-model="bVal.launch" :checked="bVal.launch===2">
 										</div>
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -104,6 +106,7 @@
 									<div>
 										<input type="text" placeholder="取值为0-90整数" v-model="bVal.cutangle"/>
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -118,6 +121,7 @@
 									<div>
 										<input type="text" placeholder="支持2位小数" v-model="bVal.pdop"/>
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -151,6 +155,7 @@
 											<input name="radio2" type="radio" value="1" v-model="bVal.baseLaunch" :checked="bVal.baseLaunch===1">
 										</div>
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -165,6 +170,7 @@
 									<div>
 										<input type="text" placeholder="0-100，支持3位小数" v-model="bVal.antenna" />
 									</div>
+
 									<!--<div v-show="baseSetStatus === 1&&currentTabIndex===1">
 										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
 									</div>
@@ -216,7 +222,7 @@
 									<div>
 										<span>纬度</span>
 									</div>
-									<div class="content">
+									<div class="content positionJustify">
 										<input type="text" v-model="latitude_degree"/>
 										<span class="symbol">°</span>
 										<input type="text" v-model="latitude_minute"/>
@@ -235,7 +241,7 @@
 									<div>
 										<span>经度</span>
 									</div>
-									<div class="content">
+									<div class="content positionJustify">
 										<input type="text" v-model="longitude_degree"/>
 										<span class="symbol">°</span>
 										<input type="text" v-model="longitude_minute"/>
@@ -266,12 +272,8 @@
 								</li>
 								<li class="btn">
 									<button class="setting" v-on:tap="baseSet">设 置</button>
-								</li>
-								<li class="btn">
 									<button class="start" v-show="bVal.show === 'start'"  v-on:tap="baseStartOrBreak('start')">启 动</button>
-								</li>
-								<li class="btn" v-show="bVal.show !== 'start'"  v-on:tap="baseStartOrBreak('break')">
-									<button class="stop">断 开</button>
+									<button class="stop" v-show="bVal.show !== 'start'" v-on:tap="baseStartOrBreak('break')">断 开</button>
 								</li>
 							</ul>
 							<!--*********************移动站**********************-->
@@ -285,7 +287,7 @@
 									</div>
 								</li>
 								<li class="btn">
-									<button class="setting" v-on:tap="roverSet()">设 置</button>
+									<button class="setting resetBtn" v-on:tap="roverSet()">设 置</button>
 								</li>
 							</ul>
 							<!--*********************静态站**********************-->
@@ -364,12 +366,8 @@
 								</li>
 								<li class="btn">
 									<button class="setting" v-on:tap="staticSet()">设 置</button>
-								</li>
-								<li class="btn" v-show="sVal.show === 'start'">
-									<button class="start" v-on:tap="staticStartOrBreak('start')">启 动</button>
-								</li>
-								<li class="btn" v-show="sVal.show !== 'start'">
-									<button class="stop" v-on:tap="staticStartOrBreak('break')">断 开</button>
+									<button class="start" v-show="sVal.show === 'start'" v-on:tap="staticStartOrBreak('start')">启 动</button>
+									<button class="stop" v-show="sVal.show !== 'start'" v-on:tap="staticStartOrBreak('break')">断 开</button>
 								</li>
 							</ul>
 						</div>
@@ -485,22 +483,70 @@
 										<span>频道设置</span>
 									</div>
 									<div class="channel">
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
-										<input type="text" v-model="channelValue1" />
+										<div class="changePart">
+											<span>01</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>02</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>03</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>04</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>05</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>06</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>07</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>08</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>09</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>10</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>11</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>12</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>13</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>14</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>15</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
+										<div class="changePart">
+											<span>16</span>
+											<input type="text" v-model="channelValue1" />
+										</div>
 									</div>
 								</li>
 								<li>
@@ -537,7 +583,7 @@
 									</div>
 								</li>
 								<li class="btn" style="margin-bottom: 10px;">
-									<button class="setting" v-on:tap="uhfSet()">设 置</button>
+									<button class="setting resetBtn" v-on:tap="uhfSet()">设 置</button>
 								</li>
 							</ul>
 						</div>
@@ -545,6 +591,29 @@
 						<div id="item3mobile" class="mui-slider-item mui-control-content">
 							<ul>
 								<li v-for="(item,index) in Satellite">
+									<div><span style="padding-left: 15px;">{{item.name}}</span><span>卫星系统</span></div>
+									<div class="setNum">
+										<span class="title">设置使能</span>
+										<a @click="setSatelliteNum(index)">设置卫星号</a>
+										<div class="mui-switch" :class="{'mui-active':item.status === true}">
+											<div class="mui-switch-handle" style="-webkit-transition: 0.2s; transition: 0.2s; -webkit-transform: translate(0, 0px);"></div>
+										</div>
+										<div class="line"></div>
+									</div>
+									<div class="setNum">
+										<span class="title">跟踪状态</span>
+										<span>{{item.trackChecked}}</span>
+										<div class="line"></div>
+									</div>
+									<div class="setNum">
+										<span class="title">操作</span>
+										<a @click="settrackNum(index)">修改跟踪频段</a>
+										<div class="line"></div>
+									</div>
+									<div></div>
+									<div></div>
+								</li>
+								<!--<li v-for="(item,index) in Satellite">
 									<span class="satellite-title">卫星系统</span>
 									<div class="satellite-set">
 										<span>{{item.name}}</span>
@@ -561,7 +630,7 @@
 										<span>{{item.trackChecked}}</span>
 										<a @click="settrackNum(index)">修改跟踪频段</a>
 									</div>
-								</li>
+								</li>-->
 								<button class="ClearEphemeris" v-on:tap="clearEphemerisPage()">清除星历</button>
 							</ul>
 						</div>
@@ -682,8 +751,12 @@
 									<span class="otherTitle">固件升级</span>
 									<div class="otherContent remoteUpdate">
 										<span class="mainTitle">远程更新</span>
-										<input type="text" />
-										<button>确认</button>
+										<!-- <input type="text" /> -->
+										<select v-model="firmware">
+											<option v-show="firmwareList.length === 0" :disabled="firmwareList.length">暂无数据</option>
+											<option v-for="v in firmwareList" :value="v.fileId" v-show="firmwareList.length !== 0">{{v}}</option>
+										</select>
+										<button @click="rtkUpdate">确认</button>
 									</div>
 								</li>
 							</ul>
@@ -713,8 +786,8 @@
 							</div>
 						</li>
 					</ul>
-					<div class="btn">
-						<button v-on:tap="closeSetSatellite()">取消</button><button v-on:tap="setSatellite(currentSatelliteIndex)">确认</button>
+					<div class="btn" style="margin-top: 11px;">
+						<button v-on:tap="closeSetSatellite()" class="cancel">取消</button><button v-on:tap="setSatellite(currentSatelliteIndex)" class="sure">确认</button>
 					</div>
 				</div>
 			</div>
@@ -737,7 +810,7 @@
 						</li>
 					</ul>
 					<div class="btn">
-						<button v-on:tap="closeSetTrack()">取消</button><button v-on:tap="setTrack(currentTrackIndex)">确认</button>
+						<button v-on:tap="closeSetTrack()" class="cancel">取消</button><button v-on:tap="setTrack(currentTrackIndex)" class="sure">确认</button>
 					</div>
 				</div>
 			</div>
@@ -748,11 +821,10 @@
 					<span>确认</span>
 					<hr>
 					<div>
-
-						<span>确认切换到{{currentMode}}？</span>
+						<span class="meg">确认切换到{{currentMode}}？</span>
 					</div>
 					<div class="btn">
-						<button v-on:tap="closeSelectionMode">取消</button><button v-on:tap="changeMode(currentModeIndex)">确认</button>
+						<button v-on:tap="closeSelectionMode" class="cancel">取消</button><button v-on:tap="changeMode(currentModeIndex)" class="sure">确认</button>
 					</div>
 				</div>
 			</div>
@@ -764,10 +836,10 @@
 						<hr>
 						<div>
 
-							<span>确认切换到{{currentLink}}？</span>
+							<span class="meg">确认切换到{{currentLink}}？</span>
 						</div>
 						<div class="btn">
-							<button v-on:tap="closeSelectionLink">取消</button><button v-on:tap="changeLink(currentLinkIndex)">确认</button>
+							<button v-on:tap="closeSelectionLink" class="cancel">取消</button><button v-on:tap="changeLink(currentLinkIndex)" class="sure">确认</button>
 						</div>
 					</div>
 			</div>

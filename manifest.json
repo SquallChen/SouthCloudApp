@@ -171,7 +171,7 @@
 					
 				}
 			},"debug":true
-		},"ads":{"rp":false,"splash":false,"push":false,"spot":false},"adid":"124994040906"
+		},"ads":{"rp":false,"splash":false,"push":false,"spot":false}
 	},
 	"dependencies": {
 		"pages": {
@@ -1610,7 +1610,8 @@
 					"app/taskmanager/achievecontent.html",
 					"app/taskmanager/taskmanager.html",
 					"index.html",
-					"login.html"
+					"login.html",
+					"app/personnel/subUserinfo.html"
 				],
 				"priority": 0
 			},
@@ -1618,7 +1619,8 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/userEntry.html",
-					"app/personnel/userInfoModify.html"
+					"app/personnel/userInfoModify.html",
+					"login.html"
 				],
 				"priority": 0
 			},
@@ -1708,6 +1710,13 @@
 				"resources": [],
 				"refer": [
 					"app/console/equipment.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/subUserinfo.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userInfoModify.html"
 				],
 				"priority": 0
 			}

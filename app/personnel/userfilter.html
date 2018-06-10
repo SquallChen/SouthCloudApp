@@ -12,16 +12,19 @@
 			body {
 				background: #f2f2f2;
 			}
-			#app{
+			
+			#app {
 				height: 100%;
 				background: #f2f2f2;
 			}
-			.mui-content .spacing{
+			
+			.mui-content .spacing {
 				height: 21px;
-				background:#f2f2f2;
+				background: #f2f2f2;
 				padding: 0;
 			}
-			.mui-content .spacing:after{
+			
+			.mui-content .spacing:after {
 				width: 100%;
 				height: 1px;
 				content: '';
@@ -29,12 +32,15 @@
 				transform: scaleY(.5);
 				background-color: #c8c7cc;
 			}
-			.mui-content div label{
-				color:#333;
+			
+			.mui-content div label {
+				color: #333;
 			}
-			.mui-content div:nth-child(2){
+			
+			.mui-content div:nth-child(2) {
 				padding-top: 20px;
 			}
+			
 			.mui-content div {
 				padding-right: 20px;
 				padding-left: 20px;
@@ -42,24 +48,28 @@
 				display: flex;
 				position: relative;
 			}
-			.mui-content div span{
+			
+			.mui-content div span {
 				display: inline-block;
 				position: absolute;
-				right:28px;
-				top:16px;
-				width:0px;
-	            height:0px;
-	            border-top:8px solid #666;
-	            border-right:5px solid  rgba(0,0,0,0);
-	            border-bottom:50px solid  rgba(0,0,0,0);
-	            border-left:5px solid  rgba(0,0,0,0);
+				right: 28px;
+				top: 16px;
+				width: 0px;
+				height: 0px;
+				border-top: 8px solid #666;
+				border-right: 5px solid rgba(0, 0, 0, 0);
+				border-bottom: 50px solid rgba(0, 0, 0, 0);
+				border-left: 5px solid rgba(0, 0, 0, 0);
 			}
+			
 			.mui-content div:nth-child(1) {
 				padding-top: 20px;
 			}
+			
 			.mui-content div:nth-child(2) {
 				position: relative;
 			}
+			
 			.mui-content div label {
 				width: 68px;
 				text-align: left;
@@ -67,7 +77,7 @@
 				line-height: 36px;
 				font-size: 13px;
 			}
-
+			
 			.mui-content div input {
 				flex: 1;
 				margin-bottom: 0;
@@ -75,44 +85,52 @@
 				font-size: 13px;
 				padding-left: 10px;
 			}
-			.mui-content select{
+			
+			.mui-content select {
 				font-size: 13px;
 				padding: 0 0 0 6px;
-				color:#ccc;
+				color: #ccc;
 				flex: 1;
-				height:36px;
+				height: 36px;
 				margin-bottom: 0;
 				border: 1px solid #ccc !important;
 			}
-			 .down {
+			
+			.down {
 				width: 16px;
 				height: 16px;
 				position: absolute;
 				top: 20px;
 				right: 30px;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:52px;
-				top:21px;
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
 				display: flex;
 				align-items: center;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before{
-				content:'';
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
 			}
+			
 			.mui-bar-nav~.mui-content {
 				height: 100%;
 				background: white;
-				}
-			.back{
+			}
+			
+			.back {
 				display: block;
 				width: 10px;
 				height: 16px;
-				background:url('../../public/img/back.png') no-repeat;
+				background: url('../../public/img/back.png') no-repeat;
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
+			
 			.management {
 				margin-left: 6%;
 				width: 88%;
@@ -123,17 +141,22 @@
 				color: white;
 				font-size: 20px;
 				margin-top: 25px;
-				border:none;
+				border: none;
 				border-radius: 4px;
 			}
-			.management:active{
+			
+			.management:active {
 				background: #0b5fde !important;
 			}
-			input[type=text]{
-				border:1px solid #ccc;
-			}input[type=text]:focus{
-				border:1px solid #0b60de;
+			
+			input[type=text] {
+				border: 1px solid #ccc;
 			}
+			
+			input[type=text]:focus {
+				border: 1px solid #0b60de;
+			}
+			
 			[v-cloak] {
 				display: none;
 			}
@@ -172,47 +195,76 @@
 		<script>
 			var user_page = null;
 			var vm = new Vue({
-			  el: '#app',
-			  data: {
-			    keywords: '',
-			    organizationvalue: '0',
-			    organization: [{
-			      name: '南方卫星导航',
-			      value: 0
-			    },
-			    {
-			      name: '设备初始激活组织',
-			      value: 1
-			    },
-			    {
-			      name: '南方测绘集团总部',
-			      value: 2
-			    },
-			    {
-			      name: '震源导航',
-			      value: 3
-			    },
-			    {
-			      name: '南方质量追踪',
-			      value: 4
-			    }
-			    ]
-			  },
-			  methods: {
-			    test: function () {
-			    	console.log(111111111111)
-		    	 if (user_page == null) {
-                    user_page = plus.webview.getWebviewById('user.html');
-                    console.log(JSON.stringify(user_page))
-                  }
-                  mui.fire(user_page, 'refreshUserInfo', {
-                    // 暂时没有需要传的参数
-                  });
-  			      mui.toast('此处调用用户筛选接口....');
-                  plus.webview.currentWebview().close();
-			    }
-			  },
-			  created: function () {}
+				el: '#app',
+				data: {
+					keywords: '',
+					organizationvalue: '0',
+					organization: [{
+							name: '南方卫星导航',
+							value: 0
+						},
+						{
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							name: '南方测绘集团总部',
+							value: 2
+						},
+						{
+							name: '震源导航',
+							value: 3
+						},
+						{
+							name: '南方质量追踪',
+							value: 4
+						}
+					]
+				},
+				methods: {
+					test: function() {
+						console.log(111111111111)
+						if(user_page == null) {
+							user_page = plus.webview.getWebviewById('user.html');
+							console.log(JSON.stringify(user_page))
+						}
+						mui.fire(user_page, 'refreshUserInfo', {
+							// 暂时没有需要传的参数
+						});
+						mui.toast('此处调用用户筛选接口....');
+						plus.webview.currentWebview().close();
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.ajax(apiUrl.update_user_additional_info, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								user_id: vm.userLoginId,
+								real_name: vm.realName,
+								mobile_phone: vm.mobilePhone,
+								office_phone: vm.mobile,
+								work_group: vm.workGroup,
+								email: vm.email
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 20000,
+							success: function(data) {
+								console.log('此页面请求回来的数据为：' + JSON.stringify(data));
+								mui.toast('修改用户信息成功....');
+								plus.webview.currentWebview().close();
+
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					})
+				}
 			});
 		</script>
 	</body>

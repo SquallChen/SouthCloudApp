@@ -22,18 +22,23 @@
 			ul li {
 				display: flex;
 				align-items: center;
-				margin-bottom: 5px;
+				margin-bottom: 20px;
 			}
 
 			ul li>div:nth-child(1) {
 				width: 22%;
 				text-align: right;
 				margin-right: 20px;
+				color:#999;
+				font-size: 13px;
 			}
 
 			ul li>div:nth-child(2) {
 				width: 78%;
 				margin-right: 6px;
+			}
+			ul li>div:nth-child(2) button:nth-child(2),ul li>div:nth-child(2) button:nth-child(3){
+				margin-left: -1px;
 			}
 			.baseContent li>div:nth-child(1) {
 				width: 22%;
@@ -46,7 +51,7 @@
 			}*/
 			.baseContent li>div:nth-child(2) {
 				width: 78%;
-				margin-right: 6px;
+				margin-right: 10px;
 			}
 			.size{
 				font-size: 20px;
@@ -63,9 +68,9 @@
 			}
 
 			.modeTitle button {
-				margin-right: 5px;
-				font-size: 16px;
+				font-size: 13px;
 				width: 80px;
+				border-radius: 0;
 			}
 
 			.select {
@@ -94,6 +99,10 @@
 
 			select {
 				margin-bottom: 0;
+				height: 35px;
+				font-size: 13px;
+				color: #333;
+				line-height: 13px;
 			}
 
 			.equipmentTitle {
@@ -109,15 +118,17 @@
 			.equipmentTitle .refresh {
 				margin-left: 30px;
 				display: inline-block;
-				background: #409eff;
+				background: #3b88fb;
 				color: white;
-				width: 60px;
-				height: 30px;
+				width: 50px;
+				height: 25px;
 				line-height: 12px;
 				border-radius: 5px;
 				border: 1px solid #409eff;
 			}
-
+			.equipmentTitle .refresh:active{
+				background: :#0b5fde;
+			}
 			.radio {
 				display: flex;
 				flex-wrap: wrap;
@@ -132,45 +143,78 @@
 				display: flex;
 				flex-wrap: wrap;
 				justify-content: space-between;
-				margin-top: 10px;
-				margin-bottom: 10px;
+				align-items: center;
 			}
 
 			.checkbox button {
-				width: 100px;
-				background: #409eff;
+				width: 76px;
+				height: 30px;
+				padding: 0;
+				font-size: 13px;
+				background: #3b88fb;
 				color: white;
-				font-size: 16px;
 				border: 1px solid #409eff;
 			}
-
+			.checkbox button:active{
+				background: #0b5fde;
+			}
 			.checkbox div {
 				padding-right: 6px;
 			}
-
+			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+				color:#3b88fb;
+			}
 			.btn {
+				display: flex;
 				margin-bottom: 5px;
+				padding: 0 20px;
 			}
 
 			.btn button {
+				margin-top: 10px;
 				width: 100%;
 				height: 50px;
 				color: white;
 				border: none;
-				border-radius: 0;
+				border-radius: 4px;
 				font-size: 20px;
+				color: white;
+				
 			}
-
+			.btn .cancel{
+				background:#ff3b2f;
+				margin-right: 15px;
+			}
+			.btn .cancel:active{
+				background: #f85f56;
+			}
+			.btn .sure{
+				background: #4bd562;
+			}
+			.btn .sure:active{
+				background: #65f17c;
+			}
 			.btn .setting {
-				background: #18a689;
-				margin-top: 10px;
+				background: #3b88fb;
+				margin-right: 20px;
 			}
-
+			.btn .setting:active{
+				background: #0b5fde;
+			}
 			.btn .start {
-				background: #409eff;
+				background: #00b58f;
+			}
+			.btn .start:active{
+				background: #1a9d81;
 			}
 			.btn .stop {
 				background: #F56C6C;
+			}
+			.btn .stop:active{
+				background: red;
+			}
+			.btn .resetBtn{
+				margin-right: 0;
 			}
 			.changeFormat input {
 				width: 25.63%;
@@ -183,21 +227,31 @@
 				left: -5px;
 				width: 5%;
 				border: 1px solid #ddd;
-				height: 46px;
+				height: 35px;
 				border-radius: 0 3px 3px 0;
-				background: #eee;
-				font-size: 26px;
+				background: #cfe2fd;
+				font-size: 20px;
 				line-height: 34px;
 				padding-left: 1px;
+				color:#0b5fde;
 			}
-
+			.changeFormat .positionJustify{
+				display: flex;
+			}
 			.changeFormat .content {
 				position: relative;
 			}
 		  .content .selectAll{
 				position: absolute;
-				top:0;
-				right:10px;
+				top:14px;
+				right:20px;
+			}
+			hr {
+			    box-sizing: content-box;
+			    height: 0;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				color:#ccc;
 			}
 			.autoMark {
 				margin-top: 15px;
@@ -206,7 +260,31 @@
 			.channel_content {
 				align-items: flex-start;
 			}
-
+			.channel_content .changePart{
+				position: relative;
+				display: flex;
+				width: 48%;
+				margin-bottom: 6px;
+			}
+			.channel_content .changePart span{
+				display: block;
+				background: #cfe2fd;
+				height:35px;
+				width: 33px;
+				line-height: 35px;
+				text-align: center;
+				border:1px solid #ccc;
+				border-top-left-radius: 4px;
+				border-bottom-left-radius: 4px;
+				color: #0b5fde;
+			}
+			.channel_content .changePart input{
+				flex: 1;
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+				margin-left: -1px;
+				color: #333;
+			}
 			.channel_title {
 				position: relative;
 				top: 14px;
@@ -224,25 +302,85 @@
 			}
 
 			#item3mobile {
-				padding-top: 10px;
+				background: #e8e8e8;
 			}
-
+			#item3mobile ul{
+				background: #e8e8e8;
+			}
 			#item3mobile ul li {
-				flex-wrap: wrap;
-				padding-bottom: 10px;
+				display: block;
+				background: white;
+				position: relative;
+				margin-top: 20px;
+			}
+			#item3mobile ul li>div:nth-child(1){
+				width: 100%;
+			}
+			#item3mobile ul li>div{
+				margin: 0;
+				text-align: left;
+				font-size: 15px;
+				line-height: 50px;
+				color: #333;
+				height: 50px;
+			}
+			#item3mobile ul li .title{
+				color: #999;
+				margin-right: 30px;
+				width:62px;
+				text-align: right;
+			}
+			#item3mobile ul li .mui-switch{
+				width: 66px;
+				position: absolute;
+				height: 30px;
+				right: 10px;
+				line-height: 26px;
+				top:11px;
+			}
+			#item3mobile ul li .mui-switch .mui-switch-handle{
+				top:1px;
+				left:2px;
+			}
+			#item3mobile .mui-switch.mui-active .mui-switch-handle{
+				-webkit-transform: translate(36px,0) !important;
+			}
+			#item3mobile ul li .setNum{
+				display: flex; 
+				padding-left: 15px; 
+				width: 100%;
+				align-items: center;
+				position: relative;
+			}
+			#item3mobile ul li .setNum .line{
+				width:100%;
+				height: 1px;
+				background: #ccc;
+				position: absolute;
+				top:50px;
+				left:15px;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
 			}
 
-			#item3mobile ul li:after {
+			#item3mobile ul li a{
+				color: #0b5fde;
+				height: 20px;
+				line-height: 20px;
+				border-bottom: 1px solid #0b5fde;
+			}
+			#item3mobile ul li div:nth-child(1):after{
 				width: 100%;
 				height: 1px;
 				content: '';
+				display: block;
+				padding: 0;
 				position: relative;
-				top: 10px;
 				-webkit-transform: scaleY(.5);
 				transform: scaleY(.5);
-				background-color: #c8c7cc;
+				background-color: #ccc;
 			}
-
+			
 			#item3mobile .satellite-title {
 				width: 100%;
 				padding: 5px 10px;
@@ -273,15 +411,19 @@
 				position: fixed;
 				transform: translate(-50%, -50%);
 				-webkit-transform: translate(-50%, -50%);
+				background: white;
 			}
 
 			.Satellite .content>span {
 				display: inline-block;
-				padding: 10px;
+				padding: 21px 0 15px 20px;
+				color:#0B5fde;
+				font-size: 13px;
 			}
 
 			.Satellite .content {
 				text-align: left;
+				font-size: 13px;
 			}
 
 			.Satellite ul {
@@ -292,6 +434,7 @@
 			.Satellite ul li {
 				display: flex;
 				flex-wrap: wrap;
+				margin-bottom: 0;
 			}
 
 			.Satellite ul li>div {
@@ -301,9 +444,15 @@
 			}
 			.Satellite .btn,.track .btn{
 				display: flex;
+				margin-bottom: 20px;
 			}
 			.Satellite .btn button,.track .btn button{
-				color:black;
+				font-size: 13px;
+				color: white;
+				height: 32px;
+				line-height: 36px;
+				padding-top: 0;
+				margin-top: 0;
 			}
 			.track {
 				top: 50% !important;
@@ -312,29 +461,30 @@
 				position: fixed;
 				transform: translate(-50%, -50%);
 				-webkit-transform: translate(-50%, -50%);
+				background: white;
 			}
 			.track ul li {
 				width:100%;
 				display: block;
-				padding-left: 10px;
+				padding-left: 20px;
 			}
 			.track ul li div{
 				width:100%;
 				text-align: left;
+				display: flex;
+				align-items: center;
 			}
-			.track ul li div:after{
-				width: 100%;
-				height: 1px;
-				content: '';
-				position: relative;
-				display: block;
-				-webkit-transform: scaleY(.5);
-				transform: scaleY(.5);
-				background-color: #c8c7cc;
+			.track .mui-checkbox.mui-left input[type=checkbox] {
+			    left: 0;
+			    top: 13px;
+			    }
+			.track{
+				font-size: 13px;
 			}
 			.track div>span{
 				display: block;
-				padding: 10px;
+				padding: 21px 10px 15px 20px;
+				color:#0b5fde;
 
 			}
 			.mui-scroll {
@@ -379,7 +529,7 @@
 			}
 
 			#item3mobile .mui-switch {
-				margin-right: 42px;
+				/*margin-right: 42px;*/
 			}
 
 			#item3mobile .ClearEphemeris {
@@ -419,6 +569,7 @@
 				display: flex;
 				justify-content: space-between;
 				text-align: center;
+				padding: 0;
 			}
 			#item4mobile .btn div{
 				display: flex;
@@ -586,8 +737,9 @@
 			}
 
 			.active {
-				color: #409eff;
-				border-color: #409eff;
+				color: #0b5fde;
+				border-color: #0b5fde;
+				z-index: 2;
 			}
 
 			.mui-switch.mui-active {
@@ -637,18 +789,22 @@
 				font-size: 14px;
 				padding: 10px 4px 10px 10px ;
 				margin-bottom: 0;
-				height: 46px;
+				height: 35px;
 				line-height: 23px;
 				position: relative;
+				border-radius: 4px;
+				color:#333;
 			}
 
 			.mui-radio.mui-left label {
 				padding-left: 34px;
+				padding-top: 5px;
+				padding-bottom: 5px;
 			}
 
 			.mui-radio.mui-left input[type=radio] {
 				left: 0;
-				top: 7px;
+				top: 2px;
 				width: 20px;
 				height: 20px;
 			}
@@ -660,15 +816,29 @@
 
 			.mui-checkbox.mui-left input[type=checkbox] {
 				left: 0;
-				top: 8px;
+				top: 5px;
 			}
 
+			.Satellite .mui-checkbox.mui-left label{
+				padding-left: 30px;
+				padding-right: 0;
+				color:#333;
+				padding-top: 11px;
+				padding-bottom: 9px;
+			}
+			#selectionMode .meg,#selectionLink .meg{
+				color: #333;
+			}
 			.mui-checkbox.mui-left label {
 				padding-left: 30px;
 				padding-right: 0;
-				;
+				color:#333;
+				padding-top: 20px;
+				padding-bottom: 0;
 			}
-
+			#item1mobile .mui-checkbox.mui-left label {
+				padding-top: 11px;
+			}
 			.mui-bar-nav.mui-bar .mui-icon {
 				padding-top: 24px;
 				padding-bottom: 25px;
@@ -703,10 +873,17 @@
 				height: 0;
 			}
 
-.mui-segmented-control .mui-control-item{
-	width:25%;
-}
-
-[v-cloak] {
-	display: none;
-}
+			.mui-segmented-control .mui-control-item{
+				width:25%;
+			}
+			.mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+				background: #3b88fb;
+				color:white;
+			}
+			.mui-slider-indicator.mui-segmented-control{
+				background: #f2f2f2;
+				height: 40px;
+			}
+			[v-cloak] {
+				display: none;
+			}

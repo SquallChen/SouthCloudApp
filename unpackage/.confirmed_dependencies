@@ -1446,7 +1446,8 @@
 			"app/taskmanager/achievecontent.html",
 			"app/taskmanager/taskmanager.html",
 			"index.html",
-			"login.html"
+			"login.html",
+			"app/personnel/subUserinfo.html"
 		],
 		"resources": [
 			"public/img/related.png",
@@ -1456,7 +1457,8 @@
 	"app/personnel/userinfo.html": {
 		"refer": [
 			"app/personnel/userEntry.html",
-			"app/personnel/userInfoModify.html"
+			"app/personnel/userInfoModify.html",
+			"login.html"
 		]
 	},
 	"app/personnel/userInfoModify.html": {
@@ -1530,6 +1532,11 @@
 	"app/equipment/deviceEntry.html": {
 		"refer": [
 			"app/console/equipment.html"
+		]
+	},
+	"app/personnel/subUserinfo.html": {
+		"refer": [
+			"app/personnel/userInfoModify.html"
 		]
 	}
 }

@@ -1,188 +1,261 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>坐标点信息</title>
-		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
-		<style>
-			[v-cloak] {
-				display: none;
-			}
-			*{
-				padding: 0;
-				margin: 0;
-			}
-			
-			.mui-input-row label {
-				text-align: left;
-			}
-			.mui-content{
-				padding-top: 0;
-			}
-			.mui-input-group .mui-input-row {
-				height: 50px;
-			}
-			.mui-input-row{
-				padding-left: 15px;
-			}
-			.mui-input-row label {
-				padding: 16px 15px 17px 0;
-			}
-			.mui-input-row span{
-				display: inline-block;
-				height:50px;
-				line-height: 50px;
-			}
-			.title{
-				font-weight: bold;
-				font-size: 18px;
-				line-height: 20;
-			}
-			input[type=text] {
-				height: 50px;
-			}
-			body{
-				background: #fff;
-			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:73px;
-				display: flex;
-				align-items: center;
-			}
-			.mui-input-group .mui-input-row:after{
-				left:0;
-			}
-			
-			
-		</style>
-	</head>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+  <title>坐标点信息</title>
+  <link href="../../css/mui.min.css" rel="stylesheet" />
+  <link href="../../css/custom.css" rel="stylesheet" />
+  <link href="../../css/input.css" rel="stylesheet" />
+  <style>
+    [v-cloak] {
+      display: none;
+    }
 
-	<body>
-		<div id="app" v-cloak>
-			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
-				<h1 class="mui-title">坐标点信息</h1>
-			</header>
-			<div class="mui-content">
-				<form class="mui-input-group">
-					<div class="mui-input-row">
-						<label class="title">位置</label>
-					</div>
-					<div class="mui-input-row">
-						<span>经度：</span><span>106°07'57.2169"</span>
-					</div>
-					<div class="mui-input-row">
-						<span>纬度：</span><span>28°46'34.4285"</span>
-					</div>
-					<div class="mui-input-row">
-						<span>高程：</span><span>610.4958</span>
-					</div>
-					<div class="mui-input-row">
-						<label class="title">状态</label>
-					</div>
-					<div class="mui-input-row">
-						<span>解算状态：</span><span>差分解</span>
-					</div>
-					<div class="mui-input-row">
-						<span>UTC时间：</span><span>2018-4-28 06:07:40</span>
-					</div>
-					<div class="mui-input-row">
-						<span>PDOP：</span><span>1.48</span>
-					</div>
-					<div class="mui-input-row">
-						<span>HDOP：</span><span>0.69</span>
-					</div>
-					<div class="mui-input-row">
-						<span>VDOP：</span><span>1.38</span>
-					</div>
-					<div class="mui-input-row">
-						<label class="title">主机设置</label>
-					</div>
-					<div class="mui-input-row">
-						<span>解算状态：</span><span>差分解</span>
-					</div>
-					<div class="mui-input-row">
-						<span>UTC时间：</span><span>2018-4-28 06:07:40</span>
-					</div>
-					<div class="mui-input-row">
-						<span>PDOP：</span><span>1.48</span>
-					</div>
-					<div class="mui-input-row">
-						<span>HDOP：</span><span>0.69</span>
-					</div>
-					<div class="mui-input-row">
-						<span>VDOP：</span><span>1.38</span>
-					</div>
-				</form>
-			</div>
-		</div>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/app.js"></script>
-		<script src="../../js/url.js"></script>
-		<script src="../../js/vue.min.js"></script>
-		<script>
-			var vm = new Vue({
-				el: '#app',
-				data: {
-					account: '653685',
-					userName: '张三丰',
-					password: '',
-					password2: '',
-					mobilePhone: '1234567',
-					email: '123456@qq.com',
-					mobile: '123456',
-					organizationvalue: '1',
-					rolevalue: '0',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					],
-					role: [{
-							name: '管理员',
-							value: 0
-						},
-						{
-							name: '南方管理员',
-							value: 1
-						},
-						{
-							name: '南方外贸管理员',
-							value: 2
-						},
-						{
-							name: '仪器管理员',
-							value: 3
-						},
-					]
-				},
-				methods: {
+    * {
+      padding: 0;
+      margin: 0;
+    }
 
-				},
-				created: function() {}
-			});
-		</script>
-	</body>
+    .mui-input-row label {
+      text-align: left;
+    }
+
+    .mui-content {
+      padding-top: 0;
+    }
+
+    .mui-input-group .mui-input-row {
+      height: 50px;
+    }
+
+    .mui-input-row {
+      padding-left: 15px;
+    }
+
+    .mui-input-row label {
+      padding: 16px 15px 17px 0;
+    }
+
+    .mui-input-row span {
+      display: inline-block;
+      height: 50px;
+      line-height: 50px;
+    }
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      line-height: 20;
+    }
+
+    input[type=text] {
+      height: 50px;
+    }
+
+    body {
+      background: #fff;
+    }
+
+    .mui-bar-nav.mui-bar .mui-icon {
+      width: 73px;
+      height: 73px;
+      display: flex;
+      align-items: center;
+    }
+
+    .mui-input-group .mui-input-row:after {
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app" v-cloak>
+    <header class="mui-bar mui-bar-nav">
+      <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+      <h1 class="mui-title">坐标点信息</h1>
+    </header>
+    <div class="mui-content">
+      <form class="mui-input-group">
+        <div class="mui-input-row">
+          <label class="title">位置</label>
+        </div>
+        <div class="mui-input-row">
+          <span>经度：</span>
+          <span>{{basic.longitude | trans}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>纬度：</span>
+          <span>{{basic.latitude | trans}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>高程：</span>
+          <span>{{basic.altitude}}</span>
+        </div>
+        <div class="mui-input-row">
+          <label class="title">状态</label>
+        </div>
+        <div class="mui-input-row">
+          <span>解算状态：</span>
+          <span>{{gnssLocationData.solutionType | transSolutionType}}</span>
+        </div>
+       <!--  <div class="mui-input-row">
+          <span>差分延迟：</span>
+          <span>{{gnssLocationData.ageOfDiff | transSolutionType}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>水平残差：</span>
+          <span>{{gnssLocationData.hrms | transSolutionType}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>垂直残差：</span>
+          <span>{{gnssLocationData.vrms | transSolutionType}}</span>
+        </div> -->
+        <div class="mui-input-row">
+          <span>UTC时间：</span>
+          <span>{{gnssLocationData.datatime | fromtTime}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>PDOP：</span>
+          <span>{{gnssLocationData.pdop | checkNull}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>HDOP：</span>
+          <span>{{gnssLocationData.hdop | checkNull}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>VDOP：</span>
+          <span>{{gnssLocationData.vdop | checkNull}}</span>
+        </div>
+        <!-- <div class="mui-input-row">
+          <label class="title">主机设置</label>
+        </div>
+        <div class="mui-input-row">
+          <span>解算状态：</span>
+          <span>{{gnssLocationData.solutionType | transSolutionType}}</span>
+        </div>
+        <div class="mui-input-row">
+          <span>UTC时间：</span>
+          <span>2018-4-28 06:07:40</span>
+        </div>
+        <div class="mui-input-row">
+          <span>PDOP：</span>
+          <span>1.48</span>
+        </div>
+        <div class="mui-input-row">
+          <span>HDOP：</span>
+          <span>0.69</span>
+        </div>
+        <div class="mui-input-row">
+          <span>VDOP：</span>
+          <span>1.38</span>
+        </div> -->
+      </form>
+    </div>
+  </div>
+  <script src="../../js/mui.min.js"></script>
+  <script src="../../js/app.js"></script>
+  <script src="../../js/url.js"></script>
+  <script src="../../js/vue.min.js"></script>
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        basic: '',
+        gnssLocationData: '',
+        gnssRefStationData: '',
+        base: '',
+        appVer: '',
+        powerFree: '',
+        deviceData: ''
+      },
+      methods: {
+
+      },
+      created: function () {
+        mui.plusReady(function () {
+          mui.init({});
+          var self = plus.webview.currentWebview();
+          var obj = self.infoObj;
+          console.log(obj);
+          vm.basic = obj.basic;
+          vm.gnssLocationData = obj.detail.gnssLocationData;
+          vm.gnssRefStationData = obj.detail.gnssRefStationData;
+          vm.deviceData = obj.detail.deviceData;
+          vm.appVer = obj.detail.deviceData.deviceInfo.appVer;
+          vm.powerFree = obj.detail.deviceData.powerFree ? obj.detail.deviceData.powerFree + '%' : '-';
+        });
+      },
+      filters: {
+        checkNull: function (val) {
+          if (val === 0 && val !== '') {
+            return val;
+          } else {
+            return val ? val : '-';
+          }
+        },
+
+        trans: function (val) {
+          return formatDegree(val);
+        },
+
+        fromtTime: function (val) {
+          if (!val) return '-';
+          var hour = val.hour < 10 ? "0" + val.hour : val.hour;
+          var minute = val.minute < 10 ? "0" + val.minute : val.minute;
+          var second = val.second < 10 ? "0" + val.second : val.second;
+          datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+          return datetime_string;
+        },
+
+        transSolutionType: function (val) {
+          if (!val) return '-';
+          var solutionValue = '';
+          switch (val) {
+            case 'ST_INVALID_FIX':
+              solutionValue = '无效解';
+              break;
+            case 'ST_GPS_FIX':
+              solutionValue = '单点解';
+              break;
+            case 'ST_DGPS_FIX':
+              solutionValue = '差分3D';
+              break;
+            case 'ST_RTK_FIX':
+              solutionValue = '固定解';
+              break;
+            case 'ST_FRTK_FIX':
+              solutionValue = '浮点解';
+              break;
+            case 'ST_FIXEDPOS_FIX':
+              solutionValue = '基站';
+              break;
+          }
+          return solutionValue;
+        },
+        sysModel: function (val) {
+          var sysModelVal = '';
+          switch (val) {
+            case 'BASE':
+              sysModelVal = '基准站';
+              break;
+            case 'ROVER':
+              sysModelVal = '移动站';
+              break;
+            case 'STATIC':
+              sysModelVal = '静态';
+              break;
+            default:
+              sysModelVal = '-';
+              break;
+          }
+          return sysModelVal;
+        },
+      }
+    });
+  </script>
+</body>
 
 </html>
