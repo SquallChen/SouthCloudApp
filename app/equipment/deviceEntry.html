@@ -186,57 +186,48 @@
 				},
 				methods: {
 					diviceEntry: function() {
-						if(equipment_page == null) {
-							equipment_page = plus.webview.getWebviewById('equipment.html');
+						if(this.deviceId === '') {
+							mui.toast('机身号不能为空！');
+							return;
 						}
-						mui.fire(equipment_page, 'refreshDeviceInfo', {
-							// 暂时没有需要传的参数
+						if(/^[A-Z0-9]{10,18}$/.test(this.deviceId) !== true) {
+							mui.toast('设备编号为 10-18 位的大写字母、数字组合！');
+							return;
+						}
+						mui.ajax(apiUrl.deviceMachineAdd, {
+							data: {
+								user_name: plus.storage.getItem('user_name'),
+								token: plus.storage.getItem('token'),
+								identify_code: vm.deviceId
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) {
+								console.log('新建设备返回信息' + JSON.stringify(data));
+								if(equipment_page == null) {
+									equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
+								}
+								mui.fire(equipment_page, 'refreshDeviceInfo', {
+									// 暂时没有需要传的参数
+								});
+								mui.toast('设备录入成功....');
+								plus.webview.currentWebview().close();
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								plus.nativeUI.closeWaiting();
+							}
 						});
-						mui.toast('设备录入成功....');
-						plus.webview.currentWebview().close();
-						//			    	 if (this.deviceId === '') {
-						//			         mui.toast('机身号不能为空！');
-						//			         return;
-						//			       }
-						//			    	if (/^[A-Z0-9]{10,18}$/.test(this.deviceId)!==true) {
-						//			         mui.toast('设备编号为 10-18 位的大写字母、数字组合！');
-						//			         return;
-						//			       } 
-						//					mui.ajax(apiUrl.deviceMachineAdd, {
-						//				        data: {
-						//				          user_name: plus.storage.getItem('user_name'),
-						//							token: plus.storage.getItem('token'),
-						//							identify_code:vm.deviceId
-						//				        },
-						//				        dataType: 'json',
-						//				        type: 'post',
-						//				        timeout: 10000,
-						//				        success: function (data) {
-						//							console.log('新建设备返回信息'+JSON.stringify(data));
-						//							 if (equipment_page == null) {
-						//			                    equipment_page = plus.webview.getWebviewById('equipment.html');
-						//			                  }
-						//			                  mui.fire(equipment_page, 'refreshDeviceInfo', {
-						//			                    // 暂时没有需要传的参数
-						//			                  });
-						//			                  mui.toast('设备录入成功....');
-						//			                  plus.webview.currentWebview().close();
-						//				        },
-						//			        error: function (xhr, type, errorThrown) {
-						//			          // 异常处理；
-						//			          plus.nativeUI.closeWaiting();
-						//			        }
-						//					});
 					}
 				},
 				created: function() {
 					mui.plusReady(function() {
 						mui.init({})
 						preloadPages: [{
-								id: 'equipment.html',
-								url: '../app/console/equipment.html'
-							}
-						]
+							id: 'equipment.html',
+							url: '../app/console/equipment.html'
+						}]
 					})
 				}
 			});

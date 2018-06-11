@@ -52,7 +52,7 @@
 			}
 			
 			.filter {
-				height: 102px;
+				height: 51px;
 				margin-bottom: 20px;
 			}
 			
@@ -115,120 +115,69 @@
 				width: 100%;
 				overflow: auto;
 				flex: 1;
+				font-size: 13px;
 			}
 			
 			.personnelInfo ul li {
-				height: 60px;
+				height: 40px;
 			}
-			
-			.personnelInfo .mui-table-cell {
-				display: flex;
-			}
-			
-			.personnelInfo .img-content {
-				/*width: 25%;*/
-				margin-right: 10px;
-				display: flex;
-				align-items: center;
-				height: 60px;
-			}
-			
-			.personnelInfo .main-content {
-				flex: 1;
-				color: #333;
-				padding-top: 12px;
-			}
-			
-			.personnelInfo .main-content :nth-child(2) {
-				position: relative;
-				top: -4px;
-			}
-			
-			.main-content .name,
-			.mui-content .group {
-				font-size: 14px;
-			}
-			
-			.personnelInfo .main-content .group {
-				top: 4px;
-			}
-			
-			.main-content .pinyin {
-				font-size: 11px;
-			}
-			
-			.personnelInfo img {
-				width: 38px;
-				height: 38px;
-				border-radius: 50px;
-				position: relative;
-				border: 1px solid #0b5fde;
-			}
-			
-			.personnelInfo .main-content div {
-				display: flex;
-				justify-content: space-between;
-			}
-			
-			.personnelInfo .status {
-				position: relative;
-				top: -3px;
-				background: linear-gradient(to bottom, #aeaeae, #707070);
-				width: 16px;
+			.back {
+				display: block;
+				width: 10px;
 				height: 16px;
-				border-radius: 50px;
-				border: 1px solid white;
-				box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, .25);
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
 			}
-			
-			.personnelInfo .main-content .active {
-				background: linear-gradient(to bottom, #39e131, #31bd2a);
-				top: -2px;
-			}
-			
-			.personnelInfo .mui-slider-right a:nth-child(1) {
-				background: #f87776;
-				border-right: 1px solid #eee;
-			}
-			
-			.personnelInfo .mui-slider-right a:nth-child(2) {
-				background: #deaa02;
-				border-right: 1px solid #eee;
-			}
-			
-			.personnelInfo .mui-slider-right a:nth-child(3) {
-				background: #019bdc;
-			}
-			
 			.mui-table-view-cell>.mui-slider-left>.mui-btn:after,
 			.mui-table-view-cell>.mui-slider-right>.mui-btn:after {
 				position: relative;
 			}
-			
+			.mui-icon-back:before, .mui-icon-left-nav:before{
+				content:'';
+			}
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
 			.personnelInfo .mui-table-view-cell {
 				padding: 0 14px 0 10px;
 			}
-			
+			.personnelInfo .userInfo{
+				width:100%;
+				display: flex;
+				justify-content: space-between;
+			}
+			.personnelInfo .title{
+				text-align: center;
+				font-weight: 500;
+				font-size: 14px;
+			}
+			.personnelInfo .userInfo span{
+				display: block;
+			}
+			.personnelInfo .userInfo span:nth-child(1),.personnelInfo .userInfo span:nth-child(2){
+				flex:1;
+			}
+			.personnelInfo .userInfo .status{
+				width:42px;
+				text-align: right;
+			}
+			.selectBtn{
+				background: transparent;
+				border: none;
+				color:white;
+				float: right;
+				position: relative;
+				top:32px;
+				left:8px;
+			}
 			.mui-table-view-cell:after {
 				left: 0;
 				background-color: #ccc;
-			}
-			
-			#topPopover .mui-table-view-cell a {
-				display: flex;
-				align-items: center;
-				font-size: 20px;
-				border-bottom: 1px solid #ddd;
-			}
-			
-			#topPopover .mui-table-view-cell a span {
-				display: inline-block;
-				width: 100%;
-				text-align: center;
-			}
-			
-			#topPopover .mui-table-view-cell a img {
-				margin-right: 20px;
 			}
 			
 			.mui-popover {
@@ -267,24 +216,6 @@
 				border-top-right-radius: 0;
 			}
 			
-			.userEntryImg {
-				display: inline-block;
-				width: 22px;
-				height: 22px;
-				background: url(../../public/img/user_icon01.png) no-repeat;
-				background-size: 19px 22px;
-				margin-left: 5px;
-			}
-			
-			.userfilter {
-				display: inline-block;
-				width: 22px;
-				height: 22px;
-				background: url(../../public/img/user_icon02.png) no-repeat;
-				background-size: 19px 22px;
-				margin-left: 5px;
-			}
-			
 			.mui-content .mui-icon {
 				color: #ccc;
 				position: absolute;
@@ -304,26 +235,11 @@
 				background: white;
 			}
 			
-			.icon-related,
-			.icon-sign-out {
-				color: #666;
-				width: 15px !important;
-				height: 22px !important;
-				font-size: 20px !important;
-				margin-right: 10px;
-			}
-			
 			.mui-popover {
 				width: 122px;
 				height: 50px;
 				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
 				background: white;
-			}
-			
-			#topPopover .mui-table-view-cell {
-				border-bottom: 1px solid #e3e3e3;
-				height: 52px;
-				line-height: 26px;
 			}
 			
 			.mui-popover .mui-table-view .mui-table-view-cell:first-child {
@@ -335,22 +251,22 @@
 				padding: 11px 20px;
 			}
 			
-			#topPopover .mui-table-view-cell a span {
-				display: inline-block;
-				width: 100%;
-				text-align: center;
-				font-size: 13px;
-				color: #666;
-			}
-			
 			.mui-table-view-cell:after {
-				height: 0;
+				height: 1;
 			}
-			
-			#topPopover .mui-table-view-cell a {
-				border-bottom: 0;
+			.mui-checkbox.mui-left label{
+				display: flex;
+				align-items: center;
+				padding:0 0 0 40px;
+				height: 40px;
+				line-height: 20px;
 			}
-			
+			.mui-checkbox.mui-left input[type=checkbox]{
+				left:0px;
+			}
+			.mui-checkbox input[type=checkbox]{
+				top:5px;
+			}
 			[v-cloak] {
 				display: none;
 			}
@@ -360,18 +276,15 @@
 	<body>
 		<div id="vm">
 			<header class="mui-bar mui-bar-nav">
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
+				<button class="selectBtn">完  成</button>
 				<h1 class="mui-title">南方云</h1>
 			</header>
 			<div class="mui-content">
 				<div class="filter">
 					<ul class="filter-ul">
-						<li href="../personnel/userEntry.html" class="filter-li">
-							<span class="userEntryImg"></span>
-							<a href="#">用户录入</a>
-							<span class="mui-icon mui-icon-arrowright"></span>
-							<span class="border_bottom"></span>
-						</li>
 						<li href="../personnel/userfilter.html" class="filter-li">
 							<span class="userfilter"></span>
 							<a href="#">用户筛选</a>
@@ -385,7 +298,47 @@
 				</div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
-						<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
+						<li class="mui-table-view-cell content">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>
+								<input name="checkbox" value="1" type="checkbox">
+								<div class="userInfo title">
+									<span>用户账号</span><span>用户名称</span><span class="status">状态</span>
+								</div>
+								</label>
+							</div>
+						</li>
+						<li class="mui-table-view-cell content">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>
+								<input name="checkbox" value="1" type="checkbox">
+								<div class="userInfo">
+									<span>SG607B16</span><span>36356</span><span class="status">激活</span>
+								</div>
+								</label>
+							</div>
+						</li>
+						<li class="mui-table-view-cell content">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>
+								<input name="checkbox" value="1" type="checkbox">
+								<div class="userInfo">
+									<span>SG607B133236356</span><span>SG607B133236356</span><span class="status">未激活</span>
+								</div>
+								</label>
+							</div>
+						</li>
+						<li class="mui-table-view-cell content">
+							<div class="mui-input-row mui-checkbox mui-left">
+								<label>
+								<input name="checkbox" value="1" type="checkbox">
+								<div class="userInfo">
+									<span>SG607B133236356</span><span>SG607B133236356</span><span class="status">激活</span>
+								</div>
+								</label>
+							</div>
+						</li>
+						<!--<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
 							<div class="mui-slider-right mui-disabled">
 								<a class="mui-btn" href="#" v-on:tap="openpage(item,index)" data-href="../personnel/userinfo.html">资料</a>
 								<a class="mui-btn" href="#" v-on:tap="openpage(item,index)" data-href="../personnel/authorizedEquipment.html">设备</a>
@@ -402,32 +355,11 @@
 									</div>
 								</div>
 							</div>
-						</li>
+						</li>-->
 					</ul>
 				</div>
 			</div>
 
-			<!--右上角弹出菜单-->
-			<div id="topPopover" class="mui-popover">
-				<div class="mui-popover-arrow"></div>
-				<div class="mui-scroll-wrapper">
-					<div class="mui-scroll">
-						<ul class="mui-table-view">
-							<li class="mui-table-view-cell">
-								<a href="#" v-on:tap="test">
-									<span class="icon-related"></span>
-									<span>设备关联</span>
-								</a>
-							</li>
-							<!--<li id="logout" class="mui-table-view-cell">
-								<a href="#">
-									<span class="icon-sign-out"></span>
-									<span>退出登录</span></a>
-							</li>-->
-						</ul>
-					</div>
-				</div>
-			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
 		<script src="../../js/url.js"></script>
@@ -452,29 +384,7 @@
 					keywords: '',
 					workGroup: '',
 				},
-				methods: {
-					openpage: function(item, index) {
-						var data_url = event.target.dataset.href;
-						var el = event.target.parentNode.parentNode;
-						mui.openWindow({
-							url: data_url,
-							id: data_url,
-							extras: {
-								index: index,
-								username: item.username,
-								wrok_group: item.wrok_group,
-								realname: item.realname,
-								userId: item.id,
-								currentAccount: 'subAccount'
-							}
-						});
-						mui.swipeoutClose(el);
-					},
-					test: function() {
-						mui.toast('此处调用关联接口....');
-						mui('#topPopover').popover('hide');
-					}
-				},
+				methods: {},
 				created: function() {
 					mui.plusReady(function() {
 						mui.init({});
@@ -485,34 +395,21 @@
 								url: url,
 								id: url,
 								extras: {
-									parentPage: 'user'
+									parentPage: 'equipment-user-authorized'
 								}
 							});
 						});
-						//右上角弹出窗链接跳转
-						mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
-							var url = this.getAttribute('href');
-							mui.openWindow({
-								url: url,
-								id: url
-							});
-							//点击弹窗连接后隐藏弹窗和背景阴影层，防止页面返回时需要多点击一次关闭
-							document.querySelector('#topPopover').style.display = "none";
-							document.querySelector('.mui-backdrop').style.display = "none";
-							document.querySelector('#topPopover').className = 'mui-popover';
-						});
-
 						//登陆时存放到本地的数据
 						vm.token = plus.storage.getItem('token');
 						vm.user_name = plus.storage.getItem('user_name');
 						//请求用户数据
 						getUserData();
 						window.addEventListener('refreshUser', function() {
-							console.log('刷新user页面数据...');
+							console.log('刷新用户页面数据了...');
 							getUserData();
 						});
 						window.addEventListener('userDataFilter', function(event) {
-							console.log('筛选并刷新user页面数据.....');
+							console.log('刷新equipment-user-authorized页面数据.....');
 							vm.keywords = event.detail.keywords;
 							vm.workGroup = event.detail.workGroup;
 							getFilterUserData();

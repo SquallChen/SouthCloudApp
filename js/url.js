@@ -23,6 +23,7 @@ var apiUrl = {
   detail_info: str + '/device/detail_info',
   doSendConfig: str + '/device/do_send_config',
   firmwareUpdate: str + '/device/doSendConfigFirmwareUpdate',
+  filterDeviceByGroupAndCoder: str + '/device/filterDeviceByGroupAndCoder',
 
   // doSendConfig: str + '/device/doSendConfig',
   doRequestConnectStatusMonitor: str + '/device/monitor_connect_status',

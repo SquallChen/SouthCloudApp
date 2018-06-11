@@ -1679,7 +1679,9 @@
 					"app/personnel/historicalTrack.html",
 					"app/personnel/currentLocation.html",
 					"app/personnel/onlineSettings.html",
-					"login.html"
+					"login.html",
+					"app/personnel/allocationAuthorization.html",
+					"app/equipment/allocationAuthorization.html"
 				],
 				"priority": 0
 			},
@@ -1717,6 +1719,20 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/userInfoModify.html"
+				],
+				"priority": 0
+			},
+			"app/equipment/allocationAuthorization.html": {
+				"resources": [],
+				"refer": [
+					"app/equipment/equipment-user-authorized.html"
+				],
+				"priority": 0
+			},
+			"app/equipment/equipment-user-authorized.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userfilter.html"
 				],
 				"priority": 0
 			}

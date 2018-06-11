@@ -1499,7 +1499,9 @@
 			"app/personnel/historicalTrack.html",
 			"app/personnel/currentLocation.html",
 			"app/personnel/onlineSettings.html",
-			"login.html"
+			"login.html",
+			"app/personnel/allocationAuthorization.html",
+			"app/equipment/allocationAuthorization.html"
 		],
 		"resources": [
 			"public/img/user_icon01.png",
@@ -1537,6 +1539,16 @@
 	"app/personnel/subUserinfo.html": {
 		"refer": [
 			"app/personnel/userInfoModify.html"
+		]
+	},
+	"app/equipment/allocationAuthorization.html": {
+		"refer": [
+			"app/equipment/equipment-user-authorized.html"
+		]
+	},
+	"app/equipment/equipment-user-authorized.html": {
+		"refer": [
+			"app/personnel/userfilter.html"
 		]
 	}
 }

@@ -388,6 +388,8 @@
       // 登陆时存放到本地的数据
       vm.token = plus.storage.getItem('token');
       vm.user_name = plus.storage.getItem('user_name');
+      pointUrl = plus.storage.getItem('line');
+      lineUrl = plus.storage.getItem('point');
 
       // 请求指定设备的历史跟踪轨迹数据
       mui.ajax(apiUrl.track_info_page, {
@@ -424,26 +426,6 @@
             infoObj: vm.infoObj
           }
         });
-      });
-      mui.ajax(apiUrl.map_url, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          if (data.status === 0) {
-            pointUrl = data.history_track_point;
-            lineUrl = data.history_track_line;
-          } else {
-            mui.toast(data.info);
-          }
-        },
-        error: function (xhr, type, errorThrown) {
-          onNetChange();
-        }
       });
     });
 

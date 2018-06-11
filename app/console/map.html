@@ -1,415 +1,414 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title>地图</title>
-	<link href="../../css/mui.min.css" rel="stylesheet" />
-	<link href="../../css/custom.css" rel="stylesheet" />
-	<link href="../../css/input.css" rel="stylesheet" />
-	<link href="../../css/ol.css" rel="stylesheet" />
-	<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
-	<link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
-	<link href="../../css/map.css" rel="stylesheet" />
-	<link href="../../css/iconfont.css" rel="stylesheet" />
-	<script src="../js/jquery.js"></script>
-	<style>
-		body {
-			background: #fff;
-			font-size: 20px;
-		}
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>map</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/custom.css" rel="stylesheet" />
+		<link href="../../css/input.css" rel="stylesheet" />
+		<link href="../../css/ol.css" rel="stylesheet" />
+		<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
+		<link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
+		<link href="../../css/map.css" rel="stylesheet" />
+		<link href="../../css/iconfont.css" rel="stylesheet" />
+		<script src="../js/jquery.js"></script>
+		<style>
+			body {
+				background: #fff;
+				font-size: 20px;
+			}
+			
+			ul {
+				list-style: none;
+				padding: 0;
+				margin: 0;
+			}
+			
+			.mui-bar-nav.mui-bar :nth-child(1) {
+				position: relative;
+			}
+			
+			.mui-bar-nav.mui-bar :nth-child(2) {
+				font-size: 28px;
+				padding: 10px 10px;
+				position: relative;
+				top: 23px;
+				left: -15px;
+			}
+			
+			#topPopover1 .mui-popover-arrow {
+				left: 146px !important;
+			}
+			
+			#topPopover2 .mui-popover-arrow {
+				left: 205px !important;
+			}
+			
+			.s-map-wrap {
+				padding-top: 73px;
+			}
+			
+			#topPopover .mui-table-view-cell a {
+				display: flex;
+				align-items: center;
+				font-size: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell a img {
+				margin-right: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell {
+				border-bottom: 1px solid #706f71;
+			}
+			
+			.mui-popover {
+				height: 300px;
+			}
+			
+			.mui-popover {
+				width: 180px;
+				height: 166px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			#topPopover2 {
+				width: 280px;
+				height: 256px;
+				font-size: 13px;
+			}
+			
+			#topPopover2 .mui-scroll-wrapper,
+			#topPopover2 .mui-scroll-wrapper .mui-table-view-cell {
+				background: white;
+			}
+			
+			#topPopover2 ul li {
+				padding: 0;
+				height: 54px;
+				display: flex;
+				align-items: center;
+				position: relative;
+			}
+			
+			#topPopover2 ul li .line {
+				width: 100%;
+				height: 1px;
+				background: #ccc;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				position: absolute;
+				top: 54px;
+				left: 0;
+			}
+			
+			#topPopover2 ul li span {
+				width: 60px;
+				text-align: right;
+			}
+			
+			#topPopover2 ul li input {
+				flex: 1;
+				margin-bottom: 0;
+				border: none;
+				padding-left: 0;
+				font-size: 13px;
+			}
+			
+			#topPopover2 ul :nth-child(4) {
+				display: flex;
+				margin-top: 25px;
+				padding: 0 20px;
+			}
+			
+			#topPopover2 ul li span {
+				/*display: block;*/
+			}
+			
+			#topPopover2 ul li div {
+				text-align: center;
+				display: flex;
+				align-items: center;
+			}
+			
+			#topPopover2 ul li div .mui-checkbox label {
+				line-height: 20px;
+				padding-top: 10px;
+				padding-bottom: 8px;
+			}
+			
+			#topPopover2 ul li div button,
+			#topPopover2 ul li button {
+				margin-right: 15px;
+				background: #ccc;
+				color: white;
+				width: 80px;
+				margin-bottom: 10px;
+			}
+			
+			#topPopover2 ul li>button {
+				height: 46px;
+				width: 50%;
+				margin: 0;
+				border-radius: 4px;
+				border: none;
+			}
+			
+			#topPopover2 ul li div .active,
+			#topPopover2 ul li .active {
+				background: #0b60de;
+			}
+			
+			#topPopover2 .group_title {
+				font-size: 13px;
+				color: #999;
+				padding-left: 20px;
+				margin-right: 20px;
+			}
+			
+			#topPopover2 .group {}
+			
+			#topPopover2 .mui-scroll-wrapper {
+				border-radius: 4px;
+			}
+			
+			#topPopover2 button {
+				border-radius: 4px;
+				color: white;
+			}
+			
+			#topPopover2 .reset {
+				background: #3b88fb;
+				margin-right: 15px;
+			}
+			
+			#topPopover2 .reset:active {
+				background: #0b5fde;
+			}
+			
+			#topPopover2 .finish {
+				background: #00b58f;
+			}
+			
+			#topPopover2 .finish:active {
+				background: #1a9b81;
+			}
+			
+			.mui-popover .mui-table-view {
+				background: white;
+				;
+			}
+			
+			.mui-backdrop {
+				background: transparent;
+			}
+			
+			.mui-popover .mui-scroll-wrapper {
+				margin: 0;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+			
+			.mui-popover .mui-popover-arrow:after {
+				background: white;
+			}
+			
+			#topPopover1 .mui-table-view-cell {
+				border-bottom: 1px solid #ddd;
+			}
+			
+			.mui-popover .mui-table-view {
+				border-radius: 7px;
+			}
+			
+			.popup-info {
+				padding: 6px 6px 0 6px;
+				text-align: left;
+			}
+			
+			.popup-info p {
+				color: #fff;
+			}
+			
+			.icon-related,
+			.icon-sign-out {
+				color: #666;
+				width: 15px !important;
+				height: 22px !important;
+				font-size: 20px !important;
+				margin-right: 10px;
+				position: relative;
+				top: 3px;
+			}
+			
+			.mui-popover {
+				width: 122px;
+				height: 50px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			#topPopover1 .mui-table-view-cell {
+				border-bottom: 1px solid #e3e3e3;
+				height: 52px;
+				line-height: 26px;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child {
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
+			}
+			
+			.mui-table-view-cell {
+				padding: 11px 20px;
+			}
+			
+			#topPopover1 .mui-table-view-cell a span {
+				position: relative;
+				left: -12px;
+				display: inline-block;
+				width: 100%;
+				text-align: center;
+				font-size: 13px;
+				color: #666;
+			}
+			
+			.mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			#topPopover1 .mui-table-view-cell a {
+				border-bottom: 0;
+			}
+		</style>
+	</head>
 
-		ul {
-			list-style: none;
-			padding: 0;
-			margin: 0;
-		}
-
-		.mui-bar-nav.mui-bar :nth-child(1) {
-			position: relative;
-		}
-
-		.mui-bar-nav.mui-bar :nth-child(2) {
-			font-size: 28px;
-			padding: 10px 10px;
-			position: relative;
-			top: 23px;
-			left: -15px;
-		}
-
-		#topPopover1 .mui-popover-arrow {
-			left: 146px !important;
-		}
-
-		#topPopover2 .mui-popover-arrow {
-			left: 205px !important;
-		}
-
-		.s-map-wrap {
-			padding-top: 73px;
-		}
-
-		#topPopover .mui-table-view-cell a {
-			display: flex;
-			align-items: center;
-			font-size: 20px;
-		}
-
-		#topPopover .mui-table-view-cell a img {
-			margin-right: 20px;
-		}
-
-		#topPopover .mui-table-view-cell {
-			border-bottom: 1px solid #706f71;
-		}
-
-		.mui-popover {
-			height: 300px;
-		}
-
-		.mui-popover {
-			width: 180px;
-			height: 166px;
-			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-			background: white;
-		}
-
-		#topPopover2 {
-			width: 280px;
-			height: 256px;
-			font-size: 13px;
-		}
-
-		#topPopover2 .mui-scroll-wrapper,
-		#topPopover2 .mui-scroll-wrapper .mui-table-view-cell {
-			background: white;
-		}
-
-		#topPopover2 ul li {
-			padding: 0;
-			height: 54px;
-			display: flex;
-			align-items: center;
-			position: relative;
-		}
-
-		#topPopover2 ul li .line {
-			width: 100%;
-			height: 1px;
-			background: #ccc;
-			-webkit-transform: scaleY(.5);
-			transform: scaleY(.5);
-			position: absolute;
-			top: 54px;
-			left: 0;
-		}
-
-		#topPopover2 ul li span {
-			width: 60px;
-			text-align: right;
-		}
-
-		#topPopover2 ul li input {
-			flex: 1;
-			margin-bottom: 0;
-			border: none;
-			padding-left: 0;
-			font-size: 13px;
-		}
-
-		#topPopover2 ul :nth-child(4) {
-			display: flex;
-			margin-top: 25px;
-			padding: 0 20px;
-		}
-
-		#topPopover2 ul li span {
-			/*display: block;*/
-		}
-
-		#topPopover2 ul li div {
-			text-align: center;
-			display: flex;
-			align-items: center;
-		}
-
-		#topPopover2 ul li div .mui-checkbox label {
-			line-height: 20px;
-			padding-top: 10px;
-			padding-bottom: 8px;
-		}
-
-		#topPopover2 ul li div button,
-		#topPopover2 ul li button {
-			margin-right: 15px;
-			background: #ccc;
-			color: white;
-			width: 80px;
-			margin-bottom: 10px;
-		}
-
-		#topPopover2 ul li>button {
-			height: 46px;
-			width: 50%;
-			margin: 0;
-			border-radius: 4px;
-			border: none;
-		}
-
-		#topPopover2 ul li div .active,
-		#topPopover2 ul li .active {
-			background: #0b60de;
-		}
-
-		#topPopover2 .group_title {
-			font-size: 13px;
-			color: #999;
-			padding-left: 20px;
-			margin-right: 20px;
-		}
-
-		#topPopover2 .group {}
-
-		#topPopover2 .mui-scroll-wrapper {
-			border-radius: 4px;
-		}
-
-		#topPopover2 button {
-			border-radius: 4px;
-			color: white;
-		}
-
-		#topPopover2 .reset {
-			background: #3b88fb;
-			margin-right: 15px;
-		}
-
-		#topPopover2 .reset:active {
-			background: #0b5fde;
-		}
-
-		#topPopover2 .finish {
-			background: #00b58f;
-		}
-
-		#topPopover2 .finish:active {
-			background: #1a9b81;
-		}
-
-		.mui-popover .mui-table-view {
-			background: white;
-			;
-		}
-
-		.mui-backdrop {
-			background: transparent;
-		}
-
-		.mui-popover .mui-scroll-wrapper {
-			margin: 0;
-		}
-
-		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
-		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
-		.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
-		.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
-			border-bottom-left-radius: 0;
-			border-bottom-right-radius: 0;
-			border-top-left-radius: 0;
-			border-top-right-radius: 0;
-		}
-
-		.mui-popover .mui-popover-arrow:after {
-			background: white;
-		}
-
-		#topPopover1 .mui-table-view-cell {
-			border-bottom: 1px solid #ddd;
-		}
-
-		.mui-popover .mui-table-view {
-			border-radius: 0;
-		}
-
-		.popup-info {
-			padding: 6px 6px 0 6px;
-			text-align: left;
-		}
-
-		.popup-info p {
-			color: #fff;
-		}
-
-		.icon-related,
-		.icon-sign-out {
-			color: #666;
-			width: 15px !important;
-			height: 22px !important;
-			font-size: 20px !important;
-			margin-right: 10px;
-			position: relative;
-			top: 3px;
-		}
-
-		.mui-popover {
-			width: 122px;
-			height: 104px;
-			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-			background: white;
-		}
-
-		#topPopover1 .mui-table-view-cell {
-			border-bottom: 1px solid #e3e3e3;
-			height: 52px;
-			line-height: 26px;
-		}
-
-		.mui-popover .mui-table-view .mui-table-view-cell:first-child {
-			border-top-left-radius: 12px;
-			border-top-right-radius: 12px;
-		}
-
-		.mui-table-view-cell {
-			padding: 11px 20px;
-		}
-
-		#topPopover1 .mui-table-view-cell a span {
-			position: relative;
-			left: -12px;
-			display: inline-block;
-			width: 100%;
-			text-align: center;
-			font-size: 13px;
-			color: #666;
-		}
-
-		.mui-table-view-cell:after {
-			height: 0;
-		}
-
-		#topPopover1 .mui-table-view-cell a {
-			border-bottom: 0;
-		}
-	</style>
-</head>
-
-<body>
-	<div id="app">
-		<header class="mui-bar mui-bar-nav">
-			<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>
-			<a id="menu2" class="mui-icon mui-pull-right" href="#topPopover2">
-				<span class="icon-list"></span>
-			</a>
-			<h1 class="mui-title">南方云</h1>
-		</header>
-		<div class="mui-content">
-			<div class="s-map-wrap">
-				<div style="height: 100%;" id="map" class="map"> </div>
+	<body>
+		<div id="app">
+			<header class="mui-bar mui-bar-nav">
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>
+				<a id="menu2" class="mui-icon mui-pull-right" href="#topPopover2">
+					<span class="icon-list"></span>
+				</a>
+				<h1 class="mui-title">南方云</h1>
+			</header>
+			<div class="mui-content">
+				<div class="s-map-wrap">
+					<div style="height: 100%;" id="map" class="map"> </div>
+				</div>
 			</div>
-		</div>
 
-		<!--右上角弹出菜单1-->
-		<div id="topPopover1" class="mui-popover">
-			<div class="mui-popover-arrow" style="left:130px"></div>
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul class="mui-table-view">
-						<li class="mui-table-view-cell">
-							<a href="#" v-on:tap="test">
-								<span class="icon-related"></span>
-								<span>设备关联</span>
-							</a>
-						</li>
-						<li id="logout" class="mui-table-view-cell">
+			<!--右上角弹出菜单1-->
+			<div id="topPopover1" class="mui-popover">
+				<div class="mui-popover-arrow" style="left:130px"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a href="#" v-on:tap="test">
+									<span class="icon-related"></span>
+									<span>设备关联</span>
+								</a>
+							</li>
+							<!--<li id="logout" class="mui-table-view-cell">
 							<a href="#">
 								<span class="icon-sign-out"></span>
 								<span>退出登录</span>
 							</a>
-						</li>
-					</ul>
+						</li>-->
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--右上角弹出菜单2-->
+			<div id="topPopover2" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul>
+							<li>
+								<span class="group_title">工作组</span>
+								<input type="text" v-model="workGroup" placeholder="请输入工作组" />
+								<div class="line"></div>
+							</li>
+							<li>
+								<span class="group_title">机身号</span>
+								<input v-model="equipmentNum" type="text" placeholder="请输入机身号" />
+								<div class="line"></div>
+							</li>
+							<li>
+								<span class="group_title">状态</span>
+								<div>
+									<div class="mui-input-row mui-checkbox mui-left">
+										<label>在线</label>
+										<input name="checkbox" type="checkbox" v-model="equipmentOnline">
+									</div>
+									<div class="mui-input-row mui-checkbox mui-left">
+										<label>离线</label>
+										<input name="checkbox" type="checkbox" v-model="equipmentOffline">
+									</div>
+								</div>
+								<div class="line"></div>
+							</li>
+							<li>
+								<button class="reset" id="reset">重置</button>
+								<button class="finish" id="set">完成</button>
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
-		<!--右上角弹出菜单2-->
-		<div id="topPopover2" class="mui-popover">
-			<div class="mui-popover-arrow"></div>
-			<div class="mui-scroll-wrapper">
-				<div class="mui-scroll">
-					<ul>
-						<li>
-							<span class="group_title">工作组</span>
-							<input type="text" v-model="workGroup" placeholder="请输入工作组" />
-							<div class="line"></div>
-						</li>
-						<li>
-							<span class="group_title">机身号</span>
-							<input v-model="equipmentNum" type="text" placeholder="请输入机身号" />
-							<div class="line"></div>
-						</li>
-						<li>
-							<span class="group_title">状态</span>
-							<div>
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>在线</label>
-									<input name="checkbox" type="checkbox" v-model="equipmentOnline">
-								</div>
-								<div class="mui-input-row mui-checkbox mui-left">
-									<label>离线</label>
-									<input name="checkbox" type="checkbox" v-model="equipmentOffline">
-								</div>
-							</div>
-							<div class="line"></div>
-						</li>
-						<li>
-							<button class="reset" id="reset">重置</button>
-							<button class="finish" id="set">完成</button>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-	<script src="../../js/ol.js"></script>
-	<script src="../../js/ol3-layerswitcher.js"></script>
-	<script src="../../js/overlay/popupoverlay.js"></script>
-	<script src="../../js/mui.min.js"></script>
-	<script src="../../js/app.js"></script>
-	<script src="../../js/url.js"></script>
-	<script src="../../js/vue.min.js"></script>
-	<script type="text/javascript">
-		var vm = new Vue({
-			el: '#app',
-			data: {
-				workGroup: '',
-				equipmentNum: '',
-				equipmentOnline: false,
-				equipmentOffline: false,
-				equipmentData: '',
-				isAlready: ''
-			},
-			methods: {
-				test: function () {
-					mui.toast('此处调用关联接口....');
-					mui('#topPopover1').popover('hide');
-				}
-			},
-			created: function () {
-			}
-		});
-		// 获取设备图层加载的数据源 url
-		var monitorUrlAddress = '';
-		mui.plusReady(function () {
-			/* 初始化mui控件 */
-			mui.init({
-				beforeback: function () { }
+		<script src="../../js/ol.js"></script>
+		<script src="../../js/ol3-layerswitcher.js"></script>
+		<script src="../../js/overlay/popupoverlay.js"></script>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					workGroup: '',
+					equipmentNum: '',
+					equipmentOnline: false,
+					equipmentOffline: false,
+					equipmentData: '',
+					isAlready: ''
+				},
+				methods: {
+					test: function() {
+						mui.toast('此处调用关联接口....');
+						mui('#topPopover1').popover('hide');
+					}
+				},
+				created: function() {}
 			});
+			// 获取设备图层加载的数据源 url
+			var monitorUrlAddress = '';
+			mui.plusReady(function() {
+				/* 初始化mui控件 */
+				mui.init({
+					beforeback: function() {}
+				});
 
-			plus.webview.currentWebview().setStyle({
-				softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
-			});
+				plus.webview.currentWebview().setStyle({
+					softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
+				});
 
-		  /*  var params = '';
+				/*  var params = '';
 		  document.getElementById('online').addEventListener('tap', function () {
 		    alert(1);
 		  });
@@ -417,330 +416,340 @@
 		    alert(0);
 			}); */
 
-			monitorUrlAddress = plus.storage.getItem('monitor');
-			// 天地图加载资源
-			var tianDiTuMapLayer = new ol.layer.Tile({
-				title: '天地图路网',
-				preload: Infinity,
-				source: new ol.source.XYZ({
-					url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
-				})
-			});
-			var tianDiTuAnnotation = new ol.layer.Tile({
-				title: '天地图文字标注',
-				source: new ol.source.XYZ({
-					url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
-				})
-			});
-			var tianDiTuSatellite = new ol.layer.Tile({
-				title: '天地图卫星影像',
-				source: new ol.source.XYZ({
-					url: 'http://t3.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}'/**/
-				})
-			});
-
-			// 设备图层资源
-		  /*  var vectorSource = new ol.source.Vector({
-		    format: new ol.format.GeoJSON(),
-		    url: monitorUrlAddress + ';state1:1;state2:1'
-		  }); */
-			var device_vector_layer = new ol.layer.Vector({
-				source: new ol.source.Vector({
-					format: new ol.format.GeoJSON(),
-					url: monitorUrlAddress + ';state1:1;state2:0'
-				}),
-				style: function (feature, resolution) {
-					var featureProperties = feature.getProperties();
-					if (featureProperties === null || featureProperties === undefined) return pointOfflineStyle;
-					return featureProperties.online_status === 1 ? pointOnlineStyle : pointOfflineStyle;
-				}
-			});
-			document.getElementById('reset').addEventListener('tap', function () {
-				vm.workGroup = '';
-				vm.equipmentNum = '';
-				vm.equipmentOnline = false;
-				vm.equipmentOffline = false;
-			});
-
-			document.getElementById('set').addEventListener('tap', function () {
-				var url, urlAdd;
-				if (vm.equipmentNum === '') {
-					if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
-						urlAdd = ';state1:1;state2:0';
-						url = monitorUrlAddress + urlAdd;
-						 filterMapData(url);
-					} else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
-						urlAdd = ';state1:1;state2:1';
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					} else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
-						urlAdd = ';state1:0;state2:0';
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					} else {
-						mui.toast('你并没有进行筛选！')
-					}
-				} else {
-					if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
-						urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					} else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
-						urlAdd = ';state1:1;state2:1;code:' + vm.equipmentNum;
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					} else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
-						urlAdd = ';state1:0;state2:0;code:' + vm.equipmentNum;
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					} else {
-						urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
-						url = monitorUrlAddress + urlAdd;
-						filterMapData(url);
-					}
-				}
-				// 	if (vm.equipmentData !== ''&&vm.isAlready!==''){
-				// 		console.log(555555555555555555555);
-				// 	for (var i = 0; i < FeaturesArr.length; i++) {
-				// 		device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
-				// 	}
-				// 	var features = (new ol.format.GeoJSON()).readFeatures(vm.equipmentData);
-				// 	device_vector_layer.getSource().addFeatures(features);
-				// 	var pointArr = [];
-				// 	for (var i = 0; i < features.length; i++) {
-				// 		if (features[i].getGeometry()) {
-				// 			if (features[i].getGeometry().getCoordinates().length > 0) {
-				// 				pointArr.push(features[i].getGeometry().getCoordinates());
-				// 			}
-				// 		}
-				// 	}
-				// 	if (pointArr.length === 1) {
-				// 		mapCenter(pointArr[0], 8);
-				// 	} else {
-				// 		fitCenter(pointArr);
-				// 	}
-				// 	FeaturesArr = features;
-				// 	vm.isAlready = '';
-				// }
-				console.log(urlAdd);
-				//在线： state1:1;state2:1
-				//	离线： state1:0;state2:0
-				//var url = monitorUrlAddress + ';state1:1;state2:1;code:';
-
-				//var url = monitorUrlAddress + urlAdd;
-				// mui.ajax(url, {
-				//   dataType: 'json',
-				//   type: 'get',
-				//   // equipmentOnline:true,
-				//   // equipmentOffline:true,
-				//   // equipmentNum:'123456789',
-				//   success: function (datas) {
-				//     /* device_vector_layer.getSource().clear();
-				//     device_vector_layer.getSource().addFeatures(features); */
-				//     for (var i = 0; i < FeaturesArr.length; i++) {
-				//       device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
-				//     }
-				//     var features = (new ol.format.GeoJSON()).readFeatures(datas);
-				//     device_vector_layer.getSource().addFeatures(features);
-				//     var pointArr = [];
-				//     for (var i = 0; i < features.length; i++) {
-				//       if (features[i].getGeometry()) {
-				//         if (features[i].getGeometry().getCoordinates().length > 0) {
-				//           pointArr.push(features[i].getGeometry().getCoordinates());
-				//         }
-				//       }
-				//     }
-				//     if (pointArr.length === 1) {
-				//       mapCenter(pointArr[0], 8);
-				//     } else {
-				//       fitCenter(pointArr);
-				//     }
-				//     FeaturesArr = features;
-				//   }
-				// });
-				mui('#topPopover2').popover('hide');
-			});
-
-			// 设备在线样式
-			var pointOnlineStyle = new ol.style.Style({
-				image: new ol.style.Icon({
-					src: '../../public/img/device_online.png',
-					anchor: [0.5, 0.5] // 设置图标位置
-				})
-			});
-
-			// 设备离线样式
-			var pointOfflineStyle = new ol.style.Style({
-				image: new ol.style.Icon({
-					src: '../../public/img/device_offline.png',
-					anchor: [0.5, 0.5] // 设置图标位置
-				})
-			});
-
-			// 比例尺控件
-			var scaleLineControl = new ol.control.ScaleLine();
-
-			/**
-				* 调用外部的JS创建弹出框
-				* Create xiaoJing 2017年11月7日 09:34:25
-				*/
-			var popup = new ol.Overlay.Popup({
-				popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
-				closeBox: true,
-				positioning: 'auto',
-				autoPan: true,
-				autoPanAnimation: { duration: 250 }
-			});
-
-			var olMap = new ol.Map({
-				// 图层
-				layers: [
-					tianDiTuMapLayer, tianDiTuAnnotation, device_vector_layer
-					// tianDiTuOfflineGuangzhowRoadmap, tianDiTuOfflineGuangzhowOverlay_r
-				],
-				overlays: [popup],
-				target: 'map',
-				// 禁止在移动端旋转设备
-				interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
-				controls: ol.control.defaults({
-					attributionOptions: ({
-						collapsible: false
-
-					}),
-					attribution: false,
-					// 不显示旋转控件
-					rotate: false,
-					// 不显示缩放控件
-					zoom: false
-				}).extend([
-					// 添加比例尺控制到地图上
-					scaleLineControl
-				]),
-				view: new ol.View({
-					// 指定投影使用EPSG:4326
-					projection: 'EPSG:4326',
-					constrainRotation: false,
-					enableRotation: false,
-					center: [113.2652664185, 23.1349929688],
-					zoom: 8,
-					minZoom: 0,
-					maxZoom: 24
-				})
-			});
-
-			// 地图中心调用函数
-			function mapCenter(position, zoom) {
-				olMap.getView().animate({
-					center: position,
-					zoom: zoom,
-					duration: 0
+				monitorUrlAddress = plus.storage.getItem('monitor');
+				// 天地图加载资源
+				var tianDiTuMapLayer = new ol.layer.Tile({
+					title: '天地图路网',
+					preload: Infinity,
+					source: new ol.source.XYZ({
+						url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
+					})
 				});
-			}
+				var tianDiTuAnnotation = new ol.layer.Tile({
+					title: '天地图文字标注',
+					source: new ol.source.XYZ({
+						url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
+					})
+				});
+				var tianDiTuSatellite = new ol.layer.Tile({
+					title: '天地图卫星影像',
+					source: new ol.source.XYZ({
+						url: 'http://t3.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}' /**/
+					})
+				});
 
-			//  根据数据源的坐标组来判断缩放级别
-			function fitCenter(coordinates) {
-				var boundingExtent = ol.extent.boundingExtent(coordinates);
-				olMap.getView().fit(boundingExtent, olMap.getSize());
-			}
+				// 设备图层资源
+				/*  var vectorSource = new ol.source.Vector({
+				  format: new ol.format.GeoJSON(),
+				  url: monitorUrlAddress + ';state1:1;state2:1'
+				}); */
+				var device_vector_layer = new ol.layer.Vector({
+					source: new ol.source.Vector({
+						format: new ol.format.GeoJSON(),
+						url: monitorUrlAddress + ';state1:1;state2:0'
+					}),
+					style: function(feature, resolution) {
+						var featureProperties = feature.getProperties();
+						if(featureProperties === null || featureProperties === undefined) return pointOfflineStyle;
+						return featureProperties.online_status === 1 ? pointOnlineStyle : pointOfflineStyle;
+					}
+				});
+				document.getElementById('reset').addEventListener('tap', function() {
+					vm.workGroup = '';
+					vm.equipmentNum = '';
+					vm.equipmentOnline = false;
+					vm.equipmentOffline = false;
+				});
 
-			var FeaturesArr = '';
-			// 加载完设备图层的回调
-			device_vector_layer.getSource().once('change', function () {
-				if (device_vector_layer.getSource().getState() === 'ready') {
-					FeaturesArr = device_vector_layer.getSource().getFeatures();
-					var coordinatesArr = [];
-					for (var i = 0; i < FeaturesArr.length; i++) {
-						if (FeaturesArr[i].getGeometry()) {
-							if (FeaturesArr[i].getGeometry().getCoordinates().length > 0) {
-								coordinatesArr.push(FeaturesArr[i].getGeometry().getCoordinates());
-							}
+				document.getElementById('set').addEventListener('tap', function() {
+					var url, urlAdd;
+					if(vm.equipmentNum === '') {
+						if(vm.equipmentOnline === true && vm.equipmentOffline === true) {
+							urlAdd = ';state1:1;state2:0';
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else if(vm.equipmentOnline === true && vm.equipmentOffline === false) {
+							urlAdd = ';state1:1;state2:1';
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else if(vm.equipmentOnline === false && vm.equipmentOffline === true) {
+							urlAdd = ';state1:0;state2:0';
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else {
+							mui.toast('你并没有进行筛选！')
+						}
+					} else {
+						if(vm.equipmentOnline === true && vm.equipmentOffline === true) {
+							urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else if(vm.equipmentOnline === true && vm.equipmentOffline === false) {
+							urlAdd = ';state1:1;state2:1;code:' + vm.equipmentNum;
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else if(vm.equipmentOnline === false && vm.equipmentOffline === true) {
+							urlAdd = ';state1:0;state2:0;code:' + vm.equipmentNum;
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
+						} else {
+							urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
+							url = monitorUrlAddress + urlAdd;
+							filterMapData(url);
 						}
 					}
-					if (coordinatesArr.length === 1) {
-						mapCenter(coordinatesArr[0], 8);
-					} else {
-						fitCenter(coordinatesArr);
-					}
-					// device_vector_layer.getSource().unByKey(listenerKey); // 注销监听器
-				}
-			});
+					// 	if (vm.equipmentData !== ''&&vm.isAlready!==''){
+					// 		console.log(555555555555555555555);
+					// 	for (var i = 0; i < FeaturesArr.length; i++) {
+					// 		device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
+					// 	}
+					// 	var features = (new ol.format.GeoJSON()).readFeatures(vm.equipmentData);
+					// 	device_vector_layer.getSource().addFeatures(features);
+					// 	var pointArr = [];
+					// 	for (var i = 0; i < features.length; i++) {
+					// 		if (features[i].getGeometry()) {
+					// 			if (features[i].getGeometry().getCoordinates().length > 0) {
+					// 				pointArr.push(features[i].getGeometry().getCoordinates());
+					// 			}
+					// 		}
+					// 	}
+					// 	if (pointArr.length === 1) {
+					// 		mapCenter(pointArr[0], 8);
+					// 	} else {
+					// 		fitCenter(pointArr);
+					// 	}
+					// 	FeaturesArr = features;
+					// 	vm.isAlready = '';
+					// }
+					console.log(urlAdd);
+					//在线： state1:1;state2:1
+					//	离线： state1:0;state2:0
+					//var url = monitorUrlAddress + ';state1:1;state2:1;code:';
 
-			//  绑定地图上的单击事件
-			olMap.on('singleclick', function (evt) {
-				if (evt.dragging) {
-					return;
-				}
-				var pixel = olMap.getEventPixel(evt.originalEvent);
-				//  获取当前点击位置的图层
-				var feature = olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
-					return feature;
+					//var url = monitorUrlAddress + urlAdd;
+					// mui.ajax(url, {
+					//   dataType: 'json',
+					//   type: 'get',
+					//   // equipmentOnline:true,
+					//   // equipmentOffline:true,
+					//   // equipmentNum:'123456789',
+					//   success: function (datas) {
+					//     /* device_vector_layer.getSource().clear();
+					//     device_vector_layer.getSource().addFeatures(features); */
+					//     for (var i = 0; i < FeaturesArr.length; i++) {
+					//       device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
+					//     }
+					//     var features = (new ol.format.GeoJSON()).readFeatures(datas);
+					//     device_vector_layer.getSource().addFeatures(features);
+					//     var pointArr = [];
+					//     for (var i = 0; i < features.length; i++) {
+					//       if (features[i].getGeometry()) {
+					//         if (features[i].getGeometry().getCoordinates().length > 0) {
+					//           pointArr.push(features[i].getGeometry().getCoordinates());
+					//         }
+					//       }
+					//     }
+					//     if (pointArr.length === 1) {
+					//       mapCenter(pointArr[0], 8);
+					//     } else {
+					//       fitCenter(pointArr);
+					//     }
+					//     FeaturesArr = features;
+					//   }
+					// });
+					mui('#topPopover2').popover('hide');
 				});
-				if (feature === null || feature === undefined) return;
-				// 获取图层信息
-				displayDeviceInfoOverlay(feature);
-			}, device_vector_layer);
 
-			function displayDeviceInfoOverlay(selectFeature) {
-				popup.hide();
-				if (selectFeature === undefined) return;
-				var deviceItemInfo = selectFeature.getProperties();
-				if (deviceItemInfo === undefined) return;
-				var content = '<div class="popup-info">';
-				content += '<p>设备编号:' + deviceItemInfo.identify_code + '</p>';
-				if (deviceItemInfo.online_status === 1) {
-					content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
-				} else {
-					content += '<p>断开时间:' + timeTrans(deviceItemInfo.disconnect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+				// 设备在线样式
+				var pointOnlineStyle = new ol.style.Style({
+					image: new ol.style.Icon({
+						src: '../../public/img/device_online.png',
+						anchor: [0.5, 0.5] // 设置图标位置
+					})
+				});
+
+				// 设备离线样式
+				var pointOfflineStyle = new ol.style.Style({
+					image: new ol.style.Icon({
+						src: '../../public/img/device_offline.png',
+						anchor: [0.5, 0.5] // 设置图标位置
+					})
+				});
+
+				// 比例尺控件
+				var scaleLineControl = new ol.control.ScaleLine();
+
+				/**
+				 * 调用外部的JS创建弹出框
+				 * Create xiaoJing 2017年11月7日 09:34:25
+				 */
+				var popup = new ol.Overlay.Popup({
+					popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
+					closeBox: true,
+					positioning: 'auto',
+					autoPan: true,
+					autoPanAnimation: {
+						duration: 250
+					}
+				});
+
+				var olMap = new ol.Map({
+					// 图层
+					layers: [
+						tianDiTuMapLayer, tianDiTuAnnotation, device_vector_layer
+						// tianDiTuOfflineGuangzhowRoadmap, tianDiTuOfflineGuangzhowOverlay_r
+					],
+					overlays: [popup],
+					target: 'map',
+					// 禁止在移动端旋转设备
+					interactions: ol.interaction.defaults({
+						altShiftDragRotate: false,
+						pinchRotate: false
+					}),
+					controls: ol.control.defaults({
+						attributionOptions: ({
+							collapsible: false
+
+						}),
+						attribution: false,
+						// 不显示旋转控件
+						rotate: false,
+						// 不显示缩放控件
+						zoom: false
+					}).extend([
+						// 添加比例尺控制到地图上
+						scaleLineControl
+					]),
+					view: new ol.View({
+						// 指定投影使用EPSG:4326
+						projection: 'EPSG:4326',
+						constrainRotation: false,
+						enableRotation: false,
+						center: [113.2652664185, 23.1349929688],
+						zoom: 8,
+						minZoom: 0,
+						maxZoom: 24
+					})
+				});
+
+				// 地图中心调用函数
+				function mapCenter(position, zoom) {
+					olMap.getView().animate({
+						center: position,
+						zoom: zoom,
+						duration: 0
+					});
 				}
-				var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
-				var upDataCompanyInfo = deviceItemInfo.up_data_company_info ? deviceItemInfo.up_data_company_info : '-';
-				content += '<p>经度:' + formatDegree(deviceItemInfo.longitude) + '</p>';
-				content += '<p>纬度:' + formatDegree(deviceItemInfo.latitude) + '</p>';
-				content += '<p>用户名:' + upDataUserName + '</p>';
-				content += '<p>用户单位:' + upDataCompanyInfo + '</p></div>';
 
-				popup.show(selectFeature.getGeometry().getCoordinates(), content);
-			}
-			function test() {
-				mui.toast('此处调用关联接口....');
-				console.log(FeaturesArr.length);
-			}
+				//  根据数据源的坐标组来判断缩放级别
+				function fitCenter(coordinates) {
+					var boundingExtent = ol.extent.boundingExtent(coordinates);
+					olMap.getView().fit(boundingExtent, olMap.getSize());
+				}
+
+				var FeaturesArr = '';
+				// 加载完设备图层的回调
+				device_vector_layer.getSource().once('change', function() {
+					if(device_vector_layer.getSource().getState() === 'ready') {
+						FeaturesArr = device_vector_layer.getSource().getFeatures();
+						var coordinatesArr = [];
+						for(var i = 0; i < FeaturesArr.length; i++) {
+							if(FeaturesArr[i].getGeometry()) {
+								if(FeaturesArr[i].getGeometry().getCoordinates().length > 0) {
+									coordinatesArr.push(FeaturesArr[i].getGeometry().getCoordinates());
+								}
+							}
+						}
+						if(coordinatesArr.length === 1) {
+							mapCenter(coordinatesArr[0], 8);
+						} else {
+							fitCenter(coordinatesArr);
+						}
+						// device_vector_layer.getSource().unByKey(listenerKey); // 注销监听器
+					}
+				});
+
+				//  绑定地图上的单击事件
+				olMap.on('singleclick', function(evt) {
+					if(evt.dragging) {
+						return;
+					}
+					var pixel = olMap.getEventPixel(evt.originalEvent);
+					//  获取当前点击位置的图层
+					var feature = olMap.forEachFeatureAtPixel(pixel, function(feature, layer) {
+						return feature;
+					});
+					if(feature === null || feature === undefined) return;
+					// 获取图层信息
+					displayDeviceInfoOverlay(feature);
+				}, device_vector_layer);
+
+				function displayDeviceInfoOverlay(selectFeature) {
+					popup.hide();
+					if(selectFeature === undefined) return;
+					var deviceItemInfo = selectFeature.getProperties();
+					if(deviceItemInfo === undefined) return;
+					var content = '<div class="popup-info">';
+					content += '<p>设备编号:' + deviceItemInfo.identify_code + '</p>';
+					if(deviceItemInfo.online_status === 1) {
+						content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+					} else {
+						content += '<p>断开时间:' + timeTrans(deviceItemInfo.disconnect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+					}
+					var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
+					var upDataCompanyInfo = deviceItemInfo.up_data_company_info ? deviceItemInfo.up_data_company_info : '-';
+					content += '<p>经度:' + formatDegree(deviceItemInfo.longitude) + '</p>';
+					content += '<p>纬度:' + formatDegree(deviceItemInfo.latitude) + '</p>';
+					content += '<p>用户名:' + upDataUserName + '</p>';
+					content += '<p>用户单位:' + upDataCompanyInfo + '</p></div>';
+
+					popup.show(selectFeature.getGeometry().getCoordinates(), content);
+				}
+
+				function test() {
+					mui.toast('此处调用关联接口....');
+					console.log(FeaturesArr.length);
+				}
 
 				//筛选地图显示设备功能
-		function filterMapData(url) {
-			mui.ajax(url, {
-				dataType: 'json',
-				type: 'get',
-				success: function (datas) {
-					vm.equipmentData = datas;
-					vm.isAlready = true;
-					console.log('筛选后的数据为：' + JSON.stringify(vm.equipmentData));
-					for (var i = 0; i < FeaturesArr.length; i++) {
-						device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
-					}
-					var features = (new ol.format.GeoJSON()).readFeatures(datas);
-					device_vector_layer.getSource().addFeatures(features);
-					var pointArr = [];
-					for (var i = 0; i < features.length; i++) {
-						if (features[i].getGeometry()) {
-							if (features[i].getGeometry().getCoordinates().length > 0) {
-								pointArr.push(features[i].getGeometry().getCoordinates());
+				function filterMapData(url) {
+					mui.ajax(url, {
+						dataType: 'json',
+						type: 'get',
+						success: function(datas) {
+							vm.equipmentData = datas;
+							vm.isAlready = true;
+							console.log('筛选后的数据为：' + JSON.stringify(vm.equipmentData));
+							for(var i = 0; i < FeaturesArr.length; i++) {
+								device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
 							}
+							var features = (new ol.format.GeoJSON()).readFeatures(datas);
+							device_vector_layer.getSource().addFeatures(features);
+							var pointArr = [];
+							for(var i = 0; i < features.length; i++) {
+								if(features[i].getGeometry()) {
+									if(features[i].getGeometry().getCoordinates().length > 0) {
+										pointArr.push(features[i].getGeometry().getCoordinates());
+									}
+								}
+							}
+							if(pointArr.length === 1) {
+								mapCenter(pointArr[0], 8);
+							} else {
+								fitCenter(pointArr);
+							}
+							FeaturesArr = features;
+							vm.isAlready = '';
 						}
-					}
-					if (pointArr.length === 1) {
-						mapCenter(pointArr[0], 8);
-					} else {
-						fitCenter(pointArr);
-					}
-					FeaturesArr = features;
-					vm.isAlready = '';
+					});
 				}
-			});
-		}
-		});
 
-	</script>
-</body>
+				window.addEventListener('closeTopPopover', function() {
+					mui('#topPopover1').popover('hide');
+					mui('#topPopover2').popover('hide');
+				});
+			});
+		</script>
+	</body>
 
 </html>

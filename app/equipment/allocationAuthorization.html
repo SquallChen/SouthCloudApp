@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>设备授权</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/custom.css">
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+			}
+			
+			html,
+			body,
+			#vbody {
+				height: 100%;
+			}
+			
+			a {
+				color: #000;
+			}
+			
+			.mui-bar .mui-icon {
+				font-size: 32px;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				margin-right: -10px;
+				margin-left: -10px;
+				padding-right: 10px;
+				padding-left: 10px;
+				padding-top: 20px;
+				padding-bottom: 21px;
+			}
+			
+			.mui-bar .mui-title {
+				right: 50px;
+				left: 50px;
+			}
+			.mui-bar .name{
+				width: 70px;
+				font-size: 17px;
+			}
+			.mui-content {
+				background: white;
+			}
+			.equipment-content ul li{
+				position: relative;
+			}
+			.equipment-content ul li:after{
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			.equipment-content ul li span{
+				display: inline-block;
+				height:40px;
+				line-height: 40px;
+			}
+			.equipment-content ul li span:nth-child(1){
+				text-align: center;
+				width:50px;
+			}
+			.equipment-content ul li button{
+				position: absolute;
+				right:15px;
+				border:none;
+				background: #F56C6C;
+				color:white;
+				height: 32px;
+				top:4px;
+				}
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			.mui-icon-back:before, .mui-icon-left-nav:before {
+				content: '';
+				}
+			.padding_top{
+				width:100%;
+				height:21px;
+				background: #f2f2f2;
+			}
+			.mui-table-view:before{
+				height: 0;
+			}
+			.mui-table-view-cell:after{
+				left:0;
+			}
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			.mui-bar-nav.mui-bar .lists {
+				width:55px;
+				position: relative;
+				height: 50px;
+				
+			}
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="vbody" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#" data-href="./equipment-user-authorized.html" v-on:tap="openpage"></a>
+				<h1 class="mui-title">设备授权</h1>
+			</header>
+			<div class="mui-content">
+				<div class="padding_top"></div>
+				<div  v-show="hasData===false" class="tip"><span>没有设备...</span></div>
+				<div class="equipment-content">
+					<ul>
+						<li><span>1</span><span>SG11125415526</span><button>删 除</button></li>
+						<li><span>2</span><span>SG11125415526</span><button>删 除</button></li>
+						<li><span>3</span><span>SG11125415526</span><button>删 除</button></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			mui.init({
+				beforeback: function() {},
+			});
+			mui.plusReady(function() {});
+			var vm = new Vue({
+				el: '#vbody',
+				data: {
+					filterUser:'',
+					user_name:'',
+					token:'',
+					equipmentInfo:'',
+					realname:'',
+					hasData:true,
+				},
+				methods: {
+					openpage: function() {
+						var data_url = event.target.dataset.href;
+						mui.openWindow({
+							url: data_url,
+							id: data_url
+						});
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({});
+						// 登陆时存放到本地的用户数据
+				        vm.token = plus.storage.getItem('token');
+				        vm.user_name = plus.storage.getItem('user_name');
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.filterUser = self.username;
+						vm.realname = self.realname;
+//						mui.ajax(apiUrl.deviceMachineWithUser, {
+//							data: {
+//								user_name: vm.user_name,
+//								token: vm.token,
+//								filter_user:vm.filterUser
+//							},
+//							dataType: 'json',
+//							type: 'post',
+//							timeout: 20000,
+//							success: function(data) {
+//								console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
+//								vm.hasData = true;
+//								vm.equipmentInfo = data.list;
+//							},
+//							error: function(xhr, type, errorThrown) {
+//								mui.toast('该用户下没有关联设备。');
+//								vm.hasData = false;
+//								// 异常处理；
+//								onNetChange();
+//								plus.nativeUI.closeWaiting();
+//							}
+//						});
+					});
+				}
+			});
+		</script>
+	</body>
+
+</html>

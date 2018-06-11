@@ -12,6 +12,7 @@
 			body {
 				background: #fff;
 			}
+			
 			.mui-content div {
 				padding-right: 20px;
 				padding-left: 20px;
@@ -19,70 +20,82 @@
 				display: flex;
 				position: relative;
 			}
-			.mui-content div:nth-child(2){
+			
+			.mui-content div:nth-child(2) {
 				margin-bottom: 5px;
 			}
-			.mui-content div span{
+			
+			.mui-content div span {
 				display: inline-block;
 				position: absolute;
-				right:28px;
-				top:23px;
-				width:0px;
-	            height:0px;
-	            border-top:8px solid #666;
-	            border-right:5px solid  rgba(0,0,0,0);
-	            border-bottom:0px solid  rgba(0,0,0,0);
-	            border-left:5px solid  rgba(0,0,0,0);
+				right: 28px;
+				top: 23px;
+				width: 0px;
+				height: 0px;
+				border-top: 8px solid #666;
+				border-right: 5px solid rgba(0, 0, 0, 0);
+				border-bottom: 0px solid rgba(0, 0, 0, 0);
+				border-left: 5px solid rgba(0, 0, 0, 0);
 			}
+			
 			.mui-content div:nth-child(1) {
 				padding-top: 20px;
 			}
+			
 			.mui-content div:nth-child(2) {
 				position: relative;
 			}
+			
 			.mui-content div label {
 				width: 68px;
 				text-align: left;
 				padding: 16px 0 17px 0;
 			}
-
+			
 			.mui-content div input {
 				flex: 1;
 				margin-bottom: 0;
 				height: 54px;
 			}
-			.mui-content select{
+			
+			.mui-content select {
 				flex: 1;
-				height:54px;
+				height: 54px;
 				margin-bottom: 0;
 				border: 1px solid #ccc !important;
-				color:#ccc;
+				color: #ccc;
 			}
-			 .down {
+			
+			.down {
 				width: 16px;
 				height: 16px;
 				position: absolute;
 				top: 20px;
 				right: 30px;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
-				width:73px;
-				height:52px;
-				top:21px;
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
 				display: flex;
 				align-items: center;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before{
-				content:'';
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
 			}
-			.back{
+			
+			.back {
 				display: block;
 				width: 10px;
 				height: 16px;
-				background:url('../../public/img/back.png') no-repeat;
+				background: url('../../public/img/back.png') no-repeat;
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
+			
 			.management {
 				margin-left: 6%;
 				width: 88%;
@@ -93,24 +106,30 @@
 				color: white;
 				font-size: 20px;
 				margin-top: 20px;
-				border:none;
+				border: none;
 				border-radius: 4px;
 			}
-			.management:active{
+			
+			.management:active {
 				background: #0b5fde !important;
 			}
-			.padding_top{
-				height:21px;
+			
+			.padding_top {
+				height: 21px;
 				background: #f2f2f2;
 				margin-bottom: 20px;
 			}
-			.mui-content{
+			
+			.mui-content {
 				background: white;
 			}
-			input[type=text]{
-				border:1px solid #ccc;
-			}input[type=text]:focus{
-				border:1px solid #333;
+			
+			input[type=text] {
+				border: 1px solid #ccc;
+			}
+			
+			input[type=text]:focus {
+				border: 1px solid #333;
 			}
 			
 			[v-cloak] {
@@ -135,13 +154,13 @@
 				</div>
 				<div>
 					<label>工作组：</label>
-					<select name="" v-model="organizationvalue">
-						<option v-for="item in organization" :value="item.value">{{item.name}}</option>
+					<select name="" v-model="workGroupValue">
+						<option value="" selected disabled>请选择工作组...</option>
+						<option v-for="item in workGroup" :value="item">{{item}}</option>
 					</select>
 					<span></span>
-					<!--<img src="../../public/img/dropdown_blue.png" alt="" class="down" />-->
 				</div>
-				<button class="management" v-on:tap="test">完  成</button>
+				<button class="management" v-on:tap="send">完  成</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -151,51 +170,57 @@
 		<script>
 			var equipment_page = null;
 			var vm = new Vue({
-			  el: '#app',
-			  data: {
-			    keywords: '',
-			    organizationvalue: '0',
-			    organization: [{
-			      name: '南方卫星导航',
-			      value: 0
-			    },
-			    {
-			      name: '设备初始激活组织',
-			      value: 1
-			    },
-			    {
-			      name: '南方测绘集团总部',
-			      value: 2
-			    },
-			    {
-			      name: '震源导航',
-			      value: 3
-			    },
-			    {
-			      name: '南方质量追踪',
-			      value: 4
-			    }
-			    ]
-			  },
-			  methods: {
-			    test: function () {
-			    	if (equipment_page == null) {
-                    equipment_page = plus.webview.getWebviewById('equipment.html');
-                  }
-					console.log(equipment_page)
-			    	mui.fire(equipment_page, 'refreshDeviceInfo', {
-                    // 暂时没有需要传的参数
-                  	});
-			      	mui.toast('此处调用设备筛选接口....');
-			      	plus.webview.currentWebview().close();
-			    }
-			  },
-			  created: function () {
-			  	mui.plusReady(function () {
-			  		mui.init({
-			  		})
-			  	})
-			  }
+				el: '#app',
+				data: {
+					keywords: '',
+					workGroupValue: '',
+					workGroup:[],
+				},
+				methods: {
+					send: function() {
+						if(equipment_page == null) {
+							equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
+						}
+						mui.fire(equipment_page, 'equipmentDataFilter', {
+							keywords:vm.keywords,
+							workGroup:vm.workGroupValue
+						});
+						plus.webview.currentWebview().close();
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({})
+						// 登陆时存放到本地的用户数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						mui.ajax(apiUrl.get_work_group, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 20000,
+							success: function(data) {
+								console.log('工作组数据为：' + JSON.stringify(data));
+								var tempGroup = [];
+								var tempData = data.groupList;
+								for(var i = 0; i < tempData.length; i++) {
+									if(tempGroup.indexOf(tempData[i]) == -1) {
+										tempGroup.push(tempData[i]);
+									}
+								}
+								vm.workGroup = tempGroup;
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					})
+				}
 			});
 		</script>
 	</body>

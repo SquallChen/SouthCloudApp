@@ -179,13 +179,13 @@
 				</div>
 				<div>
 					<label>工作组：</label>
-					<select name="" v-model="organizationvalue">
-						<option v-for="item in organization" :value="item.value">{{item.name}}</option>
+					<select name="" v-model="workGroupValue">
+						<option value="" selected disabled>请选择工作组...</option>
+						<option v-for="item in workGroup" :value="item">{{item}}</option>
 					</select>
 					<span></span>
-					<!--<img src="../../public/img/dropdown_blue.png" alt="" class="down" />-->
 				</div>
-				<button class="management" v-on:tap="test">完  成</button>
+				<button class="management" v-on:tap="send">完  成</button>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -194,68 +194,66 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var user_page = null;
+			var equipment_user_authorized_page = null;
 			var vm = new Vue({
 				el: '#app',
 				data: {
 					keywords: '',
-					organizationvalue: '0',
-					organization: [{
-							name: '南方卫星导航',
-							value: 0
-						},
-						{
-							name: '设备初始激活组织',
-							value: 1
-						},
-						{
-							name: '南方测绘集团总部',
-							value: 2
-						},
-						{
-							name: '震源导航',
-							value: 3
-						},
-						{
-							name: '南方质量追踪',
-							value: 4
-						}
-					]
+					workGroupValue: '',
+					workGroup: [],
+					parentPage: ''
 				},
 				methods: {
-					test: function() {
-						console.log(111111111111)
+					send: function() {
 						if(user_page == null) {
-							user_page = plus.webview.getWebviewById('user.html');
-							console.log(JSON.stringify(user_page))
+							user_page = plus.webview.getWebviewById('app/console/user.html');
+						};
+						if(equipment_user_authorized_page == null) {
+							equipment_user_authorized_page = plus.webview.getWebviewById('./equipment-user-authorized.html');
+						};
+						if(vm.parentPage === 'user') {
+							mui.fire(user_page, 'userDataFilter', {
+								keywords: vm.keywords,
+								workGroup: vm.workGroupValue
+							});
+							plus.webview.currentWebview().close();
+						}else if(vm.parentPage === 'equipment-user-authorized'){
+							mui.fire(equipment_user_authorized_page, 'userDataFilter', {
+								keywords: vm.keywords,
+								workGroup: vm.workGroupValue
+							});
+							plus.webview.currentWebview().close();
 						}
-						mui.fire(user_page, 'refreshUserInfo', {
-							// 暂时没有需要传的参数
-						});
-						mui.toast('此处调用用户筛选接口....');
-						plus.webview.currentWebview().close();
+
 					}
 				},
 				created: function() {
 					mui.plusReady(function() {
-						mui.ajax(apiUrl.update_user_additional_info, {
+						// 登陆时存放到本地的用户数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.parentPage = self.parentPage;
+
+						mui.ajax(apiUrl.get_work_group, {
 							data: {
 								user_name: vm.user_name,
 								token: vm.token,
-								user_id: vm.userLoginId,
-								real_name: vm.realName,
-								mobile_phone: vm.mobilePhone,
-								office_phone: vm.mobile,
-								work_group: vm.workGroup,
-								email: vm.email
 							},
 							dataType: 'json',
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
-								console.log('此页面请求回来的数据为：' + JSON.stringify(data));
-								mui.toast('修改用户信息成功....');
-								plus.webview.currentWebview().close();
-
+								console.log('工作组数据为：' + JSON.stringify(data));
+								var tempGroup = [];
+								var tempData = data.groupList;
+								for(var i = 0; i < tempData.length; i++) {
+									if(tempGroup.indexOf(tempData[i]) == -1) {
+										tempGroup.push(tempData[i]);
+									}
+								}
+								vm.workGroup = tempGroup;
 							},
 							error: function(xhr, type, errorThrown) {
 								// 异常处理；
