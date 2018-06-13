@@ -160,6 +160,7 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script>
+			var user_page = null;
 			var vm = new Vue({
 				el: '#app',
 				data: {
@@ -170,24 +171,24 @@
 					wrok_group: '',
 					realname: '',
 					userId: '',
-					user_name:'',
-					token:''
+					user_name: '',
+					token: ''
 				},
 				methods: {
 					changeGroup: function() {
-						console.log(1111111);
 						mui.ajax(apiUrl.update_user_additional_info, {
 							data: {
 								user_name: vm.user_name,
 								token: vm.token,
 								user_id: vm.userId,
-								work_group:vm.wrok_group
+								work_group: vm.wrok_group
 							},
 							dataType: 'json',
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
 								console.log('设置工作组成功：' + JSON.stringify(data));
+								refreshData();
 								mui.toast('设置工作组成功！')
 								plus.webview.currentWebview().close();
 							},
@@ -198,14 +199,14 @@
 								plus.nativeUI.closeWaiting();
 							}
 						});
-						
+
 					}
 				},
 				created: function() {
 					mui.plusReady(function() {
 						// 登陆时存放到本地的用户数据
-				        vm.token = plus.storage.getItem('token');
-				        vm.user_name = plus.storage.getItem('user_name');
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
 						vm.username = self.username;
@@ -215,6 +216,14 @@
 					})
 				}
 			});
+
+			function refreshData() {
+				if(user_page == null) {
+					user_page = plus.webview.getWebviewById('app/console/user.html');
+					
+				};
+				mui.fire(user_page, 'refreshUser', {});
+			}
 		</script>
 	</body>
 

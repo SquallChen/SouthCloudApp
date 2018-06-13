@@ -1,652 +1,555 @@
 <!DOCTYPE html>
 <html>
 
-<head>
-  <meta charset='utf-8'>
-  <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' />
-  <title>历史轨迹</title>
-  <link href='../../css/mui.min.css' rel='stylesheet' />
-  <link href='../../css/custom.css' rel='stylesheet' />
-  <!--<link href='../../css/input.css' rel='stylesheet' />-->
-  <link href='../../css/ol.css' rel='stylesheet' />
-  <link href='../../css/ol3-layerswitcher.css' rel='stylesheet' />
-  <link href='../../css/map.css' rel='stylesheet' />
-  <script src='../js/jquery.js'></script>
-  <style>
-    body {
-      background: #fff;
-      font-size: 20px;
-    }
+	<head>
+		<meta charset='utf-8'>
+		<meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' />
+		<title>历史轨迹</title>
+		<link href='../../css/mui.min.css' rel='stylesheet' />
+		<link href='../../css/custom.css' rel='stylesheet' />
+		<!--<link href='../../css/input.css' rel='stylesheet' />-->
+		<link href='../../css/ol.css' rel='stylesheet' />
+		<link href='../../css/ol3-layerswitcher.css' rel='stylesheet' />
+		<!-- <link href='../../css/map.css' rel='stylesheet' /> -->
+		<script src='../js/jquery.js'></script>
+		<style>
+			body {
+				background: #fff;
+				font-size: 20px;
+				height: 100%;
+			}
+			
+			ul {
+				list-style: none;
+				padding-left: 10px;
+				padding-right: 10px;
+				font-size: 13px;
+				margin-top: 10px;
+			}
+			
+			ul li {
+				margin-bottom: 10px;
+			}
+			
+			ul li:nth-child(2) span {
+				display: inline-block;
+				width: 50%;
+			}
+			
+			ul li:nth-child(3) span {
+				display: inline-block;
+			}
+			
+			ul li:nth-child(1) span {
+				display: inline-block;
+			}
+			
+			ul li:nth-child(4) {
+				padding: 0 55px;
+			}
+			
+			ul li:nth-child(4) a {
+				width: 100%;
+				background: #3b88fb;
+				border: none;
+				border-radius: 4px;
+				color: white;
+				height: 31px;
+				line-height: 31px;
+				font-size: 13px;
+				position: relative;
+				top: -3px;
+				text-align: center;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 73px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.dropDown {
+				width: 100%;
+				height: 200px;
+				position: fixed;
+				background: white;
+				z-index: 1;
+				bottom: 0;
+				left: 0;
+				border-top: 2px solid #0b5fde;
+				-webkit-transform: translateY(0px);
+				-webkit-transition: 0.38s;
+			}
+			
+			.active {
+				-webkit-transform: translateY(200px);
+				-webkit-transition: 0.38s;
+			}
+			
+			.dropDown a {
+				display: block;
+				width: 53px;
+				height: 29px;
+				background: white;
+				border-top-left-radius: 5px;
+				border-top-right-radius: 5px;
+				position: absolute;
+				left: 50%;
+				top: -29px;
+				-webkit-transform: translate(-50%);
+				border: 2px solid #0b5fde;
+				border-bottom: none;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+			}
+			
+			.dropDown .upanddown {
+				display: inline-block;
+				width: 18px;
+				height: 14px;
+				background: url('../../public/img/UpAndDown.png') no-repeat;
+				background-size: 18px 14px;
+			}
+			
+			.dropDown a span:nth-child(2) {
+				top: 20px;
+			}
+			
+			.dropDown .btn-content {
+				padding-top: 10px;
+				padding-left: 10px;
+				height: 50px;
+			}
+			
+			.dropDown .btn-content button {
+				margin-right: 15px;
+				width: 67px;
+				height: 30px;
+				background: #3b88fb;
+				color: white;
+				font-size: 13px;
+				border: none;
+				border-radius: 0;
+				padding: 4px 12px;
+			}
+			
+			.dropDown .btn-content .changecolor {
+				background: #0b5fde;
+			}
+			
+			.date {
+				display: inline-block;
+				text-align: center;
+				width: 116px;
+				border: 1px solid #999;
+				padding: 0px;
+				position: relative;
+			}
+			
+			.date img {
+				width: 12px;
+				height: 12px;
+				position: absolute;
+				top: 5px;
+				right: 3px;
+			}
+			
+			.Num {
+				width: 48%;
+			}
+			
+			#pickDateBtn {
+				width: 120px;
+				height: 20px;
+				line-height: 4px;
+				position: absolute;
+				top: -5px;
+				left: -1px;
+				margin: 0;
+				opacity: 0;
+			}
+			
+			.s-map-wrap {
+				/* padding-top: 73px; */
+				height: 500px;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			select {
+				display: inline-block;
+				width: 110px;
+				margin-bottom: 0px;
+				padding: 3px 0;
+				border: 1px solid #ccc !important;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
+			}
+		</style>
+	</head>
 
-    ul {
-      list-style: none;
-      padding-left: 10px;
-      padding-right: 10px;
-      font-size: 16px;
-      margin-top: 10px;
-    }
-
-    ul li {
-      margin-bottom: 10px;
-    }
-
-    ul li:nth-child(2) span {
-      display: inline-block;
-      width: 50%;
-    }
-
-    ul li:nth-child(3) span {
-      display: inline-block;
-      width: 49%;
-    }
-
-    ul li:nth-child(1) span {
-      display: inline-block;
-    }
-
-    ul li:nth-child(4) a {
-      background: #409eff;
-      color: white;
-      width: 100px;
-      font-size: 18px;
-      position: relative;
-      top: -3px;
-      text-align: center;
-      line-height: 36px;
-      border-radius: 5px;
-    }
-
-    .mui-bar-nav.mui-bar .mui-icon {
-      width: 73px;
-      height: 73px;
-      display: flex;
-      align-items: center;
-    }
-
-    .dropDown {
-      width: 100%;
-      height: 200px;
-      position: fixed;
-      background: white;
-      z-index: 1;
-      bottom: 0;
-      left: 0;
-      border: 1px solid #ddd;
-      -webkit-transform: translateY(0px);
-      -webkit-transition: 0.38s;
-    }
-
-    .active {
-      -webkit-transform: translateY(200px);
-      -webkit-transition: 0.38s;
-    }
-
-    .dropDown a {
-      display: block;
-      width: 70px;
-      height: 34px;
-      background: white;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
-      position: absolute;
-      left: 50%;
-      top: -34px;
-      -webkit-transform: translate(-50%);
-      border: 1px solid #ddd;
-      border-bottom: none;
-    }
-
-    .dropDown a span {
-      display: block;
-      width: 50px;
-      height: 1px;
-      background: #ddd;
-      position: absolute;
-      top: 10px;
-      left: 10px;
-    }
-
-    .dropDown a span:nth-child(2) {
-      top: 20px;
-    }
-
-    .dropDown .btn-content {
-      padding-top: 10px;
-      padding-left: 10px;
-      height: 50px;
-    }
-
-    .dropDown .btn-content button {
-      margin-right: 5px;
-      width: 80px;
-      background: #999;
-      color: white;
-      font-size: 18px;
-      padding: 4px 12px;
-    }
-
-    .dropDown .btn-content .changecolor {
-      background: #409eff;
-    }
-
-    .date {
-      display: inline-block;
-      text-align: center;
-      width: 116px;
-      border: 1px solid #999;
-      padding: 0px;
-      position: relative;
-    }
-
-    .date img {
-      width: 12px;
-      height: 12px;
-      position: absolute;
-      top: 5px;
-      right: 3px;
-    }
-
-    .Num {
-      width: 49%;
-    }
-
-    #pickDateBtn {
-      width: 120px;
-      height: 20px;
-      line-height: 4px;
-      position: absolute;
-      top: -5px;
-      left: -1px;
-      margin: 0;
-      opacity: 0;
-    }
-
-    .s-map-wrap {
-      padding-top: 73px;
-    }
-
-    [v-cloak] {
-      display: none;
-    }
-
-    select {
-      display: inline-block;
-      width: 110px;
-      margin-bottom: 0px;
-      padding: 3px 0;
-      border: 1px solid #ccc !important;
-    }
-  </style>
-</head>
-
-<body>
-  <div>
-    <header class='mui-bar mui-bar-nav'>
-      <a class='mui-action-back mui-icon mui-icon-left-nav mui-pull-left'></a>
-      <h1 class='mui-title'>历史轨迹</h1>
-    </header>
-    <div class='mui-content'>
-      <div class='s-map-wrap'>
-        <div id='app' class='dropDown' :class='{active:isActive}' v-cloak>
-          <div class='btn-content'>
-            <button v-for='(item,index) in modetype' v-on:tap='changeMode(index)' :class='{changecolor:index===mode}'>{{item.name}}</button>
-          </div>
-          <ul v-show='mode===0'>
-            <li>
-              <span class='Num'>{{currentIndexUserName}}</span>
-              <span>日期：
+	<body>
+		<header class='mui-bar mui-bar-nav'>
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class='mui-title'>历史轨迹</h1>
+		</header>
+		<div class='mui-content'>
+			<div class='s-map-wrap'>
+				<div id='app' class='dropDown' :class='{active:isActive}' v-cloak>
+					<div class='btn-content'>
+						<button v-for='(item,index) in modetype' v-on:tap='changeMode(index)' :class='{changecolor:index===mode}'>{{item.name}}</button>
+					</div>
+					<ul v-show='mode===0'>
+						<li>
+							<span class='Num'>{{currentIndexUserName}}</span>
+							<span>日期：
                 <select v-model='track' @change='showHistory'>
                   <option value=''>请选择日期</option>
                   <option :value='v' v-for='(v,k) in trackData' :key='k'>{{v.trackDate | filtersDate }}</option>
                 </select>
               </span>
-              <!-- <span>日期：
-                <span class='date' id='info'>{{date}}
-                  <img src='../../public/img/down.png' alt='' class='down' />
-                  <button id='pickDateBtn' type='button' class='mui-btn mui-btn-block'>选择日期</button>
-                </span>
-              </span> -->
+						</li>
+						<li>
+							<span>{{currentCompanyInfo}}</span><span>在线时长：{{currentDayOnlineTime | formatSeconds}}</span>
+						</li>
+						<li>
+							<span>作业里程：{{length}}</span>
+						</li>
+					</ul>
+					<ul v-show='mode===1'>
+						<li>
+							<span>时间：{{gnssLocationData.datatime | fromtTime}}</span>
+						</li>
+						<li>
+							<span>状态：{{basic.isOnline == true ? '在线' : '离线'}}</span>
+						</li>
+						<li>
+							<span style="display: inline-block; width: 49%">工作模式：{{deviceData.curSysmode | sysModel}}</span>
+							<span style="display: inline-block; width: 49%">数据链：{{deviceData.curDatalink | dataLinkType}}</span>
+						</li>
+						<li>
+							<a href="#" id="detail">查看详情</a>
+						</li>
+					</ul>
+					<a v-on:tap="changestatus">
+						<span class="upanddown" :class="{isrotate:isActive}"></span>
+					</a>
+				</div>
+				<div style='height: 100%;' id='map' class='map'> </div>
+			</div>
+		</div>
+		<script src=../../js/ol.js></script>
+		<script src=../../js/ol3-layerswitcher.js></script>
+		<script src=../js/rtkmap.js></script>
+		<script src=../../js/mui.min.js></script>
+		<script src=../../js/app.js></script>
+		<script src=../../js/url.js></script>
+		<script src=../../js/vue.min.js></script>
+		<script src=./rtkhistorytrack.js></script>
+		<script>
+			var pointUrl = '';
+			var lineUrl = '';
+			var infoObj = '';
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					user_name: '',
+					token: '',
+					isActive: false,
+					mode: 0,
+					currentData: '',
+					currentIndex: '',
+					currentIndexUserName: '',
+					currentCompanyInfo: '',
+					currentIdentifyCode: '',
+					currentDayOnlineTime: '',
+					trackData: '',
+					currentDate: '',
+					track: '',
+					modetype: [{
+						name: '轨迹'
+					}, {
+						name: '坐标点'
+					}],
+					basic: '',
+					gnssLocationData: '',
+					gnssRefStationData: '',
+					gnssSateInfoList: '',
+					deviceData: '',
+					disance: '-',
+					powerFree: '-',
+					appVer: '-',
+					length: '-'
+				},
+				methods: {
+					changestatus: function() {
+						vm.isActive = !vm.isActive;
+					},
+					changeMode: function(index) {
+						this.mode = index;
+					},
+					showHistory: function() {
+						mui.ajax(apiUrl.track_day_page, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								track_day_id: vm.track.id
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) {
+								console.log('日期数据为：' + JSON.stringify(data));
+								if(data.status === 0) {
+									vm.length = data.length + 'm';
+								} else {
+									plus.nativeUI.toast(data.info);
+									setTimeout(function() {
+										plus.nativeUI.closeWaiting();
+									}, 1000);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
+						this.currentDayOnlineTime = this.track.dayOnlineSeconds;
+						var timestampBegin = Date.parse(new Date(this.track.trackDate)) / 1000;
+						var timestampEnd = Date.parse(new Date(this.track.trackDate.split(' ')[0] + ' 23:59:59')) / 1000;
+						initHistoryVecrtorLayer(lineUrl, pointUrl, this.track.machineId, timestampBegin, timestampEnd, this.track.id);
+					}
+				},
+				filters: {
+					filtersDate: function(v) {
+						return v.split(' ')[0];
+					},
+					formatSeconds: function(value) {
+						if(!value) return '暂无数据';
+						var theTime = parseInt(value); // 秒
+						var theTime1 = 0; // 分
+						var theTime2 = 0; // 小时
+						if(theTime > 60) {
+							theTime1 = parseInt(theTime / 60);
+							theTime = parseInt(theTime % 60);
+							if(theTime1 > 60) {
+								theTime2 = parseInt(theTime1 / 60);
+								theTime1 = parseInt(theTime1 % 60);
+							}
+						}
+						var result = '' + parseInt(theTime) + '';
+						if(result == '-1') {
+							result = '0';
+						}
+						if(theTime1 > 0) {
+							result = '' + parseInt(theTime1) + '分' + result;
+						}
+						if(theTime2 > 0) {
+							result = '' + parseInt(theTime2) + '小时' + result;
+						}
+						return result;
+					},
+					transSolutionType: function(val) {
+						if(!val) return '-';
+						var solutionValue = '';
+						switch(val) {
+							case 'ST_INVALID_FIX':
+								solutionValue = '无效解';
+								break;
+							case 'ST_GPS_FIX':
+								solutionValue = '单点解';
+								break;
+							case 'ST_DGPS_FIX':
+								solutionValue = '差分3D';
+								break;
+							case 'ST_RTK_FIX':
+								solutionValue = '固定解';
+								break;
+							case 'ST_FRTK_FIX':
+								solutionValue = '浮点解';
+								break;
+							case 'ST_FIXEDPOS_FIX':
+								solutionValue = '基站';
+								break;
+						}
+						return solutionValue;
+					},
+					sysModel: function(val) {
+						var sysModelVal = '';
+						switch(val) {
+							case 'BASE':
+								sysModelVal = '基准站';
+								break;
+							case 'ROVER':
+								sysModelVal = '移动站';
+								break;
+							case 'STATIC':
+								sysModelVal = '静态站';
+								break;
+							default:
+								sysModelVal = '-';
+								break;
+						}
+						return sysModelVal;
+					},
+					dataLinkType: function(v) {
+						var dataLinkVal = '';
+						switch(v) {
+							case 'CELLULAR_NET':
+								dataLinkVal = '移动网络';
+								break;
+							case 'UHF':
+								dataLinkVal = '内置电台';
+								break;
+							default:
+								dataLinkVal = '-';
+								break;
+						}
+						return dataLinkVal;
+					},
+					fromtTime: function(val) {
+						if(!val) return '-';
+						var hour = val.hour < 10 ? '0' + val.hour : val.hour;
+						var minute = val.minute < 10 ? '0' + val.minute : val.minute;
+						var second = val.second < 10 ? '0' + val.second : val.second;
+						datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+						return datetime_string;
+					}
+				},
 
-            </li>
-            <li>
-              <span>{{currentCompanyInfo}}</span>
-            </li>
-            <li>
-              <span>在线时长:{{currentDayOnlineTime}}</span>
-              <span>作业里程:暂无数据</span>
-            </li>
-          </ul>
-          <ul v-show='mode===1'>
-            <li>
-              <span>时间：{{ locationTime}}</span>
-            </li>
-            <li>
-              <span>状态：{{basic.isOnline == true ? '在线' : '离线'}}</span>
-            </li>
-            <li>
-              <span>工作模式:{{deviceData.curSysmode | sysModel}}</span>
-              <span>数据链:{{deviceData.curDatalink | dataLinkType}}</span>
-            </li>
-            <li>
-              <button @click='test'>test</button>
-              <!-- <a href='coordinateDetails.html'>查看详情</a> -->
-              <button id="detail">查看详情</button>
-            </li>
-          </ul>
-        </div>
-        <div style='height: 100%;' id='map' class='map'> </div>
-      </div>
-    </div>
-  </div>
-  <script src='../../js/ol.js'></script>
-  <script src='../../js/ol3-layerswitcher.js'></script>
-  <script src='../js/rtkmap.js'></script>
-  <script src='../../js/mui.min.js'></script>
-  <script src='../../js/app.js'></script>
-  <script src='../../js/url.js'></script>
-  <script src='../../js/vue.min.js'></script>
-  <script src='./rtkhistorytrack.js'></script>
-  <script>
-    var pointUrl = '';
-    var lineUrl = '';
-    var vm = new Vue({
-      el: '#app',
-      data: {
-        user_name: '',
-        token: '',
-        isActive: false,
-        mode: 0,
-        currentData: '',
-        currentIndex: '',
-        currentIndexUserName: '',
-        currentCompanyInfo: '',
-        currentIdentifyCode: '',
-        currentDayOnlineTime: '',
-        trackData: '',
-        currentDate: '',
-        track: '',
-        modetype: [{
-          name: '轨迹'
-        }, {
-          name: '坐标点'
-        }],
-        basic: '',
-        gnssLocationData: '',
-        gnssRefStationData: '',
-        gnssSateInfoList: '',
-        deviceData: '',
-        disance: '-',
-        powerFree: '-',
-        appVer: '-',
-        infoObj: '',
-        locationTime: ''
-      },
-      methods: {
-        test: function () {
-          getPointInfo('66f19fc4-42bd-44b3-82f3-79f275d595b5');
-        },
-        changestatus: function () {
-          vm.isActive = !vm.isActive;
-        },
+				created: function() {}
+			});
 
-        changeMode: function (index) {
-          this.mode = index;
-        },
-        showHistory: function () {
-          this.currentDayOnlineTime = this.track.dayOnlineSeconds;
-          var timestampBegin = Date.parse(new Date(this.track.trackDate)) / 1000;
-          var timestampEnd = Date.parse(new Date(this.track.trackDate.split(' ')[0] + ' 23:59:59')) / 1000;
-          initHistoryVecrtorLayer(lineUrl, pointUrl, this.track.machineId, timestampBegin, timestampEnd, this.track.id);
-        },
-        utcTime: function () {
-          var hour = this.gnssLocationData.datatime.hour < 10 ? '0' + this.gnssLocationData.datatime.hour : this.gnssLocationData.datatime.hour;
+			mui.init({
+				beforeback: function() {}
+			});
+			mui.plusReady(function() {
+				// 获取上层页面传递过来的参数
+				var self = plus.webview.currentWebview();
+				vm.currentIndexUserName = self.upDataUserName;
+				vm.currentCompanyInfo = self.upDataCompanyInfo;
+				vm.currentIdentifyCode = self.identifyCode;
+				// 登陆时存放到本地的数据
+				vm.token = plus.storage.getItem('token');
+				vm.user_name = plus.storage.getItem('user_name');
+				pointUrl = plus.storage.getItem('line');
+				lineUrl = plus.storage.getItem('point');
 
-          var minute = this.gnssLocationData.datatime.minute < 10 ? '0' + this.gnssLocationData.datatime.minute : this.gnssLocationData.datatime.minute;
+				// 请求指定设备的历史跟踪轨迹数据
+				mui.ajax(apiUrl.track_info_page, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						filter_identifycode: vm.currentIdentifyCode
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						if(data.status === 0) {
+							console.log('当前设备的历史跟踪轨迹数据为：' + JSON.stringify(data));
+							vm.trackData = data.recordList;
+						} else {
+							plus.nativeUI.toast(data.info);
+							setTimeout(function() {
+								plus.nativeUI.closeWaiting();
+							}, 1000);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
 
-          var second = this.gnssLocationData.datatime.second < 10 ? '0' + this.gnssLocationData.datatime.second : this.gnssLocationData.datatime.second;
+				document.getElementById('detail').addEventListener('tap', function() {
+					mui.openWindow({
+						url: 'coordinateDetails.html',
+						id: 'coordinateDetails.html',
+						extras: {
+							infoObj: infoObj
+						}
+					});
+				});
+			});
 
-          var datetime_string = this.gnssLocationData.datatime.year + '-' + this.gnssLocationData.datatime.month + '-' + this.gnssLocationData.datatime.day + ' ' + hour + ':' + minute + ':' + second;
-          this.locationTime = datetime_string;
-        }
-      },
-      filters: {
-        filtersDate: function (v) {
-          return v.split(' ')[0];
-        },
-        transSolutionType: function (val) {
-          if (!val) return '-';
-          var solutionValue = '';
-          switch (val) {
-            case 'ST_INVALID_FIX':
-              solutionValue = '无效解';
-              break;
-            case 'ST_GPS_FIX':
-              solutionValue = '单点解';
-              break;
-            case 'ST_DGPS_FIX':
-              solutionValue = '差分3D';
-              break;
-            case 'ST_RTK_FIX':
-              solutionValue = '固定解';
-              break;
-            case 'ST_FRTK_FIX':
-              solutionValue = '浮点解';
-              break;
-            case 'ST_FIXEDPOS_FIX':
-              solutionValue = '基站';
-              break;
-          }
-          return solutionValue;
-        },
-        sysModel: function (val) {
-          var sysModelVal = '';
-          switch (val) {
-            case 'BASE':
-              sysModelVal = '基准站';
-              break;
-            case 'ROVER':
-              sysModelVal = '移动站';
-              break;
-            case 'STATIC':
-              sysModelVal = '静态站';
-              break;
-            default:
-              sysModelVal = '-';
-              break;
-          }
-          return sysModelVal;
-        },
-        dataLinkType: function (v) {
-          var dataLinkVal = '';
-          switch (v) {
-            case 'CELLULAR_NET':
-              dataLinkVal = '移动网络';
-              break;
-            case 'UHF':
-              dataLinkVal = '内置电台';
-              break;
-            default:
-              dataLinkVal = '-';
-              break;
-          }
-          return dataLinkVal;
-        }
-      },
-
-      created: function () { }
-    });
-
-    mui.init({
-      beforeback: function () { }
-    });
-    mui.plusReady(function () {
-      // 获取上层页面传递过来的参数
-      var self = plus.webview.currentWebview();
-      vm.currentIndexUserName = self.upDataUserName;
-      vm.currentCompanyInfo = self.upDataCompanyInfo;
-      vm.currentIdentifyCode = self.identifyCode;
-      // 登陆时存放到本地的数据
-      vm.token = plus.storage.getItem('token');
-      vm.user_name = plus.storage.getItem('user_name');
-      pointUrl = plus.storage.getItem('line');
-      lineUrl = plus.storage.getItem('point');
-
-      // 请求指定设备的历史跟踪轨迹数据
-      mui.ajax(apiUrl.track_info_page, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          filter_identifycode: vm.currentIdentifyCode
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          if (data.status === 0) {
-            vm.trackData = data.recordList;
-          } else {
-            plus.nativeUI.toast(data.info);
-            setTimeout(function () {
-              plus.nativeUI.closeWaiting();
-            }, 1000);
-          }
-        },
-        error: function (xhr, type, errorThrown) {
-          // 异常处理；
-          onNetChange();
-          plus.nativeUI.closeWaiting();
-        }
-      });
-
-      document.getElementById('detail').addEventListener('tap', function () {
-        mui.openWindow({
-          url: 'coordinateDetails.html',
-          id: 'coordinateDetails.html',
-          extras: {
-            infoObj: vm.infoObj
-          }
-        });
-      });
-    });
-
-    function getPointInfo(rand_uuid) {
-      var data = {
-        'detail': {
-          'diskData': {
-            'diskInfo': {
-              'fileSystem': '',
-              'totalMemory': '',
-              'type': '',
-              'freeMemory': ''
-            }
-          },
-          'uhfData': {
-            'protocol': '',
-            'curChannel': '',
-            'uhfBaudrate': {
-              'air': ''
-            },
-            'power': ''
-          },
-          'antennaData': {
-            'antennaMeasurement': {
-              'method': '',
-              'height': ''
-            }
-          },
-          'networkData': {
-            'networkCellularnet': {
-              'apnUser': '',
-              'apn': '',
-              'apnPassword': ''
-            }
-          },
-          'transportationData': {
-            'transportationNtrip': {
-              'workpara': ''
-            }
-          },
-          'gnssRefStationData': {
-            'altitude': 0,
-            'latitude': 0,
-            'diffType': 0,
-            'id': 0,
-            'longitude': 0
-          },
-          'deviceData': {
-            'curLanguage': '',
-            'hostTemperature': '',
-            'voiceEnable': '',
-            'curDatalink': 'CELLULAR_NET',
-            'deviceRecord': {
-              'autoRec': '',
-              'interval': '',
-              'status': ''
-            },
-            'oemTemperature': '',
-            'curSysmode': 'STATIC',
-            'expireDate': '',
-            'powerFree': '',
-            'deviceInfo': {
-              'appVer': '',
-              'model': '',
-              'sn': '',
-              'pn': ''
-            },
-            'availableLanguage': ''
-          },
-          'gnssLocationData': {
-            'altitude': 49.397999999999996,
-            'hrms': 2.8609877,
-            'pdop': 1.3,
-            'datatime': {
-              'month': 5,
-              'hour': 0,
-              'year': 2018,
-              'millisecond': 0,
-              'day': 29,
-              'minute': 29,
-              'second': 16
-            },
-            'latitude': 23.1815017125,
-            'azimuth': 0,
-            'velocity': 0,
-            'undulation': 0,
-            'hdop': 0.7,
-            'ageOfDiff': 0,
-            'vrms': 4.195,
-            'vdop': 1.1,
-            'solutionType': 'ST_GPS_FIX',
-            'longitude': 113.41676926466667
-          },
-          'gnssData': {
-            'pdop': '',
-            'cutangle': '',
-            'gnssSatellite': {
-              'satelliteEnable': {
-                'bds': '',
-                'glonass': '',
-                'galileo': '',
-                'sbas': '',
-                'gps': '',
-                'qzss': ''
-              },
-              'satelliteTrack': {
-                'bds': '',
-                'glonass': '',
-                'galileo': '',
-                'sbas': '',
-                'gps': '',
-                'qzss': ''
-              },
-              'satelliteUntrack': {
-                'bds': '',
-                'glonass': '',
-                'galileo': '',
-                'sbas': '',
-                'gps': '',
-                'qzss': ''
-              },
-              'satelliteDisable': {
-                'bds': '',
-                'glonass': '',
-                'galileo': '',
-                'sbas': '',
-                'gps': '',
-                'qzss': ''
-              }
-            },
-            'gnssBase': {
-              'pdop': '',
-              'startMode': '',
-              'difftype': '',
-              'interval': '',
-              'startPosition': '',
-              'status': ''
-            }
-          },
-          'gnssSateInfoList': {
-            'satInLock': 0,
-            'sbasInLock': 0,
-            'bdInLock': 0,
-            'sateInfoList': [],
-            'gpsInLock': 0,
-            'glonassInLock': 0,
-            'gaileoInLock': 0,
-            'satInView': 0
-          }
-        },
-        'basic': {
-          'altitude': 49.397999999999996,
-          'locationTime': '0',
-          'connectTime': '1527553696',
-          'disconnectTime': '-1',
-          'latitude': 23.1815017125,
-          'localTimestamp': '1527553700',
-          'isOnline': true,
-          'identifyCode': 'SG6075117213416',
-          'uploadDataByte': '416',
-          'userName': 'SG6075117213416',
-          'supportSic20': false,
-          'longitude': 113.41676926466667
-        },
-        'status': 0,
-        'info': ''
-      };
-      vm.gnssLocationData = data.detail.gnssLocationData;
-      vm.gnssRefStationData = data.detail.gnssRefStationData;
-      vm.appVer = data.detail.deviceData.deviceInfo.appVer;
-      vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
-      vm.deviceData = data.detail.deviceData;
-      vm.utcTime();
-      vm.infoObj = data;
-      /* plus.nativeUI.showWaiting();
-      mui.ajax(apiUrl.rtkTrackPointDetail, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          identifyCode: vm.currentIdentifyCode,
-          randUuid: rand_uuid
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          if (data.status === 0) {
-            console.log(data);
-            vm.infoObj = data;
-            if (data.detail) {
-              vm.gnssLocationData = data.detail.gnssLocationData;
-              vm.gnssRefStationData = data.detail.gnssRefStationData;
-              vm.appVer = data.detail.deviceData.deviceInfo.appVer;
-              vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
-              vm.deviceData = data.detail.deviceData;
-            } else {
-              vm.gnssLocationData = '';
-              vm.gnssRefStationData = '';
-              vm.deviceData = '';
-              vm.appVer = '-';
-              vm.powerFree = '-';
-            }
-            if (data.basic) {
-              vm.basic = data.basic;
-            } else {
-              vm.basic = '';
-            }
-          } else {
-            plus.nativeUI.toast(data.info);
-          }
-          plus.nativeUI.closeWaiting();
-        },
-        error: function (xhr, type, errorThrown) {
-          // 异常处理；
-          onNetChange();
-          plus.nativeUI.closeWaiting();
-        }
-      }); */
-    }
-
-  </script>
-</body>
+			function getPointInfo(rand_uuid) {
+				plus.nativeUI.showWaiting();
+				mui.ajax(apiUrl.rtkTrackPointDetail, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						identifyCode: vm.currentIdentifyCode,
+						randUuid: rand_uuid
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						if(data.status === 0) {
+							infoObj = data;
+							if(data.detail) {
+								vm.gnssLocationData = data.detail.gnssLocationData;
+								vm.gnssRefStationData = data.detail.gnssRefStationData;
+								vm.appVer = data.detail.deviceData.deviceInfo.appVer;
+								vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
+								vm.deviceData = data.detail.deviceData;
+							} else {
+								vm.gnssLocationData = '';
+								vm.gnssRefStationData = '';
+								vm.deviceData = '';
+								vm.appVer = '-';
+								vm.powerFree = '-';
+							}
+							if(data.basic) {
+								vm.basic = data.basic;
+							} else {
+								vm.basic = '';
+							}
+						} else {
+							plus.nativeUI.toast(data.info);
+						}
+						if(vm.mode !== 1) {
+							vm.changeMode(1);
+						}
+						plus.nativeUI.closeWaiting();
+					},
+					error: function(xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
+		</script>
+	</body>
 
 </html>

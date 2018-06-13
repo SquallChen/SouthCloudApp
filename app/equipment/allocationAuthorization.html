@@ -3,7 +3,7 @@
 
 	<head>
 		<meta charset="UTF-8">
-		<title>设备授权</title>
+		<title>用户授权</title>
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link rel="stylesheet" href="../../css/custom.css">
@@ -40,17 +40,22 @@
 				right: 50px;
 				left: 50px;
 			}
-			.mui-bar .name{
+			
+			.mui-bar .name {
 				width: 70px;
 				font-size: 17px;
 			}
+			
 			.mui-content {
 				background: white;
 			}
-			.equipment-content ul li{
+			
+			.equipment-content ul li {
 				position: relative;
+				color: #333;
 			}
-			.equipment-content ul li:after{
+			
+			.equipment-content ul li:after {
 				width: 100%;
 				height: 1px;
 				content: '';
@@ -61,24 +66,33 @@
 				transform: scaleY(.5);
 				background-color: #ccc;
 			}
-			.equipment-content ul li span{
+			
+			.equipment-content ul li span {
 				display: inline-block;
-				height:40px;
-				line-height: 40px;
+				height: 50px;
+				line-height: 50px;
 			}
-			.equipment-content ul li span:nth-child(1){
+			
+			.equipment-content ul li span:nth-child(1) {
 				text-align: center;
-				width:50px;
+				width: 50px;
+				color: #999;
 			}
-			.equipment-content ul li button{
+			
+			.equipment-content ul li button {
+				font-size: 13px;
+				line-height: 13px;
 				position: absolute;
-				right:15px;
-				border:none;
-				background: #F56C6C;
-				color:white;
-				height: 32px;
-				top:4px;
-				}
+				right: 15px;
+				border: none;
+				background: #f94b3e;
+				color: white;
+				width: 55px;
+				height: 26px;
+				top: 12px;
+				border-radius: 3px;
+			}
+			
 			.back {
 				display: block;
 				width: 10px;
@@ -87,20 +101,26 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before {
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
 				content: '';
-				}
-			.padding_top{
-				width:100%;
-				height:21px;
-				background: #f2f2f2;
 			}
-			.mui-table-view:before{
+			
+			.padding_top {
+				width: 100%;
+				height: 21px;
+				background: #e8e8e8;
+			}
+			
+			.mui-table-view:before {
 				height: 0;
 			}
-			.mui-table-view-cell:after{
-				left:0;
+			
+			.mui-table-view-cell:after {
+				left: 0;
 			}
+			
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -108,12 +128,84 @@
 				display: flex;
 				align-items: center;
 			}
+			
 			.mui-bar-nav.mui-bar .lists {
-				width:55px;
+				width: 55px;
 				position: relative;
 				height: 50px;
-				
 			}
+			
+			.track {
+				top: 50% !important;
+				left: 50% !important;
+				width: 290px;
+				position: fixed;
+				transform: translate(-50%, -50%);
+				-webkit-transform: translate(-50%, -50%);
+				background: white;
+			}
+			
+			.tip {
+				padding: 15px 0 0 15px;
+				height: 40px;
+				line-height: 40px;
+			}
+			
+			.filter {
+				height: 50px;
+				width: 100%;
+				font-size: #333;
+			}
+			.filter ul:after,.filter ul:before{
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			.filter ul:after{
+				top:-1px;
+			}
+			.filter ul li {
+				display: flex;
+				align-items: center;
+				padding-left: 10px;
+				padding-right: 10px;
+				position: relative;
+				flex-wrap: wrap;
+				position: relative;
+			}
+			
+			.userEntryImg {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon01.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 5px;
+			}
+			
+			.filter a {
+				display: block;
+				width: 80%;
+				height: 50px;
+				line-height: 50px;
+				font-size: 14px;
+				padding-left: 20px;
+				color: #333;
+			}
+			
+			.mui-content .mui-icon {
+				color: #ccc;
+				position: absolute;
+				right: 15px;
+				top: 13px;
+			}
+			
 			[v-cloak] {
 				display: none;
 			}
@@ -126,18 +218,38 @@
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
 					<span class="back"></span>
 				</a>
-				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#" data-href="./equipment-user-authorized.html" v-on:tap="openpage"></a>
-				<h1 class="mui-title">设备授权</h1>
+				<h1 class="mui-title">用户授权</h1>
 			</header>
 			<div class="mui-content">
 				<div class="padding_top"></div>
-				<div  v-show="hasData===false" class="tip"><span>没有设备...</span></div>
+				<div class="filter">
+					<ul class="filter-ul">
+						<li class="filter-li">
+							<span class="userEntryImg"></span>
+							<a href="#" data-href="./equipment-user-authorized.html" v-on:tap="openpage">添加授权用户</a>
+							<span class="mui-icon mui-icon-arrowright"></span>
+						</li>
+					</ul>
+				</div>
+				<div class="padding_top"></div>
+				<div v-show="hasData===false" class="tip"><span>暂无授权用户...</span></div>
 				<div class="equipment-content">
 					<ul>
-						<li><span>1</span><span>SG11125415526</span><button>删 除</button></li>
-						<li><span>2</span><span>SG11125415526</span><button>删 除</button></li>
-						<li><span>3</span><span>SG11125415526</span><button>删 除</button></li>
+						<li v-for="(item,index) in deviceData"><span>{{index+1}}</span><span>{{item.userName}}</span><button v-on:tap="deleteConfirmation(item.userId)">删 除</button></li>
 					</ul>
+				</div>
+			</div>
+			<!--**************************清除星历弹窗****************************-->
+			<div id="deleteConfirmation" class="mui-popover track">
+				<div class="content">
+					<span>确认</span>
+					<hr>
+					<div>
+						<span>确定删除该用户？</span>
+					</div>
+					<div class="btn">
+						<button v-on:tap="cancel()">取消</button><button>确认</button>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -152,19 +264,84 @@
 			var vm = new Vue({
 				el: '#vbody',
 				data: {
-					filterUser:'',
-					user_name:'',
-					token:'',
-					equipmentInfo:'',
-					realname:'',
-					hasData:true,
+					filterUser: '',
+					user_name: '',
+					token: '',
+					equipmentInfo: '',
+					realname: '',
+					hasData: true,
+					identifyCode: '',
+					targetUserid: '',
+					deviceData: '',
+					currentIndex: ''
 				},
 				methods: {
 					openpage: function() {
 						var data_url = event.target.dataset.href;
 						mui.openWindow({
 							url: data_url,
-							id: data_url
+							id: data_url,
+							extras: {
+								identifyCode: vm.identifyCode,
+							}
+						});
+					},
+					deleteConfirmation: function(target) {
+						// 控制打开遮罩层
+						mui.confirm(
+							'',
+							'确认删除？', ['取消', '确认'],
+							function(e) {
+								if(e.index == 1) {
+									mui.ajax(apiUrl.auth_delete_user_device, {
+										data: {
+											user_name: vm.user_name,
+											token: vm.token,
+											identify_code: vm.identifyCode,
+											target_user_id: target
+										},
+										dataType: 'json',
+										type: 'post',
+										timeout: 20000,
+										success: function(data) {
+											getUserInfo();
+											mui.toast('删除授权用户成功！')
+										},
+										error: function(xhr, type, errorThrown) {
+											// 异常处理；
+											onNetChange();
+											plus.nativeUI.closeWaiting();
+										}
+									});
+								}
+							},
+							'div'
+						);
+					},
+					cancel: function() {
+						// 控制打开遮罩层
+						mui('#deleteConfirmation').popover('toggle');
+					},
+					deleteUser: function(target) {
+						mui.ajax(apiUrl.auth_delete_user_device, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								identify_code: vm.identifyCode,
+								target_user_id: target
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 20000,
+							success: function(data) {
+								getUserInfo();
+								mui.toast('删除授权用户成功！')
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
 						});
 					}
 				},
@@ -172,37 +349,52 @@
 					mui.plusReady(function() {
 						mui.init({});
 						// 登陆时存放到本地的用户数据
-				        vm.token = plus.storage.getItem('token');
-				        vm.user_name = plus.storage.getItem('user_name');
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
-						vm.filterUser = self.username;
-						vm.realname = self.realname;
-//						mui.ajax(apiUrl.deviceMachineWithUser, {
-//							data: {
-//								user_name: vm.user_name,
-//								token: vm.token,
-//								filter_user:vm.filterUser
-//							},
-//							dataType: 'json',
-//							type: 'post',
-//							timeout: 20000,
-//							success: function(data) {
-//								console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
-//								vm.hasData = true;
-//								vm.equipmentInfo = data.list;
-//							},
-//							error: function(xhr, type, errorThrown) {
-//								mui.toast('该用户下没有关联设备。');
-//								vm.hasData = false;
-//								// 异常处理；
-//								onNetChange();
-//								plus.nativeUI.closeWaiting();
-//							}
-//						});
+						vm.identifyCode = self.identifyCode;
+						getUserInfo();
+
+						window.addEventListener('refreshAllocationAuthorization', function() {
+							console.log('刷新授权用户数据...');
+							getUserInfo();
+						});
 					});
 				}
 			});
+
+			function getUserInfo() {
+				mui.ajax(apiUrl.authUserPage, {
+					data: {
+						user_name: vm.user_name,
+						token: vm.token,
+						pageNum: 1,
+						numberPerPage: 1000,
+						identifyCode: vm.identifyCode
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 20000,
+					success: function(data) {
+						if(data.recordList.length === 0) {
+							vm.hasData = false;
+							mui.toast('该用户下没有关联设备。');
+						} else {
+							console.log('此设备已授权的用户为：' + JSON.stringify(data));
+							vm.hasData = true;
+							vm.deviceData = data.recordList;
+						}
+
+					},
+					error: function(xhr, type, errorThrown) {
+						mui.toast('该用户下没有关联设备。');
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
 		</script>
 	</body>
 

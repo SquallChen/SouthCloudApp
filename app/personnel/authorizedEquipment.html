@@ -40,10 +40,12 @@
 				right: 50px;
 				left: 50px;
 			}
-			.mui-bar .name{
+			
+			.mui-bar .name {
 				width: 70px;
 				font-size: 17px;
 			}
+			
 			.mui-content {
 				background: white;
 			}
@@ -62,14 +64,15 @@
 				padding-bottom: 6px;
 			}
 			
-			
 			.personnelInfo .main-content div {
 				display: flex;
 				justify-content: space-between;
 			}
-			.personnelInfo .main-content div:nth-child(1){
+			
+			.personnelInfo .main-content div:nth-child(1) {
 				margin-bottom: 4px;
 			}
+			
 			.personnelInfo .status {
 				position: relative;
 				top: -3px;
@@ -100,13 +103,15 @@
 			.personnelInfo .mui-table-view-cell {
 				padding: 2px 15px;
 			}
-			.mui-bar-nav.mui-bar .mui-icon{
+			
+			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
 				top: 21px;
 				display: flex;
 				align-items: center;
 			}
+			
 			.back {
 				display: block;
 				width: 10px;
@@ -115,25 +120,32 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before {
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
 				content: '';
-				}
-			.padding_top{
-				width:100%;
-				height:21px;
+			}
+			
+			.padding_top {
+				width: 100%;
+				height: 21px;
 				background: #f2f2f2;
 			}
-			.tip{
+			
+			.tip {
 				padding-left: 15px;
 				height: 40px;
 				line-height: 40px;
 			}
-			.mui-table-view:before{
+			
+			.mui-table-view:before {
 				height: 0;
 			}
-			.mui-table-view-cell:after{
-				left:0;
+			
+			.mui-table-view-cell:after {
+				left: 0;
 			}
+			
 			[v-cloak] {
 				display: none;
 			}
@@ -151,14 +163,14 @@
 			</header>
 			<div class="mui-content">
 				<div class="padding_top"></div>
-				<div  v-show="hasData===false" class="tip"><span>没有设备...</span></div>
+				<div v-show="hasData===false" class="tip"><span>暂无设备...</span></div>
 				<div class="personnelInfo">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in equipmentInfo">
 							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="realTimeTrack.html">实时轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="historicalTrack.html">历史轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage" data-href="currentLocation.html">位置</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(item)" data-href="realTimeTrack.html">实时轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(item)" data-href="historicalTrack.html">历史轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(item)" data-href="currentLocation.html">位置</a>
 							</div>
 							<div class="mui-slider-handle">
 								<div class="mui-table-cell">
@@ -184,85 +196,36 @@
 			var vm = new Vue({
 				el: '#vbody',
 				data: {
-					filterUser:'',
-					user_name:'',
-					token:'',
-					equipmentInfo:'',
-					realname:'',
-					hasData:true,
-					userdata: [{
-							name: '张三',
-							Numbering:'123456',
-							pinyin: 'zhangsan',
-							group: '南方卫星导航',
-							status: 0
-						},
-						{
-							name: '张三',
-							Numbering:'234567',
-							pinyin: 'lisi',
-							group: '南方卫星导航',
-							status: 0
-						},
-						{
-							name: '张三',
-							Numbering:'345678',
-							pinyin: 'yaoming',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '张三',
-							Numbering:'456789',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '张三',
-							Numbering:'567891',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '张三',
-							Numbering:'678912',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '张三',
-							Numbering:'789123',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						},
-						{
-							name: '张三',
-							Numbering:'891234',
-							pinyin: 'wangwu',
-							group: '南方卫星导航',
-							status: 1
-						}
-					]
+					filterUser: '',
+					user_name: '',
+					token: '',
+					equipmentInfo: '',
+					realname: '',
+					hasData: true,
 				},
 				methods: {
-					openpage: function() {
+					openpage: function(item) {
 						var data_url = event.target.dataset.href;
+						var el = event.target.parentNode.parentNode;
 						mui.openWindow({
 							url: data_url,
-							id: data_url
+							id: data_url,
+							extras: {
+								upDataUserName: item.upDataUserName,
+								upDataCompanyInfo: item.upDataCompanyInfo,
+								identifyCode: item.identifyCode,
+								item:item
+							}
 						});
+						mui.swipeoutClose(el);
 					}
 				},
 				created: function() {
 					mui.plusReady(function() {
 						mui.init({});
 						// 登陆时存放到本地的用户数据
-				        vm.token = plus.storage.getItem('token');
-				        vm.user_name = plus.storage.getItem('user_name');
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
 						vm.filterUser = self.username;
@@ -271,15 +234,22 @@
 							data: {
 								user_name: vm.user_name,
 								token: vm.token,
-								filter_user:vm.filterUser
+								filter_user: vm.filterUser
 							},
 							dataType: 'json',
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
-								console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
-								vm.hasData = true;
-								vm.equipmentInfo = data.list;
+								console.log('此用户拥有的设备信息为：' + JSON.stringify(data));
+								if(data.list === null) {
+									vm.hasData = false;
+									mui.toast('该用户下没有关联设备。');
+								} else {
+									//console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
+									vm.hasData = true;
+									vm.equipmentInfo = data.list;
+								}
+
 							},
 							error: function(xhr, type, errorThrown) {
 								mui.toast('该用户下没有关联设备。');

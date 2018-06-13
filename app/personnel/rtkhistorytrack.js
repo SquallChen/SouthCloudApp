@@ -147,7 +147,7 @@ highAlpColor = highAlpColor.slice();
 highAlpColor[3] = 0.9;
 var pointStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 3,
+    radius: 4,
     fill: new ol.style.Fill({
       color: highAlpColor
     })
@@ -319,7 +319,7 @@ olMap.on('singleclick', function (evt) {
   });
   if (feature === null || feature === undefined) return;
   var pointInfo = feature.getProperties();
-  getPointInfo(pointInfo.id);
+  getPointInfo(pointInfo.rand_uuid);
 }, pointLayerSelect);
 
 var moveFeature;

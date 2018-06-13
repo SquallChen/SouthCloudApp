@@ -69,8 +69,9 @@
 
 			.modeTitle button {
 				font-size: 13px;
-				width: 80px;
+				width: 76px;
 				border-radius: 0;
+				padding: 6px 8px;
 			}
 
 			.select {
@@ -166,7 +167,7 @@
 			}
 			.btn {
 				display: flex;
-				margin-bottom: 5px;
+				margin-bottom: 10px;
 				padding: 0 20px;
 			}
 
@@ -179,7 +180,7 @@
 				border-radius: 4px;
 				font-size: 20px;
 				color: white;
-				
+
 			}
 			.btn .cancel{
 				background:#ff3b2f;
@@ -189,10 +190,10 @@
 				background: #f85f56;
 			}
 			.btn .sure{
-				background: #4bd562;
+				background: #3b88fb;
 			}
 			.btn .sure:active{
-				background: #65f17c;
+				background: #0b5fde;
 			}
 			.btn .setting {
 				background: #3b88fb;
@@ -346,8 +347,8 @@
 				-webkit-transform: translate(36px,0) !important;
 			}
 			#item3mobile ul li .setNum{
-				display: flex; 
-				padding-left: 15px; 
+				display: flex;
+				padding-left: 15px;
 				width: 100%;
 				align-items: center;
 				position: relative;
@@ -380,7 +381,7 @@
 				transform: scaleY(.5);
 				background-color: #ccc;
 			}
-			
+
 			#item3mobile .satellite-title {
 				width: 100%;
 				padding: 5px 10px;
@@ -408,7 +409,6 @@
 				top: 50% !important;
 				left: 50% !important;
 				width: 290px;
-				position: fixed;
 				transform: translate(-50%, -50%);
 				-webkit-transform: translate(-50%, -50%);
 				background: white;
@@ -554,8 +554,8 @@
 				text-align: right;
 				display: inline-block;
 				width: 25%;
-				padding: 12px 15px 12px 15px;
-				font-size: 15px;
+				padding: 12px 15px 12px 10px;
+				font-size: 13px;
 				font-weight: 500;
 				color:#999;
 			}
@@ -578,6 +578,10 @@
 				justify-content: center;
 				width: 25%;
 			}
+			#item4mobile .selfcheck{
+				padding: 0 5px;
+				width: 100%;
+			}
 			#item4mobile .btn a{
 				display:block;
 				width:48px;
@@ -588,6 +592,9 @@
 			}
 			#item4mobile select{
 				padding: 6px 12px;
+				flex: 1;
+				margin-left: 0;
+				margin-right: 8px;
 			}
 			#item4mobile .select .down {
 				width: 10px;
@@ -657,18 +664,27 @@
 				margin-right: 10px;
 				text-align: right;
 				color:#999;
+				font-size: 13px;
+				width: 70px;
+				display: block;
 			}
 			#item4mobile .otherContent .deadline{
 				color:green;
 				font-weight: 500;
 				color: #0b5fde;
 			}
+			#item4mobile .limit{
+				text-align: left !important;
+				display: flex;
+			}
 			#item4mobile .update{
 				position: relative;
-				margin-left:25% ;
 				top:-6px;
 				display: flex;
 				align-items: center;
+				width: 100%;
+				padding-top: 20px;
+				padding: 20px 5px 0 5px;
 			}
 			#item4mobile .remoteUpdate{
 				position: relative;
@@ -688,7 +704,7 @@
 			    position: relative;
 			    left: 0px;
 			    top: 13px;
-    			
+
 			}
 			.icon-reset{
 				color:#ffa300;
@@ -726,14 +742,14 @@
 				margin-right: 8px;
 			}
 			#item4mobile .mui-table-view-cell.mui-active{
-				background: white;;
+				background: white;
 			}
 			#item1mobile,
 			#item2mobile,
 			#item3mobile,
 			#item4mobile {
 				overflow: auto;
-				padding-bottom: 30px;
+				/*padding-bottom: 30px;*/
 			}
 
 			.active {
@@ -754,7 +770,7 @@
 				flex-direction: column;
 			}
 			.mui-slider{
-				flex: 1;
+				/*flex: 1;*/
 				display: flex;
 				flex-direction: column;
 			}
@@ -884,6 +900,24 @@
 				background: #f2f2f2;
 				height: 40px;
 			}
+					.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+			}
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+			}	
+		.mui-icon-back:before, .mui-icon-left-nav:before{
+			content: '';
+		}	
 			[v-cloak] {
 				display: none;
 			}

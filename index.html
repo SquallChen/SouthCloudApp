@@ -1,247 +1,250 @@
 <!DOCTYPE html>
 <html>
 
-	<head>
-		<meta charset="utf-8">
-		<title>Hello MUI</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
-		<meta name="apple-mobile-web-app-capable" content="yes">
-		<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<head>
+  <meta charset="utf-8">
+  <title>南方云</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
-		<link rel="stylesheet" href="css/mui.min.css">
-		<link href="./css/iconfont.css" rel="stylesheet" />
-		<style>
-			html,
-			body {
-				background-color: #efeff4;
-			}
-			
-			.mui-bar-nav {
-				background: linear-gradient(to right, #1d86bf, #1d69bf);
-				height: 48px;
-				line-height: 48px;
-			}
-			
-			.mui-bar-tab {
-				background: white;
-			}
-			
-			.mui-title {
-				color: #fff;
-				height: 48px;
-				line-height: 48px;
-				font-size: 20px;
-			}
-			
-			.mui-icon-contact {}
-			
-			.mui-bar-tab .mui-tab-item.mui-active {
-				color: #0b60de;
-			}
-			
-			.mui-bar-tab .mui-tab-item {
-				color: #666;
-			}
-			
-			.mui-bar2 {
-				position: fixed;
-				z-index: 10;
-				right: 0;
-				left: 0;
-				/*box-shadow: 0 0 1px rgba(0,0,0,.85);*/
-				-webkit-backface-visibility: hidden;
-			}
-			
-			.line {
-				position: fixed;
-				left: 0;
-				bottom: 50px;
-				width: 100%;
-				height: 1px;
-				background: #ccc;
-				-webkit-transform: scaleY(.5);
-			}
-			
-			.mui-bar-tab .mui-tab-item .mui-icon {
-				position: relative;
-				top: 4px;
-			}
-			/*如果处于选中状态下,改变其显示图案*/
-			
-			.mui-active .icon-user:before {
-				content: "\e905";
-			}
-			
-			.mui-active .icon-map:before {
-				content: "\e904";
-			}
-			
-			.mui-active .icon-equipment:before {
-				content: "\e906";
-			}
-			
-			.mui-active .icon-userlist:before {
-				content: "\e907";
-			}
-		</style>
-	</head>
+  <link rel="stylesheet" href="css/mui.min.css">
+  <link href="./css/iconfont.css" rel="stylesheet" />
+  <style>
+    html,
+    body {
+      background-color: #efeff4;
+    }
 
-	<body>
-		<div class="line"></div>
-		<nav class="mui-bar2 mui-bar-tab">
-			<a id="defaultTab" class="mui-tab-item mui-active" href="app/console/user.html">
-				<span class="mui-icon icon-user"></span>
-				<span class="mui-tab-label">用户</span>
-			</a>
-			<a class="mui-tab-item" href="app/console/equipment.html">
-				<span class="mui-icon icon-equipment"></span>
-				<span class="mui-tab-label">设备</span>
-			</a>
-			<a class="mui-tab-item" href="app/console/map.html">
-				<span class="mui-icon icon-map"></span>
-				<span class="mui-tab-label">地图</span>
-			</a>
-			<a class="mui-tab-item" href="app/console/me.html">
-				<span class="mui-icon icon-userlist"></span>
-				<span class="mui-tab-label">我</span>
-			</a>
-		</nav>
-		<script src="js/mui.min.js"></script>
-		<script src="js/url.js"></script>
-		<script type="text/javascript" charset="utf-8">
-			// mui初始化
-			var user_page = null;
-			var equipment_page = null;
-			var map_page = null;
-			var me_page = null;
-			mui.init();
-			var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/me.html'];
-			var subpage_style = {
-				top: '0',
-				bottom: '51px'
-			};
+    .mui-bar-nav {
+      background: linear-gradient(to right, #1d86bf, #1d69bf);
+      height: 48px;
+      line-height: 48px;
+    }
 
-			var aniShow = {};
+    .mui-bar-tab {
+      background: white;
+    }
 
-			// 创建子页面，首个选项卡页面显示，其它均隐藏；
-			mui.plusReady(function() {
-				if(!plus.storage.getItem('token')) {
-					mui.openWindow({
-						url: './login.html',
-						id: 'login'
-					});
-					return;
-				}
+    .mui-title {
+      color: #fff;
+      height: 48px;
+      line-height: 48px;
+      font-size: 20px;
+    }
 
-				var exist = plus.webview.getWebviewById('app/console/user.html');
-				if(exist) {
-					plus.webview.hide(plus.webview.getWebviewById('app/console/me.html'));
-					plus.webview.show(exist, 'fade-in', 300);
+    .mui-icon-contact {}
 
-					mui.ajax(apiUrl.map_url, {
-						data: {
-							user_name: plus.storage.getItem('user_name'),
-							token: plus.storage.getItem('token')
-						},
-						dataType: 'json',
-						type: 'post',
-						timeout: 10000,
-						success: function(data) {
-							if(data.status === 0) {
-								plus.storage.setItem('point', data.history_track_line);
-								plus.storage.setItem('line', data.history_track_point);
-								plus.storage.setItem('prefix', data.map_id_prefix);
-								plus.storage.setItem('monitor', data.map_monitor);
-							} else {
-								mui.toast(data.info);
-							}
-						},
-						error: function(xhr, type, errorThrown) {
-							onNetChange();
-						}
-					});
+    .mui-bar-tab .mui-tab-item.mui-active {
+      color: #0b60de;
+    }
 
-					return;
-				}
-				var self = plus.webview.currentWebview();
-				for(var i = 0; i < subpages.length; i++) {
-					var temp = {};
-					var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
-					if(i > 0) {
-						sub.hide();
-					} else {
-						temp[subpages[i]] = 'true';
-						mui.extend(aniShow, temp);
-					}
-					self.append(sub);
-				}
-				
-				if(user_page == null) {
-					user_page = plus.webview.getWebviewById('app/console/user.html');
-				}
-				if(equipment_page == null) {
-					equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
-				}
-				if(map_page == null) {
-					map_page = plus.webview.getWebviewById('app/console/map.html');
-				}
-				if(me_page == null) {
-					me_page = plus.webview.getWebviewById('app/console/me.html');
-				}
-			});
-			// 当前激活选项
-			var activeTab = subpages[0];
-			// var title = document.getElementById('title');
-			// 选项卡点击事件
-			mui('.mui-bar-tab').on('tap', 'a', function(e) {
-				setPage();
-				var targetTab = this.getAttribute('href');
-				if(targetTab == activeTab) {
-					return;
-				}
-				// 更换标题
-				// title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
-				// 显示目标选项卡
-				// 若为iOS平台或非首次显示，则直接显示
-				if(mui.os.ios || aniShow[targetTab]) {
-					plus.webview.show(targetTab);
-				} else {
-					// 否则，使用fade-in动画，且保存变量
-					var temp = {};
-					temp[targetTab] = 'true';
-					mui.extend(aniShow, temp);
-					plus.webview.show(targetTab, 'fade-in', 300);
-				}
-				// 隐藏当前;
-				plus.webview.hide(activeTab);
-				// 更改当前活跃的选项卡
-				activeTab = targetTab;
-			});
-			// 自定义事件，模拟点击“首页选项卡”
-			document.addEventListener('gohome', function() {
-				gohome();
-			});
-			gohome();
+    .mui-bar-tab .mui-tab-item {
+      color: #666;
+    }
 
-			function gohome() {
-				var defaultTab = document.getElementById('defaultTab');
-				// 模拟首页点击
-				mui.trigger(defaultTab, 'tap');
-				// 切换选项卡高亮
-				var current = document.querySelector('.mui-bar-tab>.mui-tab-item.mui-active');
-				if(defaultTab !== current) {
-					current.classList.remove('mui-active');
-					defaultTab.classList.add('mui-active');
-				}
-			};
+    .mui-bar2 {
+      position: fixed;
+      z-index: 10;
+      right: 0;
+      left: 0;
+      /*box-shadow: 0 0 1px rgba(0,0,0,.85);*/
+      -webkit-backface-visibility: hidden;
+    }
 
-			function setPage() {
-				mui.fire(user_page, 'closeTopPopover', {});
-				mui.fire(equipment_page, 'closeTopPopover', {});
-				mui.fire(map_page, 'closeTopPopover', {});
-				mui.fire(me_page, 'closeTopPopover', {});
-			}
-		</script>
-	</body>
+    .line {
+      position: fixed;
+      left: 0;
+      bottom: 50px;
+      width: 100%;
+      height: 1px;
+      background: #ccc;
+      -webkit-transform: scaleY(.5);
+    }
+
+    .mui-bar-tab .mui-tab-item .mui-icon {
+      position: relative;
+      top: 4px;
+    }
+
+    /*如果处于选中状态下,改变其显示图案*/
+
+    .mui-active .icon-user:before {
+      content: "\e905";
+    }
+
+    .mui-active .icon-map:before {
+      content: "\e904";
+    }
+
+    .mui-active .icon-equipment:before {
+      content: "\e906";
+    }
+
+    .mui-active .icon-userlist:before {
+      content: "\e907";
+    }
+  </style>
+</head>
+
+<body>
+  <div class="line"></div>
+  <nav class="mui-bar2 mui-bar-tab">
+    <a id="defaultTab" class="mui-tab-item mui-active" href="app/console/user.html">
+      <span class="mui-icon icon-user"></span>
+      <span class="mui-tab-label">用户</span>
+    </a>
+    <a class="mui-tab-item" href="app/console/equipment.html">
+      <span class="mui-icon icon-equipment"></span>
+      <span class="mui-tab-label">设备</span>
+    </a>
+    <a class="mui-tab-item" href="app/console/map.html">
+      <span class="mui-icon icon-map"></span>
+      <span class="mui-tab-label">地图</span>
+    </a>
+    <a class="mui-tab-item" href="app/console/me.html">
+      <span class="mui-icon icon-userlist"></span>
+      <span class="mui-tab-label">我</span>
+    </a>
+  </nav>
+  <script src="js/mui.min.js"></script>
+  <script src="js/url.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    mui.init();
+    var user_page = null;
+    var equipment_page = null;
+    var map_page = null;
+    var me_page = null;
+
+    var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/me.html'];
+    var aniShow = {};
+    var subpage_style = {
+      top: '0',
+      bottom: '51px'
+    };
+
+    // 创建子页面，首个选项卡页面显示，其它均隐藏；
+    mui.plusReady(function () {
+      if (!plus.storage.getItem('token')) {
+        mui.openWindow({
+          url: './login.html',
+          id: 'login'
+        });
+        return;
+      }
+      var exist = plus.webview.getWebviewById('app/console/user.html');
+      if (exist) {
+        plus.webview.hide(plus.webview.getWebviewById('app/console/me.html'));
+        plus.webview.show(exist, 'fade-in', 300);
+        user_page = plus.webview.getWebviewById('app/console/user.html');
+        equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
+        map_page = plus.webview.getWebviewById('app/console/map.html');
+        me_page = plus.webview.getWebviewById('app/console/me.html');
+        setPage();
+      } else {
+        var self = plus.webview.currentWebview();
+        for (var i = 0; i < subpages.length; i++) {
+          var temp = {};
+          var sub = plus.webview.create(subpages[i], subpages[i], subpage_style);
+          if (i > 0) {
+            sub.hide();
+          } else {
+            temp[subpages[i]] = 'true';
+            mui.extend(aniShow, temp);
+          }
+          self.append(sub);
+        }
+        user_page = plus.webview.getWebviewById('app/console/user.html');
+        equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
+        map_page = plus.webview.getWebviewById('app/console/map.html');
+        me_page = plus.webview.getWebviewById('app/console/me.html');
+      }
+      getMapUrl();
+    });
+
+    // 当前激活选项
+    var activeTab = subpages[0];
+    // var title = document.getElementById('title');
+    // 选项卡点击事件
+    mui('.mui-bar-tab').on('tap', 'a', function (e) {
+      var targetTab = this.getAttribute('href');
+      setPage(targetTab);
+      if (targetTab === activeTab) {
+        return;
+      }
+      // 更换标题
+      // title.innerHTML = this.querySelector('.mui-tab-label').innerHTML;
+      // 显示目标选项卡
+      // 若为iOS平台或非首次显示，则直接显示
+      if (mui.os.ios || aniShow[targetTab]) {
+        plus.webview.show(targetTab);
+      } else {
+        // 否则，使用fade-in动画，且保存变量
+        var temp = {};
+        temp[targetTab] = 'true';
+        mui.extend(aniShow, temp);
+        plus.webview.show(targetTab, 'fade-in', 300);
+      }
+      // 隐藏当前;
+      plus.webview.hide(activeTab);
+      // 更改当前活跃的选项卡
+      activeTab = targetTab;
+    });
+    // 自定义事件，模拟点击“首页选项卡”
+    document.addEventListener('gohome', function () {
+      gohome();
+    });
+    gohome();
+
+    function gohome() {
+      var defaultTab = document.getElementById('defaultTab');
+      // 模拟首页点击
+      mui.trigger(defaultTab, 'tap');
+      // 切换选项卡高亮
+      var current = document.querySelector('.mui-bar-tab>.mui-tab-item.mui-active');
+      if (defaultTab !== current) {
+        current.classList.remove('mui-active');
+        defaultTab.classList.add('mui-active');
+      }
+    }
+
+    function getMapUrl() {
+      mui.ajax(apiUrl.map_url, {
+        data: {
+          user_name: plus.storage.getItem('user_name'),
+          token: plus.storage.getItem('token')
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 10000,
+        success: function (data) {
+          if (data.status === 0) {
+            plus.storage.setItem('point', data.history_track_line);
+            plus.storage.setItem('line', data.history_track_point);
+            plus.storage.setItem('prefix', data.map_id_prefix);
+            plus.storage.setItem('monitor', data.map_monitor);
+          } else if (data.status === 40004) {
+            mui.openWindow({
+              url: './login.html',
+              id: 'login'
+            });
+          } else {
+            mui.toast(data.info);
+          }
+        },
+        error: function (xhr, type, errorThrown) {
+          onNetChange();
+        }
+      });
+    }
+
+    function setPage(v) {
+      mui.fire(user_page, 'closeTopPopover', { id: v });
+      mui.fire(equipment_page, 'closeTopPopover', { id: v });
+      mui.fire(map_page, 'closeTopPopover', { id: v });
+      mui.fire(me_page, 'closeTopPopover', { id: v });
+    }
+  </script>
+</body>
 
 </html>

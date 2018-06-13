@@ -53,7 +53,6 @@
 			
 			.filter {
 				height: 51px;
-				margin-bottom: 20px;
 			}
 			
 			.filter ul li {
@@ -102,13 +101,13 @@
 			
 			.usertitle {
 				width: 100%;
-				background: #f2f2f2;
+				background: #e8e8e8;
 				padding-left: 20px;
 				height: 36px;
 				line-height: 36px;
-				color: #0b60de;
+				color: #333;
 				font-weight: 500;
-				font-size: 14px;
+				font-size: 15px;
 			}
 			
 			.personnelInfo {
@@ -121,6 +120,7 @@
 			.personnelInfo ul li {
 				height: 40px;
 			}
+			
 			.back {
 				display: block;
 				width: 10px;
@@ -129,13 +129,17 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
+			
 			.mui-table-view-cell>.mui-slider-left>.mui-btn:after,
 			.mui-table-view-cell>.mui-slider-right>.mui-btn:after {
 				position: relative;
 			}
-			.mui-icon-back:before, .mui-icon-left-nav:before{
-				content:'';
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
 			}
+			
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -143,38 +147,52 @@
 				display: flex;
 				align-items: center;
 			}
+			
 			.personnelInfo .mui-table-view-cell {
-				padding: 0 14px 0 10px;
+				padding: 0 10px 0 10px;
 			}
-			.personnelInfo .userInfo{
-				width:100%;
+			
+			.personnelInfo .userInfo {
+				width: 100%;
 				display: flex;
 				justify-content: space-between;
 			}
-			.personnelInfo .title{
-				text-align: center;
+			
+			.personnelInfo .title {
 				font-weight: 500;
 				font-size: 14px;
 			}
-			.personnelInfo .userInfo span{
+			
+			.personnelInfo .userInfo span {
 				display: block;
 			}
-			.personnelInfo .userInfo span:nth-child(1),.personnelInfo .userInfo span:nth-child(2){
-				flex:1;
+			
+			.personnelInfo .userInfo span:nth-child(1),
+			.personnelInfo .userInfo span:nth-child(2) {
+				flex: 1;
+				font-size: 13px;
 			}
-			.personnelInfo .userInfo .status{
-				width:42px;
+			
+			.personnelInfo .userInfo .status {
+				width: 42px;
 				text-align: right;
 			}
-			.selectBtn{
+			
+			.selectBtn {
 				background: transparent;
 				border: none;
-				color:white;
+				color: white;
 				float: right;
 				position: relative;
-				top:32px;
-				left:8px;
+				top: 32px;
+				left: 8px;
+				font-size: 15px;
 			}
+			
+			.noSelect {
+				opacity: .4;
+			}
+			
 			.mui-table-view-cell:after {
 				left: 0;
 				background-color: #ccc;
@@ -254,18 +272,104 @@
 			.mui-table-view-cell:after {
 				height: 1;
 			}
-			.mui-checkbox.mui-left label{
+			
+			.mui-checkbox.mui-left label {
 				display: flex;
 				align-items: center;
-				padding:0 0 0 40px;
+				padding: 0 0 0 68px;
 				height: 40px;
 				line-height: 20px;
 			}
-			.mui-checkbox.mui-left input[type=checkbox]{
-				left:0px;
+			
+			.mui-checkbox.mui-left input[type=checkbox] {
+				left: 15px;
 			}
-			.mui-checkbox input[type=checkbox]{
-				top:5px;
+			
+			.mui-checkbox input[type=checkbox] {
+				top: 5px;
+			}
+			
+			.filter {
+				height: 50px;
+				width: 100%;
+				font-size: #333;
+			}
+			
+			.filter ul:after,
+			.filter ul:before {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			
+			.filter ul:after {
+				top: -1px;
+			}
+			
+			.filter ul li {
+				display: flex;
+				align-items: center;
+				padding-left: 10px;
+				padding-right: 10px;
+				position: relative;
+				flex-wrap: wrap;
+				position: relative;
+			}
+			
+			.userEntryImg {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon02.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 5px;
+			}
+			
+			.filter a {
+				display: block;
+				width: 80%;
+				height: 50px;
+				line-height: 50px;
+				font-size: 14px;
+				padding-left: 20px;
+				color: #333;
+			}
+			
+			.mui-content .mui-icon {
+				color: #ccc;
+				position: absolute;
+				right: 15px;
+				top: 13px;
+			}
+			.padding_top {
+				width: 100%;
+				height: 21px;
+				background: #e8e8e8;
+			}
+			.mui-radio.mui-left input[type=radio]{
+				left: 5px;
+				width: 15px;
+				height: 15px;
+				top:12px;
+				line-height: 12px;
+			}
+			.mui-radio.mui-left label{
+				padding-left: 68px;
+			}
+			.mui-input-row label{
+				padding: 13px 15px;
+			}
+			.mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+				color: #0b60de;
+			}
+			.mui-checkbox input[type=checkbox]:before, .mui-radio input[type=radio]:before{
+				font-size: 15px;
 			}
 			[v-cloak] {
 				display: none;
@@ -279,17 +383,17 @@
 				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
 					<span class="back"></span>
 				</a>
-				<button class="selectBtn">完  成</button>
-				<h1 class="mui-title">南方云</h1>
+				<button class="selectBtn" @click="add">完  成</button>
+				<h1 class="mui-title">添加授权用户</h1>
 			</header>
 			<div class="mui-content">
+				<div class="padding_top"></div>
 				<div class="filter">
 					<ul class="filter-ul">
-						<li href="../personnel/userfilter.html" class="filter-li">
-							<span class="userfilter"></span>
-							<a href="#">用户筛选</a>
+						<li class="filter-li">
+							<span class="userEntryImg"></span>
+							<a href="#" data-href="../personnel/userfilter.html" v-on:tap="openpage">用户筛选</a>
 							<span class="mui-icon mui-icon-arrowright"></span>
-							<span class="border_bottom"></span>
 						</li>
 					</ul>
 				</div>
@@ -301,61 +405,22 @@
 						<li class="mui-table-view-cell content">
 							<div class="mui-input-row mui-checkbox mui-left">
 								<label>
-								<input name="checkbox" value="1" type="checkbox">
 								<div class="userInfo title">
-									<span>用户账号</span><span>用户名称</span><span class="status">状态</span>
+									<span>用户账号</span><span>用户名称</span>
 								</div>
 								</label>
 							</div>
 						</li>
-						<li class="mui-table-view-cell content">
-							<div class="mui-input-row mui-checkbox mui-left">
+						<li class="mui-table-view-cell content" v-for="item in deviceData">
+							<div class="mui-input-row mui-radio mui-left">
 								<label>
-								<input name="checkbox" value="1" type="checkbox">
-								<div class="userInfo">
-									<span>SG607B16</span><span>36356</span><span class="status">激活</span>
-								</div>
-								</label>
-							</div>
-						</li>
-						<li class="mui-table-view-cell content">
-							<div class="mui-input-row mui-checkbox mui-left">
-								<label>
-								<input name="checkbox" value="1" type="checkbox">
-								<div class="userInfo">
-									<span>SG607B133236356</span><span>SG607B133236356</span><span class="status">未激活</span>
-								</div>
-								</label>
-							</div>
-						</li>
-						<li class="mui-table-view-cell content">
-							<div class="mui-input-row mui-checkbox mui-left">
-								<label>
-								<input name="checkbox" value="1" type="checkbox">
-								<div class="userInfo">
-									<span>SG607B133236356</span><span>SG607B133236356</span><span class="status">激活</span>
-								</div>
-								</label>
-							</div>
-						</li>
-						<!--<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
-							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage(item,index)" data-href="../personnel/userinfo.html">资料</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(item,index)" data-href="../personnel/authorizedEquipment.html">设备</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(item,index)" data-href="../personnel/workGroup.html">工作组</a>
-							</div>
-							<div class="mui-slider-handle">
-								<div class="mui-table-cell">
-									<div class="img-content">
-										<img src="../../public/img/01.jpg" alt="" class="img" />
+									<input name="radio" :value="item.id" v-model="checkUserArr" type="radio">
+									<div class="userInfo">
+										<span>{{item.username}}</span><span>{{item.realname}}</span>
 									</div>
-									<div class="main-content" v-cloak>
-										<div><span class="name">{{item.realname}}</span><span class="status" :class="{active:item.status===0}"></span></div>
-										<div><span class="pinyin">{{item.username}}</span><span class="group">{{item.departname}}</span></div>
-									</div>
-								</div>
+								</label>
 							</div>
-						</li>-->
+						</li>
 					</ul>
 				</div>
 			</div>
@@ -365,6 +430,7 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
+			var allocationAuthorization_page = null;
 			mui.init({
 				beforeback: function() {},
 			});
@@ -383,25 +449,80 @@
 					deviceData: '',
 					keywords: '',
 					workGroup: '',
+					deviceData: '',
+					isSelected: false,
+					checkUserArr: '',
+					identifyCode: ''
 				},
-				methods: {},
+				methods: {
+					openpage: function() {
+						var data_url = event.target.dataset.href;
+						mui.openWindow({
+							url: data_url,
+							id: data_url,
+							extras: {
+								parentPage: 'equipment-user-authorized',
+							}
+						});
+					},
+					add: function() {
+						if(this.checkUserArr.length === 0) {
+							mui.toast('请选择用户!');
+							return;
+						}
+						//var userStr = this.checkUserArr.join(',');
+						mui.ajax(apiUrl.auth_add_user_device, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token,
+								target_user_id: vm.checkUserArr,
+								identify_code: vm.identifyCode
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function(data) {
+								if(data.status === 0) {
+									if(allocationAuthorization_page == null) {
+										allocationAuthorization_page = plus.webview.getWebviewById('../equipment/allocationAuthorization.html');
+									}
+									mui.fire(allocationAuthorization_page, 'refreshAllocationAuthorization', {
+										keywords: vm.keywords,
+										workGroup: vm.workGroupValue
+									});
+									mui.toast('添加授权用户成功！')
+									plus.webview.currentWebview().close();
+
+								} else if(data.status === 40004) {
+									mui.openWindow({
+										url: '../../login.html',
+										id: 'login'
+									});
+								} else {
+									console.log(2222)
+									plus.nativeUI.toast(data.info);
+									setTimeout(function() {
+										plus.nativeUI.closeWaiting();
+									}, 1000);
+								}
+							},
+							error: function(xhr, type, errorThrown) {
+								// 异常处理；
+								onNetChange();
+								plus.nativeUI.closeWaiting();
+							}
+						});
+					}
+				},
 				created: function() {
 					mui.plusReady(function() {
 						mui.init({});
-						//页面顶部筛选按钮跳转
-						mui('.filter-ul').on('tap', '.filter-li', function(e) {
-							var url = this.getAttribute('href');
-							mui.openWindow({
-								url: url,
-								id: url,
-								extras: {
-									parentPage: 'equipment-user-authorized'
-								}
-							});
-						});
-						//登陆时存放到本地的数据
+						// 登陆时存放到本地的数据
 						vm.token = plus.storage.getItem('token');
 						vm.user_name = plus.storage.getItem('user_name');
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.identifyCode = self.identifyCode;
 						//请求用户数据
 						getUserData();
 						window.addEventListener('refreshUser', function() {
@@ -413,9 +534,6 @@
 							vm.keywords = event.detail.keywords;
 							vm.workGroup = event.detail.workGroup;
 							getFilterUserData();
-						});
-						window.addEventListener('closeTopPopover', function() {
-							mui('#topPopover').popover('hide');
 						});
 
 						function getUserData() {
@@ -430,6 +548,7 @@
 								timeout: 10000,
 								success: function(data) {
 									if(data.status === 0) {
+										console.log(JSON.stringify(data));
 										var tempData = data.recordList;
 										var tempArray = [];
 										// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
@@ -444,7 +563,7 @@
 										}
 										// 完成排列处理的数组数据添加到页面上渲染
 										vm.deviceData = tempData;
-										//	console.log(JSON.stringify(vm.deviceData));
+										//console.log(JSON.stringify(vm.deviceData));
 									} else if(data.status === 40004) {
 										mui.openWindow({
 											url: '../../login.html',

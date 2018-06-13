@@ -181,11 +181,11 @@
 					</div>
 					<div class="mui-input-row">
 						<label>办公电话</label>
-						<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话">
+						<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="this.value=this.value.replace(/[^a-z0-9-]/g,'');">
 					</div>
 					<div class="mui-input-row">
 						<label>常用邮箱</label>
-						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\@\.]/g,'')">
 					</div>
 				</form>
 

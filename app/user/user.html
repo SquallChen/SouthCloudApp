@@ -194,6 +194,7 @@ var bindMsgList = function () {
   template.config('escape', false);
 
   mui.plusReady(function () {
+    console.log(1234125);
     user_name = plus.storage.getItem('user_name');
     token = plus.storage.getItem('token');
     myDB.name = user_name;

@@ -17,6 +17,7 @@ body {
 
 .mui-bar-nav~.mui-content {
   padding-top: 73px;
+  position: relative;
 }
 
 .mui-bar-nav {

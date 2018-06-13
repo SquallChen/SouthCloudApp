@@ -2072,12 +2072,6 @@ var vm = new Vue({
   },
 
   methods: {
-    // management: function() {
-    // 	mui.openWindow({
-    // 		url: 'deviceStatus.html',
-    // 		id: 'deviceStatus.html'
-    // 	});
-    // },
     //  刷新页面
     refresh: function () {
       currentWebview.reload();
@@ -3071,7 +3065,7 @@ var vm = new Vue({
 
     // 固件升级
     rtkUpdate: function () {
-      $.ajax({
+      mui.ajax(apiUrl.firmwareUpdate, {
         type: 'post',
         data: {
           user_name: vm.user_name,
@@ -3081,20 +3075,17 @@ var vm = new Vue({
           fileId: vm.firmware,
           requestType: 'setRtkUpdate'
         },
-        url: apiUrl.firmwareUpdate,
-        dataType: 'JSON',
+        dataType: 'json',
+        timeout: 10000,
         success: function callback(data) {
-          if (data.result_code === ERR_NO) {
+          if (data.status === ERR_NO) {
             timeFun(data, updateRtk, '升级失败', '', 5000);
           } else {
-            toastr.error('升级失败');
+            mui.toast(data.info);
             plus.nativeUI.closeWaiting();
           }
         },
         error: function (data) {
-          plus.nativeUI.closeWaiting();
-        },
-        beforeSend: function (data) {
           plus.nativeUI.closeWaiting();
         }
       });
@@ -3287,18 +3278,10 @@ var vm = new Vue({
       });
       var resolutionHeight = window.innerHeight;
       resolutionHeight = resolutionHeight - 149;
-      document
-        .getElementById('item1mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item2mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item3mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item4mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item1mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item2mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item3mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item4mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
 
       //  switch开关设置卫星使能
       mui('#item3mobile .mui-switch').each(function (index) {
@@ -3476,6 +3459,20 @@ var vm = new Vue({
           }
         });
       });
+      // 监听window的resize
+window.addEventListener('resize', function() {
+    var height = document.documentElement.clientHeight;
+    var width = document.documentElement.clientWidth;
+    console.log('可见区域高度:' + height);
+    //console.log('可见区域宽度:' + width);
+    if (document.activeElement.tagName == 'INPUT') {
+
+       //延迟出现是因为有些 Android 手机键盘出现的比较慢         window.setTimeout(() => {
+
+           document.activeElement.scrollIntoViewIfNeeded();
+
+    }
+});
     });
   },
 
@@ -3800,7 +3797,7 @@ function getConfigWorkModePageInfo(hd) {
         vm.rVal.cutangle = hd[i].value;
         vm.sVal.cutangle = hd[i].value;
         //  天线高
-      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.HEIGHT') {
+      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.HEIGHT') {
         vm.bVal.antenna = hd[i].value / 1000;
         vm.sVal.antenna = hd[i].value / 1000;
         //  差分格式

@@ -14,8 +14,8 @@ var apiUrl = {
   get_depart_info: str + '/user/get_depart_info',
   get_role_info: str + '/user/get_role_info',
   update_user_additional_info: str + '/user/update_user_additional_info',
-  get_work_group:str + '/user/get_work_group',
-  updateUser:str + '/user/updateUser',
+  get_work_group: str + '/user/get_work_group',
+  updateUser: str + '/user/updateUser',
 
   // 设备
   device_list_page: str + '/device/list_page',
@@ -24,6 +24,9 @@ var apiUrl = {
   doSendConfig: str + '/device/do_send_config',
   firmwareUpdate: str + '/device/doSendConfigFirmwareUpdate',
   filterDeviceByGroupAndCoder: str + '/device/filterDeviceByGroupAndCoder',
+  auth_delete_user_device:str + '/device/auth_delete_user_device',
+	authUserPage:str + '/device/authUserPage',
+	auth_add_user_device:str + '/device/auth_add_user_device',
 
   // doSendConfig: str + '/device/doSendConfig',
   doRequestConnectStatusMonitor: str + '/device/monitor_connect_status',
@@ -33,10 +36,11 @@ var apiUrl = {
   track_day_statistics: str + '/device/track_day_statistics',
   track_day_page: str + '/device/track_day_page',
   map_url: str + '/device/map_url',
+  real_track: str + '/device/real_track',
   change_work_mode: str + '/device/change_work_mode',
   rtkTrackPointDetail: str + '/device/rtkTrackPointDetail',
   deviceMachineAdd: str + '/device/deviceMachineAdd',
-  deviceMachineWithUser:str + '/device/deviceMachineWithUser',
+  deviceMachineWithUser: str + '/device/deviceMachineWithUser',
 
   // 数据
   data_list_page: str + '/data/list_page',

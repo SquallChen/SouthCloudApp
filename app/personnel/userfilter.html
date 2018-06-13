@@ -76,6 +76,7 @@
 				padding: 0;
 				line-height: 36px;
 				font-size: 13px;
+				color: #999;
 			}
 			
 			.mui-content div input {
@@ -89,13 +90,12 @@
 			.mui-content select {
 				font-size: 13px;
 				padding: 0 0 0 6px;
-				color: #ccc;
+				color: #333;
 				flex: 1;
 				height: 36px;
 				margin-bottom: 0;
 				border: 1px solid #ccc !important;
 			}
-			
 			.down {
 				width: 16px;
 				height: 16px;
@@ -205,19 +205,25 @@
 				},
 				methods: {
 					send: function() {
+						console.log(1111111)
 						if(user_page == null) {
+							console.log(222222)
 							user_page = plus.webview.getWebviewById('app/console/user.html');
 						};
 						if(equipment_user_authorized_page == null) {
+							console.log(3333333)
 							equipment_user_authorized_page = plus.webview.getWebviewById('./equipment-user-authorized.html');
 						};
+						console.log(vm.parentPage);
 						if(vm.parentPage === 'user') {
+							console.log(4444444)
 							mui.fire(user_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue
 							});
 							plus.webview.currentWebview().close();
 						}else if(vm.parentPage === 'equipment-user-authorized'){
+							console.log(5555555)
 							mui.fire(equipment_user_authorized_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue

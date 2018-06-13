@@ -292,7 +292,6 @@ var vm = new Vue({
           vm.wActive = workMode;
           vm.wshow = workMode;
           mui.ajax(url, {
-            type: 'post',
             data: {
               user_name: vm.userName,
               token: vm.token,
