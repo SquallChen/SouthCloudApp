@@ -233,12 +233,13 @@
     }
 
     .popup-info {
-      padding: 6px 6px 0 6px;
+      padding: 6px 0 0 6px;
       text-align: left;
     }
 
     .popup-info p {
       color: #000;
+      margin-bottom: 5px;
     }
 
     .icon-related,
@@ -257,6 +258,9 @@
       height: 50px;
       box-shadow: 0 0 15px rgba(0, 0, 0, .3);
       background: white;
+    }
+    .ol-popup .closeBox {
+      margin: 8px 5px 0 0
     }
 
     #topPopover1 .mui-table-view-cell {
@@ -530,7 +534,7 @@
       var popup = new ol.Overlay.Popup({
         popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
         closeBox: true,
-        positioning: 'top',
+        positioning: 'bottom-center',
         autoPan: true,
         autoPanAnimation: { duration: 250 }
       });
@@ -648,7 +652,7 @@
         companyInfo = upDataCompanyInfo;
         content += '<p>' + upDataUserName + '</p>';
         content += '<p>' + upDataCompanyInfo + '</p></div>';
-        content += '<p><button id="real" style="background:#0b5fde;color:white">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
+        content += '<p><button id="real" style="background:#0b5fde;color:white; margin-right:8px">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
 
         popup.show(selectFeature.getGeometry().getCoordinates(), content);
       }
@@ -699,8 +703,6 @@
     });
 
     $(document).on('click', '#history', function () {
-      console.log(companyInfo);
-      console.log(identifyCode);
       mui.openWindow({
         url: '../personnel/historicalTrack.html',
         id: '../personnel/historicalTrack.html',

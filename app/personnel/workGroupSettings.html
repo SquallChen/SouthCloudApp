@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>工作组设置</title>
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link href="../../css/custom.css" rel="stylesheet" />
+		<link href="../../css/input.css" rel="stylesheet" />
+		<style>
+			[v-cloak] {
+				display: none;
+			}
+			
+			.mui-input-row label {
+				text-align: right;
+			}
+			
+			.select {
+				display: flex;
+			}
+			
+			.select div {
+				width: 55%;
+				position: relative;
+			}
+			
+			.select .down {
+				width: 16px;
+				height: 16px;
+				position: absolute;
+				top: 12px;
+				right: 14px;
+			}
+			
+			select {
+				margin-bottom: 0;
+			}
+			
+			.management {
+				width: 100%;
+				height: 60px;
+				line-height: 30px;
+				border-radius: 0;
+				background: linear-gradient(to bottom, #1d86bf, #1d69bf);
+				color: white;
+				font-size: 20px;
+				margin-top: 20px;
+			}
+			.mui-input-row label{
+				width:45%;
+			}
+			.mui-input-row label~input, .mui-input-row label~select, .mui-input-row label~textarea{
+				width:55%;
+			}
+			.mui-input-group{
+				font-size: 16px;
+			}
+			.mui-input-group .mui-input-row{
+				height: 50px;
+			}
+			.mui-input-row label{
+				padding: 16px 15px 17px 15px;
+			}
+			input[type=text]{
+				height:50px;
+			}
+			.mui-input-row select{
+				height: 50px;
+			}
+			.mui-bar-nav.mui-bar .mui-icon{
+				width:73px;
+				height:73px;
+				display: flex;
+				align-items: center;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div id="app" v-cloak>
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+				<h1 class="mui-title">工作组设置</h1>
+			</header>
+			<div class="mui-content" style="padding-top: 70px">
+				<form class="mui-input-group">
+					<div class="mui-input-row">
+						<label>组织机构名称：</label>
+						<input v-model="groupName" id="groupName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户账号">
+					</div>
+					<div class="mui-input-row">
+						<label>组织机构描述：</label>
+						<input v-model="groupDescription" id="groupDescription" type="text" class="mui-input-clear mui-input" placeholder="请输入用户名称">
+					</div>
+					<div class="mui-input-row select">
+						<label>上级组织机构：</label>
+						<div>
+							<select name="" v-model="superiorGroup">
+								<option value disabled selected>请选择组织机构...</option>
+								<option v-for="item in organization" :value="item.value">{{item.name}}</option>
+							</select>
+							<img src="../../public/img/down.png" alt="" class="down" />
+						</div>
+
+					</div>
+					<div class="mui-input-row select">
+						<label>机构类型：</label>
+						<div>
+							<select v-model="groupType">
+								<option value disabled selected>请选择角色...</option>
+								<option v-for="item in role" :value="item.value">{{item.name}}</option>
+							</select>
+							<span>Selected: {{ role }}</span>
+							<img src="../../public/img/down.png" alt="" class="down" />
+						</div>
+					</div>
+					<div class="mui-input-row">
+						<label>电话：</label>
+						<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入手机号码">
+					</div>
+					<div class="mui-input-row">
+						<label>传真：</label>
+						<input v-model="fax" id="fax" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话">
+					</div>
+					<div class="mui-input-row">
+						<label>地址：</label>
+						<input v-model="address" id="address" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+					</div>
+				</form>
+
+				<button class="management" v-on:tap="send">确  定</button>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/app.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					groupName: '',
+					groupDescription: '',
+					superiorGroup: '',
+					groupType: '',
+					mobile: '',
+					fax: '',
+					address: '',
+					organization: [{
+							name: '南方卫星导航',
+							value: 0
+						},
+						{
+							name: '设备初始激活组织',
+							value: 1
+						},
+						{
+							name: '南方测绘集团总部',
+							value: 2
+						},
+						{
+							name: '震源导航',
+							value: 3
+						},
+						{
+							name: '南方质量追踪',
+							value: 4
+						}
+					],
+					role: [{
+							name: '管理员',
+							value: 0
+						},
+						{
+							name: '南方管理员',
+							value: 1
+						},
+						{
+							name: '南方外贸管理员',
+							value: 2
+						},
+						{
+							name: '仪器管理员',
+							value: 3
+						},
+					]
+				},
+				methods: {
+					send: function() {
+						console.log('track.......');
+						if(this.account === '') {
+							mui.toast('请输入用户账号!');
+							return;
+						}
+						if(this.userName === '') {
+							mui.toast('请输入用户名称!');
+							return;
+						}
+						if(this.mobilePhone === '') {
+							mui.toast('请输入手机号码！');
+							return;
+						}
+						if(this.password === '') {
+							mui.toast('请输入密码！');
+							return;
+						}
+						if(this.password2 === '') {
+							mui.toast('请再次输入密码！');
+							return;
+						}
+						if(this.password !== this.password2) {
+							mui.toast('两次密码输入不一致！');
+							return;
+						}
+						if(this.email === '') {
+							mui.toast('请输入邮箱！');
+							return;
+						}
+						if(this.mobile === '') {
+							mui.toast('请输入办公电话！');
+							return;
+						}
+						if(this.organizationvalue === '') {
+							mui.toast('请选择组织机构！');
+							return;
+						}
+						if(this.rolevalue === '') {
+							mui.toast('请选择角色！');
+							return;
+						}
+						if(this.accountstatusvalue === '') {
+							mui.toast('请选择账号状态设置！');
+							return;
+						}
+						console.log('信息完整，可以进行下一步')
+					}
+				},
+				created: function() {}
+			});
+		</script>
+	</body>
+
+</html>

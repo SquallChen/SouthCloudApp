@@ -34,8 +34,6 @@ var vm = new Vue({
     currentIndex: '',
     currentMode: '',
     currentLink: '',
-    currentModeIndex: '',
-    currentLinkIndex: '',
     currentIdentifyCode: '',
     currentSatelliteIndex: '',
     currentTrackIndex: '',
@@ -2217,168 +2215,202 @@ var vm = new Vue({
       switch (index) {
         case 0:
           vm.workMode = 'BASE';
+          vm.currentMode = '基准站';
+
           break;
         case 1:
           vm.workMode = 'ROVER';
+          vm.currentMode = '移动站';
           break;
         case 2:
           vm.workMode = 'STATIC';
+          vm.currentMode = '静态站';
           break;
         default:
       }
-      plus.nativeUI.showWaiting('读取设置中...', {
-        height: '100px',
-        width: '150px'
-      });
-      mui.ajax(url, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          workMode: vm.workMode,
-          identifyCode: vm.currentIdentifyCode,
-          clientUUid: vm.clientUUid,
-          requestType: 'getChangeWorkMode'
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function callback(data) {
-          //  切换工作模式成功后，请求切换后的对应数据
-          switch (index) {
-            case 0:
-              vm.wActive = 'BASE';
-              vm.wshow = 'BASE';
-              break;
-            case 1:
-              vm.wActive = 'ROVER';
-              vm.wshow = 'ROVER';
-              break;
-            case 2:
-              vm.wActive = 'STATIC';
-              vm.wshow = 'STATIC';
-              break;
-            default:
+      var changeTip = '确认切换到' + vm.currentMode;
+      mui.confirm(
+        '',
+        changeTip,
+        ['取消', '确认'],
+        function (e) {
+          if (e.index === 1) {
+            plus.nativeUI.showWaiting('读取设置中...', {
+              height: '100px',
+              width: '150px'
+            });
+            mui.ajax(url, {
+              data: {
+                user_name: vm.user_name,
+                token: vm.token,
+                workMode: vm.workMode,
+                identifyCode: vm.currentIdentifyCode,
+                clientUUid: vm.clientUUid,
+                requestType: 'getChangeWorkMode'
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function callback(data) {
+                //  切换工作模式成功后，请求切换后的对应数据
+                switch (index) {
+                  case 0:
+                    vm.wActive = 'BASE';
+                    vm.wshow = 'BASE';
+                    break;
+                  case 1:
+                    vm.wActive = 'ROVER';
+                    vm.wshow = 'ROVER';
+                    break;
+                  case 2:
+                    vm.wActive = 'STATIC';
+                    vm.wshow = 'STATIC';
+                    break;
+                  default:
+                }
+                if (data.status === ERR_NO) {
+                  timeFun(
+                    data,
+                    getConfigWorkModePageInfo,
+                    '工作模式切换失败',
+                    'workModel'
+                  );
+                } else {
+                  mui.toast(data.info);
+                  plus.nativeUI.closeWaiting();
+                }
+                plus.nativeUI.closeWaiting();
+              },
+              error: function (xhr, type, errorThrown) {
+                plus.nativeUI.closeWaiting();
+              }
+            });
           }
-          if (data.status === ERR_NO) {
-            timeFun(
-              data,
-              getConfigWorkModePageInfo,
-              '工作模式切换失败',
-              'workModel'
-            );
-          } else {
-            mui.toast(data.info);
-            plus.nativeUI.closeWaiting();
-          }
-          plus.nativeUI.closeWaiting();
         },
-        error: function (xhr, type, errorThrown) {
-          plus.nativeUI.closeWaiting();
-        }
-      });
-
-      //  this.mode = index;
-      mui('#selectionMode').popover('toggle');
+        'div'
+      );
     },
     // 数据链切换
     changeLink: function (index) {
-      plus.nativeUI.showWaiting('读取设置中...', {
-        height: '100px',
-        width: '150px'
-      });
       switch (index) {
         case 0:
           vm.linkMode = 'CELLULAR_NET';
+          vm.currentLink = '移动网络';
           break;
         case 1:
           vm.linkMode = 'UHF';
+          vm.currentLink = '内置电台';
           break;
         default:
       }
-      vm.linkChecked = vm.lActive;
-      vm.lActive = vm.linkMode;
-      vm.lshow = vm.linkMode;
-      mui.ajax(url, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          workMode: vm.workMode,
-          identifyCode: vm.currentIdentifyCode,
-          clientUUid: vm.clientUUid,
-          requestType: 'getChangeDataLinkMode',
-          dataLinkMode: vm.lActive
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function callback(data) {
-          //  切换数据链成功后，请求切换后的对应数据
-          mui.toast('数据链切换成功！');
-          switch (index) {
-            case 0:
-              vm.lActive = 'CELLULAR_NET';
-              vm.lshow = 'CELLULAR_NET';
-              break;
-            case 1:
-              vm.lActive = 'UHF';
-              vm.lshow = 'UHF';
-              break;
-            default:
+      var changeTip = '确认切换到' + vm.currentLink;
+      mui.confirm(
+        '',
+        changeTip,
+        ['取消', '确认'],
+        function (e) {
+          if (e.index === 1) {
+            plus.nativeUI.showWaiting('读取设置中...', {
+              height: '100px',
+              width: '150px'
+            });
+            vm.linkChecked = vm.lActive;
+            vm.lActive = vm.linkMode;
+            vm.lshow = vm.linkMode;
+            mui.ajax(url, {
+              data: {
+                user_name: vm.user_name,
+                token: vm.token,
+                workMode: vm.workMode,
+                identifyCode: vm.currentIdentifyCode,
+                clientUUid: vm.clientUUid,
+                requestType: 'getChangeDataLinkMode',
+                dataLinkMode: vm.lActive
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function callback(data) {
+                //  切换数据链成功后，请求切换后的对应数据
+                mui.toast('数据链切换成功！');
+                switch (index) {
+                  case 0:
+                    vm.lActive = 'CELLULAR_NET';
+                    vm.lshow = 'CELLULAR_NET';
+                    break;
+                  case 1:
+                    vm.lActive = 'UHF';
+                    vm.lshow = 'UHF';
+                    break;
+                  default:
+                }
+                if (data.status === ERR_NO) {
+                  timeFun(
+                    data,
+                    getConfigDataLinkPageInfo,
+                    '工作模式切换失败',
+                    'workModel',
+                    3000
+                  );
+                } else {
+                  mui.toast(data.info);
+                  plus.nativeUI.closeWaiting();
+                }
+                plus.nativeUI.closeWaiting();
+              },
+              error: function (xhr, type, errorThrown) {
+                plus.nativeUI.closeWaiting();
+              }
+            });
           }
-          if (data.status === ERR_NO) {
-            timeFun(
-              data,
-              getConfigDataLinkPageInfo,
-              '工作模式切换失败',
-              'workModel',
-              3000
-            );
-          } else {
-            mui.toast(data.info);
-            plus.nativeUI.closeWaiting();
-          }
-          plus.nativeUI.closeWaiting();
         },
-        error: function (xhr, type, errorThrown) {
-          plus.nativeUI.closeWaiting();
-        }
-      });
-      mui('#selectionLink').popover('toggle');
+        'div'
+      );
     },
     clearEphemeris: function () {
-      mui.ajax(url, {
-        data: {
-          user_name: vm.user_name,
-          token: vm.token,
-          clientUUid: vm.clientUUid,
-          identifyCode: vm.currentIdentifyCode,
-          requestType: 'clearSatellite'
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function callback(data) {
-          if (data.status === ERR_NO) {
-            plus.nativeUI.closeWaiting();
-            mui.toast('清除星历成功！');
-            mui('#clearEphemeris').popover('toggle');
-            timeFun(
-              data,
-              getConfigSatellitePageInfo,
-              '切换其它设置失败!',
-              'pagesInfo',
-              3000
-            );
-          } else {
-            mui.toast(data.info);
-            plus.nativeUI.closeWaiting();
+      mui.confirm(
+        '',
+        '确认清除星历?',
+        ['取消', '确认'],
+        function (e) {
+          if (e.index === 1) {
+            mui.ajax(url, {
+              data: {
+                user_name: vm.user_name,
+                token: vm.token,
+                clientUUid: vm.clientUUid,
+                identifyCode: vm.currentIdentifyCode,
+                requestType: 'clearSatellite'
+              },
+              dataType: 'json',
+              type: 'post',
+              timeout: 10000,
+              success: function callback(data) {
+                if (data.status === ERR_NO) {
+                  plus.nativeUI.closeWaiting();
+                  mui.toast('清除星历成功！');
+                  mui('#clearEphemeris').popover('toggle');
+                  timeFun(
+                    data,
+                    getConfigSatellitePageInfo,
+                    '切换其它设置失败!',
+                    'pagesInfo',
+                    3000
+                  );
+                } else {
+                  mui.toast(data.info);
+                  plus.nativeUI.closeWaiting();
+                }
+              },
+              error: function (data) {
+                mui.toast('清除星历失败！');
+                plus.nativeUI.closeWaiting();
+              }
+            });
           }
         },
-        error: function (data) {
-          mui.toast('清除星历失败！');
-          plus.nativeUI.closeWaiting();
-        }
-      });
+        'div'
+      );
     },
 
     // 点击按钮动态加载对应的数据再渲染页面
@@ -2515,36 +2547,7 @@ var vm = new Vue({
       mui('#setTrack').popover('toggle');
     },
 
-    selectionMode: function (index) {
-      this.currentModeIndex = index;
-      if (index === 0) {
-        this.currentMode = '基准站';
-      } else if (index === 1) {
-        this.currentMode = '移动站';
-      } else {
-        this.currentMode = '静态站';
-      }
-      mui('#selectionMode').popover('toggle');
-    },
-    selectionLink: function (index) {
-      this.currentLinkIndex = index;
-      if (index === 0) {
-        this.currentLink = '移动网络';
-      } else {
-        this.currentLink = '内置电台';
-      }
-      mui('#selectionLink').popover('toggle');
-    },
     //  关闭弹窗事件
-    closeSelectionMode: function () {
-      mui('#selectionMode').popover('toggle');
-    },
-    closeSelectionLink: function () {
-      mui('#selectionLink').popover('toggle');
-    },
-    closeClearEphemerisPage: function () {
-      mui('#clearEphemeris').popover('toggle');
-    },
     closeSetSatellite: function () {
       mui('#setSatelliteNum').popover('toggle');
     },
@@ -3156,9 +3159,9 @@ var vm = new Vue({
       mui('.mui-slider').slider().stopped = true;
 
       currentWebview = plus.webview.currentWebview();
-      //    currentWebview.setStyle({
+      /* //    currentWebview.setStyle({
       //      softinputMode: 'adjustResize'
-      //    });
+      //    }); */
       plus.nativeUI.showWaiting('正在初始化设置中...', {
         height: '100px',
         width: '180px'
@@ -3278,10 +3281,18 @@ var vm = new Vue({
       });
       var resolutionHeight = window.innerHeight;
       resolutionHeight = resolutionHeight - 149;
-      document.getElementById('item1mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item2mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item3mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item4mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item1mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item2mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item3mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item4mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 
       //  switch开关设置卫星使能
       mui('#item3mobile .mui-switch').each(function (index) {
@@ -3460,19 +3471,17 @@ var vm = new Vue({
         });
       });
       // 监听window的resize
-window.addEventListener('resize', function() {
-    var height = document.documentElement.clientHeight;
-    var width = document.documentElement.clientWidth;
-    console.log('可见区域高度:' + height);
-    //console.log('可见区域宽度:' + width);
-    if (document.activeElement.tagName == 'INPUT') {
+      window.addEventListener('resize', function () {
+        var height = document.documentElement.clientHeight;
+        var width = document.documentElement.clientWidth;
+        console.log('可见区域高度:' + height);
+        // console.log('可见区域宽度:' + width);
+        if (document.activeElement.tagName == 'INPUT') {
+          // 延迟出现是因为有些 Android 手机键盘出现的比较慢         window.setTimeout(() => {
 
-       //延迟出现是因为有些 Android 手机键盘出现的比较慢         window.setTimeout(() => {
-
-           document.activeElement.scrollIntoViewIfNeeded();
-
-    }
-});
+          document.activeElement.scrollIntoViewIfNeeded();
+        }
+      });
     });
   },
 
