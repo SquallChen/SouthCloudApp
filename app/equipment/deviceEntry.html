@@ -12,15 +12,19 @@
 			[v-cloak] {
 				display: none;
 			}
-			
+			body{
+				font-size: 15px;
+			}
 			.select {
 				display: flex;
 			}
-			
+			input{
+				font-size: 15px;
+			}
 			.select div {
 				width: 65%;
 			}
-			
+
 			.select .down {
 				width: 10px;
 				height: 7px;
@@ -28,60 +32,59 @@
 				top: 16px;
 				right: 15px;
 			}
-			
+
 			select {
 				margin-bottom: 0;
 			}
-			
+
 			.padding_top {
 				height: 21px;
-				background: #f2f2f2;
+				background: #e8e8e8;
 			}
-			
+
 			.management {
 				width: 100%;
-				height: 50px;
-				line-height: 25px;
+				height: 36px;
+				line-height: 18px;
 				background: #3b88fb;
 				color: white;
-				font-size: 20px;
+				font-size: 15px;
 				margin-top: 30px;
 				border: none;
 				border-radius: 4px;
 			}
-			
+
 			.management:active {
 				background: #0b5fde !important;
 			}
-			
+
 			.mui-input-row label {
 				padding: 0 15px 0 0;
 				height: 36px;
 				line-height: 36px;
-				color: #333;
-				width: 25%;
-				text-align: right;
-				/*margin-right: 25px;*/
+				color: #999;
+				width: 27%;
+				text-align: left;
 			}
-			
+
 			.mui-input-group .mui-input-row {
 				margin-top: 20px;
 				position: relative;
 				display: flex;
 			}
-			
+
 			input[type=text] {
 				height: 40px;
 			}
-			
+
 			input::-webkit-input-placeholder {
 				color: #999;
 			}
-			
+
 			.mui-input-row select {
 				height: 40px;
 			}
-			
+
 			.mui-input-row label~input {
 				padding-left: 10px;
 				float: left;
@@ -90,20 +93,20 @@
 				border-radius: 4px;
 				height: 36px;
 			}
-			
+
 			.mui-input-group .mui-input-row:after {
 				left: 0;
 				background-color: #ccc;
 			}
-			
+
 			.mui-input-group .mui-input-row {
 				height: 36px;
 			}
-			
+
 			body {
 				background: #f2f2f2;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -111,12 +114,12 @@
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
 			}
-			
+
 			.back {
 				display: block;
 				width: 10px;
@@ -125,17 +128,17 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			
+
 			.mui-input-group {
 				padding: 0 20px;
 			}
-			
+
 			body,
 			.mui-content {
 				background: white;
 				;
 			}
-			
+
 			.mui-input-group:before,
 			.mui-input-group:after,
 			.mui-input-group .mui-input-row:after {
@@ -156,7 +159,7 @@
 				<div class="padding_top"></div>
 				<form class="mui-input-group">
 					<div class="mui-input-row">
-						<label>机身号:</label>
+						<label>机身号</label>
 						<input v-model="deviceId" id="deviceId" type="text" class="mui-input-clear mui-input" placeholder="请输入机身号">
 					</div>
 				</form>

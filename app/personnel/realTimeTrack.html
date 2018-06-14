@@ -76,7 +76,7 @@
 			z-index: 1;
 			bottom: 0;
 			left: 0;
-			border-top: 2px solid #0b5fde;
+			border-top: 1px solid #0b5fde;
 			-webkit-transform: translateY(0px);
 			-webkit-transition: 0.38s;
 		}
@@ -85,9 +85,11 @@
 			-webkit-transform: translateY(200px);
 			-webkit-transition: 0.38s;
 		}
-		.isrotate{
+
+		.isrotate {
 			-webkit-transform: rotateX(180deg);
 		}
+
 		.dropDown a {
 			display: block;
 			width: 53px;
@@ -99,14 +101,14 @@
 			left: 50%;
 			top: -29px;
 			-webkit-transform: translate(-50%);
-			border: 2px solid #0b5fde;
+			border: 1px solid #0b5fde;
 			border-bottom: none;
 			display: flex;
 			justify-content: center;
 			align-items: center;
 		}
 
-		.dropDown .upanddown{
+		.dropDown .upanddown {
 			display: inline-block;
 			width: 18px;
 			height: 14px;
@@ -149,13 +151,15 @@
 		.popup-info p {
 			color: #fff;
 		}
+
 		.mui-bar-nav.mui-bar .mui-icon {
 			width: 73px;
 			height: 52px;
 			top: 21px;
 			display: flex;
 			align-items: center;
-			}
+		}
+
 		.back {
 			display: block;
 			width: 10px;
@@ -163,10 +167,13 @@
 			background: url('../../public/img/back.png') no-repeat;
 			background-size: 10px 16px;
 			margin-left: 10px;
-			}	
-		.mui-icon-back:before, .mui-icon-left-nav:before{
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
 			content: '';
-		}	
+		}
+
 		[v-cloak] {
 			display: none;
 		}
@@ -174,40 +181,40 @@
 </head>
 
 <body>
-		<header class="mui-bar mui-bar-nav">
-			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
-					<span class="back"></span>
-			</a>
-			<h1 class="mui-title">实时轨迹</h1>
-		</header>
-		<div class="mui-content">
-			<div class="s-map-wrap">
-				<div class="dropDown" :class="{active:isActive}" id="app" v-cloak>
-					<div class="btn-content">
-						<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
-					</div>
-					<ul v-show="mode===0">
-						<li>
-							<span>时间：{{gnssLocationData.datatime | fromtTime}}</span>
-						</li>
-						<li>
-							<span>状态：{{basic.isOnline == true ? '在线' : '离线'}}</span>
-						</li>
-						<li>
-							<span style="display: inline-block; width: 49%">工作模式：{{deviceData.curSysmode | sysModel}}</span>
-							<span style="display: inline-block; width: 49%">数据链：{{deviceData.curDatalink | dataLinkType}}</span>
-						</li>
-						<li>
-							<a href="#" id="detail">查看详情</a>
-						</li>
-					</ul>
-					<a v-on:tap="changestatus">
-						<span class="upanddown" :class="{isrotate:isActive}"></span>
-					</a>
+	<header class="mui-bar mui-bar-nav">
+		<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+			<span class="back"></span>
+		</a>
+		<h1 class="mui-title">实时轨迹</h1>
+	</header>
+	<div class="mui-content">
+		<div class="s-map-wrap">
+			<div class="dropDown" :class="{active:isActive}" id="app" v-cloak>
+				<div class="btn-content">
+					<button v-for="(item,index) in modetype" v-on:tap="changeMode(index)" :class="{changecolor:index===mode}">{{item.name}}</button>
 				</div>
-				<div style="height: 100%;" id="map" class="map"> </div>
+				<ul v-show="mode===0">
+					<li>
+						<span>时间：{{gnssLocationData.datatime | fromtTime}}</span>
+					</li>
+					<li>
+						<span>状态：{{basic.isOnline == true ? '在线' : '离线'}}</span>
+					</li>
+					<li>
+						<span style="display: inline-block; width: 49%">工作模式：{{deviceData.curSysmode | sysModel}}</span>
+						<span style="display: inline-block; width: 49%">数据链：{{deviceData.curDatalink | dataLinkType}}</span>
+					</li>
+					<li>
+						<a href="#" id="detail">查看详情</a>
+					</li>
+				</ul>
+				<a v-on:tap="changestatus">
+					<span class="upanddown" :class="{isrotate:isActive}"></span>
+				</a>
 			</div>
+			<div style="height: 100%;" id="map" class="map"> </div>
 		</div>
+	</div>
 	<script src="../../js/ol.js"></script>
 	<script src="../../js/ol3-layerswitcher.js"></script>
 	<script src="../../js/mui.min.js"></script>
@@ -220,556 +227,558 @@
 		var token = '';
 		var infoObj = '';
 		var vm = new Vue({
-		  el: '#app',
-		  data: {
-		    isActive: false,
-		    mode: 0,
-		    modetype: [/* {
+			el: '#app',
+			data: {
+				isActive: false,
+				mode: 0,
+				modetype: [/* {
 		      name: '轨迹'
 		    },  */{
-		        name: '坐标点'
-		      }],
-		    basic: '',
-		    gnssLocationData: '',
-		    gnssRefStationData: '',
-		    gnssSateInfoList: '',
-		    deviceData: '',
-		    disance: '-',
-		    powerFree: '-',
-		    appVer: '-'
-		  },
-		  methods: {
-		    changestatus: function () {
-		      vm.isActive = !vm.isActive;
-		    },
-		    changeMode: function (index) {
-		      this.mode = index;
-		    }
-		  },
-		  filters: {
-		    filtersDate: function (v) {
-		      return v.split(' ')[0];
-		    },
-		    formatSeconds: function (value) {
-		      if (!value) return '暂无数据';
-		      var theTime = parseInt(value); // 秒
-		      var theTime1 = 0; // 分
-		      var theTime2 = 0; // 小时
-		      if (theTime > 60) {
-		        theTime1 = parseInt(theTime / 60);
-		        theTime = parseInt(theTime % 60);
-		        if (theTime1 > 60) {
-		          theTime2 = parseInt(theTime1 / 60);
-		          theTime1 = parseInt(theTime1 % 60);
-		        }
-		      }
-		      var result = '' + parseInt(theTime) + '';
-		      if (result == '-1') {
-		        result = '0';
-		      }
-		      if (theTime1 > 0) {
-		        result = '' + parseInt(theTime1) + '分' + result;
-		      }
-		      if (theTime2 > 0) {
-		        result = '' + parseInt(theTime2) + '小时' + result;
-		      }
-		      return result;
-		    },
-		    transSolutionType: function (val) {
-		      if (!val) return '-';
-		      var solutionValue = '';
-		      switch (val) {
-		        case 'ST_INVALID_FIX':
-		          solutionValue = '无效解';
-		          break;
-		        case 'ST_GPS_FIX':
-		          solutionValue = '单点解';
-		          break;
-		        case 'ST_DGPS_FIX':
-		          solutionValue = '差分3D';
-		          break;
-		        case 'ST_RTK_FIX':
-		          solutionValue = '固定解';
-		          break;
-		        case 'ST_FRTK_FIX':
-		          solutionValue = '浮点解';
-		          break;
-		        case 'ST_FIXEDPOS_FIX':
-		          solutionValue = '基站';
-		          break;
-		      }
-		      return solutionValue;
-		    },
-		    sysModel: function (val) {
-		      var sysModelVal = '';
-		      switch (val) {
-		        case 'BASE':
-		          sysModelVal = '基准站';
-		          break;
-		        case 'ROVER':
-		          sysModelVal = '移动站';
-		          break;
-		        case 'STATIC':
-		          sysModelVal = '静态站';
-		          break;
-		        default:
-		          sysModelVal = '-';
-		          break;
-		      }
-		      return sysModelVal;
-		    },
-		    dataLinkType: function (v) {
-		      var dataLinkVal = '';
-		      switch (v) {
-		        case 'CELLULAR_NET':
-		          dataLinkVal = '移动网络';
-		          break;
-		        case 'UHF':
-		          dataLinkVal = '内置电台';
-		          break;
-		        default:
-		          dataLinkVal = '-';
-		          break;
-		      }
-		      return dataLinkVal;
-		    },
-		    fromtTime: function (val) {
-		      if (!val) return '-';
-		      var hour = val.hour < 10 ? '0' + val.hour : val.hour;
-		      var minute = val.minute < 10 ? '0' + val.minute : val.minute;
-		      var second = val.second < 10 ? '0' + val.second : val.second;
-		      datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
-		      return datetime_string;
-		    }
-		  },
-		  created: function () { }
+						name: '坐标点'
+					}],
+				basic: '',
+				gnssLocationData: '',
+				gnssRefStationData: '',
+				gnssSateInfoList: '',
+				deviceData: '',
+				disance: '-',
+				powerFree: '-',
+				appVer: '-'
+			},
+			methods: {
+				changestatus: function () {
+					vm.isActive = !vm.isActive;
+				},
+				changeMode: function (index) {
+					this.mode = index;
+				}
+			},
+			filters: {
+				filtersDate: function (v) {
+					return v.split(' ')[0];
+				},
+				formatSeconds: function (value) {
+					if (!value) return '暂无数据';
+					var theTime = parseInt(value); // 秒
+					var theTime1 = 0; // 分
+					var theTime2 = 0; // 小时
+					if (theTime > 60) {
+						theTime1 = parseInt(theTime / 60);
+						theTime = parseInt(theTime % 60);
+						if (theTime1 > 60) {
+							theTime2 = parseInt(theTime1 / 60);
+							theTime1 = parseInt(theTime1 % 60);
+						}
+					}
+					var result = '' + parseInt(theTime) + '';
+					if (result == '-1') {
+						result = '0';
+					}
+					if (theTime1 > 0) {
+						result = '' + parseInt(theTime1) + '分' + result;
+					}
+					if (theTime2 > 0) {
+						result = '' + parseInt(theTime2) + '小时' + result;
+					}
+					return result;
+				},
+				transSolutionType: function (val) {
+					if (!val) return '-';
+					var solutionValue = '';
+					switch (val) {
+						case 'ST_INVALID_FIX':
+							solutionValue = '无效解';
+							break;
+						case 'ST_GPS_FIX':
+							solutionValue = '单点解';
+							break;
+						case 'ST_DGPS_FIX':
+							solutionValue = '差分3D';
+							break;
+						case 'ST_RTK_FIX':
+							solutionValue = '固定解';
+							break;
+						case 'ST_FRTK_FIX':
+							solutionValue = '浮点解';
+							break;
+						case 'ST_FIXEDPOS_FIX':
+							solutionValue = '基站';
+							break;
+					}
+					return solutionValue;
+				},
+				sysModel: function (val) {
+					var sysModelVal = '';
+					switch (val) {
+						case 'BASE':
+							sysModelVal = '基准站';
+							break;
+						case 'ROVER':
+							sysModelVal = '移动站';
+							break;
+						case 'STATIC':
+							sysModelVal = '静态站';
+							break;
+						default:
+							sysModelVal = '-';
+							break;
+					}
+					return sysModelVal;
+				},
+				dataLinkType: function (v) {
+					var dataLinkVal = '';
+					switch (v) {
+						case 'CELLULAR_NET':
+							dataLinkVal = '移动网络';
+							break;
+						case 'UHF':
+							dataLinkVal = '内置电台';
+							break;
+						default:
+							dataLinkVal = '-';
+							break;
+					}
+					return dataLinkVal;
+				},
+				fromtTime: function (val) {
+					if (!val) return '-';
+					var hour = val.hour < 10 ? '0' + val.hour : val.hour;
+					var minute = val.minute < 10 ? '0' + val.minute : val.minute;
+					var second = val.second < 10 ? '0' + val.second : val.second;
+					datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+					return datetime_string;
+				}
+			},
+			created: function () { }
 		});
 
 		mui.plusReady(function () {
-		  /* 初始化mui控件 */
-		  mui.init({
-		    beforeback: function () { }
-		  });
+			/* 初始化mui控件 */
+			mui.init({
+				beforeback: function () { }
+			});
 
-		  plus.webview.currentWebview().setStyle({
-		    softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
-		  });
+			plus.webview.currentWebview().setStyle({
+				softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
+			});
 
-		  var self = plus.webview.currentWebview();
-		  var deviceInfo = self.item;
-		  identify_code = self.identifyCode;
-		  user_name = plus.storage.getItem('user_name');
-		  token = plus.storage.getItem('token');
+			var self = plus.webview.currentWebview();
+			var deviceInfo = self.item;
+			identify_code = self.identifyCode;
+			user_name = plus.storage.getItem('user_name');
+			token = plus.storage.getItem('token');
 
-		  document.getElementById('detail').addEventListener('tap', function () {
-		    mui.openWindow({
-		      url: 'coordinateDetails.html',
-		      id: 'coordinateDetails.html',
-		      extras: {
-		        infoObj: infoObj
-		      }
-		    });
-		  });
+			document.getElementById('detail').addEventListener('tap', function () {
+				mui.openWindow({
+					url: 'coordinateDetails.html',
+					id: 'coordinateDetails.html',
+					extras: {
+						infoObj: infoObj
+					}
+				});
+			});
 
-		  updatePoints(-1);
-		  // 天地图加载资源
-		  var tianDiTuMapLayer = new ol.layer.Tile({
-		    title: '天地图路网',
-		    preload: Infinity,
-		    source: new ol.source.XYZ({
-		      url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
-		    })
-		  });
-		  var tianDiTuAnnotation = new ol.layer.Tile({
-		    title: '天地图文字标注',
-		    source: new ol.source.XYZ({
-		      url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
-		    })
-		  });
+			updatePoints(-1);
+			// 天地图加载资源
+			var tianDiTuMapLayer = new ol.layer.Tile({
+				title: '天地图路网',
+				preload: Infinity,
+				source: new ol.source.XYZ({
+					url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
+				})
+			});
+			var tianDiTuAnnotation = new ol.layer.Tile({
+				title: '天地图文字标注',
+				source: new ol.source.XYZ({
+					url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
+				})
+			});
 
-		  // 比例尺控件
-		  var scaleLineControl = new ol.control.ScaleLine();
-		  var popup = new ol.Overlay.Popup({
-		    popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
-		    closeBox: true,
-		    positioning: 'auto',
-		    autoPan: true,
-		    autoPanAnimation: { duration: 250 }
-		  });
+			// 比例尺控件
+			var scaleLineControl = new ol.control.ScaleLine();
+			var popup = new ol.Overlay.Popup({
+				popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
+				closeBox: true,
+				positioning: 'auto',
+				autoPan: true,
+				autoPanAnimation: { duration: 250 }
+			});
 
-		  function mapCenter(position, zoom) {
-		    olMap.getView().animate({
-		      center: position,
-		      duration: 1500,
-		      zoom: zoom
-		    });
-		  }
+			function mapCenter(position, zoom) {
+				olMap.getView().animate({
+					center: position,
+					duration: 1500,
+					zoom: zoom
+				});
+			}
 
-		  function updatePoints(latestTrackTime) {
-		    mui.ajax(apiUrl.real_track, {
-		      data: {
-		        user_name: user_name,
-		        token: token,
-		        identify_code: identify_code,
-		        // identify_code: 'SG607A117234038',
-		        time: latestTrackTime
-		      },
-		      dataType: 'json',
-		      type: 'post',
-		      timeout: 10000,
-		      success: function (data) {
-		        if (data.status === 0) {
-		          draw(data.trackList, latestTrackTime);
-		        } else {
-		          plus.nativeUI.toast(data.info);
-		        }
-		      },
-		      error: function (xhr, type, errorThrown) {
-		        // 异常处理；
-		        onNetChange();
-		        setTimeout(function () {
-		          console.log(latestTrackTime);
-		          updatePoints(latestTrackTime);
-		        }, 3000);
-		      }
-		    });
-		  }
+			function updatePoints(latestTrackTime) {
+				mui.ajax(apiUrl.real_track, {
+					data: {
+						user_name: user_name,
+						token: token,
+						identify_code: identify_code,
+						// identify_code: 'SG607A117234038',
+						time: latestTrackTime
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						if (data.status === 0) {
+							draw(data.trackList, latestTrackTime);
+						} else {
+							plus.nativeUI.toast(data.info);
+						}
+					},
+					error: function (xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						setTimeout(function () {
+							console.log(latestTrackTime);
+							updatePoints(latestTrackTime);
+						}, 3000);
+					}
+				});
+			}
 
-		  // 自定义图层
-		  var historyLineTracklayers = new ol.layer.Vector({
-		    source: new ol.source.Vector({
-		      type: 'Lines',
-		      features: []
-		    }),
-		    style: new ol.style.Style({
-		      fill: new ol.style.Fill({
-		        color: '#0044CC'
-		      }),
-		      stroke: new ol.style.Stroke({
-		        color: '#0044CC',
-		        width: 4
-		      })
-		    })
-		  });
+			// 自定义图层
+			var historyLineTracklayers = new ol.layer.Vector({
+				source: new ol.source.Vector({
+					type: 'Lines',
+					features: []
+				}),
+				style: new ol.style.Style({
+					fill: new ol.style.Fill({
+						color: '#0044CC'
+					}),
+					stroke: new ol.style.Stroke({
+						color: '#0044CC',
+						width: 4
+					})
+				})
+			});
 
-		  var historyPointTracklayers = new ol.layer.Vector({
-		    source: new ol.source.Vector({
-		      type: 'Points',
-		      features: []
-		    })
-		  });
+			var historyPointTracklayers = new ol.layer.Vector({
+				source: new ol.source.Vector({
+					type: 'Points',
+					features: []
+				})
+			});
 
-		  // 自定义样式
-		  var lineBlue = new ol.style.Style({
-		    stroke: new ol.style.Stroke({
-		      color: 'blue',
-		      width: 2
-		    })
-		  });
-		  var lineRed = new ol.style.Style({
-		    stroke: new ol.style.Stroke({
-		      lineDash: [1, 2, 3, 4, 5, 6],
-		      color: 'red',
-		      width: 2
-		    })
-		  });
-		  var highAlpColor = ol.color.asArray('#1fca04');
-		  highAlpColor = highAlpColor.slice();
-		  highAlpColor[3] = 0.9;
-		  var pointStyle = new ol.style.Style({
-		    image: new ol.style.Circle({
-		      radius: 5,
-		      fill: new ol.style.Fill({
-		        color: highAlpColor
-		      })
-		    })
-		  });
-		  var pointSelectStyle = new ol.style.Style({
-		    image: new ol.style.Circle({
-		      radius: 3,
-		      fill: new ol.style.Fill({
-		        color: 'yellow'
-		      })
-		    })
-		  });
+			// 自定义样式
+			var lineBlue = new ol.style.Style({
+				stroke: new ol.style.Stroke({
+					color: 'blue',
+					width: 2
+				})
+			});
+			var lineRed = new ol.style.Style({
+				stroke: new ol.style.Stroke({
+					lineDash: [1, 2, 3, 4, 5, 6],
+					color: 'red',
+					width: 2
+				})
+			});
+			var highAlpColor = ol.color.asArray('#1fca04');
+			highAlpColor = highAlpColor.slice();
+			highAlpColor[3] = 0.9;
+			var pointStyle = new ol.style.Style({
+				image: new ol.style.Circle({
+					radius: 5,
+					fill: new ol.style.Fill({
+						color: highAlpColor
+					})
+				})
+			});
+			var pointSelectStyle = new ol.style.Style({
+				image: new ol.style.Circle({
+					radius: 3,
+					fill: new ol.style.Fill({
+						color: 'yellow'
+					})
+				})
+			});
 
-		  var olMap = new ol.Map({
-		    // 图层
-		    layers: [
-		      tianDiTuMapLayer, tianDiTuAnnotation, historyLineTracklayers, historyPointTracklayers
-		    ],
-		    overlays: [popup],
-		    target: 'map',
-		    interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
-		    controls: ol.control.defaults({
-		      attributionOptions: ({
-		        collapsible: false
+			var olMap = new ol.Map({
+				// 图层
+				layers: [
+					tianDiTuMapLayer, tianDiTuAnnotation, historyLineTracklayers, historyPointTracklayers
+				],
+				overlays: [popup],
+				target: 'map',
+				interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
+				controls: ol.control.defaults({
+					attributionOptions: ({
+						collapsible: false
 
-		      }),
-		      attribution: false,
-		      rotate: false,
-		      zoom: false
-		    }).extend([
-		      scaleLineControl
-		    ]),
-		    view: new ol.View({
-		      projection: 'EPSG:4326',
-		      constrainRotation: false,
-		      enableRotation: false,
-		      center: [deviceInfo.longitude, deviceInfo.latitude],
-		      zoom: 10,
-		      minZoom: 0,
-		      maxZoom: 24
-		    })
-		  });
+					}),
+					attribution: false,
+					rotate: false,
+					zoom: false
+				}).extend([
+					scaleLineControl
+				]),
+				view: new ol.View({
+					projection: 'EPSG:4326',
+					constrainRotation: false,
+					enableRotation: false,
+					// center: [deviceInfo.longitude, deviceInfo.latitude],
+					center: [113.2652664185, 23.1349929688],
+					zoom: 10,
+					minZoom: 0,
+					maxZoom: 24
+				})
+			});
 
-		  olMap.on('singleclick', function (evt) {
-		    if (evt.dragging) {
-		      return;
-		    }
-		    var pixel = olMap.getEventPixel(evt.originalEvent);
-		    var feature = olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
-		      return feature;
-		    });
-		    if (feature === null || feature === undefined) return;
-		    var pointInfo = feature.getProperties();
-		    console.log(pointInfo);
-		    getPointInfo(pointInfo.object.randUuid);
-		  }, pointLayerSelect);
+			olMap.on('singleclick', function (evt) {
+				if (evt.dragging) {
+					return;
+				}
+				var pixel = olMap.getEventPixel(evt.originalEvent);
+				var feature = olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
+					return feature;
+				});
+				if (feature === null || feature === undefined) return;
+				var pointInfo = feature.getProperties();
+				console.log(pointInfo);
+				getPointInfo(pointInfo.object.randUuid);
+			}, pointLayerSelect);
 
-		  function getPointInfo(rand_uuid) {
-		    plus.nativeUI.showWaiting();
-		    mui.ajax(apiUrl.rtkTrackPointDetail, {
-		      data: {
-		        user_name: user_name,
-		        token: token,
-		        identifyCode: identify_code,
-		        randUuid: rand_uuid
-		      },
-		      dataType: 'json',
-		      type: 'post',
-		      timeout: 10000,
-		      success: function (data) {
-		        if (data.status === 0) {
-		          infoObj = data;
-		          if (data.detail) {
-		            vm.gnssLocationData = data.detail.gnssLocationData;
-		            vm.gnssRefStationData = data.detail.gnssRefStationData;
-		            vm.appVer = data.detail.deviceData.deviceInfo.appVer;
-		            vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
-		            vm.deviceData = data.detail.deviceData;
-		          } else {
-		            vm.gnssLocationData = '';
-		            vm.gnssRefStationData = '';
-		            vm.deviceData = '';
-		            vm.appVer = '-';
-		            vm.powerFree = '-';
-		          }
-		          if (data.basic) {
-		            vm.basic = data.basic;
-		          } else {
-		            vm.basic = '';
-		          }
-		        } else {
-		          plus.nativeUI.toast(data.info);
-		        }
-		        plus.nativeUI.closeWaiting();
-		      },
-		      error: function (xhr, type, errorThrown) {
-		        // 异常处理；
-		        onNetChange();
-		        plus.nativeUI.closeWaiting();
-		      }
-		    });
-		  }
+			function getPointInfo(rand_uuid) {
+				plus.nativeUI.showWaiting();
+				mui.ajax(apiUrl.rtkTrackPointDetail, {
+					data: {
+						user_name: user_name,
+						token: token,
+						identifyCode: identify_code,
+						// identifyCode: 'SG607A117234038',
+						randUuid: rand_uuid
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function (data) {
+						if (data.status === 0) {
+							infoObj = data;
+							if (data.detail) {
+								vm.gnssLocationData = data.detail.gnssLocationData;
+								vm.gnssRefStationData = data.detail.gnssRefStationData;
+								vm.appVer = data.detail.deviceData.deviceInfo.appVer;
+								vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
+								vm.deviceData = data.detail.deviceData;
+							} else {
+								vm.gnssLocationData = '';
+								vm.gnssRefStationData = '';
+								vm.deviceData = '';
+								vm.appVer = '-';
+								vm.powerFree = '-';
+							}
+							if (data.basic) {
+								vm.basic = data.basic;
+							} else {
+								vm.basic = '';
+							}
+						} else {
+							plus.nativeUI.toast(data.info);
+						}
+						plus.nativeUI.closeWaiting();
+					},
+					error: function (xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
 
-		  var lastTrackPointInfo = undefined;
-		  function addPositionsToHistoryVertoryLayer(trackPointInfoArray) {
-		    if (trackPointInfoArray == undefined || trackPointInfoArray == null || trackPointInfoArray.length == 0) return;
-		    var is_first = lastTrackPointInfo == undefined;
-		    if (lastTrackPointInfo != undefined) {
-		      trackPointInfoArray.push(lastTrackPointInfo);
-		      var endFeatureTemp = historyPointTracklayers.getSource().getFeatureById(lastTrackPointInfo.randUuid);
-		      if (endFeatureTemp != null) {
-		        endFeatureTemp.setStyle(pointStyle);
-		      }
-		    }
+			var lastTrackPointInfo = undefined;
+			function addPositionsToHistoryVertoryLayer(trackPointInfoArray) {
+				if (trackPointInfoArray == undefined || trackPointInfoArray == null || trackPointInfoArray.length == 0) return;
+				var is_first = lastTrackPointInfo == undefined;
+				if (lastTrackPointInfo != undefined) {
+					trackPointInfoArray.push(lastTrackPointInfo);
+					var endFeatureTemp = historyPointTracklayers.getSource().getFeatureById(lastTrackPointInfo.randUuid);
+					if (endFeatureTemp != null) {
+						endFeatureTemp.setStyle(pointStyle);
+					}
+				}
 
-		    var trackPointInfoArrayTemp = [];
-		    for (var i = 0; i < trackPointInfoArray.length; i++) {
-		      var trackPointInfo = trackPointInfoArray[i];
-		      if (trackPointInfoArrayTemp.length === 0) {
-		        trackPointInfoArrayTemp.push(trackPointInfo);
-		      } else {
-		        /* 计算2点之间的距离, 根据是否大于指定的值, 绘制不同颜色的线 */
-		        var distance = lonlatDistance(
-		          trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude, trackPointInfo.longitude, trackPointInfo.latitude);
-		        if (distance > 100) {
-		          if (trackPointInfoArrayTemp.length === 1) {
-		            /* 绘制红线 */
-		            var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
-		            var redLineFeature = new ol.Feature({
-		              geometry: new ol.geom.LineString(redLinePostions, 'XY')
-		            });
-		            redLineFeature.setStyle(lineRed);
-		            historyLineTracklayers.getSource().addFeature(redLineFeature);
-		            /* 清空数据元素 */
-		            trackPointInfoArrayTemp = [];
-		            /* 增加一个尾部元素 */
-		            trackPointInfoArrayTemp.push(trackPointInfo);
-		          } else {
-		            /* 添加蓝线 */
-		            var coordinateArray = [];
-		            for (var index = 0; index < trackPointInfoArrayTemp.length; index++) coordinateArray.push([trackPointInfoArrayTemp[index].longitude, trackPointInfoArrayTemp[index].latitude]);
-		            var blueLineFeature = new ol.Feature({
-		              geometry: new ol.geom.LineString(coordinateArray, 'XY')
-		            });
-		            blueLineFeature.setStyle(lineBlue);
-		            historyLineTracklayers.getSource().addFeature(blueLineFeature);
-		            /* 绘制红线 */
-		            var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
-		            var redLineFeature = new ol.Feature({
-		              geometry: new ol.geom.LineString(redLinePostions, 'XY')
-		            });
-		            redLineFeature.setStyle(lineRed);
-		            historyLineTracklayers.getSource().addFeature(redLineFeature);
-		            /* 清空数据元素 */
-		            trackPointInfoArrayTemp = [];
-		            /* 增加一个尾部元素 */
-		            trackPointInfoArrayTemp.push(trackPointInfo);
-		          }
-		        } else {
-		          trackPointInfoArrayTemp.push(trackPointInfo);
-		        }
-		      }
-		    }
-		    if (trackPointInfoArrayTemp.length > 1) {
-		      /* 常规数据, 绘制蓝线 */
-		      var coordinateArray = [];
-		      for (var index = 0; index < trackPointInfoArrayTemp.length; index++) {
-		        coordinateArray.push([trackPointInfoArrayTemp[index].longitude, trackPointInfoArrayTemp[index].latitude]);
-		      }
-		      var blueLineFeature = new ol.Feature({
-		        geometry: new ol.geom.LineString(coordinateArray, 'XY')
-		      });
-		      blueLineFeature.setStyle(lineBlue);
-		      historyLineTracklayers.getSource().addFeature(blueLineFeature);
-		    }
-		    /* 添加所有点至图层 */
-		    var endFeature = undefined;
-		    var startFeature = undefined;
-		    for (var i = 0; i < trackPointInfoArray.length; i++) {
-		      var trackPointInfo = trackPointInfoArray[i];
-		      var pointFeature = new ol.Feature({
-		        geometry: new ol.geom.Point([trackPointInfo.longitude, trackPointInfo.latitude], 'XY')
-		      });
-		      pointFeature.setProperties({ 'object': trackPointInfo });
-		      pointFeature.setId(trackPointInfo.randUuid);
-		      if (i === 0) {
-		        pointFeature.setStyle(new ol.style.Style({
-		          image: new ol.style.Icon({
-		            src: '../../public/img/run.gif',
-		            anchor: [0.5, 0.9]
-		          })
-		        }));
-		        endFeature = pointFeature;
-		        continue;
-		      } else if (i === trackPointInfoArray.length - 1) {
-		        if (is_first == true) {
-		          pointFeature.setStyle(new ol.style.Style({
-		            image: new ol.style.Icon({
-		              src: '../../public/img/start.png',
-		              anchor: [0.5, 0.9]
-		            }),
-		            text: new ol.style.Text({
-		              font: 'bold 18px " Microsoft YaHei"',
-		              placement: 'line',
-		              text: '',
-		              offsetY: -24,
-		              fill: new ol.style.Fill({
-		                color: '#fff'
-		              })
-		            })
-		          }));
-		          startFeature = pointFeature;
-		          continue;
-		        }
-		      } else {
-		        pointFeature.setStyle(pointStyle);
-		        historyPointTracklayers.getSource().addFeature(pointFeature);
-		      }
-		    }
-		    if (endFeature !== undefined) {
-		      historyPointTracklayers.getSource().addFeature(endFeature);
-		    }
-		    if (startFeature !== undefined) {
-		      historyPointTracklayers.getSource().addFeature(startFeature);
-		    }
-		    if (olMap.getView().getZoom() < 14) {
-		      mapCenter(endFeature.getGeometry().getCoordinates(), 14);
-		    }
+				var trackPointInfoArrayTemp = [];
+				for (var i = 0; i < trackPointInfoArray.length; i++) {
+					var trackPointInfo = trackPointInfoArray[i];
+					if (trackPointInfoArrayTemp.length === 0) {
+						trackPointInfoArrayTemp.push(trackPointInfo);
+					} else {
+						/* 计算2点之间的距离, 根据是否大于指定的值, 绘制不同颜色的线 */
+						var distance = lonlatDistance(
+							trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude, trackPointInfo.longitude, trackPointInfo.latitude);
+						if (distance > 100) {
+							if (trackPointInfoArrayTemp.length === 1) {
+								/* 绘制红线 */
+								var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
+								var redLineFeature = new ol.Feature({
+									geometry: new ol.geom.LineString(redLinePostions, 'XY')
+								});
+								redLineFeature.setStyle(lineRed);
+								historyLineTracklayers.getSource().addFeature(redLineFeature);
+								/* 清空数据元素 */
+								trackPointInfoArrayTemp = [];
+								/* 增加一个尾部元素 */
+								trackPointInfoArrayTemp.push(trackPointInfo);
+							} else {
+								/* 添加蓝线 */
+								var coordinateArray = [];
+								for (var index = 0; index < trackPointInfoArrayTemp.length; index++) coordinateArray.push([trackPointInfoArrayTemp[index].longitude, trackPointInfoArrayTemp[index].latitude]);
+								var blueLineFeature = new ol.Feature({
+									geometry: new ol.geom.LineString(coordinateArray, 'XY')
+								});
+								blueLineFeature.setStyle(lineBlue);
+								historyLineTracklayers.getSource().addFeature(blueLineFeature);
+								/* 绘制红线 */
+								var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
+								var redLineFeature = new ol.Feature({
+									geometry: new ol.geom.LineString(redLinePostions, 'XY')
+								});
+								redLineFeature.setStyle(lineRed);
+								historyLineTracklayers.getSource().addFeature(redLineFeature);
+								/* 清空数据元素 */
+								trackPointInfoArrayTemp = [];
+								/* 增加一个尾部元素 */
+								trackPointInfoArrayTemp.push(trackPointInfo);
+							}
+						} else {
+							trackPointInfoArrayTemp.push(trackPointInfo);
+						}
+					}
+				}
+				if (trackPointInfoArrayTemp.length > 1) {
+					/* 常规数据, 绘制蓝线 */
+					var coordinateArray = [];
+					for (var index = 0; index < trackPointInfoArrayTemp.length; index++) {
+						coordinateArray.push([trackPointInfoArrayTemp[index].longitude, trackPointInfoArrayTemp[index].latitude]);
+					}
+					var blueLineFeature = new ol.Feature({
+						geometry: new ol.geom.LineString(coordinateArray, 'XY')
+					});
+					blueLineFeature.setStyle(lineBlue);
+					historyLineTracklayers.getSource().addFeature(blueLineFeature);
+				}
+				/* 添加所有点至图层 */
+				var endFeature = undefined;
+				var startFeature = undefined;
+				for (var i = 0; i < trackPointInfoArray.length; i++) {
+					var trackPointInfo = trackPointInfoArray[i];
+					var pointFeature = new ol.Feature({
+						geometry: new ol.geom.Point([trackPointInfo.longitude, trackPointInfo.latitude], 'XY')
+					});
+					pointFeature.setProperties({ 'object': trackPointInfo });
+					pointFeature.setId(trackPointInfo.randUuid);
+					if (i === 0) {
+						pointFeature.setStyle(new ol.style.Style({
+							image: new ol.style.Icon({
+								src: '../../public/img/run.gif',
+								anchor: [0.5, 0.9]
+							})
+						}));
+						endFeature = pointFeature;
+						continue;
+					} else if (i === trackPointInfoArray.length - 1) {
+						if (is_first == true) {
+							pointFeature.setStyle(new ol.style.Style({
+								image: new ol.style.Icon({
+									src: '../../public/img/start.png',
+									anchor: [0.5, 0.9]
+								}),
+								text: new ol.style.Text({
+									font: 'bold 18px " Microsoft YaHei"',
+									placement: 'line',
+									text: '',
+									offsetY: -24,
+									fill: new ol.style.Fill({
+										color: '#fff'
+									})
+								})
+							}));
+							startFeature = pointFeature;
+							continue;
+						}
+					} else {
+						pointFeature.setStyle(pointStyle);
+						historyPointTracklayers.getSource().addFeature(pointFeature);
+					}
+				}
+				if (endFeature !== undefined) {
+					historyPointTracklayers.getSource().addFeature(endFeature);
+				}
+				if (startFeature !== undefined) {
+					historyPointTracklayers.getSource().addFeature(startFeature);
+				}
+				if (olMap.getView().getZoom() < 14) {
+					mapCenter(endFeature.getGeometry().getCoordinates(), 14);
+				}
 
-		    lastTrackPointInfo = trackPointInfoArray[0];
-		  }
+				lastTrackPointInfo = trackPointInfoArray[0];
+			}
 
-		  // 关键： 设置过了条件，可以用feature来写过滤，也可以用layer来写过滤
-		  // modify xiaojing 2017年11月6日 14:35:06
-		  var pointLayerSelect = new ol.interaction.Select({
-		    filter: function (feature, layer) {
-		      return layer === historyPointTracklayers;
-		    },
-		    condition: ol.events.condition.click,
-		    style: pointSelectStyle
-		  });
+			// 关键： 设置过了条件，可以用feature来写过滤，也可以用layer来写过滤
+			// modify xiaojing 2017年11月6日 14:35:06
+			var pointLayerSelect = new ol.interaction.Select({
+				filter: function (feature, layer) {
+					return layer === historyPointTracklayers;
+				},
+				condition: ol.events.condition.click,
+				style: pointSelectStyle
+			});
 
-		  function draw(rows, preTrackTime) {
-		    var trackPointInfoArray = [];
-		    for (var i = 0; i < rows.length; i++) {
-		      if (rows[i].longitude && rows[i].latitude) {
-		        var trackPointInfo = trackPointInfoObject(rows[i]);
-		        trackPointInfoArray.push(trackPointInfo);
-		      }
-		    }
+			function draw(rows, preTrackTime) {
+				var trackPointInfoArray = [];
+				for (var i = 0; i < rows.length; i++) {
+					if (rows[i].longitude && rows[i].latitude) {
+						var trackPointInfo = trackPointInfoObject(rows[i]);
+						trackPointInfoArray.push(trackPointInfo);
+					}
+				}
 
-		    var beginTrackTime = preTrackTime;
-		    if (trackPointInfoArray.length !== 0) {
-		      addPositionsToHistoryVertoryLayer(trackPointInfoArray);
-		      beginTrackTime = timeTrans(trackPointInfoArray[0].localTime, 'yyyy-MM-dd HH:mm:ss');
-		    }
-		    setTimeout(function () {
-		      updatePoints(beginTrackTime);
-		    }, 3000);
-		  }
+				var beginTrackTime = preTrackTime;
+				if (trackPointInfoArray.length !== 0) {
+					addPositionsToHistoryVertoryLayer(trackPointInfoArray);
+					beginTrackTime = timeTrans(trackPointInfoArray[0].localTime, 'yyyy-MM-dd HH:mm:ss');
+				}
+				setTimeout(function () {
+					updatePoints(beginTrackTime);
+				}, 3000);
+			}
 
-		  function trackPointInfoObject(trackPointInfo) {
-		    var oTrackPointInfoObject = {};
-		    oTrackPointInfoObject.identifyCode = trackPointInfo['identifyCode'];
-		    oTrackPointInfoObject.longitude = trackPointInfo['longitude'];
-		    oTrackPointInfoObject.latitude = trackPointInfo['latitude'];
-		    oTrackPointInfoObject.altitude = trackPointInfo['altitude'];
-		    oTrackPointInfoObject.solutionType = trackPointInfo['solutionType'];
-		    oTrackPointInfoObject.satInView = trackPointInfo['satInView'];
-		    oTrackPointInfoObject.satInLock = trackPointInfo['satInLock'];
-		    oTrackPointInfoObject.trackTime = trackPointInfo['trackTime'];
-		    oTrackPointInfoObject.localTime = trackPointInfo['localTime'];
-		    oTrackPointInfoObject.randUuid = trackPointInfo['randUuid'];
-		    return oTrackPointInfoObject;
-		  }
+			function trackPointInfoObject(trackPointInfo) {
+				var oTrackPointInfoObject = {};
+				oTrackPointInfoObject.identifyCode = trackPointInfo['identifyCode'];
+				oTrackPointInfoObject.longitude = trackPointInfo['longitude'];
+				oTrackPointInfoObject.latitude = trackPointInfo['latitude'];
+				oTrackPointInfoObject.altitude = trackPointInfo['altitude'];
+				oTrackPointInfoObject.solutionType = trackPointInfo['solutionType'];
+				oTrackPointInfoObject.satInView = trackPointInfo['satInView'];
+				oTrackPointInfoObject.satInLock = trackPointInfo['satInLock'];
+				oTrackPointInfoObject.trackTime = trackPointInfo['trackTime'];
+				oTrackPointInfoObject.localTime = trackPointInfo['localTime'];
+				oTrackPointInfoObject.randUuid = trackPointInfo['randUuid'];
+				return oTrackPointInfoObject;
+			}
 
-		  function rad(d) {
-		    return d * Math.PI / 180.0;
-		  }
+			function rad(d) {
+				return d * Math.PI / 180.0;
+			}
 
-		  function lonlatDistance(lon1, lat1, lon2, lat2) {
-		    var radLat1 = rad(lat1);
-		    var radLat2 = rad(lat2);
-		    var a = radLat1 - radLat2;
-		    var b = rad(lon1) - rad(lon2);
-		    var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
-		    s = s * 6378.137;
-		    s = Math.round(s * 10000) / 10;
-		    return s;
-		  }
+			function lonlatDistance(lon1, lat1, lon2, lat2) {
+				var radLat1 = rad(lat1);
+				var radLat2 = rad(lat2);
+				var a = radLat1 - radLat2;
+				var b = rad(lon1) - rad(lon2);
+				var s = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(a / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(b / 2), 2)));
+				s = s * 6378.137;
+				s = Math.round(s * 10000) / 10;
+				return s;
+			}
 		});
 	</script>
 </body>

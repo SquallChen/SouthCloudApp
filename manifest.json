@@ -1705,7 +1705,10 @@
 				"resources": [
 					"fonts/mui.ttf"
 				],
-				"refer": [],
+				"refer": [
+					"app/personnel/historicalTrack.html",
+					"app/personnel/realTimeTrack.html"
+				],
 				"priority": 0
 			},
 			"app/equipment/deviceEntry.html": {

@@ -11,7 +11,7 @@
 			html,
 			body,
 			#app {
-				height: 100%;
+				min-height: 100%;
 			}
 
 			ul {
@@ -117,12 +117,12 @@
 			}
 
 			.equipmentTitle .refresh {
-				margin-left: 30px;
+				margin-left: 10px;
 				display: inline-block;
 				background: #3b88fb;
 				color: white;
-				width: 50px;
-				height: 25px;
+				width: 60px;
+				height: 28px;
 				line-height: 12px;
 				border-radius: 5px;
 				border: 1px solid #409eff;
@@ -531,14 +531,21 @@
 			#item3mobile .mui-switch {
 				/*margin-right: 42px;*/
 			}
-
+			#item3mobile .btn{
+				padding: 0 20px;
+			}
 			#item3mobile .ClearEphemeris {
 				width: 100%;
 				border: none;
-				margin-top: 10px;
+				margin-top: 0;
 				height: 40px;
 				margin-bottom: 10px;
 				font-size: 20px;
+				background: #3b88fb;
+				color: white;
+			}
+			#item3mobile .ClearEphemeris:active{
+				background: #0b5fde;
 			}
 			#item4mobile ul{
 				padding-top: 10px;
@@ -914,10 +921,10 @@
 			background: url('../../public/img/back.png') no-repeat;
 			background-size: 10px 16px;
 			margin-left: 10px;
-			}	
+			}
 		.mui-icon-back:before, .mui-icon-left-nav:before{
 			content: '';
-		}	
+		}
 			[v-cloak] {
 				display: none;
 			}

@@ -11,8 +11,11 @@
 		<style>
 			body {
 				background: #fff;
+				font-size: 15px;
 			}
-			
+			input{
+				font-size: 15px;
+			}
 			.mui-content div {
 				padding-right: 20px;
 				padding-left: 20px;
@@ -29,7 +32,7 @@
 				display: inline-block;
 				position: absolute;
 				right: 28px;
-				top: 23px;
+				top: 15px;
 				width: 0px;
 				height: 0px;
 				border-top: 8px solid #666;
@@ -49,21 +52,23 @@
 			.mui-content div label {
 				width: 68px;
 				text-align: left;
-				padding: 16px 0 17px 0;
+				padding: 7px 0 8px 0;
+				color:#999;
 			}
 			
 			.mui-content div input {
 				flex: 1;
 				margin-bottom: 0;
-				height: 54px;
+				height: 36px;
 			}
 			
 			.mui-content select {
 				flex: 1;
-				height: 54px;
+				height: 36px;
 				margin-bottom: 0;
 				border: 1px solid #ccc !important;
 				color: #333;
+				padding: 0 0 0 6px;
 			}
 			
 			.down {
@@ -99,12 +104,12 @@
 			.management {
 				margin-left: 6%;
 				width: 88%;
-				height: 50px;
-				line-height: 25px;
+				height: 36px;
+				line-height: 18px;
 				border-radius: 0;
 				background: #3b88fb;
 				color: white;
-				font-size: 20px;
+				font-size: 15px;
 				margin-top: 20px;
 				border: none;
 				border-radius: 4px;
@@ -149,11 +154,11 @@
 			<div class="mui-content">
 				<div class="padding_top"></div>
 				<div>
-					<label>关键字：</label>
+					<label>关键字</label>
 					<input v-model="keywords" type="text" placeholder="请输入关键字">
 				</div>
 				<div>
-					<label>工作组：</label>
+					<label>工作组</label>
 					<select name="" v-model="workGroupValue">
 						<option value="" selected disabled>请选择工作组...</option>
 						<option v-for="item in workGroup" :value="item">{{item}}</option>

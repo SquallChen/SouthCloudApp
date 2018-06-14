@@ -1,648 +1,679 @@
 <!doctype html>
 <html>
 
-<head>
-  <meta charset="UTF-8">
-  <title></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <link href="../../css/mui.min.css" rel="stylesheet" />
-  <link rel="stylesheet" href="../../css/custom.css">
-  <link rel="stylesheet" href="../../css/iconfont.css">
-  <style>
-    * {
-      padding: 0;
-      margin: 0;
-      box-sizing: border-box;
-    }
-
-    html,
-    body,
-    #vm {
-      height: 100%;
-    }
-
-    a {
-      color: #333;
-    }
-
-    .filter {
-      width: 100%;
-      usertitle
-    }
-
-    .filter a {
-      display: block;
-      width: 80%;
-      height: 50px;
-      line-height: 50px;
-      font-size: 13px;
-      padding-left: 20px;
-    }
-
-    .btn {
-      background: none;
-      border: none;
-      color: white;
-      font-size: 40px;
-      line-height: 24px;
-      width: 48px;
-      height: 48px;
-      float: right;
-      right: -4px;
-    }
-
-    .filter {
-      height: 102px;
-      margin-bottom: 20px;
-    }
-
-    .filter ul li {
-      display: flex;
-      align-items: center;
-      padding-left: 15px;
-      padding-right: 15px;
-      position: relative;
-      flex-wrap: wrap;
-    }
-
-    .filter ul li img {
-      width: 38px;
-      height: 44px;
-    }
-
-    .filter .userentry {
-      border-bottom: 1px solid #ccc;
-    }
-
-    .filter .border_bottom {
-      display: block;
-      width: 100%;
-      height: 1px;
-      background: #ccc;
-      left: 30px;
-      bottom: 0px;
-      -webkit-transform: scaleY(.5);
-    }
-
-    .mui-bar .mui-icon {
-      font-size: 32px;
-    }
-
-    .mui-bar .mui-title {
-      right: 50px;
-      left: 50px;
-    }
-
-    .mui-content {
-      background: white;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .usertitle {
-      width: 100%;
-      background: #f2f2f2;
-      padding-left: 20px;
-      height: 36px;
-      line-height: 36px;
-      color: #0b60de;
-      font-weight: 500;
-      font-size: 14px;
-    }
-
-    .personnelInfo {
-      width: 100%;
-      overflow: auto;
-      flex: 1;
-    }
-
-    .personnelInfo ul li {
-      height: 60px;
-    }
-
-    .personnelInfo .mui-table-cell {
-      display: flex;
-    }
-
-    .personnelInfo .img-content {
-      width: 25%;
-      display: flex;
-      align-items: center;
-      height: 60px;
-    }
-
-    .personnelInfo .main-content {
-      width: 100%;
-      padding-top: 12px;
-      color: #333;
-    }
-
-    .personnelInfo .main-content :nth-child(2) {
-      position: relative;
-      top: -4px;
-    }
-
-    .main-content .name,
-    .mui-content .group {
-      font-size: 13px;
-    }
-
-    .personnelInfo .main-content .group {
-      top: 4px;
-    }
-
-    .main-content .upDataUserName {
-      font-size: 11px;
-    }
-
-    .personnelInfo img {
-      width: 36px;
-      height: 36px;
-      border-radius: 5px;
-      position: relative;
-      border: 1px solid #0b60de;
-    }
-
-    .personnelInfo .main-content div {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .personnelInfo .status {
-      position: relative;
-      top: -3px;
-      background: linear-gradient(to bottom, #aeaeae, #707070);
-      width: 16px;
-      height: 16px;
-      border-radius: 50px;
-      border: 1px solid white;
-      box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, .25);
-    }
-
-    .personnelInfo .main-content .active {
-      background: linear-gradient(to bottom, #39e131, #31bd2a);
-      top: -2px;
-    }
-
-    .personnelInfo .mui-slider-right a:nth-child(1) {
-      background: #f87776;
-    }
-
-    .personnelInfo .mui-slider-right a:nth-child(2) {
-      background: #b876f5;
-    }
-
-    .personnelInfo .mui-slider-right a:nth-child(3) {
-      background: #deaa02;
-    }
-
-    .personnelInfo .mui-slider-right a:nth-child(4) {
-      background: #019bdc;
-    }
-
-    .personnelInfo .mui-slider-right a:nth-child(5) {
-      background: lightseagreen;
-    }
-
-    .personnelInfo .mui-table-view-cell {
-      padding: 0 14px 0 10px;
-    }
-
-    .mui-table-view-cell>.mui-slider-right>.mui-btn {
-      padding: 0;
-      /*width: 85px;*/
-      width: 68px;
-      justify-content: center;
-    }
-
-    .mui-table-view-cell:after {
-      left: 0;
-      background-color: #ccc;
-    }
-
-    #topPopover .mui-table-view-cell a {
-      display: flex;
-      align-items: center;
-      font-size: 20px;
-    }
-
-    #topPopover .mui-table-view-cell a img {
-      margin-right: 20px;
-    }
-
-    #topPopover .mui-table-view-cell {
-      border-bottom: 1px solid #ddd;
-    }
-
-    .mui-popover {
-      height: 300px;
-    }
-
-    .mui-popover {
-      width: 180px;
-      height: 166px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-      background: white;
-    }
-
-    .mui-backdrop {
-      background: transparent;
-    }
-
-    .mui-scroll-wrapper,
-    .mui-popover .mui-popover-arrow:after,
-    .mui-scroll-wrapper .mui-table-view-cell {
-      /*background: #49484a;
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../css/custom.css">
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			
+			html,
+			body,
+			#vm {
+				height: 100%;
+			}
+			
+			a {
+				color: #333;
+			}
+			
+			.filter {
+				width: 100%;
+				usertitle
+			}
+			
+			.filter a {
+				display: block;
+				width: 80%;
+				height: 50px;
+				line-height: 50px;
+				font-size: 15px;
+				padding-left: 20px;
+			}
+			
+			.btn {
+				background: none;
+				border: none;
+				color: white;
+				font-size: 40px;
+				line-height: 24px;
+				width: 48px;
+				height: 48px;
+				float: right;
+				right: -4px;
+			}
+			
+			.filter {
+				height: 102px;
+			}
+			
+			.filter ul li {
+				display: flex;
+				align-items: center;
+				/*padding-left: 15px;
+      padding-right: 15px;*/
+				position: relative;
+				flex-wrap: wrap;
+			}
+			
+			.filter ul li:after {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			
+			.filter ul li img {
+				width: 38px;
+				height: 44px;
+			}
+			
+			.filter .userentry {
+				border-bottom: 1px solid #ccc;
+			}
+			
+			.mui-bar .mui-icon {
+				font-size: 32px;
+			}
+			
+			.mui-bar .mui-title {
+				right: 50px;
+				left: 50px;
+			}
+			
+			.mui-content {
+				background: white;
+				display: flex;
+				flex-direction: column;
+			}
+			
+			.usertitle {
+				width: 100%;
+				background: #e8e8e8;
+				padding-left: 20px;
+				height: 36px;
+				line-height: 36px;
+				color: #333;
+				font-weight: 500;
+				font-size: 15px;
+			}
+			
+			.personnelInfo {
+				width: 100%;
+				overflow: auto;
+				flex: 1;
+			}
+			
+			.personnelInfo ul li {
+				height: 60px;
+			}
+			
+			.personnelInfo ul li:after {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+				top: -1px;
+			}
+			
+			.personnelInfo .mui-table-cell {
+				display: flex;
+				height: 60px;
+			}
+			
+			.personnelInfo .img-content {
+				width: 25%;
+				display: flex;
+				align-items: center;
+				height: 60px;
+			}
+			
+			.personnelInfo .main-content {
+				width: 100%;
+				padding-top: 10px;
+				color: #333;
+				height: 100%;
+				padding-left: 15px;
+				padding-right: 15px;
+			}
+			
+			.personnelInfo .main-content .status {
+				position: relative;
+				top: -2px;
+			}
+			
+			.main-content .name,
+			.mui-content .group {
+				font-size: 15px;
+			}
+			
+			.personnelInfo .main-content .group {
+				top: -3px;
+			}
+			
+			.main-content .upDataUserName {
+				font-size: 12px;
+			}
+			
+			.personnelInfo img {
+				width: 36px;
+				height: 36px;
+				border-radius: 5px;
+				position: relative;
+				border: 1px solid #0b60de;
+			}
+			
+			.personnelInfo .main-content div {
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.personnelInfo .status {
+				position: relative;
+				top: -3px;
+				background: linear-gradient(to bottom, #aeaeae, #707070);
+				width: 16px;
+				height: 16px;
+				border-radius: 50px;
+				border: 1px solid white;
+				box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, .25);
+			}
+			
+			.personnelInfo .main-content .active {
+				background: linear-gradient(to bottom, #39e131, #31bd2a);
+				/*top: -2px;*/
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(1) {
+				background: #6dcba4;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(2) {
+				background: #39a277;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(3) {
+				background: #3e7eda;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(4) {
+				background: #60a0fc;
+			}
+			
+			.personnelInfo .mui-slider-right a:nth-child(5) {
+				background: #9cc3f9;
+			}
+			
+			.personnelInfo .mui-table-view-cell {
+				padding: 0;
+			}
+			
+			.mui-table-view-cell>.mui-slider-right>.mui-btn {
+				padding: 0;
+				/*width: 85px;*/
+				width: 68px;
+				justify-content: center;
+			}
+			
+			.mui-table-view-cell:after {
+				left: 0;
+				background-color: #ccc;
+			}
+			
+			#topPopover .mui-table-view-cell a {
+				display: flex;
+				align-items: center;
+				font-size: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell a img {
+				margin-right: 20px;
+			}
+			
+			#topPopover .mui-table-view-cell {
+				border-bottom: 1px solid #ddd;
+			}
+			
+			.mui-popover {
+				height: 300px;
+			}
+			
+			.mui-slider-handle {
+				height: 60px;
+			}
+			
+			.mui-popover {
+				width: 180px;
+				height: 166px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			.mui-backdrop {
+				background: transparent;
+			}
+			
+			.mui-scroll-wrapper,
+			.mui-popover .mui-popover-arrow:after,
+			.mui-scroll-wrapper .mui-table-view-cell {
+				/*background: #49484a;
 				color: white;*/
-    }
+			}
+			
+			.mui-popover .mui-scroll-wrapper {
+				margin: 0;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+			
+			.userEntryImg {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon01.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 5px;
+			}
+			
+			.userfilter {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon02.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 5px;
+			}
+			
+			.icon-equipment-entry,
+			.icon-equipment-select {
+				font-size: 26px;
+				color: #0b5fde;
+				margin-left: 15px;
+			}
+			
+			.mui-content .mui-icon {
+				color: #ccc;
+				position: absolute;
+				right: 15px;
+				top: 13px;
+			}
+			
+			.mui-popover .mui-table-view {
+				background: white;
+			}
+			
+			.mui-popover .mui-table-view {
+				border-radius: 7px;
+			}
+			
+			.mui-popover .mui-popover-arrow:after {
+				background: white;
+			}
+			
+			#topPopover .mui-table-view-cell a span {
+				display: inline-block;
+				width: 100%;
+				text-align: center;
+			}
+			
+			.icon-related,
+			.icon-sign-out {
+				color: #666;
+				width: 15px !important;
+				height: 22px !important;
+				font-size: 20px !important;
+				margin-right: 10px;
+			}
+			
+			.mui-popover {
+				width: 122px;
+				height: 50px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			#topPopover .mui-table-view-cell {
+				border-bottom: 1px solid #e3e3e3;
+				height: 52px;
+				line-height: 26px;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child {
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
+			}
+			
+			.mui-table-view-cell {
+				padding: 11px 20px;
+			}
+			
+			#topPopover .mui-table-view-cell a span {
+				display: inline-block;
+				width: 100%;
+				text-align: center;
+				font-size: 13px;
+				color: #666;
+			}
+			
+			.mui-table-view-cell:after {
+				height: 0;
+			}
+			
+			#topPopover .mui-table-view-cell a {
+				border-bottom: 0;
+			}
+			
+			.padding_top {
+				height: 21px;
+				background: #e8e8e8;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+		</style>
+	</head>
 
-    .mui-popover .mui-scroll-wrapper {
-      margin: 0;
-    }
-
-    .mui-popover .mui-table-view .mui-table-view-cell:last-child,
-    .mui-popover .mui-table-view .mui-table-view-cell:last-child,
-    .mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
-    .mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
-      border-bottom-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-left-radius: 0;
-      border-top-right-radius: 0;
-    }
-
-    .userEntryImg {
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url(../../public/img/user_icon01.png) no-repeat;
-      background-size: 19px 22px;
-      margin-left: 5px;
-    }
-
-    .userfilter {
-      display: inline-block;
-      width: 22px;
-      height: 22px;
-      background: url(../../public/img/user_icon02.png) no-repeat;
-      background-size: 19px 22px;
-      margin-left: 5px;
-    }
-
-    .icon-equipment-entry {
-      font-size: 26px;
-      color: #0b5fde;
-    }
-
-    .icon-equipment-select {
-      font-size: 26px;
-      color: #0b5fde;
-    }
-
-    .mui-content .mui-icon {
-      color: #ccc;
-      position: absolute;
-      right: 15px;
-      top: 13px;
-    }
-
-    .mui-popover .mui-table-view {
-      background: white;
-    }
-
-    .mui-popover .mui-table-view {
-      border-radius: 7px;
-    }
-
-    .mui-popover .mui-popover-arrow:after {
-      background: white;
-    }
-
-    #topPopover .mui-table-view-cell a span {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-    }
-
-    .icon-related,
-    .icon-sign-out {
-      color: #666;
-      width: 15px !important;
-      height: 22px !important;
-      font-size: 20px !important;
-      margin-right: 10px;
-    }
-
-    .mui-popover {
-      width: 122px;
-      height: 50px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, .3);
-      background: white;
-    }
-
-    #topPopover .mui-table-view-cell {
-      border-bottom: 1px solid #e3e3e3;
-      height: 52px;
-      line-height: 26px;
-    }
-
-    .mui-popover .mui-table-view .mui-table-view-cell:first-child {
-      border-top-left-radius: 12px;
-      border-top-right-radius: 12px;
-    }
-
-    .mui-table-view-cell {
-      padding: 11px 20px;
-    }
-
-    #topPopover .mui-table-view-cell a span {
-      display: inline-block;
-      width: 100%;
-      text-align: center;
-      font-size: 13px;
-      color: #666;
-    }
-
-    .mui-table-view-cell:after {
-      height: 0;
-    }
-
-    #topPopover .mui-table-view-cell a {
-      border-bottom: 0;
-    }
-
-    [v-cloak] {
-      display: none;
-    }
-  </style>
-</head>
-
-<body>
-  <div id="vm">
-    <header class="mui-bar mui-bar-nav">
-      <a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
-      <h1 class="mui-title">南方云</h1>
-    </header>
-    <div class="mui-content">
-      <div class="filter">
-        <ul class="filter-ul">
-          <li href="../equipment/deviceEntry.html" class="filter-li">
-            <span class="icon-equipment-entry"></span>
-            <a href="#">设备录入</a>
-            <span class="mui-icon mui-icon-arrowright"></span>
-            <span class="border_bottom"></span>
-          </li>
-          <li href="../equipment/equipmentFilter.html" class="filter-li">
-            <span class="icon-equipment-select"></span>
-            <a href="#">设备筛选</a>
-            <span class="mui-icon mui-icon-arrowright"></span>
-            <span class="border_bottom"></span>
-          </li>
-        </ul>
-      </div>
-      <div class="usertitle">
-        <span>设备</span>
-      </div>
-      <div class="personnelInfo">
-        <ul class="mui-table-view">
-          <li class="mui-table-view-cell" v-for="(item,index) in deviceData">
-            <div class="mui-slider-right mui-disabled">
-              <a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
-              <a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/historicalTrack.html">历史轨迹</a>
-              <a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/currentLocation.html">位置</a>
-              <a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/onlineSettings.html">在线配置</a>
-              <a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../equipment/allocationAuthorization.html">分发授权</a>
-            </div>
-            <div class="mui-slider-handle">
-              <div class="mui-table-cell">
-                <div class="main-content" v-cloak>
-                  <div>
-                    <span class="name">{{item.identifyCode}}</span>
-                    <span class="status" :class="{active:item.onlineStatus!==0}"></span>
-                  </div>
-                  <div>
-                    <span class="upDataUserName">{{item.upDataUserName}}</span>
-                    <span class="group">{{item.upDataCompanyInfo}}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    <!--右上角弹出菜单-->
-    <div id="topPopover" class="mui-popover">
-      <div class="mui-popover-arrow"></div>
-      <div class="mui-scroll-wrapper">
-        <div class="mui-scroll">
-          <ul class="mui-table-view">
-            <li class="mui-table-view-cell">
-              <a href="#" v-on:tap="test">
-                <span class="icon-related"></span>
-                <span>设备关联</span>
-              </a>
-            </li>
+	<body>
+		<div id="vm">
+			<header class="mui-bar mui-bar-nav">
+				<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
+				<h1 class="mui-title">南方云</h1>
+			</header>
+			<div class="mui-content">
+				<div class="padding_top"></div>
+				<div class="filter">
+					<ul class="filter-ul">
+						<li href="../equipment/deviceEntry.html" class="filter-li">
+							<span class="icon-equipment-entry"></span>
+							<a href="#">设备录入</a>
+							<span class="mui-icon mui-icon-arrowright"></span>
+							<!--<span class="border_bottom"></span>-->
+						</li>
+						<li href="../equipment/equipmentFilter.html" class="filter-li">
+							<span class="icon-equipment-select"></span>
+							<a href="#">设备筛选</a>
+							<span class="mui-icon mui-icon-arrowright"></span>
+							<!--<span class="border_bottom"></span>-->
+						</li>
 					</ul>
+				</div>
+				<div class="usertitle">
+					<span>设备</span>
+				</div>
+				<div class="personnelInfo">
+					<ul class="mui-table-view">
+						<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
+							<div class="mui-slider-right mui-disabled">
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/realTimeTrack.html">实时轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/historicalTrack.html">历史轨迹</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/currentLocation.html">位置</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/onlineSettings.html">在线配置</a>
+								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../equipment/allocationAuthorization.html">分发授权</a>
+							</div>
+							<div class="mui-slider-handle">
+								<div class="mui-table-cell">
+									<div class="main-content" v-cloak>
+										<div>
+											<span class="name">{{item.identifyCode}}</span>
+											<span class="status" :class="{active:item.onlineStatus!==0}"></span>
+										</div>
+										<div>
+											<span class="upDataUserName">{{item.upDataUserName}}</span>
+											<span class="group">{{item.upDataCompanyInfo}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 
-        </div>
-      </div>
-    </div>
-  </div>
-  <script src="../../js/mui.min.js"></script>
-  <script src="../../js/url.js"></script>
-  <script src="../../js/vue.min.js"></script>
-  <script type="text/javascript">
-    var vm = new Vue({
-      el: '#vm',
-      data: {
-        deviceData: '',
-        token: '',
-        user_name: ''
-      },
-      methods: {
-        openpage: function (index, item) {
-          var data_url = event.target.dataset.href;
-          var el = event.target.parentNode.parentNode;
-          // 如果设备离线并且点击的是在线配置的页面
-          if (item.onlineStatus === 0 && data_url === '../personnel/onlineSettings.html') {
-            mui.toast('设备离线，暂时无法在线配置');
-          } else if (item.supportSic20 === 0 && data_url === '../personnel/onlineSettings.html') {
-            mui.toast('设备不支持Sic2.0,不能在线配置');
-          } else {
-            mui.openWindow({
-              url: data_url,
-              id: data_url,
-              extras: {
-                upDataUserName: item.upDataUserName,
-                upDataCompanyInfo: item.upDataCompanyInfo,
-                identifyCode: item.identifyCode,
-                item: item
-              }
-            });
-            mui.swipeoutClose(el);
-          }
-        },
-        test: function () {
-          mui.toast('此处调用关联接口....');
-          mui('#topPopover').popover('hide');
-        }
-      },
-      created: function () {
-        mui.plusReady(function () {
-          // 页面顶部筛选按钮跳转
-          mui('.filter-ul').on('tap', '.filter-li', function (e) {
-            var url = this.getAttribute('href');
-            mui.openWindow({
-              url: url,
-              id: url
-            });
-          });
-          // 右上角弹出窗链接跳转
-          mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function (e) {
-            var url = this.getAttribute('href');
-            mui.openWindow({
-              url: url,
-              id: url
-            });
+			<!--右上角弹出菜单-->
+			<div id="topPopover" class="mui-popover">
+				<div class="mui-popover-arrow"></div>
+				<div class="mui-scroll-wrapper">
+					<div class="mui-scroll">
+						<ul class="mui-table-view">
+							<li class="mui-table-view-cell">
+								<a href="#" v-on:tap="test">
+									<span class="icon-related"></span>
+									<span>设备关联</span>
+								</a>
+							</li>
+						</ul>
 
-            document.querySelector('#topPopover').style.display = 'none';
-            document.querySelector('.mui-backdrop').style.display = 'none';
-            document.querySelector('#topPopover').className = 'mui-popover';
-          });
-          // 登陆时存放到本地的数据
-          vm.token = plus.storage.getItem('token');
-          vm.user_name = plus.storage.getItem('user_name');
-          getDeviceListData();
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#vm',
+				data: {
+					deviceData: '',
+					token: '',
+					user_name: ''
+				},
+				methods: {
+					openpage: function(index, item) {
+						var data_url = event.target.dataset.href;
+						var el = event.target.parentNode.parentNode;
+						// 如果设备离线并且点击的是在线配置的页面
+						if(item.onlineStatus === 0 && data_url === '../personnel/onlineSettings.html') {
+							mui.toast('设备离线，暂时无法在线配置');
+						} else if(item.supportSic20 === 0 && data_url === '../personnel/onlineSettings.html') {
+							mui.toast('设备不支持Sic2.0,不能在线配置');
+						} else {
+							mui.openWindow({
+								url: data_url,
+								id: data_url,
+								extras: {
+									upDataUserName: item.upDataUserName,
+									upDataCompanyInfo: item.upDataCompanyInfo,
+									identifyCode: item.identifyCode,
+									item: item
+								}
+							});
+							mui.swipeoutClose(el);
+						}
+					},
+					test: function() {
+						mui.toast('此处调用关联接口....');
+						mui('#topPopover').popover('hide');
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						// 页面顶部筛选按钮跳转
+						mui('.filter-ul').on('tap', '.filter-li', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
+						});
+						// 右上角弹出窗链接跳转
+						mui('#topPopover .mui-table-view').on('tap', '.mui-table-view-cell', function(e) {
+							var url = this.getAttribute('href');
+							mui.openWindow({
+								url: url,
+								id: url
+							});
 
-          window.addEventListener('equipmentDataFilter', function (event) {
-            console.log('刷新equipment页面数据.....');
-            vm.keywords = event.detail.keywords;
-            vm.workGroup = event.detail.workGroup;
-            if (vm.keywords === '' && vm.workGroup === '') {
-              getDeviceListData();
-            } else {
-              getFilterDviceListData();
-            }
-          });
-        });
-      }
-    });
+							document.querySelector('#topPopover').style.display = 'none';
+							document.querySelector('.mui-backdrop').style.display = 'none';
+							document.querySelector('#topPopover').className = 'mui-popover';
+						});
+						// 登陆时存放到本地的数据
+						vm.token = plus.storage.getItem('token');
+						vm.user_name = plus.storage.getItem('user_name');
+						getDeviceListData();
 
-    function getDeviceListData() {
-      vm.deviceData = '';
-      mui.ajax(apiUrl.device_list_page, {
-        data: {
-          user_name: plus.storage.getItem('user_name'),
-		      token: plus.storage.getItem('token'),
-          num_per_page: 20000
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          if (data.status === 0) {
-            var tempData = data.recordList;
-            var tempArray = [];
-            // 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-            for (var i = 0; i < tempData.length; i++) {
-              if (tempData[i].onlineStatus === 1) {
-                tempArray.push(tempData[i]);
-                tempData.splice(i, 1);
-              }
-            }
-            for (var i = 0; i < tempArray.length; i++) {
-              tempData.unshift(tempArray[i]);
-            }
-            // 完成排列处理的数组数据添加到页面上渲染
-            vm.deviceData = tempData;
-          } else if (data.status === 40004) {
-            mui.openWindow({
-              url: '../../login.html',
-              id: 'login'
-            });
-          } else {
-            plus.nativeUI.toast(data.info);
-            setTimeout(function () {
-              plus.nativeUI.closeWaiting();
-            }, 1000);
-          }
-        },
-        error: function (xhr, type, errorThrown) {
-          // 异常处理；
-          onNetChange();
-          plus.nativeUI.closeWaiting();
-        }
-      });
-    }
+						window.addEventListener('equipmentDataFilter', function(event) {
+							console.log('刷新equipment页面数据.....');
+							vm.keywords = event.detail.keywords;
+							vm.workGroup = event.detail.workGroup;
+							if(vm.keywords === '' && vm.workGroup === '') {
+								getDeviceListData();
+							} else {
+								getFilterDviceListData();
+							}
+						});
+					});
+				}
+			});
 
-    function getFilterDviceListData() {
-      mui.ajax(apiUrl.filterDeviceByGroupAndCoder, {
-        data: {
-          user_name: plus.storage.getItem('user_name'),
-		      token: plus.storage.getItem('token'),
-          num_per_page: 20000,
-          filter_identify_code: vm.keywords,
-          filter_work_group: vm.workGroup
-        },
-        dataType: 'json',
-        type: 'post',
-        timeout: 10000,
-        success: function (data) {
-          if (data.list == null) {
-            vm.deviceData = [];
-            mui.toast('没有匹配的设备信息！');
-          } else {
-            if (data.status === 0) {
-              console.log(JSON.stringify(data));
-              console.log(data.list.length);
-              var tempData = data.list;
-              var tempArray = [];
-              // 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-              for (var i = 0; i < tempData.length; i++) {
-                if (tempData[i].onlineStatus === 1) {
-                  tempArray.push(tempData[i]);
-                  tempData.splice(i, 1);
-                }
-              }
-              for (var i = 0; i < tempArray.length; i++) {
-                tempData.unshift(tempArray[i]);
-              }
-              // 完成排列处理的数组数据添加到页面上渲染
-              vm.deviceData = tempData;
-            } else if (data.status === 40004) {
-              mui.openWindow({
-                url: '../../login.html',
-                id: 'login'
-              });
-            } else {
-              plus.nativeUI.toast(data.info);
-              setTimeout(function () {
-                plus.nativeUI.closeWaiting();
-              }, 1000);
-            }
-          }
-        },
-        error: function (xhr, type, errorThrown) {
-          // 异常处理；
-          onNetChange();
-          plus.nativeUI.closeWaiting();
-        }
-      });
-    }
+			function getDeviceListData() {
+				plus.nativeUI.showWaiting('正在加载设备信息...', {
+					height: '100px',
+					width: '180px'
+				});
+				vm.deviceData = '';
+				mui.ajax(apiUrl.device_list_page, {
+					data: {
+						user_name: plus.storage.getItem('user_name'),
+						token: plus.storage.getItem('token'),
+						num_per_page: 20000
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						if(data.status === 0) {
+							var tempData = data.recordList;
+							var tempArray = [];
+							// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+							for(var i = 0; i < tempData.length; i++) {
+								if(tempData[i].onlineStatus === 1) {
+									tempArray.push(tempData[i]);
+									tempData.splice(i, 1);
+								}
+							}
+							for(var i = 0; i < tempArray.length; i++) {
+								tempData.unshift(tempArray[i]);
+							}
+							// 完成排列处理的数组数据添加到页面上渲染
+							vm.deviceData = tempData;
+							 plus.nativeUI.closeWaiting();
+						} else if(data.status === 40004) {
+							mui.openWindow({
+								url: '../../login.html',
+								id: 'login'
+							});
+							 plus.nativeUI.closeWaiting();
+						} else {
+							plus.nativeUI.toast(data.info);
+							setTimeout(function() {
+								plus.nativeUI.closeWaiting();
+							}, 1000);
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
 
-    window.addEventListener('closeTopPopover', function () {
-      mui('#topPopover').popover('hide');
-      if (event.detail.id === 'app/console/equipment.html') {
-        getDeviceListData();
-      }
-    });
+			function getFilterDviceListData() {
+				mui.ajax(apiUrl.filterDeviceByGroupAndCoder, {
+					data: {
+						user_name: plus.storage.getItem('user_name'),
+						token: plus.storage.getItem('token'),
+						num_per_page: 20000,
+						filter_identify_code: vm.keywords,
+						filter_work_group: vm.workGroup
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						if(data.list == null) {
+							vm.deviceData = [];
+							mui.toast('没有匹配的设备信息！');
+						} else {
+							if(data.status === 0) {
+								console.log(JSON.stringify(data));
+								console.log(data.list.length);
+								var tempData = data.list;
+								var tempArray = [];
+								// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+								for(var i = 0; i < tempData.length; i++) {
+									if(tempData[i].onlineStatus === 1) {
+										tempArray.push(tempData[i]);
+										tempData.splice(i, 1);
+									}
+								}
+								for(var i = 0; i < tempArray.length; i++) {
+									tempData.unshift(tempArray[i]);
+								}
+								// 完成排列处理的数组数据添加到页面上渲染
+								vm.deviceData = tempData;
+							} else if(data.status === 40004) {
+								mui.openWindow({
+									url: '../../login.html',
+									id: 'login'
+								});
+							} else {
+								plus.nativeUI.toast(data.info);
+								setTimeout(function() {
+									plus.nativeUI.closeWaiting();
+								}, 1000);
+							}
+						}
+					},
+					error: function(xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
 
-    window.addEventListener('refreshDeviceInfo', function () {
-      console.log('要刷新设备页面数据了！！！！');
-      getDeviceListData();
-    });
-  </script>
-</body>
+			window.addEventListener('closeTopPopover', function() {
+				mui('#topPopover').popover('hide');
+				if(event.detail.id === 'app/console/equipment.html') {
+					getDeviceListData();
+				}
+			});
+
+			window.addEventListener('refreshDeviceInfo', function() {
+				console.log('要刷新设备页面数据了！！！！');
+				getDeviceListData();
+			});
+		</script>
+	</body>
 
 </html>

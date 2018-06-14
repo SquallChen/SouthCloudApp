@@ -10,7 +10,7 @@
 		<style>
 			body {
 				background: #fff;
-				font-size: 20px;
+				font-size: 15px;
 			}
 			
 			ul {
@@ -18,7 +18,9 @@
 				padding-left: 0;
 				margin-bottom: 30px;
 			}
-			
+			input{
+				font-size: 15px;
+			}
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 73px;
@@ -32,13 +34,15 @@
 			
 			.info span {
 				display: inline-block;
-				font-size: 13px;
+				font-size: 15px;
 				line-height: 36px;
 			}
 			
 			.info span:nth-child(1) {
-				width: 65px;
+				width: 76px;
 				text-align: right;
+				color: #999;
+				margin-right: 15px;
 			}
 			
 			.info ul li {
@@ -118,8 +122,8 @@
 				border-radius: 4px;
 			}
 			
-			button:active {
-				color: #0b5fde;
+			button:enabled:active {
+				background: #0b5fde;
 			}
 		</style>
 	</head>
@@ -138,16 +142,16 @@
 					<div>
 						<ul>
 							<li>
-								<span>用户名称：</span>
+								<span>用户名称</span>
 								<span>{{realname}}</span>
 							</li>
 							<li>
-								<span>用户账号：</span>
+								<span>用户账号</span>
 								<span>{{username}}</span>
 							</li>
 							<li>
-								<span>工作组：</span>
-								<input type="text" v-model="wrok_group" />
+								<span>工作组</span>
+								<input type="text" v-model="wrok_group" placeholder="请输入工作组"/>
 							</li>
 						</ul>
 						<button v-on:tap="changeGroup">完  成</button>

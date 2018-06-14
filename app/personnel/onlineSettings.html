@@ -28,7 +28,7 @@
 			</header>
 			<div class="mui-content">
 				<div class="equipmentTitle">
-					<span>设备信息-</span>
+					<span>设备信息 -&nbsp;</span>
 					<span>{{currentIdentifyCode}}</span>
 					<button class="refresh" v-on:tap="refresh">刷新</button>
 				</div>
@@ -599,7 +599,7 @@
 						<div id="item3mobile" class="mui-slider-item mui-control-content">
 							<ul>
 								<li v-for="(item,index) in Satellite">
-									<div><span style="padding-left: 15px;">{{item.name}}</span><span>卫星系统</span></div>
+									<div><span style="padding-left: 15px;">{{item.name.toUpperCase()}}</span><span>卫星系统</span></div>
 									<div class="setNum">
 										<span class="title">设置使能</span>
 										<a @click="setSatelliteNum(index)">设置卫星号</a>
@@ -619,7 +619,10 @@
 										<div class="line"></div>
 									</div>
 								</li>
-								<button class="ClearEphemeris" v-on:tap="clearEphemerisPage()">清除星历</button>
+								<div class="btn">
+									<button class="ClearEphemeris" v-on:tap="clearEphemerisPage()">清除星历</button>
+								</div>
+								
 							</ul>
 						</div>
 
