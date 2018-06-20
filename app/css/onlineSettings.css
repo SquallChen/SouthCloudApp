@@ -27,7 +27,7 @@
 			}
 
 			ul li>div:nth-child(1) {
-				width: 22%;
+				width: 25%;
 				text-align: right;
 				margin-right: 20px;
 				color: #999;
@@ -35,7 +35,7 @@
 			}
 
 			ul li>div:nth-child(2) {
-				width: 78%;
+				width: 75%;
 				margin-right: 6px;
 			}
 
@@ -45,7 +45,7 @@
 			}
 
 			.baseContent li>div:nth-child(1) {
-				width: 22%;
+				width: 25%;
 				text-align: right;
 				margin-right: 20px;
 			}
@@ -55,7 +55,7 @@
 			}*/
 
 			.baseContent li>div:nth-child(2) {
-				width: 78%;
+				width: 75%;
 				margin-right: 10px;
 			}
 
@@ -77,8 +77,8 @@
 			}
 
 			.modeTitle button {
-				font-size: 13px;
-				width: 76px;
+				font-size: 14px;
+				width: 74px;
 				border-radius: 0;
 				padding: 6px 8px;
 			}
@@ -110,9 +110,9 @@
 			select {
 				margin-bottom: 0;
 				height: 35px;
-				font-size: 13px;
+				font-size: 14px;
 				color: #333;
-				line-height: 13px;
+				line-height: 18px;
 			}
 
 			.equipmentTitle {
@@ -194,7 +194,7 @@
 				color: white;
 				border: none;
 				border-radius: 4px;
-				font-size: 20px;
+				font-size: 17px;
 				color: white;
 			}
 
@@ -279,7 +279,11 @@
 				top: 14px;
 				right: 20px;
 			}
-
+			.content .selectAll2 {
+				position: absolute;
+				top: 8px;
+				right: 20px;
+			}
 			hr {
 				box-sizing: content-box;
 				height: 0;
@@ -480,7 +484,7 @@
 				display: inline-block;
 				padding: 21px 0 15px 20px;
 				color: #0B5fde;
-				font-size: 13px;
+				font-size: 15px;
 			}
 
 			.Satellite .content {
@@ -513,10 +517,10 @@
 
 			.Satellite .btn button,
 			.track .btn button {
-				font-size: 13px;
+				font-size: 15px;
 				color: white;
 				height: 32px;
-				line-height: 36px;
+				line-height: 33px;
 				padding-top: 0;
 				margin-top: 0;
 			}
@@ -557,6 +561,7 @@
 				display: block;
 				padding: 21px 10px 15px 20px;
 				color: #0b5fde;
+				font-size: 15px;
 			}
 
 			.mui-scroll {
@@ -614,7 +619,7 @@
 				margin-top: 0;
 				height: 40px;
 				margin-bottom: 10px;
-				font-size: 20px;
+				font-size: 17px;
 				background: #3b88fb;
 				color: white;
 			}
@@ -639,9 +644,9 @@
 			#item4mobile .otherTitle {
 				text-align: right;
 				display: inline-block;
-				width: 25%;
+				width: 26%;
 				padding: 12px 15px 12px 10px;
-				font-size: 13px;
+				font-size: 14px;
 				font-weight: 500;
 				color: #999;
 			}
@@ -784,8 +789,8 @@
 				margin-right: 10px;
 				text-align: right;
 				color: #999;
-				font-size: 13px;
-				width: 70px;
+				font-size: 15px;
+				/*width: 70px;*/
 				display: block;
 			}
 
@@ -852,7 +857,7 @@
 
 			#item4mobile .update .mainTitle,
 			#item4mobile .remoteUpdate .mainTitle {
-				width: 70px;
+				width: 75px;
 			}
 
 			#item4mobile .update button,
@@ -959,9 +964,10 @@
 			}
 
 			.mui-radio.mui-left label {
-				padding-left: 30px;
+				padding-left: 28px;
 				padding-top: 5px;
 				padding-bottom: 5px;
+				padding-right: 13px;
 			}
 
 			.mui-radio.mui-left input[type=radio] {
@@ -987,6 +993,7 @@
 				color: #333;
 				padding-top: 11px;
 				padding-bottom: 9px;
+				font-size: 15px;
 			}
 
 			#selectionMode .meg,
@@ -1000,6 +1007,7 @@
 				color: #333;
 				padding-top: 20px;
 				padding-bottom: 0;
+				font-size: 15px;
 			}
 
 			#item1mobile .mui-checkbox.mui-left label {

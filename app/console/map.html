@@ -106,7 +106,7 @@
     }
 
     #topPopover2 ul li span {
-      width: 60px;
+      width: 65px;
       text-align: right;
     }
 
@@ -115,7 +115,7 @@
       margin-bottom: 0;
       border: none;
       padding-left: 0;
-      font-size: 13px;
+      font-size: 15px;
     }
 
     #topPopover2 ul :nth-child(4) {
@@ -136,10 +136,15 @@
 
     #topPopover2 ul li div .mui-checkbox label {
       line-height: 20px;
-      padding-top: 10px;
+      padding-top: 8px;
       padding-bottom: 8px;
+      font-size: 15px;
+      padding-left: 32px;
+      padding-right: 20px;
     }
-
+		.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{
+			left:0;
+		}
     #topPopover2 ul li div button,
     #topPopover2 ul li button {
       margin-right: 15px;
@@ -155,6 +160,7 @@
       margin: 0;
       border-radius: 4px;
       border: none;
+      font-size: 16px;
     }
 
     #topPopover2 ul li div .active,
@@ -163,7 +169,7 @@
     }
 
     #topPopover2 .group_title {
-      font-size: 13px;
+      font-size: 15px;
       color: #999;
       padding-left: 20px;
       margin-right: 20px;
@@ -241,15 +247,16 @@
     .popup-info p {
       color: #000;
 			margin-bottom: 0;
-			height: 35px;
+			height: 28px;
 			line-height: 34px;
-			font-size: 15px;
-			/*padding-left: 10px;
-			padding-right: 10px*/
+			font-size: 14px;
     }
     .popup-info p span{
     	display: block;
     	padding: 0 10px;
+    	height: 28px;
+    	line-height: 31px;
+    	color: #333;
     }
 		.popup-info p:after{
 			width: 100%;
@@ -273,9 +280,13 @@
 			margin-right: 10px;
 			margin-top: 10px;
 		}
-		#history{
+		#history,#real{
 			border:1px solid #ccc;
 			margin-top: 10px;
+		}
+		#history:active,#real:active{
+			background: #0b5fde;
+			border:none;
 		}
     .icon-related,
     .icon-sign-out {
@@ -296,14 +307,16 @@
     }
 
     .ol-popup .closeBox {
-      margin: 8px 5px 0 0;
+      margin: 2px 2px 0 0;
       background-color:white;
       color:#333;
     }
 		.ol-popup .closeBox:after{
-			content:'X';
-			font-size: 20px;
-			font-family:"bodoni mt";
+			content:"\00d7";
+			font-size: 30px;
+			/*font-family:"bodoni mt";*/
+			font-family:fantasy;
+			color: #999;
 		}
     #topPopover1 .mui-table-view-cell {
       border-bottom: 1px solid #e3e3e3;
@@ -322,7 +335,6 @@
 
     #topPopover1 .mui-table-view-cell a span {
       position: relative;
-      /*left: -12px;*/
       display: inline-block;
       width: 68px;
       text-align: center;
@@ -374,11 +386,6 @@
                   <span>设备关联</span>
                 </a>
               </li>
-              <!--<li id="logout" class="mui-table-view-cell">
-              <a href="#">
-                <span class="icon-sign-out"></span>
-                <span>退出登录</span>
-              </a>
             </li>-->
             </ul>
           </div>
@@ -438,7 +445,6 @@
       el: '#app',
       data: {
         workGroup: '',
-        // equipmentNum: 'SG1181117244806',
         equipmentNum: 'SG6075117213416',
         equipmentOnline: true,
         equipmentOffline: true
@@ -467,16 +473,7 @@
         softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
       });
 
-      /*  var params = '';
-      document.getElementById('online').addEventListener('tap', function () {
-        alert(1);
-      });
-      document.getElementById('offline').addEventListener('tap', function () {
-        alert(0);
-      }); */
-
       monitorUrlAddress = plus.storage.getItem('monitor');
-      console.log('++++++:'+monitorUrlAddress);
       // 天地图加载资源
       var tianDiTuMapLayer = new ol.layer.Tile({
         title: '天地图路网',
@@ -685,6 +682,7 @@
         identifyCode = deviceItemInfo.identify_code;
         status = deviceItemInfo.online_status;
         var content = '<div class="popup-info">';
+        content += '<p>' + '<span>&nbsp;'+'</span>'+ '</p>';
         content += '<p>' + '<span>'+deviceItemInfo.identify_code + '</span>'+ '</p>';
         /* if (deviceItemInfo.online_status === 1) {
           content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
@@ -701,7 +699,7 @@
         companyInfo = upDataCompanyInfo;
         content += '<p>' + '<span>'+upDataUserName + '</span>'+ '</p>';
         content += '<p>' + '<span>'+upDataCompanyInfo + '</span>'+ '</p></div>';
-        content += '<p><button id="real" style="background:#0b5fde;color:white; margin-right:8px">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
+        content += '<p><button id="real" style="margin-right:8px">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
 
         popup.show(selectFeature.getGeometry().getCoordinates(), content);
       }

@@ -733,7 +733,7 @@
 								<!--<span class="otherTitle">设备注册</span>-->
 								<div class="otherContent selfcheck limit">
 									<span class="mainTitle">注册码期限</span>
-									<span class="deadline">{{oVal.regday}}</span>
+									<span class="deadline" style="font-size: 15px;">{{oVal.regday}}</span>
 								</div>
 								<div class="otherContent update">
 									<span class="mainTitle">更新注册码</span>
@@ -764,7 +764,7 @@
 		<!--**************************设置卫星号弹窗****************************-->
 		<div id="setSatelliteNum" class="mui-popover Satellite">
 			<div class="content">
-				<span>设置{{currentSatelliteName}}卫星号
+				<span>设置{{currentSatelliteName.toUpperCase()}}卫星号
 				</span>
 				<div class="mui-input-row mui-checkbox mui-left selectAll">
 					<label>全选</label>
@@ -790,8 +790,8 @@
 		<!--**************************设置跟踪频段弹窗****************************-->
 		<div id="setTrack" class="mui-popover track">
 			<div class="content">
-				<span>修改{{currentSatelliteName}}跟踪频段</span>
-				<div class="mui-input-row mui-checkbox mui-left selectAll">
+				<span>修改{{currentSatelliteName.toUpperCase()}}跟踪频段</span>
+				<div class="mui-input-row mui-checkbox mui-left selectAll2">
 					<label>全选</label>
 					<input name="checkbox" value="item.value" type="checkbox" v-model="channelsAllChecked">
 				</div>

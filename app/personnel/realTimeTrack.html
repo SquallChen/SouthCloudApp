@@ -37,14 +37,16 @@
 			width: 50%;
 			color: #333;
 		}
-
+		ul li label{
+			color: #999;
+		}
 		ul li:nth-child(3) span {
 			display: inline-block;
 			width: 49%;
 		}
 
 		ul li:nth-child(4) {
-			padding: 0 30px ;
+			padding: 0 10px ;
 		}
 
 		ul li:nth-child(4) a {
@@ -196,14 +198,14 @@
 				</div>
 				<ul v-show="mode===0">
 					<li>
-						<span>时间：{{gnssLocationData.datatime | fromtTime}}</span>
+						<span><label>时间：</label>{{gnssLocationData.datatime | fromtTime}}</span>
 					</li>
 					<li>
-						<span>状态：{{basic.isOnline == true ? '在线' : '离线'}}</span>
+						<span><label>状态：</label>{{basic.isOnline == true ? '在线' : '离线'}}</span>
 					</li>
 					<li>
-						<span style="display: inline-block; width: 49%">工作模式：{{deviceData.curSysmode | sysModel}}</span>
-						<span style="display: inline-block; width: 49%">数据链：{{deviceData.curDatalink | dataLinkType}}</span>
+						<span style="display: inline-block; width: 49%"><label>工作模式：</label>{{deviceData.curSysmode | sysModel}}</span>
+						<span style="display: inline-block; width: 49%"><label>数据链：</label>{{deviceData.curDatalink | dataLinkType}}</span>
 					</li>
 					<li>
 						<a href="#" id="detail">查看详情</a>

@@ -3155,13 +3155,14 @@ var vm = new Vue({
   created: function () {
     mui.plusReady(function () {
       mui.init({});
+//    plus.webview.currentWebview().setStyle({
+//      softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
+//    });
       //  禁止tab左右滑动功能
       mui('.mui-slider').slider().stopped = true;
 
       currentWebview = plus.webview.currentWebview();
-      /* //    currentWebview.setStyle({
-      //      softinputMode: 'adjustResize'
-      //    }); */
+      
       plus.nativeUI.showWaiting('正在初始化设置中...', {
         height: '100px',
         width: '180px'
@@ -3227,6 +3228,7 @@ var vm = new Vue({
               },
               'div'
             );
+             plus.nativeUI.closeWaiting();
           } else if (jsonObj.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
             errTip(vm.socketTypeModel);
             mui.toast('设备操作被中断，请稍后再试!');
@@ -3259,6 +3261,7 @@ var vm = new Vue({
             },
             'div'
           );
+           plus.nativeUI.closeWaiting();
         }
 
         if (noteObj.connectStatus === true) {
@@ -3466,11 +3469,11 @@ var vm = new Vue({
       window.addEventListener('resize', function () {
         var height = document.documentElement.clientHeight;
         var width = document.documentElement.clientWidth;
-        console.log('可见区域高度:' + height);
-        // console.log('可见区域宽度:' + width);
+        //console.log('可见区域高度:' + height);
+        //console.log('可见区域宽度:' + width);
         if (document.activeElement.tagName == 'INPUT') {
           // 延迟出现是因为有些 Android 手机键盘出现的比较慢         window.setTimeout(() => {
-
+          //将被遮挡的元素移动到可视区域中
           document.activeElement.scrollIntoViewIfNeeded();
         }
       });
@@ -3651,6 +3654,7 @@ function getSicVersion() {
           url: '../../login.html',
           id: 'login'
         });
+        plus.nativeUI.closeWaiting();
       }
     },
     error: function (data) {
@@ -3716,6 +3720,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
                 },
                 'div'
               );
+              plus.nativeUI.closeWaiting();
             } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
               isSetSuccess(vm.socketTip);
               errTip(typeModel);
@@ -4054,6 +4059,7 @@ function getSicError(msg) {
     },
     'div'
   );
+  plus.nativeUI.closeWaiting();
 }
 
 function clear(json) {
@@ -4769,3 +4775,4 @@ function removeClass(elements, cName) {
     );
   }
 }
+
