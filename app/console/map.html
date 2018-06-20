@@ -150,7 +150,7 @@
     }
 
     #topPopover2 ul li>button {
-      height: 46px;
+      height: 36px;
       width: 50%;
       margin: 0;
       border-radius: 4px;
@@ -233,15 +233,50 @@
     }
 
     .popup-info {
-      padding: 6px 0 0 6px;
+      padding: 0;
       text-align: left;
+      width: 170px;
     }
 
     .popup-info p {
       color: #000;
-      margin-bottom: 5px;
+			margin-bottom: 0;
+			height: 35px;
+			line-height: 34px;
+			font-size: 15px;
+			/*padding-left: 10px;
+			padding-right: 10px*/
     }
-
+    .popup-info p span{
+    	display: block;
+    	padding: 0 10px;
+    }
+		.popup-info p:after{
+			width: 100%;
+			height: 1px;
+			content: '';
+			display: block;
+			padding: 0;
+			position: relative;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #ccc;
+		}
+		 p button{
+			border-radius: 0;
+			border: none;
+			width: 70px;
+			height: 35px;
+		}
+		#real{
+			margin-left: 10px;
+			margin-right: 10px;
+			margin-top: 10px;
+		}
+		#history{
+			border:1px solid #ccc;
+			margin-top: 10px;
+		}
     .icon-related,
     .icon-sign-out {
       color: #666;
@@ -259,10 +294,17 @@
       box-shadow: 0 0 15px rgba(0, 0, 0, .3);
       background: white;
     }
-    .ol-popup .closeBox {
-      margin: 8px 5px 0 0
-    }
 
+    .ol-popup .closeBox {
+      margin: 8px 5px 0 0;
+      background-color:white;
+      color:#333;
+    }
+		.ol-popup .closeBox:after{
+			content:'X';
+			font-size: 20px;
+			font-family:"bodoni mt";
+		}
     #topPopover1 .mui-table-view-cell {
       border-bottom: 1px solid #e3e3e3;
       height: 52px;
@@ -275,16 +317,16 @@
     }
 
     .mui-table-view-cell {
-      padding: 11px 20px;
+      padding: 11px 15px;
     }
 
     #topPopover1 .mui-table-view-cell a span {
       position: relative;
-      left: -12px;
+      /*left: -12px;*/
       display: inline-block;
-      width: 100%;
+      width: 68px;
       text-align: center;
-      font-size: 13px;
+      font-size: 15px;
       color: #666;
     }
 
@@ -294,6 +336,13 @@
 
     #topPopover1 .mui-table-view-cell a {
       border-bottom: 0;
+    }
+    .ol-popup.default{
+    	border:1px solid #0b60de;
+    	border-radius: 4px;
+    }
+    .ol-popup .content{
+    	padding: 0;
     }
   </style>
 </head>
@@ -384,15 +433,15 @@
   <script src="../../js/url.js"></script>
   <script src="../../js/vue.min.js"></script>
   <script type="text/javascript">
+    var popup = null;
     var vm = new Vue({
       el: '#app',
       data: {
         workGroup: '',
-        equipmentNum: '',
+        // equipmentNum: 'SG1181117244806',
+        equipmentNum: 'SG6075117213416',
         equipmentOnline: true,
-        equipmentOffline: true,
-        equipmentData: '',
-        isAlready: ''
+        equipmentOffline: true
       },
       methods: {
         test: function () {
@@ -427,7 +476,7 @@
       }); */
 
       monitorUrlAddress = plus.storage.getItem('monitor');
-      console.log(monitorUrlAddress);
+      console.log('++++++:'+monitorUrlAddress);
       // 天地图加载资源
       var tianDiTuMapLayer = new ol.layer.Tile({
         title: '天地图路网',
@@ -467,7 +516,6 @@
       });
       document.getElementById('reset').addEventListener('tap', function () {
         vm.workGroup = '';
-        vm.equipmentNum = '';
         vm.equipmentOnline = false;
         vm.equipmentOffline = false;
       });
@@ -531,7 +579,7 @@
         * 调用外部的JS创建弹出框
         * Create xiaoJing 2017年11月7日 09:34:25
         */
-      var popup = new ol.Overlay.Popup({
+      popup = new ol.Overlay.Popup({
         popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
         closeBox: true,
         positioning: 'bottom-center',
@@ -603,11 +651,12 @@
               }
             }
           }
-          if (coordinatesArr.length === 1) {
+          mapCenter([105.2652664185, 30.1349929688], 4);
+          /* if (coordinatesArr.length === 1) {
             mapCenter(coordinatesArr[0], 8);
           } else {
             fitCenter(coordinatesArr);
-          }
+          } */
           // device_vector_layer.getSource().unByKey(listenerKey); // 注销监听器
         }
       });
@@ -636,7 +685,7 @@
         identifyCode = deviceItemInfo.identify_code;
         status = deviceItemInfo.online_status;
         var content = '<div class="popup-info">';
-        content += '<p>' + deviceItemInfo.identify_code + '</p>';
+        content += '<p>' + '<span>'+deviceItemInfo.identify_code + '</span>'+ '</p>';
         /* if (deviceItemInfo.online_status === 1) {
           content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
         } else {
@@ -650,8 +699,8 @@
         var upDataCompanyInfo = deviceItemInfo.up_data_company_info ? deviceItemInfo.up_data_company_info : '-';
         var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
         companyInfo = upDataCompanyInfo;
-        content += '<p>' + upDataUserName + '</p>';
-        content += '<p>' + upDataCompanyInfo + '</p></div>';
+        content += '<p>' + '<span>'+upDataUserName + '</span>'+ '</p>';
+        content += '<p>' + '<span>'+upDataCompanyInfo + '</span>'+ '</p></div>';
         content += '<p><button id="real" style="background:#0b5fde;color:white; margin-right:8px">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
 
         popup.show(selectFeature.getGeometry().getCoordinates(), content);
@@ -663,36 +712,39 @@
 
       // 筛选地图显示设备功能
       function filterMapData(url) {
+        popup.hide();
         mui.ajax(url, {
           dataType: 'json',
           type: 'get',
           success: function (datas) {
-            vm.equipmentData = datas;
-            vm.isAlready = true;
-            console.log('筛选后的数据为：' + JSON.stringify(vm.equipmentData));
             if (FeaturesArr && FeaturesArr.length > 0) {
               for (var i = 0; i < FeaturesArr.length; i++) {
                 device_vector_layer.getSource().removeFeature(FeaturesArr[i]);
               }
             }
-            var features = (new ol.format.GeoJSON()).readFeatures(datas);
-            device_vector_layer.getSource().addFeatures(features);
-            var pointArr = [];
-            for (var i = 0; i < features.length; i++) {
-              if (features[i].getGeometry()) {
-                if (features[i].getGeometry().getCoordinates().length > 0) {
-                  pointArr.push(features[i].getGeometry().getCoordinates());
+            if (datas.totalFeatures === 0) {
+              FeaturesArr = '';
+              mui.toast('暂无搜索到的设备!');
+            } else {
+              var features = (new ol.format.GeoJSON()).readFeatures(datas);
+              device_vector_layer.getSource().addFeatures(features);
+              var pointArr = [];
+              for (var i = 0; i < features.length; i++) {
+                if (features[i].getGeometry()) {
+                  if (features[i].getGeometry().getCoordinates().length > 0) {
+                    pointArr.push(features[i].getGeometry().getCoordinates());
+                  }
                 }
               }
+              if (pointArr.length === 1) {
+                mapCenter(pointArr[0], 8);
+              } else {
+                fitCenter(pointArr);
+              }
+              FeaturesArr = features;
             }
-            if (pointArr.length === 1) {
-              mapCenter(pointArr[0], 8);
-            } else {
-              fitCenter(pointArr);
-            }
-            FeaturesArr = features;
-            vm.isAlready = '';
           }
+
         });
       }
     });
@@ -703,6 +755,7 @@
     });
 
     $(document).on('click', '#history', function () {
+      popup.hide();
       mui.openWindow({
         url: '../personnel/historicalTrack.html',
         id: '../personnel/historicalTrack.html',
@@ -717,6 +770,7 @@
       if (status == 0) {
         mui.toast('设备离线!');
       } else {
+        popup.hide();
         mui.openWindow({
           url: '../personnel/realTimeTrack.html',
           id: '../personnel/realTimeTrack.html',

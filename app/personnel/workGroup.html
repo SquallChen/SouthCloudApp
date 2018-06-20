@@ -39,10 +39,10 @@
 			}
 			
 			.info span:nth-child(1) {
-				width: 76px;
+				width: 60px;
 				text-align: right;
 				color: #999;
-				margin-right: 15px;
+				margin-right: 30px;
 			}
 			
 			.info ul li {
@@ -197,7 +197,9 @@
 								plus.webview.currentWebview().close();
 							},
 							error: function(xhr, type, errorThrown) {
-								console.log(33333)
+								console.log(33333);
+								console.log(JSON.stringify(xhr));
+								console.log(JSON.stringify(errorThrown));
 								// 异常处理；
 								onNetChange();
 								plus.nativeUI.closeWaiting();

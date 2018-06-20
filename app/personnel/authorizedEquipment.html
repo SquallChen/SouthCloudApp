@@ -48,10 +48,20 @@
 			
 			.mui-content {
 				background: white;
+				font-size: 13px;
 			}
-			
+			.mui-slider-handle{
+				height: 60px;
+			}
+			.mui-content span{
+				line-height: 18px;
+			}
+			.mui-content .name{
+				font-size: 15px;
+			}
 			.personnelInfo .mui-table-cell {
 				display: flex;
+				height: 60px;
 			}
 			
 			.personnelInfo .img-content {
@@ -60,8 +70,8 @@
 			
 			.personnelInfo .main-content {
 				width: 100%;
-				padding-top: 6px;
-				padding-bottom: 6px;
+				padding-top: 10px;
+				padding-bottom: 8px;
 			}
 			
 			.personnelInfo .main-content div {
@@ -75,7 +85,7 @@
 			
 			.personnelInfo .status {
 				position: relative;
-				top: -3px;
+				top: 0;
 				background: #999;
 				width: 16px;
 				height: 16px;
@@ -89,19 +99,20 @@
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(1) {
-				background: #00cc66;
+				background: #6ecaa5;
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(2) {
-				background: #ff9966;
+				background: #3aa078;
 			}
 			
 			.personnelInfo .mui-slider-right a:nth-child(3) {
-				background: #0099ff;
+				background: #3e7dda;
 			}
 			
 			.personnelInfo .mui-table-view-cell {
-				padding: 2px 15px;
+				padding: 0 15px;
+				height: 60px;
 			}
 			
 			.mui-bar-nav.mui-bar .mui-icon {
@@ -176,7 +187,7 @@
 								<div class="mui-table-cell">
 									<div class="main-content">
 										<div><span class="name">{{item.identifyCode}}</span><span class="status" :class="{active:item.onlineStatus===1}"></span></div>
-										<div><span>{{item.nickName}}</span><span>{{item.upDataCompanyInfo}}</span></div>
+										<div><span>{{item.nickName?item.nickName:'暂无信息'}}</span><span>{{item.upDataCompanyInfo?item.upDataCompanyInfo:'暂无信息'}}</span></div>
 									</div>
 								</div>
 							</div>

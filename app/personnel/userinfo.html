@@ -86,7 +86,7 @@
 			
 			.info span {
 				/*display: inline-block;*/
-				margin-right: 15px;
+				margin-right: 30px;
 			}
 			
 			.info span:nth-child(1) {
@@ -225,6 +225,7 @@
 					officephone: '',
 					realname: '',
 					work_group: '',
+					username:'',
 					organization: [{
 							name: '南方卫星导航',
 							value: 0
@@ -258,13 +259,14 @@
 						var self = plus.webview.currentWebview();
 						vm.currentAccount = self.currentAccount;
 						vm.userId = self.userId;
+						vm.username = self.username;
 						var index = self.index;
 						console.log('当前进入的角色为：' + vm.currentAccount)
 						//请求页面数据方法
 						if(vm.currentAccount === 'parentAccount') {
 							refreshUserInfo();
 						} else if(vm.currentAccount === 'subAccount') {
-							refreshSubUserInfo(index);
+							refreshSubUserInfo();
 						}
 						window.addEventListener('refreshUserInfo', function() {
 							console.log('刷新userInfo页面数据.....');
@@ -273,7 +275,7 @@
 						window.addEventListener('refreshSubUserInfo', function(event) {
 							console.log('刷新userInfo页面数据.....');
 							 var index = event.detail.index;
-							refreshSubUserInfo(index);
+							refreshSubUserInfo();
 						});
 						mui('.filter-ul').on('tap', '.filter-li', function(e) {
 							var url = this.getAttribute('href');
@@ -331,7 +333,7 @@
 							});
 						};
 
-						function refreshSubUserInfo(index) {
+						function refreshSubUserInfo() {
 							mui.ajax(apiUrl.stuff_lists, {
 								data: {
 									user_name: vm.user_name,
@@ -345,22 +347,15 @@
 									console.log('子用户信息为：' + JSON.stringify(data));
 									if(data.status === 0) {
 										var tempData = data.recordList;
-										var tempArray = [];
-										// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-										for(var i = 0; i < tempData.length; i++) {
-											if(tempData[i].status === 0) {
-												tempArray.push(tempData[i]);
-												tempData.splice(i, 1);
+										var tempArray;
+										console.log('当前子用户数据：' + JSON.stringify(tempData));
+//										vm.deviceData = tempData[index];
+										for(var i=0;i<tempData.length;i++){
+											if(tempData[i].username===vm.username){
+												tempArray = tempData[i];
 											}
 										}
-										for(var i = 0; i < tempArray.length; i++) {
-											tempData.unshift(tempArray[i]);
-										}
-										console.log('处理后数据为：' + JSON.stringify(tempData))
-										// 完成排列处理的数组数据添加到页面上渲染
-										vm.deviceData = tempData[index];
-										console.log(index)
-										console.log('当前子用户数据：' + JSON.stringify(vm.deviceData));
+										vm.deviceData = tempArray;
 										vm.work_group = vm.deviceData.wrok_group;
 										vm.currentUserName = vm.deviceData.username;
 										vm.realname = vm.deviceData.realname;
@@ -374,6 +369,7 @@
 											url: '../../login.html',
 											id: 'login'
 										});
+										plus.nativeUI.closeWaiting();
 									} else {
 										plus.nativeUI.toast(data.info);
 										setTimeout(function() {

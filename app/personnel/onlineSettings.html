@@ -601,7 +601,7 @@
 						<ul>
 							<li v-for="(item,index) in Satellite">
 								<div>
-									<span style="padding-left: 15px;">{{item.name}}</span>
+									<span style="padding-left: 15px;">{{item.name.toUpperCase()}}</span>
 									<span>卫星系统</span>
 								</div>
 								<div class="setNum">
@@ -660,40 +660,40 @@
 											<span>状态</span>
 										</li>
 										<li>
-											<span>主板</span>
+											<span class="changecolor">主板</span>
 											<!--<button @click="selfCheck('checkOEM')">启动自检</button>-->
 											<a href="#" @click="selfCheck('checkOEM')">
 												<span class="icon-self-test"></span>
 												启动自检
 											</a>
-											<span>{{ oVal.oemcheck }}</span>
+											<span class="changecolor">{{ oVal.oemcheck }}</span>
 										</li>
 										<li>
-											<span>电台</span>
+											<span class="changecolor">电台</span>
 											<!--<button @click="selfCheck('checkUHF')">启动自检</button>-->
 											<a href="#" @click="selfCheck('checkUHF')">
 												<span class="icon-self-test"></span>
 												启动自检
 											</a>
-											<span>{{ oVal.uhfcheck}}</span>
+											<span class="changecolor">{{ oVal.uhfcheck}}</span>
 										</li>
 										<li>
-											<span>网络</span>
+											<span class="changecolor">网络</span>
 											<!--<button @click="selfCheck('checkNET')">启动自检</button>-->
 											<a href="#" @click="selfCheck('checkNET')">
 												<span class="icon-self-test"></span>
 												启动自检
 											</a>
-											<span> {{ oVal.netcheck}}</span>
+											<span class="changecolor"> {{ oVal.netcheck}}</span>
 										</li>
 										<li>
-											<span>wifi</span>
+											<span class="changecolor">wifi</span>
 											<!--<button @click="selfCheck('checkWIFI')">启动自检</button>-->
 											<a href="#" @click="selfCheck('checkWIFI')">
 												<span class="icon-self-test"></span>
 												启动自检
 											</a>
-											<span>{{ oVal.wificheck}}</span>
+											<span class="changecolor">{{ oVal.wificheck}}</span>
 										</li>
 									</ul>
 									<div class="line1"></div>

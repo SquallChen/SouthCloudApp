@@ -63,9 +63,9 @@
 
 		.filter ul li span {
 			color: white;
-			font-size: 13px;
+			font-size: 15px;
 			display: block;
-			line-height: 18px;
+			line-height: 20px;
 		}
 
 		.filter ul li div {
@@ -110,7 +110,10 @@
 		}
 
 		.personnelInfo ul li {
-			height: 70px;
+			height: 40px;
+			font-size: 15px;
+			line-height: 40px;
+			color: #333;
 		}
 
 		.personnelInfo .mui-table-cell {
@@ -298,15 +301,15 @@
 
 		#topPopover .mui-table-view-cell a span {
 			display: inline-block;
-			width: 100%;
+			width: 68px;
 			text-align: center;
-			font-size: 13px;
+			font-size: 15px;
 			color: #666;
 		}
 
 		.btn a {
 			width: 100%;
-			font-size: 14px;
+			font-size: 15px;
 			display: block;
 			padding: 9px 0 9px 10px;
 			position: relative;
@@ -342,7 +345,7 @@
 		}
 
 		.btn a span {
-			font-size: 12px;
+			font-size: 13px;
 			color: #999;
 			position: absolute;
 			right: 15px;
@@ -350,7 +353,7 @@
 		}
 
 		.mui-table-view-cell {
-			padding: 11px 20px;
+			padding: 11px 15px;
 		}
 
 		.icon-related,
@@ -373,7 +376,7 @@
 </head>
 
 <body>
-	<div id="vm" v-cloak>
+	<div id="app" v-cloak>
 		<header class="mui-bar mui-bar-nav">
 			<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
 			<h1 class="mui-title">南方云</h1>
@@ -394,13 +397,14 @@
 				</ul>
 			</div>
 			<div class="btn">
-				<a v-on:tap="test">关联设备
+				<a v-on:tap="linkDevice">关联设备
 					<span>点击检测关联设备</span>
 				</a>
+
 			</div>
 			<div class="personnelInfo">
 				<ul class="mui-table-view">
-					<li class="mui-table-view-cell" v-for="(item,index) in userdata">
+					<li class="mui-table-view-cell">{{identifyCode}}
 					</li>
 				</ul>
 			</div>
@@ -435,7 +439,7 @@
 	<script src="../../js/vue.min.js"></script>
 	<script type="text/javascript">
 		var vm = new Vue({
-		  el: '#vm',
+		  el: '#app',
 		  data: {
 		    token: '',
 		    user_name: '',
@@ -446,55 +450,7 @@
 		    realName: '',
 		    signature: '',
 		    userId: '',
-		    userdata: [{
-		      name: '张三',
-		      pinyin: 'zhangsan',
-		      group: '南方卫星导航',
-		      status: 0
-		    },
-		    {
-		      name: '李四',
-		      pinyin: 'lisi',
-		      group: '南方卫星导航',
-		      status: 0
-		    },
-		    {
-		      name: '姚明',
-		      pinyin: 'yaoming',
-		      group: '南方卫星导航',
-		      status: 1
-		    },
-		    {
-		      name: '王五',
-		      pinyin: 'wangwu',
-		      group: '南方卫星导航',
-		      status: 1
-		    },
-		    {
-		      name: '王五',
-		      pinyin: 'wangwu',
-		      group: '南方卫星导航',
-		      status: 1
-		    },
-		    {
-		      name: '姚明',
-		      pinyin: 'yaoming',
-		      group: '南方卫星导航',
-		      status: 1
-		    },
-		    {
-		      name: '王五',
-		      pinyin: 'wangwu',
-		      group: '南方卫星导航',
-		      status: 1
-		    },
-		    {
-		      name: '王五',
-		      pinyin: 'wangwu',
-		      group: '南方卫星导航',
-		      status: 1
-		    }
-		    ]
+		    identifyCode: ''
 		  },
 		  methods: {
 		    openpage: function () {
@@ -507,6 +463,49 @@
 		    test: function () {
 		      mui.toast('此处调用关联接口....');
 		      mui('#topPopover').popover('hide');
+		    },
+		    linkDevice: function () {
+		      var websocket = new WebSocket('ws://127.0.0.1:9527/id');
+		      websocket.onmessage = function (event) {
+		        vm.identifyCode = event.data;
+		        if (event.data) {
+		          mui.ajax(apiUrl.setting_relation, {
+		            data: {
+		              user_name: vm.user_name,
+		              token: vm.token,
+		              identifyCode: vm.identifyCode
+		            },
+		            dataType: 'json',
+		            type: 'post',
+		            timeout: 10000,
+		            success: function (data) {
+		              if (data.status === 0) {
+		                mui.toast('设备关联成功!');
+		                plus.storage.setItem('linkCode', vm.identifyCode);
+		              } else {
+		                mui.toast('设备关联失败!');
+		              }
+		            },
+		            error: function (xhr, type, errorThrown) {
+		              onNetChange();
+		            }
+		          });
+		        } else {
+		          mui.toast('请使用工程之星蓝牙功能关联设备!');
+		        }
+		      };
+		      websocket.onopen = function (event) {
+		        console.log('ok');
+		      };
+		      websocket.onerror = function (event) {
+		        mui.toast('关联设备失败,请先打开工程之星!');
+		        document.addEventListener('plusready', function () {
+		          plus.storage.removeItem('linkCode');
+		        }, false);
+		      };
+		      websocket.onclose = function (event) {
+		        console.log('close');
+		      };
 		    }
 		  },
 		  created: function () {

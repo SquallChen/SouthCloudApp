@@ -17,6 +17,7 @@
 			body,
 			#vbody {
 				height: 100%;
+				font-size: 15px;
 			}
 			
 			a {
@@ -194,7 +195,7 @@
 				width: 80%;
 				height: 50px;
 				line-height: 50px;
-				font-size: 14px;
+				font-size: 15px;
 				padding-left: 20px;
 				color: #333;
 			}
@@ -233,7 +234,7 @@
 				</div>
 				<div class="padding_top"></div>
 				<div v-show="hasData===false" class="tip"><span>暂无授权用户...</span></div>
-				<div class="equipment-content">
+				<div class="equipment-content" v-show="hasData===true">
 					<ul>
 						<li v-for="(item,index) in deviceData"><span>{{index+1}}</span><span>{{item.userName}}</span><button v-on:tap="deleteConfirmation(item.userId)">删 除</button></li>
 					</ul>
@@ -379,7 +380,7 @@
 					success: function(data) {
 						if(data.recordList.length === 0) {
 							vm.hasData = false;
-							mui.toast('该用户下没有关联设备。');
+//							mui.toast('该用户下没有关联设备。');
 						} else {
 							console.log('此设备已授权的用户为：' + JSON.stringify(data));
 							vm.hasData = true;
@@ -388,7 +389,7 @@
 
 					},
 					error: function(xhr, type, errorThrown) {
-						mui.toast('该用户下没有关联设备。');
+//						mui.toast('该用户下没有关联设备。');
 						// 异常处理；
 						onNetChange();
 						plus.nativeUI.closeWaiting();

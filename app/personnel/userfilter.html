@@ -71,7 +71,8 @@
 			}
 			
 			.mui-content div label {
-				width: 68px;
+				width: 45px;
+				margin-right: 30px;
 				text-align: left;
 				padding: 0;
 				line-height: 36px;
@@ -205,32 +206,27 @@
 				},
 				methods: {
 					send: function() {
-						console.log(1111111)
 						if(user_page == null) {
-							console.log(222222)
 							user_page = plus.webview.getWebviewById('app/console/user.html');
 						};
 						if(equipment_user_authorized_page == null) {
-							console.log(3333333)
 							equipment_user_authorized_page = plus.webview.getWebviewById('./equipment-user-authorized.html');
 						};
-						console.log(vm.parentPage);
 						if(vm.parentPage === 'user') {
-							console.log(4444444)
+							console.log(11111)
 							mui.fire(user_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue
 							});
 							plus.webview.currentWebview().close();
 						}else if(vm.parentPage === 'equipment-user-authorized'){
-							console.log(5555555)
+							console.log(22222)
 							mui.fire(equipment_user_authorized_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue
 							});
 							plus.webview.currentWebview().close();
 						}
-
 					}
 				},
 				created: function() {
@@ -241,7 +237,7 @@
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
 						vm.parentPage = self.parentPage;
-
+						//请求工作组数据
 						mui.ajax(apiUrl.get_work_group, {
 							data: {
 								user_name: vm.user_name,

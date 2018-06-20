@@ -312,7 +312,7 @@
 			
 			.icon-equipment-entry,
 			.icon-equipment-select {
-				font-size: 26px;
+				font-size: 28px;
 				color: #0b5fde;
 				margin-left: 15px;
 			}
@@ -370,14 +370,14 @@
 			}
 			
 			.mui-table-view-cell {
-				padding: 11px 20px;
+				padding: 11px 15px;
 			}
 			
 			#topPopover .mui-table-view-cell a span {
 				display: inline-block;
-				width: 100%;
+				width: 68px;
 				text-align: center;
-				font-size: 13px;
+				font-size: 15px;
 				color: #666;
 			}
 			
@@ -392,6 +392,30 @@
 			.padding_top {
 				height: 21px;
 				background: #e8e8e8;
+			}
+			
+			.noResult li {
+				height: 60px;
+				line-height: 60px;
+			}
+			
+			.noResult li span {
+				display: block;
+				padding-left: 15px;
+				font-size: 15px;
+				color: #333;
+			}
+			
+			.noResult li:after {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
 			}
 			
 			[v-cloak] {
@@ -427,7 +451,12 @@
 				<div class="usertitle">
 					<span>设备</span>
 				</div>
-				<div class="personnelInfo">
+				<div class="noResult" v-show="hasResult===false">
+					<ul>
+						<li><span>没有匹配的设备信息...</span></li>
+					</ul>
+				</div>
+				<div class="personnelInfo" v-show="hasResult===true">
 					<ul class="mui-table-view">
 						<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
 							<div class="mui-slider-right mui-disabled">
@@ -445,8 +474,8 @@
 											<span class="status" :class="{active:item.onlineStatus!==0}"></span>
 										</div>
 										<div>
-											<span class="upDataUserName">{{item.upDataUserName}}</span>
-											<span class="group">{{item.upDataCompanyInfo}}</span>
+											<span class="upDataUserName">{{item.upDataUserName?item.upDataUserName:'暂无信息'}}</span>
+											<span class="group">{{item.upDataCompanyInfo?item.upDataCompanyInfo:'暂无信息'}}</span>
 										</div>
 									</div>
 								</div>
@@ -483,7 +512,10 @@
 				data: {
 					deviceData: '',
 					token: '',
-					user_name: ''
+					user_name: '',
+					keywords: '',
+					workGroup: '',
+					hasResult: true
 				},
 				methods: {
 					openpage: function(index, item) {
@@ -502,6 +534,7 @@
 									upDataUserName: item.upDataUserName,
 									upDataCompanyInfo: item.upDataCompanyInfo,
 									identifyCode: item.identifyCode,
+									machineId: item.id,
 									item: item
 								}
 							});
@@ -550,6 +583,15 @@
 								getFilterDviceListData();
 							}
 						});
+						window.addEventListener('equipmentKeywordsFilter', function(event) {
+							console.log('刷新equipment页面数据.....');
+							vm.keywords = event.detail.keywords;
+							if(vm.keywords === '' && vm.workGroup === '') {
+								getDeviceListData();
+							} else {
+								getKeywordsFilterDviceListData();
+							}
+						});
 					});
 				}
 			});
@@ -573,6 +615,11 @@
 						if(data.status === 0) {
 							var tempData = data.recordList;
 							var tempArray = [];
+							if(tempData.length > 0) {
+								vm.hasResult = true;
+							} else {
+								vm.hasResult = false;
+							}
 							// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
 							for(var i = 0; i < tempData.length; i++) {
 								if(tempData[i].onlineStatus === 1) {
@@ -585,19 +632,87 @@
 							}
 							// 完成排列处理的数组数据添加到页面上渲染
 							vm.deviceData = tempData;
-							 plus.nativeUI.closeWaiting();
+							plus.nativeUI.closeWaiting();
 						} else if(data.status === 40004) {
 							mui.openWindow({
 								url: '../../login.html',
 								id: 'login'
 							});
-							 plus.nativeUI.closeWaiting();
+							plus.nativeUI.closeWaiting();
 						} else {
 							plus.nativeUI.toast(data.info);
 							setTimeout(function() {
 								plus.nativeUI.closeWaiting();
 							}, 1000);
 						}
+					},
+					error: function(xhr, type, errorThrown) {
+						// 异常处理；
+						onNetChange();
+						vm.hasResult = false;
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
+
+			function getKeywordsFilterDviceListData() {
+				plus.nativeUI.showWaiting('正在加载设备信息...', {
+					height: '100px',
+					width: '180px'
+				});
+				vm.deviceData = '';
+				mui.ajax(apiUrl.device_list_page, {
+					data: {
+						user_name: plus.storage.getItem('user_name'),
+						token: plus.storage.getItem('token'),
+						filter_identifycode: vm.keywords,
+						num_per_page: 20000
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 10000,
+					success: function(data) {
+						if(data.list == null) {
+							vm.deviceData = [];
+							vm.hasResult = false;
+							mui.toast('没有匹配的设备信息！');
+							plus.nativeUI.closeWaiting();
+						} else {
+							if(data.status === 0) {
+								var tempData = data.recordList;
+								var tempArray = [];
+								if(tempData.length>0){
+									vm.hasResult = true;
+								}else{
+									vm.hasResult = false;
+								}
+								// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+								for(var i = 0; i < tempData.length; i++) {
+									if(tempData[i].onlineStatus === 1) {
+										tempArray.push(tempData[i]);
+										tempData.splice(i, 1);
+									}
+								}
+								for(var i = 0; i < tempArray.length; i++) {
+									tempData.unshift(tempArray[i]);
+								}
+								// 完成排列处理的数组数据添加到页面上渲染
+								vm.deviceData = tempData;
+								plus.nativeUI.closeWaiting();
+							} else if(data.status === 40004) {
+								mui.openWindow({
+									url: '../../login.html',
+									id: 'login'
+								});
+								plus.nativeUI.closeWaiting();
+							} else {
+								plus.nativeUI.toast(data.info);
+								setTimeout(function() {
+									plus.nativeUI.closeWaiting();
+								}, 1000);
+							}
+						}
+
 					},
 					error: function(xhr, type, errorThrown) {
 						// 异常处理；
@@ -620,15 +735,20 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
+						console.log('请求筛选设备' + JSON.stringify(data));
 						if(data.list == null) {
 							vm.deviceData = [];
+							vm.hasResult = false;
 							mui.toast('没有匹配的设备信息！');
 						} else {
 							if(data.status === 0) {
-								console.log(JSON.stringify(data));
-								console.log(data.list.length);
 								var tempData = data.list;
 								var tempArray = [];
+								if(tempData.length>0){
+									vm.hasResult = true;
+								}else{
+									vm.hasResult = false;
+								}
 								// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
 								for(var i = 0; i < tempData.length; i++) {
 									if(tempData[i].onlineStatus === 1) {
@@ -646,6 +766,7 @@
 									url: '../../login.html',
 									id: 'login'
 								});
+								plus.nativeUI.closeWaiting();
 							} else {
 								plus.nativeUI.toast(data.info);
 								setTimeout(function() {

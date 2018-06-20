@@ -18,7 +18,7 @@
 				background: #fff;
 				font-size: 20px;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -26,16 +26,17 @@
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.popup-info {
 				padding: 6px 6px 0 6px;
 				text-align: left;
 			}
-			
+
 			.popup-info p {
-				color: #fff;
+				color:#000;
+				margin-bottom: 5px;
 			}
-			
+
 			.back {
 				display: block;
 				width: 10px;
@@ -44,7 +45,7 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			
+
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
@@ -122,142 +123,142 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
-			mui.plusReady(function() {
-				/* 初始化mui控件 */
-				mui.init({
-					beforeback: function() {}
-				});
+			mui.plusReady(function () {
+			  /* 初始化mui控件 */
+			  mui.init({
+			    beforeback: function () {}
+			  });
 
-				plus.webview.currentWebview().setStyle({
-					softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
-				});
+			  plus.webview.currentWebview().setStyle({
+			    softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
+			  });
 
-				var self = plus.webview.currentWebview();
-				var deviceInfo = self.item;
+			  var self = plus.webview.currentWebview();
+			  var deviceInfo = self.item;
 
-				// 天地图加载资源
-				var tianDiTuMapLayer = new ol.layer.Tile({
-					title: '天地图路网',
-					preload: Infinity,
-					source: new ol.source.XYZ({
-						url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
-					})
-				});
-				var tianDiTuAnnotation = new ol.layer.Tile({
-					title: '天地图文字标注',
-					source: new ol.source.XYZ({
-						url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
-					})
-				});
+			  // 天地图加载资源
+			  var tianDiTuMapLayer = new ol.layer.Tile({
+			    title: '天地图路网',
+			    preload: Infinity,
+			    source: new ol.source.XYZ({
+			      url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
+			    })
+			  });
+			  var tianDiTuAnnotation = new ol.layer.Tile({
+			    title: '天地图文字标注',
+			    source: new ol.source.XYZ({
+			      url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
+			    })
+			  });
 
-				// 设备在线样式
-				var pointOnlineStyle = new ol.style.Style({
-					image: new ol.style.Icon({
-						src: '../../public/img/device_online.png',
-						anchor: [0.5, 0.5] // 设置图标位置
-					})
-				});
+			  // 设备在线样式
+			  var pointOnlineStyle = new ol.style.Style({
+			    image: new ol.style.Icon({
+			      src: '../../public/img/device_online.png',
+			      anchor: [0.5, 0.5] // 设置图标位置
+			    })
+			  });
 
-				// 设备离线样式
-				var pointOfflineStyle = new ol.style.Style({
-					image: new ol.style.Icon({
-						src: '../../public/img/device_offline.png',
-						anchor: [0.5, 0.5] // 设置图标位置
-					})
-				});
+			  // 设备离线样式
+			  var pointOfflineStyle = new ol.style.Style({
+			    image: new ol.style.Icon({
+			      src: '../../public/img/device_offline.png',
+			      anchor: [0.5, 0.5] // 设置图标位置
+			    })
+			  });
 
-				var pointLayers = new ol.layer.Vector({
-					source: new ol.source.Vector({
-						features: [new ol.Feature({
-							geometry: new ol.geom.Point([deviceInfo.longitude, deviceInfo.latitude])
-						})]
-					}),
-					style: function(feature, resolution) {
-						return deviceInfo.onlineStatus === 1 ? pointOnlineStyle : pointOfflineStyle;
-					}
-				});
+			  var pointLayers = new ol.layer.Vector({
+			    source: new ol.source.Vector({
+			      features: [new ol.Feature({
+			        geometry: new ol.geom.Point([deviceInfo.longitude, deviceInfo.latitude])
+			      })]
+			    }),
+			    style: function (feature, resolution) {
+			      return deviceInfo.onlineStatus === 1 ? pointOnlineStyle : pointOfflineStyle;
+			    }
+			  });
 
-				// 比例尺控件
-				var scaleLineControl = new ol.control.ScaleLine();
+			  // 比例尺控件
+			  var scaleLineControl = new ol.control.ScaleLine();
 
-				/** * 调用外部的JS创建弹出框 */
-				var popup = new ol.Overlay.Popup({
-					popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
-					closeBox: true,
-					positioning: 'auto',
-					autoPan: true,
-					autoPanAnimation: {
-						duration: 250
-					}
-				});
+			  /** * 调用外部的JS创建弹出框 */
+			  var popup = new ol.Overlay.Popup({
+			    popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
+			    closeBox: true,
+			    positioning: 'bottom-center',
+			    autoPan: true,
+			    autoPanAnimation: {
+			      duration: 250
+			    }
+			  });
 
-				var olMap = new ol.Map({
-					// 图层
-					layers: [
-						tianDiTuMapLayer, tianDiTuAnnotation, pointLayers
-					],
-					overlays: [popup],
-					target: 'map',
-					// 禁止在移动端旋转设备
-					interactions: ol.interaction.defaults({
-						altShiftDragRotate: false,
-						pinchRotate: false
-					}),
-					controls: ol.control.defaults({
-						attributionOptions: ({
-							collapsible: false
+			  var olMap = new ol.Map({
+			    // 图层
+			    layers: [
+			      tianDiTuMapLayer, tianDiTuAnnotation, pointLayers
+			    ],
+			    overlays: [popup],
+			    target: 'map',
+			    // 禁止在移动端旋转设备
+			    interactions: ol.interaction.defaults({
+			      altShiftDragRotate: false,
+			      pinchRotate: false
+			    }),
+			    controls: ol.control.defaults({
+			      attributionOptions: ({
+			        collapsible: false
 
-						}),
-						attribution: false,
-						// 不显示旋转控件
-						rotate: false,
-						// 不显示缩放控件
-						zoom: false
-					}).extend([
-						// 添加比例尺控制到地图上
-						scaleLineControl
-					]),
-					view: new ol.View({
-						// 指定投影使用EPSG:4326
-						projection: 'EPSG:4326',
-						constrainRotation: false,
-						enableRotation: false,
-						center: [deviceInfo.longitude, deviceInfo.latitude],
-						zoom: 10,
-						minZoom: 0,
-						maxZoom: 24
-					})
-				});
+			      }),
+			      attribution: false,
+			      // 不显示旋转控件
+			      rotate: false,
+			      // 不显示缩放控件
+			      zoom: false
+			    }).extend([
+			      // 添加比例尺控制到地图上
+			      scaleLineControl
+			    ]),
+			    view: new ol.View({
+			      // 指定投影使用EPSG:4326
+			      projection: 'EPSG:4326',
+			      constrainRotation: false,
+			      enableRotation: false,
+			      center: [deviceInfo.longitude, deviceInfo.latitude],
+			      zoom: 10,
+			      minZoom: 0,
+			      maxZoom: 24
+			    })
+			  });
 
-				olMap.on('singleclick', function(evt) {
-					if(evt.dragging) {
-						return;
-					}
-					var pixel = olMap.getEventPixel(evt.originalEvent);
-					var feature = olMap.forEachFeatureAtPixel(pixel, function(feature, layer) {
-						return feature;
-					});
-					if(feature === null || feature === undefined) return;
-					displayDeviceInfoOverlay();
-				}, pointLayers);
+			  olMap.on('singleclick', function (evt) {
+			    if (evt.dragging) {
+			      return;
+			    }
+			    var pixel = olMap.getEventPixel(evt.originalEvent);
+			    var feature = olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
+			      return feature;
+			    });
+			    if (feature === null || feature === undefined) return;
+			    displayDeviceInfoOverlay();
+			  }, pointLayers);
 
-				function displayDeviceInfoOverlay(selectFeature) {
-					popup.hide();
-					var content = '<div class="popup-info">';
-					content += '<p>设备编号:' + deviceInfo.identifyCode + '</p>';
-					if(deviceInfo.onlineStatus === 1) {
-						content += '<p>连接时间:' + timeTrans(deviceInfo.connectTime, 'yyyy-MM-dd HH:mm:ss') + '</p>';
-					} else {
-						content += '<p>断开时间:' + timeTrans(deviceInfo.disconnectTime, 'yyyy-MM-dd HH:mm:ss') + '</p>';
-					}
-					var upDataUserName = deviceInfo.upDataUserName ? deviceInfo.upDataUserName : '-';
-					var upDataCompanyInfo = deviceInfo.upDataCompanyInfo ? deviceInfo.upDataCompanyInfo : '-';
-					content += '<p>经度:' + formatDegree(deviceInfo.longitude) + '</p>';
-					content += '<p>纬度:' + formatDegree(deviceInfo.latitude) + '</p>';
-					content += '<p>用户名:' + upDataUserName + '</p>';
-					content += '<p>用户单位:' + upDataCompanyInfo + '</p></div>';
-					popup.show([deviceInfo.longitude, deviceInfo.latitude], content);
-				}
+			  function displayDeviceInfoOverlay(selectFeature) {
+			    popup.hide();
+			    var content = '<div class="popup-info">';
+			    content += '<p>设备编号:' + deviceInfo.identifyCode + '</p>';
+			    if (deviceInfo.onlineStatus === 1) {
+			      content += '<p>连接时间:' + timeTrans(deviceInfo.connectTime, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+			    } else {
+			      content += '<p>断开时间:' + timeTrans(deviceInfo.disconnectTime, 'yyyy-MM-dd HH:mm:ss') + '</p>';
+			    }
+			    var upDataUserName = deviceInfo.upDataUserName ? deviceInfo.upDataUserName : '-';
+			    var upDataCompanyInfo = deviceInfo.upDataCompanyInfo ? deviceInfo.upDataCompanyInfo : '-';
+			    content += '<p>经度:' + formatDegree(deviceInfo.longitude) + '</p>';
+			    content += '<p>纬度:' + formatDegree(deviceInfo.latitude) + '</p>';
+			    content += '<p>用户名:' + upDataUserName + '</p>';
+			    content += '<p>用户单位:' + upDataCompanyInfo + '</p></div>';
+			    popup.show([deviceInfo.longitude, deviceInfo.latitude], content);
+			  }
 			});
 		</script>
 	</body>

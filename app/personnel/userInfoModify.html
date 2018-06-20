@@ -4,7 +4,7 @@
 	<head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>用户录入</title>
+		<title>用户资料修改</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
 		<link href="../../css/input.css" rel="stylesheet" />
@@ -49,13 +49,14 @@
 			.management {
 				width: 100%;
 				height: 36px;
-				line-height: 18px;
+				line-height: 25px;
 				border-radius: 0;
 				background: #3b88fb;
 				border-radius: 4px;
 				color: white;
-				font-size: 13px;
+				font-size: 15px;
 				margin-top: 20px;
+				margin-bottom: 20px;
 				border: none;
 			}
 			
@@ -65,11 +66,15 @@
 			
 			.mui-input-group .mui-input-row {
 				height: 40px;
+				padding: 0 20px;
+				display: flex;
 			}
 			
 			.mui-input-row label {
-				padding: 11px 15px 12px 15px;
+				padding: 11px 0 12px 0;
 				color: #999;
+				width: 60px;
+				margin-right: 30px;
 			}
 			
 			input[type=text],
@@ -94,7 +99,7 @@
 			}
 			
 			body {
-				background: #f2f2f2;
+				background: white;
 			}
 			
 			.mui-bar-nav.mui-bar .mui-icon {
@@ -164,7 +169,7 @@
 					</div>
 					<div class="mui-input-row">
 						<label>办公电话</label>
-						<input v-model="officephone" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="this.value=this.value.replace(/[^a-z0-9-]/g,'');">
+						<input v-model="officephone" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="value=value.replace(/[^0-9-]/g,'');">
 					</div>
 					<div class="mui-input-row">
 						<label>常用邮箱</label>
@@ -182,6 +187,9 @@
 		<script src="../../js/url.js"></script>
 		<script src="../../js/vue.min.js"></script>
 		<script>
+			var phoneNum =/^[0-9]{11}$/; 
+			var MpNum =/^[0-9-]+$/; 
+			var emailtype = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
 			var userinfo_page = null;
 			var me_page = null;
 			var user_page = null;
@@ -221,15 +229,18 @@
 							mui.toast('请输入手机号码！');
 							return;
 						}
-						if(this.mobile === '') {
-							mui.toast('请输入公司号码！');
+						if(!phoneNum.test(this.mobilePhone)) {
+							mui.toast('手机号码只能由11位数字或组成!');
 							return;
 						}
-						if(this.email === '') {
-							mui.toast('请邮箱！');
-							return;
-						}
-
+//						if(this.officephone !== '' && !MpNum.test(this.officephone)) {
+//							mui.toast('办公电话格式应为XXX-XXXXXX！');
+//							return;
+//						}
+//						if(this.email !== '' && !emailtype.test(this.email)) {
+//							mui.toast('邮箱格式应该为XXX@XXX.XXX！');
+//							return;
+//						}
 						mui.ajax(apiUrl.update_user_additional_info, {
 							data: {
 								user_name: vm.user_name,
@@ -252,6 +263,9 @@
 
 							},
 							error: function(xhr, type, errorThrown) {
+								console.log(JSON.stringify(xhr));
+								console.log(JSON.stringify(errorThrown));
+								console.log('修改失败');
 								// 异常处理；
 								onNetChange();
 								plus.nativeUI.closeWaiting();

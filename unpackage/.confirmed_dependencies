@@ -1451,7 +1451,8 @@
     ],
     "resources": [
       "public/img/related.png",
-      "public/img/01.jpg"
+      "public/img/01.jpg",
+      "public/img/avatar.png"
     ]
   },
   "app/personnel/userinfo.html": {

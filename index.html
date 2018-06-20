@@ -38,7 +38,7 @@
     .mui-bar-tab .mui-tab-item.mui-active {
       color: #0b60de;
     }
-
+		
     .mui-bar-tab .mui-tab-item {
       color: #666;
     }
@@ -86,7 +86,8 @@
     }
     .mui-bar-tab .mui-tab-item .mui-icon~.mui-tab-label{
     	height: 14px;
-    	line-height: 12px;
+    	line-height: 14px;
+    	font-size: 12px;
     }
   </style>
 </head>
@@ -113,6 +114,7 @@
   </nav>
   <script src="js/mui.min.js"></script>
   <script src="js/url.js"></script>
+  <script src="js/socket.io.js"></script>
   <script type="text/javascript" charset="utf-8">
     mui.init();
     var user_page = null;
@@ -164,6 +166,17 @@
         me_page = plus.webview.getWebviewById('app/console/me.html');
       }
       getMapUrl();
+
+      var socket = io.connect('http://119.23.161.165:9210/appNotify');
+      socket.on('connect', function () {
+        console.log('appNotify');
+      });
+      socket.on('acceptCommand', function (data, ackServerCallback, arg1) {
+        alert(1234);
+        /* if (ackServerCallback) {
+          ackServerCallback(true);
+        } */
+      });
     });
 
     // 当前激活选项

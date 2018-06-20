@@ -3280,19 +3280,11 @@ var vm = new Vue({
         indicators: true // 是否显示滚动条
       });
       var resolutionHeight = window.innerHeight;
-      resolutionHeight = resolutionHeight - 149;
-      document
-        .getElementById('item1mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item2mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item3mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document
-        .getElementById('item4mobile')
-        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      resolutionHeight = resolutionHeight - 174;
+      document.getElementById('item1mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item2mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item3mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document.getElementById('item4mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
 
       //  switch开关设置卫星使能
       mui('#item3mobile .mui-switch').each(function (index) {

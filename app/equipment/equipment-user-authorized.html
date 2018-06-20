@@ -470,7 +470,10 @@
 							mui.toast('请选择用户!');
 							return;
 						}
-						//var userStr = this.checkUserArr.join(',');
+						console.log(vm.user_name)
+						console.log(vm.token)
+						console.log(vm.checkUserArr)
+						console.log(vm.identifyCode)
 						mui.ajax(apiUrl.auth_add_user_device, {
 							data: {
 								user_name: vm.user_name,
@@ -482,6 +485,7 @@
 							type: 'post',
 							timeout: 10000,
 							success: function(data) {
+								console.log('分发授权'+JSON.stringify(data))
 								if(data.status === 0) {
 									if(allocationAuthorization_page == null) {
 										allocationAuthorization_page = plus.webview.getWebviewById('../equipment/allocationAuthorization.html');
@@ -499,7 +503,6 @@
 										id: 'login'
 									});
 								} else {
-									console.log(2222)
 									plus.nativeUI.toast(data.info);
 									setTimeout(function() {
 										plus.nativeUI.closeWaiting();
@@ -548,21 +551,21 @@
 								timeout: 10000,
 								success: function(data) {
 									if(data.status === 0) {
-										console.log(JSON.stringify(data));
-										var tempData = data.recordList;
-										var tempArray = [];
-										// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-										for(var i = 0; i < tempData.length; i++) {
-											if(tempData[i].status === 0) {
-												tempArray.push(tempData[i]);
-												tempData.splice(i, 1);
-											}
-										}
-										for(var i = 0; i < tempArray.length; i++) {
-											tempData.unshift(tempArray[i]);
-										}
-										// 完成排列处理的数组数据添加到页面上渲染
-										vm.deviceData = tempData;
+										//console.log(JSON.stringify(data));
+//										var tempData = data.recordList;
+//										var tempArray = [];
+//										// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+//										for(var i = 0; i < tempData.length; i++) {
+//											if(tempData[i].status === 0) {
+//												tempArray.push(tempData[i]);
+//												tempData.splice(i, 1);
+//											}
+//										}
+//										for(var i = 0; i < tempArray.length; i++) {
+//											tempData.unshift(tempArray[i]);
+//										}
+//										// 完成排列处理的数组数据添加到页面上渲染
+										vm.deviceData = data.recordList;
 										//console.log(JSON.stringify(vm.deviceData));
 									} else if(data.status === 40004) {
 										mui.openWindow({

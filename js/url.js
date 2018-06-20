@@ -24,9 +24,9 @@ var apiUrl = {
   doSendConfig: str + '/device/do_send_config',
   firmwareUpdate: str + '/device/doSendConfigFirmwareUpdate',
   filterDeviceByGroupAndCoder: str + '/device/filterDeviceByGroupAndCoder',
-  auth_delete_user_device:str + '/device/auth_delete_user_device',
-	authUserPage:str + '/device/authUserPage',
-	auth_add_user_device:str + '/device/auth_add_user_device',
+  auth_delete_user_device: str + '/device/auth_delete_user_device',
+  authUserPage: str + '/device/authUserPage',
+  auth_add_user_device: str + '/device/auth_add_user_device',
 
   // doSendConfig: str + '/device/doSendConfig',
   doRequestConnectStatusMonitor: str + '/device/monitor_connect_status',
@@ -41,6 +41,9 @@ var apiUrl = {
   rtkTrackPointDetail: str + '/device/rtkTrackPointDetail',
   deviceMachineAdd: str + '/device/deviceMachineAdd',
   deviceMachineWithUser: str + '/device/deviceMachineWithUser',
+  send_hand_over: str + '/device/send_hand_over',
+  check_response: str + '/device/check_response',
+  setting_relation: str + '/device/setting_relation',
 
   // 数据
   data_list_page: str + '/data/list_page',
