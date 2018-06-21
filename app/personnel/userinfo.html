@@ -111,7 +111,6 @@
 				width: 80px;
 				text-align: right;
 				color: #999;
-				
 			}
 			
 			.mui-content {
@@ -130,6 +129,28 @@
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
+			}
+			
+			.btncontent {
+				padding: 0 20px;
+			}
+			
+			.management {
+				width: 100%;
+				height: 36px;
+				line-height: 25px;
+				border-radius: 0;
+				background: #fb4847;
+				border-radius: 4px;
+				color: white;
+				font-size: 15px;
+				margin-top: 20px;
+				margin-bottom: 20px;
+				border: none;
+			}
+			
+			button:enabled:active {
+				background: red;
 			}
 			
 			[v-cloak] {
@@ -155,7 +176,7 @@
 								<img src="../../public/img/01.jpg" alt="" />
 								<div>
 									<span>{{realname}}</span>
-									<span>{{work_group}}</span>
+									<!-- <span>{{work_group}}</span> -->
 								</div>
 								<a href="#">
 									<img src="../../public/img/modify.png" alt="" class="modify" />
@@ -190,6 +211,10 @@
 								<span>{{email}}</span>
 							</li>
 						</ul>
+						<div class="btncontent" v-show="currentAccount==='parentAccount'">
+							<button class="management" id="logout">退出登录</button>
+						</div>
+
 					</div>
 				</div>
 			</div>
@@ -225,7 +250,7 @@
 					officephone: '',
 					realname: '',
 					work_group: '',
-					username:'',
+					username: '',
 					organization: [{
 							name: '南方卫星导航',
 							value: 0
@@ -274,7 +299,7 @@
 						});
 						window.addEventListener('refreshSubUserInfo', function(event) {
 							console.log('刷新userInfo页面数据.....');
-							 var index = event.detail.index;
+							var index = event.detail.index;
 							refreshSubUserInfo();
 						});
 						mui('.filter-ul').on('tap', '.filter-li', function(e) {
@@ -291,7 +316,7 @@
 									officephone: vm.officephone,
 									email: vm.email,
 									currentId: vm.currentId,
-									index:index
+									index: index
 								}
 							});
 						});
@@ -310,13 +335,13 @@
 									if(data.status === 0) {
 										vm.deviceData = data;
 										//返回数据的wrok单词串错了
-										vm.work_group = vm.deviceData.additionalInfo.wrokGroup;
+										vm.work_group = vm.deviceData.additionalInfo.wrokGroup !== 'undefined' ? vm.deviceData.additionalInfo.wrokGroup : '';
 										vm.currentUserName = vm.user_name;
 										vm.realname = vm.deviceData.realName;
 										vm.rolename = vm.deviceData.additionalInfo.createName;
 										vm.mobilephone = vm.deviceData.additionalInfo.mobilePhone;
-										vm.officephone = vm.deviceData.additionalInfo.officePhone;
-										vm.email = vm.deviceData.additionalInfo.email;
+										vm.officephone = vm.deviceData.additionalInfo.officePhone !== 'undefined' ? vm.deviceData.additionalInfo.officePhone : '';
+										vm.email = vm.deviceData.additionalInfo.email !== 'undefined' ? vm.deviceData.additionalInfo.email : '';
 										vm.currentId = vm.deviceData.additionalInfo.id;
 									} else {
 										plus.nativeUI.toast(data.info);
@@ -349,20 +374,20 @@
 										var tempData = data.recordList;
 										var tempArray;
 										console.log('当前子用户数据：' + JSON.stringify(tempData));
-//										vm.deviceData = tempData[index];
-										for(var i=0;i<tempData.length;i++){
-											if(tempData[i].username===vm.username){
+										//										vm.deviceData = tempData[index];
+										for(var i = 0; i < tempData.length; i++) {
+											if(tempData[i].username === vm.username) {
 												tempArray = tempData[i];
 											}
 										}
 										vm.deviceData = tempArray;
-										vm.work_group = vm.deviceData.wrok_group;
+										vm.work_group = vm.deviceData.wrok_group !== 'undefined' ? vm.deviceData.wrok_group : '';
 										vm.currentUserName = vm.deviceData.username;
 										vm.realname = vm.deviceData.realname;
 										vm.rolename = vm.deviceData.rolename;
 										vm.mobilephone = vm.deviceData.mobilephone;
-										vm.officephone = vm.deviceData.officephone;
-										vm.email = vm.deviceData.email;
+										vm.officephone = vm.deviceData.officephone !== 'undefined' ? vm.deviceData.officephone : '';
+										vm.email = vm.deviceData.email !== 'undefined' ? vm.deviceData.email : '';
 										vm.currentId = vm.deviceData.id;
 									} else if(data.status === 40004) {
 										mui.openWindow({
@@ -384,6 +409,42 @@
 								}
 							});
 						}
+						document.getElementById('logout').addEventListener('tap', function() {
+							mui('#logout').button('loading');
+							var lauchFlag = plus.storage.getItem('lauchFlag');
+							plus.storage.clear();
+							plus.storage.setItem('lauchFlag', lauchFlag);
+
+							mui('#logout').button('reset');
+
+							mui.ajax(apiUrl.logout, {
+								data: {
+									user_name: vm.user_name,
+									token: vm.token
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function(data) {
+									if(data.status === 0 || data.status === 40004) {
+										mui.openWindow({
+											url: '../../login.html',
+											id: 'login'
+										});
+
+										var lauchFlag = plus.storage.getItem('lauchFlag');
+										plus.storage.clear();
+										plus.storage.setItem('lauchFlag', lauchFlag);
+									}
+									mui('#logout').button('reset');
+									mui('#topPopover').popover('hide');
+								},
+								error: function(xhr, type, errorThrown) {
+									onNetChange();
+									mui('#logout').button('reset');
+								}
+							});
+						});
 					})
 				}
 			});

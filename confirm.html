@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>确认授权</title>
+	<link href="./css/mui.min.css" rel="stylesheet" />
+	<link href="./css/custom.css" rel="stylesheet" />
+	<style>
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">确认授权</h1>
+		</header>
+		<div class="mui-content">
+			<button class="mui-btn-blue" id="allow">允 许</button>
+			<button class="mui-btn-danger" id="refuse">拒 绝</button>
+		</div>
+	</div>
+	<script src="./js/mui.min.js"></script>
+	<script>
+		mui.plusReady(function () {
+		  mui.init({});
+		  var indexWb = plus.webview.getLaunchWebview();
+		  document.getElementById('allow').addEventListener('tap', function () {
+		    mui.fire(indexWb, 'ifAuth', { flag: true });
+		    plus.webview.currentWebview().close();
+		  });
+		  document.getElementById('refuse').addEventListener('tap', function () {
+		    mui.fire(indexWb, 'ifAuth', { flag: false });
+		    plus.webview.currentWebview().close();
+		  });
+		});
+	</script>
+</body>
+
+</html>

@@ -1,377 +1,402 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-	<head>
-		<meta charset="utf-8">
-		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-		<title>用户录入</title>
-		<link href="../../css/mui.min.css" rel="stylesheet" />
-		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
-		<style>
-			[v-cloak] {
-				display: none;
-			}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>用户录入</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<link href="../../css/input.css" rel="stylesheet" />
+	<style>
+		[v-cloak] {
+			display: none;
+		}
 
-			.select {
-				display: flex;
-			}
+		.select {
+			display: flex;
+		}
 
-			.select div {
-				width: 65%;
-			}
+		.select div {
+			width: 65%;
+		}
 
-			.select .down {
-				width: 10px;
-				height: 7px;
-				position: absolute;
-				top: 16px;
-				right: 15px;
-			}
+		.select .down {
+			width: 10px;
+			height: 7px;
+			position: absolute;
+			top: 16px;
+			right: 15px;
+		}
 
-			select {
-				margin-bottom: 0;
-			}
+		select {
+			margin-bottom: 0;
+		}
 
-			.management {
-				margin-left: 6%;
-				width: 88%;
-				height: 36px;
-				line-height: 18px;
-				border-radius: 0;
-				background: #3a89fb;
-				color: white;
-				font-size: 15px;
-				margin-top: 25px;
-				border: none;
-				border-radius: 4px;
-				margin-bottom: 30px;
-			}
+		.management {
+			margin-left: 6%;
+			width: 88%;
+			height: 36px;
+			line-height: 18px;
+			border-radius: 0;
+			background: #3a89fb;
+			color: white;
+			font-size: 15px;
+			margin-top: 25px;
+			border: none;
+			border-radius: 4px;
+			margin-bottom: 30px;
+		}
 
-			.management:active {
-				background: #0b5fde !important;
-			}
+		.management:active {
+			background: #0b5fde !important;
+		}
 
-			.mui-input-row label {
-				padding: 0;
-				height: 40px;
-				line-height: 40px;
-				color: #999;
-				width: 70px;
-				text-align: right;
-				margin-right: 30px;
-				font-size: 15px;
-			}
+		.mui-input-row label {
+			padding: 0;
+			height: 40px;
+			line-height: 40px;
+			color: #999;
+			width: 70px;
+			text-align: right;
+			margin-right: 30px;
+			font-size: 15px;
+		}
 
-			.mui-input-group .mui-input-row {
-				padding-left: 15px;
-				position: relative;
-			}
+		.mui-input-group .mui-input-row {
+			padding-left: 15px;
+			position: relative;
+		}
 
-			input[type=text] {
-				height: 40px;
-			}
+		input[type=text] {
+			height: 40px;
+		}
 
-			.mui-input-row select {
-				height: 40px;
-			}
+		.mui-input-row select {
+			height: 40px;
+		}
 
-			.mui-input-row label~input {
-				float: left;
-			}
+		.mui-input-row label~input {
+			float: left;
+		}
 
-			.mui-input-group .mui-input-row:after {
-				left: 0;
-				background-color: #ccc;
-			}
+		.mui-input-group .mui-input-row:after {
+			left: 0;
+			background-color: #ccc;
+		}
 
-			body {
-				background: #f2f2f2;
-			}
+		body {
+			background: #f2f2f2;
+		}
 
-			.mui-bar-nav.mui-bar .mui-icon {
-				width: 73px;
-				height: 52px;
-				top: 21px;
-				display: flex;
-				align-items: center;
-			}
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
 
-			.mui-icon-back:before,
-			.mui-icon-left-nav:before {
-				content: '';
-			}
-			.mui-content{
-				background: #e8e8e8;
-			}
-			.back {
-				display: block;
-				width: 10px;
-				height: 16px;
-				background: url('../../public/img/back.png') no-repeat;
-				background-size: 10px 16px;
-				margin-left: 10px;
-			}
-			input,.mui-input-row select{
-				font-size: 15px;
-			}
-			input::-webkit-input-placeholder {
-				color: #ccc;
-			}
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
 
-			input:-moz-placeholder {
-				color: #ccc;
-			}
+		.mui-content {
+			background: #e8e8e8;
+		}
 
-			input::-moz-placeholder {
-				color: #ccc;
-			}
-		</style>
-	</head>
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
 
-	<body>
-		<div id="app" v-cloak>
-			<header class="mui-bar mui-bar-nav">
-				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
-					<span class="back"></span>
-				</a>
-				<h1 class="mui-title">用户录入</h1>
-			</header>
-			<div class="mui-content" style="padding-top: 94px">
-				<form class="mui-input-group">
-					<div class="mui-input-row">
+		input,
+		.mui-input-row select {
+			font-size: 15px;
+		}
+
+		input::-webkit-input-placeholder {
+			color: #ccc;
+		}
+
+		input:-moz-placeholder {
+			color: #ccc;
+		}
+
+		input::-moz-placeholder {
+			color: #ccc;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">用户录入</h1>
+		</header>
+		<div class="mui-content" style="padding-top: 94px">
+			<form class="mui-input-group">
+				<!--<div class="mui-input-row">
 						<label>用户账号</label>
 						<input v-model="account" id="account" type="text" class="mui-input-clear mui-input" placeholder="请输入用户账号" onkeyup="value=value.replace(/[^0-9a-zA-Z]/g,'')">
+					</div>-->
+				<div class="mui-input-row">
+					<label>用户账号</label>
+					<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户账号" onkeyup="value=value.replace(/[^0-9a-zA-Z]/g,'')">
+				</div>
+				<div class="mui-input-row">
+					<label>真实姓名</label>
+					<input v-model="realName" id="realName" type="text" class="mui-input-clear mui-input" placeholder="请输入真实姓名">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input v-model="password" id="password" type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>重复密码</label>
+					<input v-model="password2" id="password2" type="password" class="mui-input-clear mui-input" placeholder="请再次输入密码">
+				</div>
+				<div class="mui-input-row select">
+					<label>组织机构</label>
+					<div>
+						<select name="" v-model="organizationvalue">
+							<option value disabled selected>请选择组织机构...</option>
+							<option v-for="item in organization" :value="item.id">{{item.departname}}</option>
+						</select>
+						<img src="../../public/img/dropdown.png" alt="" class="down" />
 					</div>
-					<div class="mui-input-row">
-						<label>用户名称</label>
-						<input v-model="userName" id="userName" type="text" class="mui-input-clear mui-input" placeholder="请输入用户昵称">
-					</div>
-					<div class="mui-input-row">
-						<label>真实姓名</label>
-						<input v-model="realName" id="realName" type="text" class="mui-input-clear mui-input" placeholder="请输入真实姓名">
-					</div>
-					<div class="mui-input-row">
-						<label>密码</label>
-						<input v-model="password" id="password" type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
-					</div>
-					<div class="mui-input-row">
-						<label>重复密码</label>
-						<input v-model="password2" id="password2" type="password" class="mui-input-clear mui-input" placeholder="请再次输入密码">
-					</div>
-					<div class="mui-input-row select">
-						<label>组织机构</label>
-						<div>
-							<select name="" v-model="organizationvalue">
-								<option value disabled selected>请选择组织机构...</option>
-								<option v-for="item in organization" :value="item.id">{{item.departname}}</option>
-							</select>
-							<img src="../../public/img/dropdown.png" alt="" class="down" />
-						</div>
 
+				</div>
+				<div class="mui-input-row select">
+					<label>角色</label>
+					<div>
+						<select v-model="rolevalue">
+							<option value disabled selected>请选择角色...</option>
+							<option v-for="item in role" :value="item.rolecode">{{item.rolename}}</option>
+						</select>
+						<span>Selected: {{ role }}</span>
+						<img src="../../public/img/dropdown.png" alt="" class="down" />
 					</div>
-					<div class="mui-input-row select">
-						<label>角色</label>
-						<div>
-							<select v-model="rolevalue">
-								<option value disabled selected>请选择角色...</option>
-								<option v-for="item in role" :value="item.rolecode">{{item.rolename}}</option>
-							</select>
-							<span>Selected: {{ role }}</span>
-							<img src="../../public/img/dropdown.png" alt="" class="down" />
-						</div>
-					</div>
-					<div class="mui-input-row">
-						<label>手机号码</label>
-						<input v-model="mobilePhone" id="mobilePhone" type="number" class="mui-input-clear mui-input" placeholder="请输入手机号码">
-					</div>
-					<div class="mui-input-row">
-						<label>办公电话</label>
-						<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="value=value.replace(/[^0-9-]/g,'');">
-					</div>
-					<div class="mui-input-row">
-						<label>常用邮箱</label>
-						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\@\.]/g,'')">
-					</div>
-				</form>
+				</div>
+				<div class="mui-input-row">
+					<label>手机号码</label>
+					<input v-model="mobilePhone" id="mobilePhone" type="number" class="mui-input-clear mui-input" placeholder="请输入手机号码">
+				</div>
+				<!-- <div class="mui-input-row">
+					<label>办公电话</label>
+					<input v-model="mobile" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="value=value.replace(/[^0-9-]/g,'');">
+				</div>
+				<div class="mui-input-row">
+					<label>常用邮箱</label>
+					<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\@\.]/g,'')">
+				</div> -->
+			</form>
 
-				<button class="management" v-on:tap="userEntry">确  定</button>
-			</div>
+			<button class="management" v-on:tap="userEntry">确 定</button>
 		</div>
-		<script src="../../js/mui.min.js"></script>
-		<script src="../../js/app.js"></script>
-		<script src="../../js/url.js"></script>
-		<script src="../../js/vue.min.js"></script>
-		<script>
-			var enAndNum =/^[A-Za-z0-9]{6,15}$/; 
-			var pw =/^[A-Za-z0-9_]{6,15}$/; 
-			var phoneNum =/^[0-9]{11}$/; 
-			var MpNum =/^[0-9-]+$/; 
-			var emailtype = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
-			var user_page = null;
-			var vm = new Vue({
-				el: '#app',
-				user_name: '',
-				token: '',
-				data: {
-					account: '',
-					userName: '',
-					realName: '',
-					password: '',
-					password2: '',
-					mobilePhone: '',
-					email: '',
-					mobile: '',
-					organizationvalue: '',
-					rolevalue: '',
-					organization: [],
-					org_id:'',
-					role: [],
-				},
-				methods: {
-					userEntry: function() {
-						if(this.account === '') {
-							mui.toast('请输入用户账号!');
-							return;
-						}
-						if(!enAndNum.test(this.account)) {
-							mui.toast('账号只能由6-15位英文或数字组成!');
-							return;
-						}
-						if(this.userName === '') {
-							mui.toast('请输入用户名称!');
-							return;
-						}
-						if(this.realName === '') {
-							mui.toast('请输入真实名称!');
-							return;
-						}
-						if(this.password === '') {
-							mui.toast('请输入密码！');
-							return;
-						}
-						if(!pw.test(this.password)) {
-							mui.toast('密码只能由6-15位英文、数字或下划线组成!');
-							return;
-						}
-						if(this.password2 === '') {
-							mui.toast('请再次输入密码！');
-							return;
-						}
-						if(this.password !== this.password2) {
-							mui.toast('两次密码输入不一致！');
-							return;
-						}
-						if(this.organizationvalue === '') {
-							mui.toast('请选择组织机构！');
-							return;
-						}
-						if(this.rolevalue === '') {
-							mui.toast('请选择角色！');
-							return;
-						}
-						if(this.mobilePhone === '') {
-							mui.toast('请输入手机号码！');
-							return;
-						}
-						if(!phoneNum.test(this.mobilePhone)) {
-							mui.toast('手机号码只能由11位数字或组成!');
-							return;
-						}
-//						if(this.mobile !== '' && !MpNum.test(this.mobile)) {
-//							mui.toast('办公电话格式应为XXX-XXXXXX！');
-//							return;
-//						}
-//						if(this.email !== '' && !emailtype.test(this.email)) {
-//							mui.toast('邮箱格式应该为XXX@XXX.XXX！');
-//							return;
-//						}
-						mui.ajax(apiUrl.add_stuff, {
-							data: {
-								user_name: plus.storage.getItem('user_name'),
-								token: plus.storage.getItem('token'),
-								nick_name: vm.userName,
-								real_name: vm.realName,
-								password: vm.password2,
-								depart_name:'',
-								org_id: vm.organizationvalue,
-								role_code: vm.rolevalue,
-								mobile_phone: vm.mobilePhone,
-								office_phone: vm.mobile,
-								email: vm.email
-							},
-							dataType: 'json',
-							type: 'post',
-							timeout: 10000,
-							success: function(data) {
-								console.log('创建用户返回信息' + JSON.stringify(data));
-//								if(data.status===40022){
-//									mui.toast('权限不够, 无法执行此操作!')
-//									plus.webview.currentWebview().close();
-//								}
-								if(user_page == null) {
-									user_page = plus.webview.getWebviewById('app/console/user.html');
-									}
-									mui.fire(user_page, 'refreshUser', {
-										// 暂时没有需要传的参数
-									});
-									mui.toast('添加用户成功！')
-									plus.webview.currentWebview().close();
-							},
-							error: function(xhr, type, errorThrown) {
-								// 异常处理；
-								plus.nativeUI.closeWaiting();
-							}
-						});
-
-						
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var enAndNum = /^[A-Za-z0-9]{6,15}$/;
+		var pw = /^[A-Za-z0-9_]{6,15}$/;
+		var phoneNumLength = /^[0-9]{11}$/;
+		var phoneNum = /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/;
+		var MpNum = /^[0-9-]+$/;
+		var emailtype = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+		var user_page = null;
+		var vm = new Vue({
+			el: '#app',
+			user_name: '',
+			token: '',
+			data: {
+				account: '',
+				userName: '',
+				realName: '',
+				password: '',
+				password2: '',
+				mobilePhone: '',
+				email: '',
+				mobile: '',
+				organizationvalue: '',
+				rolevalue: '',
+				organization: [],
+				org_id: '',
+				role: [],
+			},
+			methods: {
+				userEntry: function () {
+					// if(this.userName === '') {
+					// 	mui.toast('请输入用户账号!');
+					// 	return;
+					// }
+					if (!enAndNum.test(this.userName)) {
+						mui.toast('账号只能由6-15位英文或数字组成!');
+						return;
 					}
-				},
-				created: function() {
-					mui.plusReady(function() {
-						vm.user_name = plus.storage.getItem('user_name');
-						vm.token = plus.storage.getItem('token');
-						mui.ajax(apiUrl.get_depart_info, {
-							data: {
-								user_name: plus.storage.getItem('user_name'),
-								token: plus.storage.getItem('token'),
-							},
-							dataType: 'json',
-							type: 'post',
-							timeout: 10000,
-							success: function(data) {
-								console.log('组织信息' + JSON.stringify(data));
-								vm.organization = data.departs;
-							},
-							error: function(xhr, type, errorThrown) {
-								// 异常处理；
+					if (this.userName === '') {
+						mui.toast('请输入用户账号!');
+						return;
+					}
+					if (this.realName === '') {
+						mui.toast('请输入真实名称!');
+						return;
+					}
+					if (this.password === '') {
+						mui.toast('请输入密码！');
+						return;
+					}
+					if (!pw.test(this.password)) {
+						mui.toast('密码只能由6-15位英文、数字或下划线组成!');
+						return;
+					}
+					if (this.password2 === '') {
+						mui.toast('请再次输入密码！');
+						return;
+					}
+					if (this.password !== this.password2) {
+						mui.toast('两次密码输入不一致！');
+						return;
+					}
+					if (this.organizationvalue === '') {
+						mui.toast('请选择组织机构！');
+						return;
+					}
+					if (this.rolevalue === '') {
+						mui.toast('请选择角色！');
+						return;
+					}
+					if (this.mobilePhone === '') {
+						mui.toast('请输入手机号码！');
+						return;
+					}
+					if (!phoneNumLength.test(this.mobilePhone)) {
+						mui.toast('手机号码只能由11位数字组成!');
+						return;
+					}
+					if (!phoneNum.test(this.mobilePhone)) {
+						mui.toast('请输入正确的手机号码！');
+						return;
+					}
+					// if(this.mobile !== '' && !MpNum.test(this.mobile)) {
+					// 	mui.toast('办公电话格式应为XXX-XXXXXX！');
+					// 	return;
+					// }
+					// if(this.email !== '' && !emailtype.test(this.email)) {
+					// 	mui.toast('邮箱格式应该为XXX@XXX.XXX！');
+					// 	return;
+					// }
+					mui.ajax(apiUrl.add_stuff, {
+						data: {
+							user_name: plus.storage.getItem('user_name'),
+							token: plus.storage.getItem('token'),
+							nick_name: vm.userName,
+							real_name: vm.realName,
+							password: vm.password2,
+							depart_name: '',
+							org_id: vm.organizationvalue,
+							role_code: vm.rolevalue,
+							mobile_phone: vm.mobilePhone,
+							office_phone: vm.mobile,
+							email: vm.email
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function (data) {
+							console.log('创建用户返回信息' + JSON.stringify(data));
+							if (data.result_code === 0) {
+								if (user_page == null) {
+									user_page = plus.webview.getWebviewById('app/console/user.html');
+								}
+								mui.fire(user_page, 'refreshUser', {
+									// 暂时没有需要传的参数
+								});
+								mui.toast('添加用户成功！')
+								plus.webview.currentWebview().close();
+							} else if ( data.result_code === 40004){
 								plus.nativeUI.closeWaiting();
+								mui.openWindow({
+		                url: '../../login.html',
+		                id: 'login'
+									});
+							} else {
+								mui.toast(data.info);
 							}
-						});
-						mui.ajax(apiUrl.get_role_info, {
-							data: {
-								user_name: plus.storage.getItem('user_name'),
-								token: plus.storage.getItem('token'),
-							},
-							dataType: 'json',
-							type: 'post',
-							timeout: 10000,
-							success: function(data) {
-								console.log('角色信息' + JSON.stringify(data));
-								vm.role = data.role;
-							},
-							error: function(xhr, type, errorThrown) {
-								console.log('获取角色信息失败');
-								// 异常处理；
-								plus.nativeUI.closeWaiting();
-							}
-						});
+						},
+						error: function (xhr, type, errorThrown) {
+							// 异常处理；
+							plus.nativeUI.closeWaiting();
+						}
 					});
+
+
 				}
-			});
+			},
+			created: function () {
+				mui.plusReady(function () {
+					vm.user_name = plus.storage.getItem('user_name');
+					vm.token = plus.storage.getItem('token');
+					mui.ajax(apiUrl.get_depart_info, {
+						data: {
+							user_name: plus.storage.getItem('user_name'),
+							token: plus.storage.getItem('token'),
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function (data) {
+							console.log('组织信息' + JSON.stringify(data));
+							if(data.status===0){
+								vm.organization = data.departs;
+							}else if(data.status===40004){
+								mui.toast(data.info);
+								mui.openWindow({
+		                url: '../../login.html',
+		                id: 'login'
+									});
+								plus.nativeUI.closeWaiting();
+							}
+						},
+						error: function (xhr, type, errorThrown) {
+							// 异常处理；
+							plus.nativeUI.closeWaiting();
+						}
+					});
+					mui.ajax(apiUrl.get_role_info, {
+						data: {
+							user_name: plus.storage.getItem('user_name'),
+							token: plus.storage.getItem('token'),
+						},
+						dataType: 'json',
+						type: 'post',
+						timeout: 10000,
+						success: function (data) {
+							console.log('角色信息' + JSON.stringify(data));
+							vm.role = data.role;
+						},
+						error: function (xhr, type, errorThrown) {
+							console.log('获取角色信息失败');
+							// 异常处理；
+							plus.nativeUI.closeWaiting();
+						}
+					});
+				});
+			}
+		});
 
 
-		</script>
-	</body>
+	</script>
+</body>
 
 </html>

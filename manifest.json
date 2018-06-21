@@ -262,7 +262,8 @@
 					"app/console/equipment.html",
 					"app/console/map.html",
 					"app/console/me.html",
-					"app/rtkonline/rtkset.html"
+					"app/rtkonline/rtkset.html",
+					"confirm.html"
 				],
 				"priority": 0
 			},
@@ -1571,7 +1572,8 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/deviceStatus.html",
-					"login.html"
+					"login.html",
+					"app/console/equipment.html"
 				],
 				"priority": 0
 			},

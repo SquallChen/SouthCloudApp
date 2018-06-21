@@ -378,7 +378,7 @@
 <body>
 	<div id="app" v-cloak>
 		<header class="mui-bar mui-bar-nav">
-			<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>
+			<!--<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>-->
 			<h1 class="mui-title">南方云</h1>
 		</header>
 		<div class="mui-content">
@@ -439,177 +439,182 @@
 	<script src="../../js/vue.min.js"></script>
 	<script type="text/javascript">
 		var vm = new Vue({
-		  el: '#app',
-		  data: {
-		    token: '',
-		    user_name: '',
-		    rtkCount: '',
-		    onlineRtkCount: '',
-		    mapRtk: '',
-		    workGroup: '',
-		    realName: '',
-		    signature: '',
-		    userId: '',
-		    identifyCode: ''
-		  },
-		  methods: {
-		    openpage: function () {
-		      var data_url = event.target.dataset.href;
-		      mui.openWindow({
-		        url: data_url,
-		        id: data_url
-		      });
-		    },
-		    test: function () {
-		      mui.toast('此处调用关联接口....');
-		      mui('#topPopover').popover('hide');
-		    },
-		    linkDevice: function () {
-		      var websocket = new WebSocket('ws://127.0.0.1:9527/id');
-		      websocket.onmessage = function (event) {
-		        vm.identifyCode = event.data;
-		        if (event.data) {
-		          mui.ajax(apiUrl.setting_relation, {
-		            data: {
-		              user_name: vm.user_name,
-		              token: vm.token,
-		              identifyCode: vm.identifyCode
-		            },
-		            dataType: 'json',
-		            type: 'post',
-		            timeout: 10000,
-		            success: function (data) {
-		              if (data.status === 0) {
-		                mui.toast('设备关联成功!');
-		                plus.storage.setItem('linkCode', vm.identifyCode);
-		              } else {
-		                mui.toast('设备关联失败!');
-		              }
-		            },
-		            error: function (xhr, type, errorThrown) {
-		              onNetChange();
-		            }
-		          });
-		        } else {
-		          mui.toast('请使用工程之星蓝牙功能关联设备!');
-		        }
-		      };
-		      websocket.onopen = function (event) {
-		        console.log('ok');
-		      };
-		      websocket.onerror = function (event) {
-		        mui.toast('关联设备失败,请先打开工程之星!');
-		        document.addEventListener('plusready', function () {
-		          plus.storage.removeItem('linkCode');
-		        }, false);
-		      };
-		      websocket.onclose = function (event) {
-		        console.log('close');
-		      };
-		    }
-		  },
-		  created: function () {
-		    mui.plusReady(function () {
-		      mui.init({});
-		      // 登陆时存放到本地的数据
-		      vm.token = plus.storage.getItem('token');
-		      vm.user_name = plus.storage.getItem('user_name');
-		      vm.realName = plus.storage.getItem('realName');
-		      vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '暂无分组';
-		      vm.password = plus.storage.getItem('passWord');
-		      vm.signature = plus.storage.getItem('signature');
-		      vm.user_name = plus.storage.getItem('user_name');
-		      // 页面顶部筛选按钮跳转
-		      mui('.filter-ul').on('tap', '.filter-li', function (e) {
-		        var url = this.getAttribute('href');
-		        mui.openWindow({
-		          url: url,
-		          id: url,
-		          extras: {
-		            currentAccount: 'parentAccount'
-		          }
-		        });
-		      });
+			el: '#app',
+			data: {
+				token: '',
+				user_name: '',
+				rtkCount: '',
+				onlineRtkCount: '',
+				mapRtk: '',
+				workGroup: '',
+				realName: '',
+				signature: '',
+				userId: '',
+				identifyCode: ''
+			},
+			methods: {
+				openpage: function () {
+					var data_url = event.target.dataset.href;
+					mui.openWindow({
+						url: data_url,
+						id: data_url
+					});
+				},
+				test: function () {
+					mui.toast('此处调用关联接口....');
+					mui('#topPopover').popover('hide');
+				},
+				linkDevice: function () {
+					plus.storage.setItem('linkCode', 'none');
+					var websocket = new WebSocket('ws://127.0.0.1:9527/id');
+					websocket.onmessage = function (event) {
+						vm.identifyCode = event.data;
+						if (event.data) {
+							mui.ajax(apiUrl.setting_relation, {
+								data: {
+									user_name: vm.user_name,
+									token: vm.token,
+									identifyCode: vm.identifyCode
+								},
+								dataType: 'json',
+								type: 'post',
+								timeout: 10000,
+								success: function (data) {
+									if (data.status === 0) {
+										mui.toast('设备关联成功!');
+										plus.storage.setItem('linkCode', vm.identifyCode);
+									} else {
+										mui.toast('设备关联失败!');
+									}
+								},
+								error: function (xhr, type, errorThrown) {
+									onNetChange();
+								}
+							});
+						} else {
+							mui.toast('请使用工程之星蓝牙功能关联设备!');
+						}
+					};
+					websocket.onopen = function (event) {
+						console.log('ok');
+					};
+					websocket.onerror = function (event) {
+						mui.toast('关联设备失败,请先打开工程之星!');
+						document.addEventListener('plusready', function () {
+							plus.storage.setItem('linkCode', 'none');
+						}, false);
+					};
+					websocket.onclose = function (event) {
+						console.log(plus.storage.getItem('linkCode'));
+						console.log('close');
+					};
+				}
+			},
+			created: function () {
+				mui.plusReady(function () {
+					mui.init({});
+					// 登陆时存放到本地的数据
+					vm.token = plus.storage.getItem('token');
+					vm.user_name = plus.storage.getItem('user_name');
+					vm.realName = plus.storage.getItem('realName');
+					vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '暂无分组';
+					vm.password = plus.storage.getItem('passWord');
+					vm.signature = plus.storage.getItem('signature');
+					console.log(plus.storage.getItem('realName'));
+					console.log(plus.storage.getItem('user_name'));
+					// 页面顶部筛选按钮跳转
+					mui('.filter-ul').on('tap', '.filter-li', function (e) {
+						var url = this.getAttribute('href');
+						mui.openWindow({
+							url: url,
+							id: url,
+							extras: {
+								currentAccount: 'parentAccount'
+							}
+						});
+					});
 
-		      document.getElementById('logout').addEventListener('tap', function () {
-		        mui('#logout').button('loading');
-		        var lauchFlag = plus.storage.getItem('lauchFlag');
-		        plus.storage.clear();
-		        plus.storage.setItem('lauchFlag', lauchFlag);
+					document.getElementById('logout').addEventListener('tap', function () {
+						mui('#logout').button('loading');
+						var lauchFlag = plus.storage.getItem('lauchFlag');
+						plus.storage.clear();
+						plus.storage.setItem('lauchFlag', lauchFlag);
 
-		        mui('#logout').button('reset');
+						mui('#logout').button('reset');
 
-		        mui.ajax(apiUrl.logout, {
-		          data: {
-		            user_name: vm.user_name,
-		            token: vm.token
-		          },
-		          dataType: 'json',
-		          type: 'post',
-		          timeout: 10000,
-		          success: function (data) {
-		            if (data.status === 0 || data.status === 40004) {
-		              mui.openWindow({
-		                url: '../../login.html',
-		                id: 'login'
-		              });
+						mui.ajax(apiUrl.logout, {
+							data: {
+								user_name: vm.user_name,
+								token: vm.token
+							},
+							dataType: 'json',
+							type: 'post',
+							timeout: 10000,
+							success: function (data) {
+								if (data.status === 0 || data.status === 40004) {
+									mui.openWindow({
+										url: '../../login.html',
+										id: 'login'
+									});
 
-		              var lauchFlag = plus.storage.getItem('lauchFlag');
-		              plus.storage.clear();
-		              plus.storage.setItem('lauchFlag', lauchFlag);
-		            }
-		            mui('#logout').button('reset');
-		            mui('#topPopover').popover('hide');
-		          },
-		          error: function (xhr, type, errorThrown) {
-		            onNetChange();
-		            mui('#logout').button('reset');
-		          }
-		        });
-		      });
-		    });
-		  }
+									var lauchFlag = plus.storage.getItem('lauchFlag');
+									plus.storage.clear();
+									plus.storage.setItem('lauchFlag', lauchFlag);
+								}
+								mui('#logout').button('reset');
+								mui('#topPopover').popover('hide');
+							},
+							error: function (xhr, type, errorThrown) {
+								onNetChange();
+								mui('#logout').button('reset');
+							}
+						});
+					});
+				});
+			}
 		});
 
 		function refreshUserInfo() {
-		  mui.ajax(apiUrl.login, {
-		    data: {
-		      user_name: plus.storage.getItem('user_name'),
-		      signature: plus.storage.getItem('signature')
-		    },
-		    dataType: 'json',
-		    type: 'post',
-		    timeout: 20000,
-		    success: function (data) {
-		      console.log('此页面请求回来的数据为：' + JSON.stringify(data));
-		      if (data.status === 0) {
-		        var _data = data;
-		        vm.realName = _data.realName;
-		        vm.workGroup = _data.additionalInfo.wrokGroup !== 'undefined' ? _data.additionalInfo.wrokGroup : '暂无分组';
-		      } else {
-		        plus.nativeUI.toast(data.info);
-		        setTimeout(function () {
-		          plus.nativeUI.closeWaiting();
-		        }, 1000);
-		      }
-		    },
-		    error: function (xhr, type, errorThrown) {
-		      // 异常处理；
-		      onNetChange();
-		      plus.nativeUI.closeWaiting();
-		    }
-		  });
+			mui.ajax(apiUrl.login, {
+				data: {
+					user_name: plus.storage.getItem('user_name'),
+					signature: plus.storage.getItem('signature')
+				},
+				dataType: 'json',
+				type: 'post',
+				timeout: 20000,
+				success: function (data) {
+					console.log('此页面请求回来的数据为：' + JSON.stringify(data));
+					if (data.status === 0) {
+						var _data = data;
+						vm.realName = _data.realName;
+						vm.workGroup = _data.additionalInfo.wrokGroup !== 'undefined' ? _data.additionalInfo.wrokGroup : '暂无分组';
+					} else {
+						plus.nativeUI.toast(data.info);
+						setTimeout(function () {
+							plus.nativeUI.closeWaiting();
+						}, 1000);
+					}
+				},
+				error: function (xhr, type, errorThrown) {
+					// 异常处理；
+					onNetChange();
+					plus.nativeUI.closeWaiting();
+				}
+			});
 		}
 
 		window.addEventListener('refreshMePageInfo', function () {
-		  console.log('刷新MePageInfo页面数据.....');
-		  refreshUserInfo();
+			console.log('刷新MePageInfo页面数据.....');
+			refreshUserInfo();
 		});
 		window.addEventListener('closeTopPopover', function () {
-		  mui('#topPopover').popover('hide');
-		  if (event.detail.id === 'app/console/me.html') {
-		    refreshUserInfo();
-		  }
+			if (event.detail.id === 'app/console/me.html') {
+				vm.linkDevice();
+				vm.user_name = plus.storage.getItem('user_name');
+				vm.realName = plus.storage.getItem('realName');
+				vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '暂无分组';
+			}
 		});
 	</script>
 </body>

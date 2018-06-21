@@ -38,7 +38,7 @@
     .mui-bar-tab .mui-tab-item.mui-active {
       color: #0b60de;
     }
-		
+
     .mui-bar-tab .mui-tab-item {
       color: #666;
     }
@@ -84,10 +84,11 @@
     .mui-active .icon-userlist:before {
       content: "\e907";
     }
-    .mui-bar-tab .mui-tab-item .mui-icon~.mui-tab-label{
-    	height: 14px;
-    	line-height: 14px;
-    	font-size: 12px;
+
+    .mui-bar-tab .mui-tab-item .mui-icon~.mui-tab-label {
+      height: 14px;
+      line-height: 14px;
+      font-size: 12px;
     }
   </style>
 </head>
@@ -107,7 +108,7 @@
       <span class="mui-icon icon-map"></span>
       <span class="mui-tab-label">地图</span>
     </a>
-    <a class="mui-tab-item" href="app/console/me.html">
+    <a id="meTab" class="mui-tab-item" href="app/console/me.html">
       <span class="mui-icon icon-user"></span>
       <span class="mui-tab-label">我</span>
     </a>
@@ -121,6 +122,7 @@
     var equipment_page = null;
     var map_page = null;
     var me_page = null;
+    var callback = null;
 
     var subpages = ['app/console/user.html', 'app/console/equipment.html', 'app/console/map.html', 'app/console/me.html'];
     var aniShow = {};
@@ -169,13 +171,28 @@
 
       var socket = io.connect('http://119.23.161.165:9210/appNotify');
       socket.on('connect', function () {
-        console.log('appNotify');
+        var jsonObject = {
+          userName: plus.storage.getItem('user_name'),
+          token: plus.storage.getItem('token')
+        };
+        socket.emit('login', jsonObject);
       });
       socket.on('acceptCommand', function (data, ackServerCallback, arg1) {
-        alert(1234);
-        /* if (ackServerCallback) {
-          ackServerCallback(true);
-        } */
+        /* mui.fire(plus.webview.getWebviewById('../personnel/onlineSettings.html'), 'auth', { data: data });*/
+        callback = ackServerCallback;
+        console.log('acceptCommand');
+        console.log(data);
+        mui.openWindow({
+          url: 'confirm.html',
+          id: 'confirm',
+          extras: {
+            data: data
+          }
+        });
+      });
+      socket.on('acceptResponse', function (data) {
+        console.log('acceptResponse');
+        mui.fire(plus.webview.getWebviewById('../personnel/onlineSettings.html'), 'authRes', { data: data });
       });
     });
 
@@ -225,6 +242,18 @@
       }
     }
 
+    function goMeTab() {
+      var meTab = document.getElementById('meTab');
+      // 模拟首页点击
+      mui.trigger(meTab, 'tap');
+      // 切换选项卡高亮
+      var current = document.querySelector('.mui-bar-tab>.mui-tab-item.mui-active');
+      if (meTab !== current) {
+        current.classList.remove('mui-active');
+        meTab.classList.add('mui-active');
+      }
+    }
+
     function getMapUrl() {
       mui.ajax(apiUrl.map_url, {
         data: {
@@ -261,6 +290,15 @@
       mui.fire(map_page, 'closeTopPopover', { id: v });
       mui.fire(me_page, 'closeTopPopover', { id: v });
     }
+
+    window.addEventListener('ifAuth', function (event) {
+      console.log('callback');
+      callback(event.detail.flag);
+    });
+    window.addEventListener('goMeTab', function (event) {
+      goMeTab();
+    });
+
   </script>
 </body>
 

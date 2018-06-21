@@ -1,6 +1,7 @@
 var url = apiUrl.doSendConfig;
 var currentWebview = null;
 var ERR_NO = 0;
+var resTime = null;
 
 // reg
 var b = /^([0-9]|[1-8][0-9]|90)$/;
@@ -11,6 +12,8 @@ var regIP = /^([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])\.([0-9]|[1-9]\d|1\d\d|2[0-4
 var vm = new Vue({
   el: '#app',
   data: {
+    machineId: '',
+    operationId: '',
     user_name: '',
     token: '',
     mode: 0,
@@ -60,7 +63,16 @@ var vm = new Vue({
     navActive: 'workPage',
     voiceEnable: true,
     lanCheck: 'CHINESE',
-    baseSetStatus: 1,
+    //判断是否点击了‘设置’按钮
+    hasSetting: false,
+    //判断在线设置属性成功与否的状态
+    baseDiffTypeStatus: false,
+    baseIntervalStatus: false,
+    cutangleStatus: false,
+    pdopStatus: false,
+    antennaMethodStatus: false,
+    antennaHeightStatus: false,
+    baseStartPositionStatus: false,
     // 基准
     bVal: {
       rtmRadios: 'RTCA',
@@ -75,42 +87,10 @@ var vm = new Vue({
       show: 'start'
     },
 
-    baseS: {
-      rtmRadios: false,
-      launch: false,
-      cutangle: false,
-      pdop: false,
-      baseLaunch: false,
-      antenna: false,
-      latitude: false,
-      longitude: false,
-      altitude: false
-    },
-
-    baseE: {
-      rtmRadios: false,
-      launch: false,
-      cutangle: false,
-      pdop: false,
-      baseLaunch: false,
-      antenna: false,
-      latitude: false,
-      longitude: false,
-      altitude: false
-    },
-
     // 移动
     rVal: {
       cutangle: '',
       show: 'break'
-    },
-
-    roverS: {
-      cutangle: false
-    },
-
-    roverE: {
-      cutangle: false
     },
 
     // 静态
@@ -121,24 +101,6 @@ var vm = new Vue({
       staticLaunch: 1,
       antenna: '',
       show: 'start'
-    },
-
-    staticS: {
-      sampling: false,
-      cutangle: false,
-      pdop: false,
-      staticLaunch: false,
-      antenna: false,
-      record: false
-    },
-
-    staticE: {
-      sampling: false,
-      cutangle: false,
-      pdop: false,
-      staticLaunch: false,
-      antenna: false,
-      record: false
     },
 
     nVal: {
@@ -153,49 +115,11 @@ var vm = new Vue({
       apnPassword: ''
     },
 
-    netS: {
-      ip: false,
-      port: false,
-      account: false,
-      pw: false,
-      linkMobileModel: false,
-      linkAccessPoint: false,
-      apnSrver: false,
-      apnUser: false,
-      apnPassword: false
-    },
-
-    netE: {
-      ip: false,
-      port: false,
-      account: false,
-      pw: false,
-      linkMobileModel: false,
-      linkAccessPoint: false,
-      apnSrver: false,
-      apnUser: false,
-      apnPassword: false
-    },
-
     uVal: {
       link_channel: '',
       UHFPowerRadios: 'HIGH',
       braundrateAir: '',
       link_UHF_protocol: ''
-    },
-
-    uhfS: {
-      link_channel: false,
-      UHFPowerRadios: false,
-      braundrateAir: false,
-      link_UHF_protocol: false
-    },
-
-    uhfE: {
-      link_channel: false,
-      UHFPowerRadios: false,
-      braundrateAir: false,
-      link_UHF_protocol: false
     },
 
     oVal: {
@@ -2071,11 +1995,12 @@ var vm = new Vue({
 
   methods: {
     //  刷新页面
-    refresh: function () {
+    refresh: function() {
       currentWebview.reload();
     },
     // 切换工作模式、数据链、其它
-    togglePage: function (v, event) {
+    togglePage: function(v, event) {
+      vm.hasSetting = false;
       plus.nativeUI.showWaiting('读取设置中...', {
         height: '100px',
         width: '150px'
@@ -2117,7 +2042,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2148,7 +2073,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2179,7 +2104,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2201,7 +2126,7 @@ var vm = new Vue({
               vm.firmwareList = data.recordList;
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2211,7 +2136,8 @@ var vm = new Vue({
       }
     },
     // 工作模式切换
-    changeMode: function (index) {
+    changeMode: function(index) {
+      vm.hasSetting = false;
       switch (index) {
         case 0:
           vm.workMode = 'BASE';
@@ -2233,7 +2159,7 @@ var vm = new Vue({
         '',
         changeTip,
         ['取消', '确认'],
-        function (e) {
+        function(e) {
           if (e.index === 1) {
             plus.nativeUI.showWaiting('读取设置中...', {
               height: '100px',
@@ -2281,7 +2207,7 @@ var vm = new Vue({
                 }
                 plus.nativeUI.closeWaiting();
               },
-              error: function (xhr, type, errorThrown) {
+              error: function(xhr, type, errorThrown) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -2291,7 +2217,7 @@ var vm = new Vue({
       );
     },
     // 数据链切换
-    changeLink: function (index) {
+    changeLink: function(index) {
       switch (index) {
         case 0:
           vm.linkMode = 'CELLULAR_NET';
@@ -2308,7 +2234,7 @@ var vm = new Vue({
         '',
         changeTip,
         ['取消', '确认'],
-        function (e) {
+        function(e) {
           if (e.index === 1) {
             plus.nativeUI.showWaiting('读取设置中...', {
               height: '100px',
@@ -2358,7 +2284,7 @@ var vm = new Vue({
                 }
                 plus.nativeUI.closeWaiting();
               },
-              error: function (xhr, type, errorThrown) {
+              error: function(xhr, type, errorThrown) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -2367,12 +2293,12 @@ var vm = new Vue({
         'div'
       );
     },
-    clearEphemeris: function () {
+    clearEphemeris: function() {
       mui.confirm(
         '',
         '确认清除星历?',
         ['取消', '确认'],
-        function (e) {
+        function(e) {
           if (e.index === 1) {
             mui.ajax(url, {
               data: {
@@ -2402,7 +2328,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('清除星历失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -2414,7 +2340,7 @@ var vm = new Vue({
     },
 
     // 点击按钮动态加载对应的数据再渲染页面
-    setSatelliteNum: function (index) {
+    setSatelliteNum: function(index) {
       this.currentSatellite = this.Satellite[index];
       this.currentSatelliteName = this.currentSatellite.name;
       this.SatelliteNumberChecked = this.Satellite[
@@ -2424,14 +2350,14 @@ var vm = new Vue({
       // 控制打开遮罩层
       mui('#setSatelliteNum').popover('toggle');
     },
-    clearEphemerisPage: function () {
+    clearEphemerisPage: function() {
       mui('#clearEphemeris').popover('toggle');
     },
     //  设置卫星号
-    setSatellite: function (index) {
+    setSatellite: function(index) {
       var chooseNums, wholeNums, notChoose, satelliteChecked;
       var currentType = vm.Satellite[index].name;
-      wholeNums = this.currentSatellite.SatelliteNumber.map(function (item) {
+      wholeNums = this.currentSatellite.SatelliteNumber.map(function(item) {
         return item.value;
       });
       if (
@@ -2444,7 +2370,7 @@ var vm = new Vue({
         satelliteChecked = this.SatelliteNumberChecked;
         chooseNums = this.SatelliteNumberChecked.join('|');
         notChoose = wholeNums
-          .filter(function (v) {
+          .filter(function(v) {
             return satelliteChecked.indexOf(v) === -1;
           })
           .join('|');
@@ -2480,7 +2406,7 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           mui.toast('设置卫星号失败！');
           plus.nativeUI.closeWaiting();
         }
@@ -2488,16 +2414,16 @@ var vm = new Vue({
     },
 
     //  设置卫星跟踪频段
-    setTrack: function (index) {
+    setTrack: function(index) {
       var choosedStr, wholeStr, notChoosedStr, channelsChecked;
       var currentType = vm.Satellite[index].name;
-      wholeStr = this.currentSatellite.track.map(function (item) {
+      wholeStr = this.currentSatellite.track.map(function(item) {
         return item.value;
       });
       channelsChecked = this.channelsChecked;
       choosedStr = this.channelsChecked.join('|');
       notChoosedStr = wholeStr
-        .filter(function (v) {
+        .filter(function(v) {
           return channelsChecked.indexOf(v) === -1;
         })
         .join('|');
@@ -2532,14 +2458,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           mui.toast('设置卫星号失败！');
           plus.nativeUI.closeWaiting();
         }
       });
     },
     // 点击按钮动态加载对应的数据再渲染页面
-    settrackNum: function (index) {
+    settrackNum: function(index) {
       this.currentSatellite = this.Satellite[index];
       this.currentSatelliteName = this.currentSatellite.name;
       this.channelsChecked = this.Satellite[index].channelsChecked;
@@ -2548,17 +2474,15 @@ var vm = new Vue({
     },
 
     //  关闭弹窗事件
-    closeSetSatellite: function () {
+    closeSetSatellite: function() {
       mui('#setSatelliteNum').popover('toggle');
     },
-    closeSetTrack: function () {
+    closeSetTrack: function() {
       mui('#setTrack').popover('toggle');
     },
 
     //  设置基准站
-    baseSet: function () {
-      clear(this.baseS);
-      clear(this.baseE);
+    baseSet: function() {
       //  前端数据输入判断
       if (
         !vm.currentIdentifyCode ||
@@ -2626,11 +2550,10 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, baseSet, '设置基准站超时，请稍候再试！');
           } else {
-            vm.baseSetStatus = 2;
             mui.toast(data.info);
             plus.nativeUI.closeWaiting();
           }
@@ -2639,10 +2562,7 @@ var vm = new Vue({
     },
 
     // 基站启动/断开
-    baseStartOrBreak: function (v) {
-      clear(this.baseS);
-      clear(this.baseE);
-
+    baseStartOrBreak: function(v) {
       var thefun, baseRunTip, baseSwith;
       if (v == 'start') {
         thefun = baseStart;
@@ -2669,7 +2589,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, thefun, baseRunTip);
           } else {
@@ -2680,9 +2600,7 @@ var vm = new Vue({
       });
     },
     // 移动站设置
-    roverSet: function () {
-      clear(this.roverS);
-      clear(this.roverE);
+    roverSet: function() {
       if (vm.rVal.cutangle === '') {
         mui.toast('截止角值不能为空！');
         return false;
@@ -2708,7 +2626,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, roverSet, '设置超时，请稍候再试！');
             plus.nativeUI.closeWaiting();
@@ -2718,15 +2636,13 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     },
     // 静态站设置
-    staticSet: function () {
-      clear(this.staticS);
-      clear(this.staticE);
+    staticSet: function() {
       if (
         !vm.currentIdentifyCode ||
         vm.sVal.sampling == '' ||
@@ -2782,7 +2698,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, staticSet, '设置超时，请稍候再试！', 'staticSet');
             plus.nativeUI.closeWaiting();
@@ -2796,10 +2712,7 @@ var vm = new Vue({
       });
     },
     // 静态站启动/断开
-    staticStartOrBreak: function (v) {
-      clear(this.staticS);
-      clear(this.staticE);
-
+    staticStartOrBreak: function(v) {
       plus.nativeUI.showWaiting('正在设置中...', {
         height: '100px',
         width: '150px'
@@ -2826,7 +2739,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, thefun, staticRunTip);
           } else {
@@ -2838,10 +2751,7 @@ var vm = new Vue({
     },
 
     // 移动网设置
-    netSet: function () {
-      clear(this.netS);
-      clear(this.netE);
-
+    netSet: function() {
       if (
         !vm.currentIdentifyCode ||
         vm.nVal.ip === '' ||
@@ -2899,7 +2809,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, networkSet, '设置超时，请稍候再试！');
           } else {
@@ -2911,10 +2821,7 @@ var vm = new Vue({
     },
 
     // 内置电台设置
-    uhfSet: function () {
-      clear(this.uhfS);
-      clear(this.uhfE);
-
+    uhfSet: function() {
       // if (vm.uVal.link_channel == null || vm.uVal.braundrateAir == null || vm.uVal.UHFPowerRadios == null || vm.uVal.link_UHF_protocol == null) {
       // 	mui.toast('设置值不能为空！');
       // 	return false;
@@ -2948,7 +2855,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, datalinkUHF, '设置超时，请稍候再试！');
           } else {
@@ -2960,7 +2867,7 @@ var vm = new Vue({
     },
 
     // 自检：
-    selfCheck: function (v) {
+    selfCheck: function(v) {
       plus.nativeUI.showWaiting('正在自检中...', {
         height: '100px',
         width: '150px'
@@ -2969,7 +2876,7 @@ var vm = new Vue({
     },
 
     // 其它设置
-    otherSet: function (v) {
+    otherSet: function(v) {
       var confirmTip = '';
       switch (v) {
         case 'FORMAT':
@@ -2989,7 +2896,7 @@ var vm = new Vue({
         '',
         confirmTip,
         ['取消', '确认'],
-        function (e) {
+        function(e) {
           if (e.index == 1) {
             plus.nativeUI.showWaiting('正在设置中...', {
               height: '100px',
@@ -3019,7 +2926,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -3030,7 +2937,7 @@ var vm = new Vue({
     },
 
     // 更新注册码
-    regCode: function () {
+    regCode: function() {
       var reg_code_reg = /^[0-9a-zA-Z]{20}$|^[0-9a-zA-Z]{36}$/;
       if (reg_code_reg.test(vm.oVal.regCode) == false) {
         mui.toast('注册码为20或36位的数字、字母组合！');
@@ -3060,14 +2967,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     },
 
     // 固件升级
-    rtkUpdate: function () {
+    rtkUpdate: function() {
       mui.ajax(apiUrl.firmwareUpdate, {
         type: 'post',
         data: {
@@ -3088,14 +2995,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     }
   },
   filters: {
-    transLan: function (val) {
+    transLan: function(val) {
       if (val === 'CHINESE') {
         return '中文';
       } else if (val === 'ENGLISH') {
@@ -3113,7 +3020,7 @@ var vm = new Vue({
   },
 
   watch: {
-    lanCheck: function (val, oldVal) {
+    lanCheck: function(val, oldVal) {
       this.oVal.oldLanCheck = oldVal;
       if (this.oVal.notSend === 0) {
         this.oVal.notSend = 1;
@@ -3136,7 +3043,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, otherLanguaer, '设置语言失败！', 'language');
           } else {
@@ -3145,24 +3052,19 @@ var vm = new Vue({
             errTip('language');
           }
         },
-        error: function (data) {
+        error: function(data) {
           layer.close(layer.index);
         }
       });
     }
   },
 
-  created: function () {
-    mui.plusReady(function () {
+  created: function() {
+    mui.plusReady(function() {
       mui.init({});
-//    plus.webview.currentWebview().setStyle({
-//      softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
-//    });
       //  禁止tab左右滑动功能
       mui('.mui-slider').slider().stopped = true;
-
       currentWebview = plus.webview.currentWebview();
-      
       plus.nativeUI.showWaiting('正在初始化设置中...', {
         height: '100px',
         width: '180px'
@@ -3170,19 +3072,21 @@ var vm = new Vue({
       // 获取上层页面传递过来的参数
       var self = plus.webview.currentWebview();
       vm.currentIdentifyCode = self.identifyCode;
+      vm.machineId = self.machineId;
+
       // 登陆时存放到本地的用户数据
       vm.token = plus.storage.getItem('token');
       vm.user_name = plus.storage.getItem('user_name');
 
       // 第一次请求
-      vm.firstTimer = setTimeout(function () {
+      vm.firstTimer = setTimeout(function() {
         vm.onlyOne = 1;
         getSicVersion();
       }, 3000);
 
       // var socket = io.connect( 'http://' + '119.23.161.165:9110' + '/rtkTransferWeb' );
       var socket = io.connect('http://119.23.161.165:9010/rtkuniqueid');
-      socket.on('connect', function () {
+      socket.on('connect', function() {
         vm.clientUUid = socket.id;
         vm.disconnectCount = 0;
         console.log('socket is ok :' + vm.clientUUid);
@@ -3193,7 +3097,7 @@ var vm = new Vue({
         }
       });
 
-      socket.on('connect_failed', function () {
+      socket.on('connect_failed', function() {
         // 连接并赋值socketID
         vm.disconnectCount++;
         if (++onlyOne === 1) {
@@ -3202,7 +3106,7 @@ var vm = new Vue({
       });
 
       // 监听数据返并做逻辑处理
-      socket.on('uniqueIdData', function (replyData) {
+      socket.on('uniqueIdData', function(replyData) {
         jsonObj = JSON.parse(replyData.data);
         console.log(jsonObj);
         if (jsonObj.uniqueId === vm.the_unique_id) {
@@ -3219,7 +3123,7 @@ var vm = new Vue({
               '',
               '设备离线,操作失败!',
               ['确认'],
-              function (e) {
+              function(e) {
                 currentWebview.close();
                 mui.openWindow({
                   url: '../../login.html',
@@ -3228,7 +3132,6 @@ var vm = new Vue({
               },
               'div'
             );
-             plus.nativeUI.closeWaiting();
           } else if (jsonObj.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
             errTip(vm.socketTypeModel);
             mui.toast('设备操作被中断，请稍后再试!');
@@ -3244,7 +3147,7 @@ var vm = new Vue({
         }
       });
 
-      socket.on('ConnectStatus', function (replyData) {
+      socket.on('ConnectStatus', function(replyData) {
         var noteObj = eval('(' + replyData.data + ')');
         console.log(noteObj);
         if (noteObj.connectStatus === false) {
@@ -3252,7 +3155,7 @@ var vm = new Vue({
             '',
             '设备离线,操作失败!',
             ['确认'],
-            function (e) {
+            function(e) {
               currentWebview.close();
               mui.openWindow({
                 url: '../../login.html',
@@ -3261,7 +3164,6 @@ var vm = new Vue({
             },
             'div'
           );
-           plus.nativeUI.closeWaiting();
         }
 
         if (noteObj.connectStatus === true) {
@@ -3284,15 +3186,23 @@ var vm = new Vue({
       });
       var resolutionHeight = window.innerHeight;
       resolutionHeight = resolutionHeight - 174;
-      document.getElementById('item1mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item2mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item3mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
-      document.getElementById('item4mobile').setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item1mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item2mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item3mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
+      document
+        .getElementById('item4mobile')
+        .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 
       //  switch开关设置卫星使能
-      mui('#item3mobile .mui-switch').each(function (index) {
+      mui('#item3mobile .mui-switch').each(function(index) {
         //  循环所有toggle
-        this.addEventListener('toggle', function (event) {
+        this.addEventListener('toggle', function(event) {
           //  event.detail.isActive 可直接获取当前状态
           var currentType = vm.Satellite[index].name;
           if (event.detail.isActive) {
@@ -3331,7 +3241,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('启动卫星使能失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3370,7 +3280,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('关闭卫星使能失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3380,9 +3290,9 @@ var vm = new Vue({
       });
 
       //  switch开关设置语音
-      mui('#item4mobile .mui-switch').each(function (index) {
+      mui('#item4mobile .mui-switch').each(function(index) {
         //  循环所有toggle
-        this.addEventListener('toggle', function (event) {
+        this.addEventListener('toggle', function(event) {
           //  event.detail.isActive 可直接获取当前状态
           if (event.detail.isActive) {
             plus.nativeUI.showWaiting('正在打开语音...', {
@@ -3418,7 +3328,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('打开语音失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3457,7 +3367,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('关闭语音失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3466,14 +3376,14 @@ var vm = new Vue({
         });
       });
       // 监听window的resize
-      window.addEventListener('resize', function () {
+      window.addEventListener('resize', function() {
         var height = document.documentElement.clientHeight;
         var width = document.documentElement.clientWidth;
-        //console.log('可见区域高度:' + height);
-        //console.log('可见区域宽度:' + width);
+        console.log('可见区域高度:' + height);
+        // console.log('可见区域宽度:' + width);
         if (document.activeElement.tagName == 'INPUT') {
           // 延迟出现是因为有些 Android 手机键盘出现的比较慢         window.setTimeout(() => {
-          //将被遮挡的元素移动到可视区域中
+
           document.activeElement.scrollIntoViewIfNeeded();
         }
       });
@@ -3483,17 +3393,17 @@ var vm = new Vue({
   computed: {
     // 设置卫星号复选框全选方法
     satelliteAllChecked: {
-      get: function () {
+      get: function() {
         // 当前选中的数据长度等于该数据的总长度（全选状态）,显示按钮选中状态
         return (
           this.satelliteCheckedCount ===
           this.currentSatellite.SatelliteNumber.length
         );
       },
-      set: function (value) {
+      set: function(value) {
         if (value) {
           this.SatelliteNumberChecked = this.currentSatellite.SatelliteNumber.map(
-            function (item) {
+            function(item) {
               return item.value;
             }
           );
@@ -3503,7 +3413,7 @@ var vm = new Vue({
       }
     },
     satelliteCheckedCount: {
-      get: function () {
+      get: function() {
         // 返回选中的数据长度
         return this.SatelliteNumberChecked.length;
       }
@@ -3511,13 +3421,13 @@ var vm = new Vue({
 
     // 修改跟踪频段复选框全选方法
     channelsAllChecked: {
-      get: function () {
+      get: function() {
         // 当前选中的数据长度等于该数据的总长度（全选状态）
         return this.channelsCheckedCount === this.currentSatellite.track.length;
       },
-      set: function (value) {
+      set: function(value) {
         if (value) {
-          this.channelsChecked = this.currentSatellite.track.map(function (
+          this.channelsChecked = this.currentSatellite.track.map(function(
             item
           ) {
             return item.value;
@@ -3528,7 +3438,7 @@ var vm = new Vue({
       }
     },
     channelsCheckedCount: {
-      get: function () {
+      get: function() {
         // 返回选中的数据总长度
         return this.channelsChecked.length;
       }
@@ -3536,10 +3446,10 @@ var vm = new Vue({
 
     //  切换度分秒格式时通过计算属性绑定同一个参数方便提交请求
     latitude_degree: {
-      get: function () {
+      get: function() {
         return Math.floor(this.bVal.latitude);
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(newValue) +
           this.latitude_minute / 60 +
@@ -3548,12 +3458,12 @@ var vm = new Vue({
       }
     },
     latitude_minute: {
-      get: function () {
+      get: function() {
         return Math.floor(
           (this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(this.latitude_degree) +
           newValue / 60 +
@@ -3562,7 +3472,7 @@ var vm = new Vue({
       }
     },
     latitude_second: {
-      get: function () {
+      get: function() {
         return (
           Math.round(
             ((this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60 -
@@ -3574,7 +3484,7 @@ var vm = new Vue({
           ) / 10000
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(this.latitude_degree) +
           this.latitude_minute / 60 +
@@ -3583,10 +3493,10 @@ var vm = new Vue({
       }
     },
     longitude_degree: {
-      get: function () {
+      get: function() {
         return Math.floor(this.bVal.longitude);
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(newValue) +
           this.longitude_minute / 60 +
@@ -3595,12 +3505,12 @@ var vm = new Vue({
       }
     },
     longitude_minute: {
-      get: function () {
+      get: function() {
         return Math.floor(
           (this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(this.longitude_degree) +
           newValue / 60 +
@@ -3609,7 +3519,7 @@ var vm = new Vue({
       }
     },
     longitude_second: {
-      get: function () {
+      get: function() {
         return (
           Math.round(
             ((this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60 -
@@ -3621,7 +3531,7 @@ var vm = new Vue({
           ) / 10000
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(this.longitude_degree) +
           this.longitude_minute / 60 +
@@ -3654,10 +3564,9 @@ function getSicVersion() {
           url: '../../login.html',
           id: 'login'
         });
-        plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       plus.nativeUI.closeWaiting();
     }
   });
@@ -3676,7 +3585,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
   // 如果请求唯一码返回数据成功
   if (data.status === ERR_NO) {
     // 生成setTimeout计时器并执行
-    vm.ajaxTimer = setTimeout(function () {
+    vm.ajaxTimer = setTimeout(function() {
       // 根据返回得到的唯一码请求相应的数据
       mui.ajax(apiUrl.doGetUniqueIdInfo, {
         data: {
@@ -3688,7 +3597,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           console.log('ajax' + JSON.stringify(data));
           if (data.status === 0) {
             tip = tip || data.info;
@@ -3705,41 +3614,34 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
                 mui.toast(data.info);
               }
             } else if (data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
-              isSetSuccess(vm.socketTip);
               errTip(typeModel);
               mui.confirm(
                 '',
                 '设备离线,操作失败!',
                 ['确认'],
-                function (e) {
+                function(e) {
                   currentWebview.close();
                   mui.openWindow({
-                    url: 'equipment.html',
+                    url: '../console/equipment.html',
                     id: './app/console/equipment.html'
                   });
                 },
                 'div'
               );
-              plus.nativeUI.closeWaiting();
             } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
-              isSetSuccess(vm.socketTip);
               errTip(typeModel);
               mui.toast('设备操作被中断，请稍后再试!');
             } else if (data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
-              isSetSuccess(vm.socketTip);
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
             } else if (data.uniqueId === theunique_id) {
-              isSetSuccess(vm.socketTip);
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
             } else {
-              isSetSuccess(vm.socketTip);
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
             }
           } else {
-            isSetSuccess(vm.socketTip);
             mui.toast(data.info);
             plus.nativeUI.closeWaiting();
           }
@@ -3747,7 +3649,6 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
       });
     }, time);
   } else {
-    isSetSuccess(vm.socketTip);
     mui.toast(data.info);
     plus.nativeUI.closeWaiting();
   }
@@ -3789,7 +3690,7 @@ function getConfigWorkModePageInfo(hd) {
           vm.bVal.altitude = data[2];
         }
         //  天线类型
-      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEAerrTipMENT.METHOD') {
+      } else if (hd[i].hitSicData === 'GET:ANTENNA.MEASUREMENT.METHOD') {
         vm.bVal.baseLaunch = hd[i].value;
         vm.sVal.staticLaunch = hd[i].value;
         //  PDOP
@@ -3826,40 +3727,87 @@ function getConfigWorkModePageInfo(hd) {
           height: '100px',
           width: '180px'
         });
-        vm.workChecked = vm.wActive;
-        vm.wActive = hd[i].value;
-        vm.wshow = hd[i].value;
-        mui.ajax(url, {
-          type: 'post',
-          data: {
-            user_name: vm.user_name,
-            token: vm.token,
-            clientUUid: vm.clientUUid,
-            identifyCode: vm.currentIdentifyCode,
-            requestType: 'getDetailWorkModeInfo',
-            workMode: hd[i].value
-          },
-          dataType: 'json',
-          type: 'post',
-          timeout: 10000,
-          success: function callback(data) {
-            if (data.status === ERR_NO) {
-              timeFun(
-                data,
-                getConfigWorkModePageInfo,
-                '读取信息失败',
-                'pagesInfo',
-                3000
-              );
-            } else {
-              mui.toast(data.info);
+
+        if (
+          hd[i].value === 'ROVER' &&
+          plus.storage.getItem('linkCode') !== 'none' &&
+          vm.currentIdentifyCode !== plus.storage.getItem('linkCode')
+        ) {
+          plus.nativeUI.closeWaiting();
+          plus.nativeUI.showWaiting('正在等待对方授权中...', {
+            height: '100px',
+            width: '180px'
+          });
+          mui.ajax(apiUrl.send_hand_over, {
+            data: {
+              user_name: vm.user_name,
+              token: vm.token,
+              identifyCode: vm.currentIdentifyCode
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function callback(data) {
+              if (data.status === ERR_NO) {
+                vm.operationId = data.operationId;
+                resTime = setTimeout(function() {
+                  console.log('checkRes');
+                  checkRes();
+                }, 180000);
+              } else {
+                plus.nativeUI.closeWaiting();
+                mui.confirm(
+                  '',
+                  '当前设备没有关联帐号!',
+                  ['确认'],
+                  function(e) {
+                    currentWebview.close();
+                    mui.openWindow({
+                      url: '../console/equipment.html',
+                      id: './app/console/equipment.html'
+                    });
+                  },
+                  'div'
+                );
+              }
+            },
+            error: function(data) {}
+          });
+        } else {
+          vm.workChecked = vm.wActive;
+          vm.wActive = hd[i].value;
+          vm.wshow = hd[i].value;
+          mui.ajax(url, {
+            data: {
+              user_name: vm.user_name,
+              token: vm.token,
+              clientUUid: vm.clientUUid,
+              identifyCode: vm.currentIdentifyCode,
+              requestType: 'getDetailWorkModeInfo',
+              workMode: hd[i].value
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function callback(data) {
+              if (data.status === ERR_NO) {
+                timeFun(
+                  data,
+                  getConfigWorkModePageInfo,
+                  '读取信息失败',
+                  'pagesInfo',
+                  3000
+                );
+              } else {
+                mui.toast(data.info);
+                plus.nativeUI.closeWaiting();
+              }
+            },
+            error: function(data) {
               plus.nativeUI.closeWaiting();
             }
-          },
-          error: function (data) {
-            plus.nativeUI.closeWaiting();
-          }
-        });
+          });
+        }
       }
     }
   }
@@ -3880,19 +3828,19 @@ function rtknote() {
     dataType: 'json',
     type: 'post',
     timeout: 10000,
-    success: function (data) {
+    success: function(data) {
       if (data.status === 0) {
         console.log('listenting rtk');
       } else {
         mui.toast(data.info);
       }
     },
-    error: function (data) {}
+    error: function(data) {}
   });
 }
 
 // 每240秒申请监控通知
-setInterval(function () {
+setInterval(function() {
   rtknote();
 }, 240000);
 
@@ -3914,7 +3862,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
     dataType: 'json',
     type: 'post',
     timeout: 10000,
-    success: function (data) {
+    success: function(data) {
       if (data.status === ERR_NO) {
         timeFun(
           data,
@@ -3947,12 +3895,13 @@ function getSic(hd) {
         if (hd[i].value === 'SIC_2.0') {
           firstGetConfigWorkModePageInfo('closeWaiting');
         } else {
+          plus.nativeUI.closeWaiting();
           // 如果以上不成立，先进行判断是否设置SIC_2.0协议，确认时，执行设置SIC_2.0协议的方法setSicVirsion
           mui.confirm(
             '',
             '是否设置SIC_2.0协议?',
             ['取消', '确认'],
-            function (e) {
+            function(e) {
               if (e.index === 1) {
                 plus.nativeUI.showWaiting('正在设置中...', {
                   height: '100px',
@@ -3991,7 +3940,7 @@ function setSicVirsion() {
         plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       mui.toast(data.info);
       plus.nativeUI.closeWaiting();
     }
@@ -4030,8 +3979,6 @@ function errTip(typeModel) {
     getSicError('设置SIC_2.0协议失败!');
   } else if (typeModel === 'getSic') {
     getSicError('获取SIC_2.0协议失败!');
-  } else {
-    mui.toast('自检失败!');
   }
   /* else if (typeModel == 'wifiModel') {
 	  wififlag = 1;
@@ -4044,28 +3991,20 @@ function errTip(typeModel) {
 }
 
 function getSicError(msg) {
+  plus.nativeUI.closeWaiting();
   mui.confirm(
     '',
     msg,
     ['确认'],
-    function (e) {
-      if (e.index === 1) {
-        currentWebview.close();
-        mui.openWindow({
-          url: '../../login.html',
-          id: 'login'
-        });
-      }
+    function(e) {
+      currentWebview.close();
+      mui.openWindow({
+        url: '../console/equipment.html',
+        id: './app/console/equipment.html'
+      });
     },
     'div'
   );
-  plus.nativeUI.closeWaiting();
-}
-
-function clear(json) {
-  for (v in json) {
-    json[v] = false;
-  }
 }
 
 /* 基准站启动*/
@@ -4103,55 +4042,50 @@ function baseSet(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:GNSS.BASE.DIFFTYPE') {
       if (hd[i].status == true) {
-        vm.baseS.rtmRadios = true;
+        vm.baseDiffTypeStatus = true;
       } else {
-        vm.baseE.rtmRadios = true;
+        vm.baseDiffTypeStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.BASE.INTERVAL') {
       if (hd[i].status == true) {
-        vm.baseS.launch = true;
+        vm.baseIntervalStatus = true;
       } else {
-        vm.baseE.launch = true;
+        vm.baseIntervalStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
       if (hd[i].status == true) {
-        vm.baseS.cutangle = true;
+        vm.cutangleStatus = true;
       } else {
-        vm.baseE.cutangle = true;
+        vm.cutangleStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.BASE.PDOP') {
       if (hd[i].status == true) {
-        vm.baseS.pdop = true;
+        vm.pdopStatus = true;
       } else {
-        vm.baseE.pdop = true;
+        vm.pdopStatus = false;
       }
-    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEAerrTipMENT.METHOD') {
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.METHOD') {
       if (hd[i].status == true) {
-        vm.baseS.baseLaunch = true;
+        vm.antennaMethodStatus = true;
       } else {
-        vm.baseE.baseLaunch = true;
+        vm.antennaMethodStatus = false;
       }
-    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEAerrTipMENT.HEIGHT') {
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.HEIGHT') {
       if (hd[i].status == true) {
-        vm.baseS.antenna = true;
+        vm.antennaHeightStatus = true;
       } else {
-        $vm.baseE.antenna = true;
+        vm.antennaHeightStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.BASE.START_POSITION') {
       if (hd[i].status == true) {
-        vm.baseS.latitude = true;
-        vm.baseS.longitude = true;
-        vm.baseS.altitude = true;
+        vm.baseStartPositionStatus = true;
       } else {
-        vm.baseE.latitude = true;
-        vm.baseE.longitude = true;
-        vm.baseE.altitude = true;
+        vm.baseStartPositionStatus = false;
       }
     }
   }
-  vm.baseSetStatus = 1;
+  vm.hasSetting = true;
   plus.nativeUI.closeWaiting();
-  mui.toast('设置成功！');
 }
 
 /* 移动站设置*/
@@ -4463,7 +4397,7 @@ function getConfigSatellitePageInfo(hd) {
 }
 
 function timerCheck(type, status, check) {
-  setTimeout(function () {
+  setTimeout(function() {
     getSelfCheck(type, status, check);
   }, 3000);
 }
@@ -4506,7 +4440,7 @@ function getSelfCheck(checkType, status, checking) {
         plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       plus.nativeUI.closeWaiting();
     }
   });
@@ -4747,11 +4681,6 @@ function transformNum(array) {
   }
 }
 
-function isSetSuccess(v) {
-  if (v === '设置基准站超时，请稍候再试！') {
-    vm.baseSetStatus = 2;
-  }
-}
 /* 封装的操作函数*/
 function $(elements) {
   return document.getElementById(elements);
@@ -4776,3 +4705,141 @@ function removeClass(elements, cName) {
   }
 }
 
+/* window.addEventListener('auth', function (event) {
+  mui.confirm(
+    '',
+    '是否授权操作',
+    ['拒绝', '允许'],
+    function (e) {
+      console.log(e.index);
+      if (e.index === 1) {
+        mui.fire(indexWb, 'ifAuth', { flag: true });
+      } else {
+        mui.fire(indexWb, 'ifAuth', { flag: false });
+      }
+    },
+    'div'
+  );
+}); */
+
+function checkRes() {
+  plus.nativeUI.closeWaiting();
+  mui.ajax(apiUrl.check_response, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      operationId: vm.operationId
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function callback(data) {
+      console.log(data);
+      if (data.status === ERR_NO) {
+        vm.operationId = data.operationId;
+        if (data.result === true) {
+          mui.toast('设备获取授权成功!');
+          plus.nativeUI.showWaiting('正在读取设备信息...', {
+            height: '100px',
+            width: '180px'
+          });
+          vm.wActive = 'ROVER';
+          vm.wshow = 'ROVER';
+          mui.ajax(url, {
+            data: {
+              user_name: vm.user_name,
+              token: vm.token,
+              clientUUid: vm.clientUUid,
+              identifyCode: vm.currentIdentifyCode,
+              requestType: 'getDetailWorkModeInfo',
+              workMode: 'ROVER'
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function callback(data) {
+              if (data.status === ERR_NO) {
+                timeFun(
+                  data,
+                  getConfigWorkModePageInfo,
+                  '读取信息失败',
+                  'pagesInfo',
+                  3000
+                );
+              } else {
+                mui.toast(data.info);
+                plus.nativeUI.closeWaiting();
+              }
+            },
+            error: function(data) {
+              plus.nativeUI.closeWaiting();
+            }
+          });
+        } else if (data.result === false) {
+          mui.confirm(
+            '',
+            '对方拒绝授权!',
+            ['确认'],
+            function(e) {
+              currentWebview.close();
+              mui.openWindow({
+                url: '../console/equipment.html',
+                id: './app/console/equipment.html'
+              });
+            },
+            'div'
+          );
+          mui.toast(data.info);
+        } else if (data.result === '') {
+          mui.confirm(
+            '',
+            '授权异常!',
+            ['确认'],
+            function(e) {
+              currentWebview.close();
+              mui.openWindow({
+                url: '../console/equipment.html',
+                id: './app/console/equipment.html'
+              });
+            },
+            'div'
+          );
+        }
+      } else {
+        mui.confirm(
+          '',
+          '授权失败!',
+          ['确认'],
+          function(e) {
+            currentWebview.close();
+            mui.openWindow({
+              url: '../console/equipment.html',
+              id: './app/console/equipment.html'
+            });
+          },
+          'div'
+        );
+        mui.toast(data.info);
+      }
+    },
+    error: function(data) {
+      mui.confirm(
+        '',
+        '授权异常!',
+        ['确认'],
+        function(e) {
+          currentWebview.close();
+          mui.openWindow({
+            url: '../console/equipment.html',
+            id: './app/console/equipment.html'
+          });
+        },
+        'div'
+      );
+    }
+  });
+}
+window.addEventListener('authRes', function(event) {
+  checkRes();
+  clearTimeout(resTime);
+});
