@@ -73,6 +73,7 @@ var vm = new Vue({
     antennaMethodStatus: false,
     antennaHeightStatus: false,
     baseStartPositionStatus: false,
+    recordInterval:false,
     // 基准
     bVal: {
       rtmRadios: 'RTCA',
@@ -2630,7 +2631,6 @@ var vm = new Vue({
           if (data.status == 0) {
             timeFun(data, roverSet, '设置超时，请稍候再试！');
             plus.nativeUI.closeWaiting();
-            mui.toast('设置值成功！');
           } else {
             mui.toast(data.info);
             plus.nativeUI.closeWaiting();
@@ -2702,7 +2702,6 @@ var vm = new Vue({
           if (data.status == 0) {
             timeFun(data, staticSet, '设置超时，请稍候再试！', 'staticSet');
             plus.nativeUI.closeWaiting();
-            mui.toast('设置值成功！');
           } else {
             errTip('staticSet');
             mui.toast(data.info);
@@ -4093,12 +4092,16 @@ function roverSet(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
       if (hd[i].status == true) {
-        vm.roverS.cutangle = true;
+        vm.cutangleStatus = true;
+        // vm.roverS.cutangle = true;
       } else {
-        vm.roverE.cutangle = true;
+        vm.cutangleStatus = false;
+        // vm.roverE.cutangle = true;
       }
     }
   }
+  vm.hasSetting = true;
+  plus.nativeUI.closeWaiting();
 }
 
 /* 静态站设置*/
@@ -4106,43 +4109,45 @@ function staticSet(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:DEVICE.RECORD.INTERVAL') {
       if (hd[i].status == true) {
-        vm.staticS.sampling = true;
+        vm.recordInterval = true;
       } else {
-        vm.staticE.sampling = true;
+        vm.recordInterval = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.BASE.PDOP') {
       if (hd[i].status == true) {
-        vm.staticS.pdop = true;
+        vm.pdopStatus = true;
       } else {
-        vm.staticE.pdop = true;
+        vm.pdopStatus = false;
       }
-    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEAerrTipMENT.HEIGHT') {
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.HEIGHT') {
       if (hd[i].status == true && hd[i].value != 'NULL') {
-        vm.staticS.antenna = true;
+        vm.antennaHeightStatus = true;
       } else {
-        vm.staticE.antenna = true;
+        vm.antennaHeightStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:GNSS.CUTANGLE') {
       if (hd[i].status == true) {
-        vm.staticS.cutangle = true;
+        vm.cutangleStatus = true;
       } else {
-        vm.staticE.cutangle = true;
+        vm.cutangleStatus = false;
       }
-    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEAerrTipMENT.METHOD') {
+    } else if (hd[i].hitSicData == 'SET:ANTENNA.MEASUREMENT.METHOD') {
       if (hd[i].status == true) {
-        vm.staticS.staticLaunch = true;
+        vm.antennaMethodStatus = true;
       } else {
-        vm.staticE.staticLaunch = true;
+        vm.antennaMethodStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:DEVICE.RECORD.AUTO_REC') {
       if (hd[i].status == true) {
-        vm.staticS.record = true;
+        // vm.staticS.record = true;
       } else {
-        vm.staticE.record = true;
+        // vm.staticE.record = true;
         vm.sVal.record = !vm.sVal.record;
       }
     }
   }
+  vm.hasSetting = true;
+  plus.nativeUI.closeWaiting();
 }
 
 /* 静态站启动*/

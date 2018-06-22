@@ -669,7 +669,8 @@
 			    type: 'post',
 			    timeout: 10000,
 			    success: function (data) {
-			      if (data.list == null) {
+			    	console.log(JSON.stringify(data))
+			      if (data.totalCount == 0) {
 			        vm.deviceData = [];
 			        vm.hasResult = false;
 			        mui.toast('没有匹配的设备信息！');
