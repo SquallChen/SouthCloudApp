@@ -59,8 +59,17 @@
 			height: 55px;
 			border-radius: 50px;
 			border: 1px solid #fff;
+			background: white;
 		}
-
+		.header{
+			display: block;
+			width: 55px;
+			height: 55px;
+			border-radius: 50px;
+			border: 1px solid #fff;
+			background: white url('../../public/img/user-header.png') no-repeat 4px 0;
+			background-size: 46px 46px;
+		}
 		.filter ul li span {
 			color: white;
 			font-size: 15px;
@@ -378,14 +387,13 @@
 <body>
 	<div id="app" v-cloak>
 		<header class="mui-bar mui-bar-nav">
-			<!--<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover"></a>-->
 			<h1 class="mui-title">南方云</h1>
 		</header>
 		<div class="mui-content">
 			<div class="filter">
 				<ul class="filter-ul">
 					<li href="../personnel/userinfo.html" class="filter-li">
-						<img src="../../public/img/01.jpg" alt="" class="img" />
+						<span class="header"></span>
 						<div>
 							<span>{{realName}}</span>
 							<span>{{user_name}}</span>
@@ -517,11 +525,9 @@
 					vm.token = plus.storage.getItem('token');
 					vm.user_name = plus.storage.getItem('user_name');
 					vm.realName = plus.storage.getItem('realName');
-					vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '暂无分组';
+					vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '';
 					vm.password = plus.storage.getItem('passWord');
 					vm.signature = plus.storage.getItem('signature');
-					console.log(plus.storage.getItem('realName'));
-					console.log(plus.storage.getItem('user_name'));
 					// 页面顶部筛选按钮跳转
 					mui('.filter-ul').on('tap', '.filter-li', function (e) {
 						var url = this.getAttribute('href');
@@ -588,7 +594,8 @@
 					if (data.status === 0) {
 						var _data = data;
 						vm.realName = _data.realName;
-						vm.workGroup = _data.additionalInfo.wrokGroup !== 'undefined' ? _data.additionalInfo.wrokGroup : '暂无分组';
+						vm.user_name = plus.storage.getItem('user_name');
+						vm.workGroup = _data.additionalInfo.wrokGroup !== 'undefined' ? _data.additionalInfo.wrokGroup : '';
 					} else {
 						plus.nativeUI.toast(data.info);
 						setTimeout(function () {
@@ -611,9 +618,7 @@
 		window.addEventListener('closeTopPopover', function () {
 			if (event.detail.id === 'app/console/me.html') {
 				vm.linkDevice();
-				vm.user_name = plus.storage.getItem('user_name');
-				vm.realName = plus.storage.getItem('realName');
-				vm.workGroup = plus.storage.getItem('workGroup') !== 'undefined' ? plus.storage.getItem('workGroup') : '暂无分组';
+				refreshUserInfo();
 			}
 		});
 	</script>

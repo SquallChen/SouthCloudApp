@@ -1,25 +1,120 @@
 <!DOCTYPE html>
 <html class="ui-page-login">
 
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-	<title>确认授权</title>
-	<link href="./css/mui.min.css" rel="stylesheet" />
-	<link href="./css/custom.css" rel="stylesheet" />
-	<style>
-		.mui-bar-nav.mui-bar .mui-icon {
-			width: 73px;
-			height: 52px;
-			top: 21px;
-			display: flex;
-			align-items: center;
-		}
-	</style>
-</head>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title>确认授权</title>
+		<link href="./css/mui.min.css" rel="stylesheet" />
+		<link href="./css/custom.css" rel="stylesheet" />
+		<style>
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('./public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
+			}
+			
+			.mui-bar-nav~.mui-content {
+				height: 100%;
+			}
+			
+			.main-content {
+				height: 100%;
+				background: url('./public/img/check_bg.png');
+				background-size: 100% 100%;
+			}
+			
+			.bg-content {
+				height: 100%;
+				background: url('./public/img/line.png') no-repeat 0 72%;
+				background-size: 100% 30px;
+			}
+			
+			.header {
+				padding-top: 40px;
+				display: flex;
+				justify-content: center;
+			}
+			
+			.header span {
+				display: block;
+				width: 124px;
+				height: 124px;
+				background: white url('./public/img/user-header.png') no-repeat 16px 13px;
+				border-radius: 90px;
+				background-size: 90px 90px;
+			}
+			
+			.textcontent {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding-top: 15px;
+				margin-bottom: 125px;
+			}
+			
+			.textcontent span {
+				display: block;
+			}
+			
+			.textcontent span:nth-child(1) {
+				font-size: 15px;
+			}
+			
+			.textcontent span:nth-child(2) {
+				font-size: 13px;
+				margin-bottom: 25px;
+			}
+			
+			.textcontent span:nth-child(3) {
+				font-size: 15px;
+			}
+			
+			.btn-content {
+				position: fixed;
+				bottom: 30px;
+				width: 100%;
+				text-align: center;
+				padding: 0 40px;
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.btn-content button {
+				width: 105px;
+				height: 43px;
+				font-size: 17px;
+			}
+			
+			.mui-btn-danger {
+				background: #fb4847;
+				border: none;
+			}
+			
+			.mui-btn-blue {
+				background: #4ad662;
+				border: none;
+			}
+		</style>
+	</head>
 
-<body>
-	<div>
+	<body>
 		<header class="mui-bar mui-bar-nav">
 			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
 				<span class="back"></span>
@@ -27,25 +122,61 @@
 			<h1 class="mui-title">确认授权</h1>
 		</header>
 		<div class="mui-content">
-			<button class="mui-btn-blue" id="allow">允 许</button>
-			<button class="mui-btn-danger" id="refuse">拒 绝</button>
+			<div class="main-content">
+				<div class="bg-content">
+					<div class="header">
+						<span></span>
+					</div>
+					<div class="textcontent">
+						<span>南方云</span>
+						<span>nanfangyun</span>
+						<span>nanfangyun向您请求授权</span>
+					</div>
+					<div class="btn-content">
+						<button class="mui-btn-danger" id="refuse">拒 绝</button>
+						<button class="mui-btn-blue" id="allow">允 许</button>
+					</div>
+				</div>
+			</div>
+
 		</div>
-	</div>
-	<script src="./js/mui.min.js"></script>
-	<script>
-		mui.plusReady(function () {
-		  mui.init({});
-		  var indexWb = plus.webview.getLaunchWebview();
-		  document.getElementById('allow').addEventListener('tap', function () {
-		    mui.fire(indexWb, 'ifAuth', { flag: true });
-		    plus.webview.currentWebview().close();
-		  });
-		  document.getElementById('refuse').addEventListener('tap', function () {
-		    mui.fire(indexWb, 'ifAuth', { flag: false });
-		    plus.webview.currentWebview().close();
-		  });
-		});
-	</script>
-</body>
+		<script src="./js/mui.min.js"></script>
+		<script src="./js/url.js"></script>
+		<script src="./js/vue.min.js"></script>
+		<script>
+			var vm = new Vue({
+				el: '#app',
+				data: {
+					keywords: '',
+					workGroupValue: '',
+					workGroup: [],
+					dataInfo:''
+				},
+				methods: {},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({});
+						// 获取上层页面传递过来的参数
+						var self = plus.webview.currentWebview();
+						vm.dataInfo = self.data;
+						console.log(vm.dataInfo)
+						var indexWb = plus.webview.getLaunchWebview();
+						document.getElementById('allow').addEventListener('tap', function() {
+							mui.fire(indexWb, 'ifAuth', {
+								flag: true
+							});
+							plus.webview.currentWebview().close();
+						});
+						document.getElementById('refuse').addEventListener('tap', function() {
+							mui.fire(indexWb, 'ifAuth', {
+								flag: false
+							});
+							plus.webview.currentWebview().close();
+						});
+					});
+				}
+			});
+		</script>
+	</body>
 
 </html>

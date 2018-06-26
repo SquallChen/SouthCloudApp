@@ -74,6 +74,15 @@ var vm = new Vue({
     antennaHeightStatus: false,
     baseStartPositionStatus: false,
     recordInterval:false,
+    transportationNtripWorkpara:false,
+    apnServerStatus:false,
+    apnUserStatus:false,
+    apnPassWordStatus:false,
+    uhfCurChannel:false,
+    uhfBaudrateAir:false,
+    uhfPower:false,
+    uhfProtocol:false,
+    uhfFrequency:false,
     // 基准
     bVal: {
       rtmRadios: 'RTCA',
@@ -2039,6 +2048,7 @@ var vm = new Vue({
                 3000
               );
             } else {
+              console.log(data.info);
               mui.toast(data.info);
               plus.nativeUI.closeWaiting();
             }
@@ -2070,6 +2080,7 @@ var vm = new Vue({
                 3000
               );
             } else {
+              console.log(data.info);
               mui.toast(data.info);
               plus.nativeUI.closeWaiting();
             }
@@ -2101,6 +2112,7 @@ var vm = new Vue({
                 3000
               );
             } else {
+              console.log(data.info);
               mui.toast(data.info);
               plus.nativeUI.closeWaiting();
             }
@@ -2416,8 +2428,12 @@ var vm = new Vue({
 
     //  设置卫星跟踪频段
     setTrack: function(index) {
+      plus.nativeUI.showWaiting('正在设置中...', {
+        height: '100px',
+        width: '150px'
+      });
       var choosedStr, wholeStr, notChoosedStr, channelsChecked;
-      var currentType = vm.Satellite[index].name;
+      var currentType = vm.Satellite[index].name.toUpperCase();
       wholeStr = this.currentSatellite.track.map(function(item) {
         return item.value;
       });
@@ -2443,18 +2459,20 @@ var vm = new Vue({
         type: 'post',
         timeout: 10000,
         success: function callback(data) {
+          console.log('-----'+JSON.stringify(data));
           if (data.status === ERR_NO) {
-            plus.nativeUI.closeWaiting();
-            mui.toast('设置卫星频段成功！');
+            //plus.nativeUI.closeWaiting();
+            //mui.toast('设置卫星频段成功！');
             mui('#setTrack').popover('toggle');
             timeFun(
               data,
               getConfigSatellitePageInfo,
               '切换其它设置失败!',
               'pagesInfo',
-              3000
+              6000
             );
           } else {
+            console.log(data.info);
             mui.toast(data.info);
             plus.nativeUI.closeWaiting();
           }
@@ -3124,6 +3142,7 @@ var vm = new Vue({
               ['确认'],
               function(e) {
                 currentWebview.close();
+                plus.nativeUI.closeWaiting();
                 mui.openWindow({
                   url: '../../login.html',
                   id: 'login'
@@ -3558,6 +3577,7 @@ function getSicVersion() {
       if (data.status === ERR_NO) {
         timeFun(data, getSic, '获取设备协议失败!', 'getSic', 3000, true);
       } else {
+        plus.nativeUI.closeWaiting();
         //  用户登陆过期
         mui.openWindow({
           url: '../../login.html',
@@ -3597,7 +3617,6 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
         type: 'post',
         timeout: 10000,
         success: function(data) {
-          console.log('ajax' + JSON.stringify(data));
           if (data.status === 0) {
             tip = tip || data.info;
             var _data = data.data;
@@ -3607,10 +3626,10 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
                 // 根据模式类型，有数据返回时对应相关处理
                 var hd = _data.hitSicDataReply;
                 func(hd);
-                //  plus.nativeUI.closeWaiting();
               } else {
                 errTip(typeModel);
                 mui.toast(data.info);
+                plus.nativeUI.closeWaiting();
               }
             } else if (data.errorId === 'ERROR_THE_SESSION_NOT_ONLINE') {
               errTip(typeModel);
@@ -3620,25 +3639,26 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
                 ['确认'],
                 function(e) {
                   currentWebview.close();
-                  mui.openWindow({
-                    url: '../console/equipment.html',
-                    id: './app/console/equipment.html'
-                  });
                 },
                 'div'
               );
+              plus.nativeUI.closeWaiting();
             } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
               errTip(typeModel);
               mui.toast('设备操作被中断，请稍后再试!');
+              plus.nativeUI.closeWaiting();
             } else if (data.errorId === 'ERROR_THE_CONFIG_TIME_OUT') {
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
+              plus.nativeUI.closeWaiting();
             } else if (data.uniqueId === theunique_id) {
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
+              plus.nativeUI.closeWaiting();
             } else {
               errTip(typeModel);
               mui.toast('设置超时，操作失败！');
+              plus.nativeUI.closeWaiting();
             }
           } else {
             mui.toast(data.info);
@@ -3660,7 +3680,8 @@ function getConfigWorkModePageInfo(hd) {
     if (hd[i].status === true) {
       //  静态站启动状态
       if (hd[i].hitSicData === 'GET:DEVICE.RECORD.STATUS') {
-        if (hd[i].value === 'RECORDING' || hd[i].value === 1) {
+        if (hd[i].value === 'RECORDING' || hd[i].value == 1) {
+          console.log('111222333');
           vm.sVal.show = 'break';
         } else {
           vm.sVal.show = 'start';
@@ -3761,10 +3782,10 @@ function getConfigWorkModePageInfo(hd) {
                   ['确认'],
                   function(e) {
                     currentWebview.close();
-                    mui.openWindow({
-                      url: '../console/equipment.html',
-                      id: './app/console/equipment.html'
-                    });
+                    // mui.openWindow({
+                    //   url: '../console/equipment.html',
+                    //   id: './app/console/equipment.html'
+                    // });
                   },
                   'div'
                 );
@@ -3873,6 +3894,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
         );
       } else if (data.status === 40004) {
         plus.storage.clear();
+        plus.nativeUI.closeWaiting();
         mui.openWindow({
           url: '../../login.html',
           id: 'login'
@@ -3997,10 +4019,10 @@ function getSicError(msg) {
     ['确认'],
     function(e) {
       currentWebview.close();
-      mui.openWindow({
-        url: '../console/equipment.html',
-        id: './app/console/equipment.html'
-      });
+      // mui.openWindow({
+      //   url: '../console/equipment.html',
+      //   id: './app/console/equipment.html'
+      // });
     },
     'div'
   );
@@ -4015,7 +4037,9 @@ function baseStart(hd) {
         plus.nativeUI.closeWaiting();
         mui.toast('启动成功!');
       } else {
-        mui.toast('启动失败');
+        vm.bVal.show = 'START';
+        plus.nativeUI.closeWaiting();
+        mui.toast('启动失败!');
       }
     }
   }
@@ -4023,6 +4047,7 @@ function baseStart(hd) {
 
 /* 基准站断开*/
 function baseBreak(hd) {
+  console.log('++++++'+JSON.stringify(hd));
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:GNSS.BASE.STOP_BASE') {
       if (hd[i].status == true) {
@@ -4214,7 +4239,6 @@ function getConfigDataLinkPageInfo(hd) {
     }
     plus.nativeUI.closeWaiting();
   }
-  vm.currentTabIndex = 2;
 }
 
 /* 数据链中的移动网络设置*/
@@ -4222,42 +4246,32 @@ function networkSet(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:TRANSPORTATION.NTRIP.WORKPARA') {
       if (hd[i].status == true) {
-        vm.netS.ip = true;
-        vm.netS.port = true;
-        vm.netS.account = true;
-        vm.netS.pw = true;
-        vm.netS.linkMobileModel = true;
-        vm.netS.linkAccessPoint = true;
+        vm.transportationNtripWorkpara = true;
       } else {
-        vm.netE.ip = true;
-        vm.netE.port = true;
-        vm.netE.account = true;
-        vm.netE.pw = true;
-        vm.netE.linkMobileModel = true;
-        vm.netE.linkAccessPoint = true;
+        vm.transportationNtripWorkpara = false;
       }
     } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN') {
       if (hd[i].status == true) {
-        vm.netS.apnSrver = true;
+        vm.apnServerStatus = true;
       } else {
-        vm.netE.apnSrver = true;
+        vm.apnServerStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN_USER') {
       if (hd[i].status == true) {
-        vm.netS.apnUser = true;
+        vm.apnUserStatus = true;
       } else {
-        vm.netE.apnUser = true;
+        vm.apnUserStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:NETWORK.CELLULAR_NET.APN_PASSWORD') {
       if (hd[i].status == true) {
-        vm.netS.apnPassword = true;
+        vm.apnPassWordStatus = true;
       } else {
-        vm.netE.apnPassword = true;
+        vm.apnPassWordStatus = false;
       }
     }
   }
+  vm.hasSetting = true;
   plus.nativeUI.closeWaiting();
-  mui.toast('设置成功！');
 }
 
 /* 数据链内置电台的设置*/
@@ -4265,32 +4279,36 @@ function datalinkUHF(hd) {
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:UHF.CUR_CHANNEL') {
       if (hd[i].status == true) {
-        vm.uhfS.link_channel = true;
+        vm.uhfCurChannel = true;
       } else {
-        vm.uhfE.link_channel = true;
+        vm.uhfCurChannel = false;
       }
     } else if (hd[i].hitSicData == 'SET:UHF.BAUDRATE.AIR') {
       if (hd[i].status == true) {
-        vm.uhfS.braundrateAir = true;
+        vm.uhfBaudrateAir = true;
       } else {
-        vm.uhfE.braundrateAir = true;
+        vm.uhfBaudrateAir = false;
       }
     } else if (hd[i].hitSicData == 'SET:UHF.POWER') {
       if (hd[i].status == true) {
-        vm.uhfS.UHFPowerRadios = true;
+        vm.uhfPower = true;
       } else {
-        vm.uhfE.UHFPowerRadios = true;
+        vm.uhfPower = false;
       }
     } else if (hd[i].hitSicData == 'SET:UHF.PROTOCOL') {
       if (hd[i].status == true) {
-        vm.uhfS.link_UHF_protocol = true;
+        vm.uhfProtocol = true;
       } else {
-        vm.uhfE.link_UHF_protocol = true;
+        vm.uhfProtocol = false;
       }
+    }else if(hd[i].hitSicData == 'SET:UHF.FREQUENCY'){
+      vm.uhfFrequency = true;
+    }else{
+      vm.uhfFrequency = false;
     }
   }
+  vm.hasSetting = true;
   plus.nativeUI.closeWaiting();
-  mui.toast('设置成功！');
 }
 
 // 获取卫星设置页面数据
@@ -4397,7 +4415,6 @@ function getConfigSatellitePageInfo(hd) {
       }
     }
   }
-  vm.currentTabIndex = 3;
   plus.nativeUI.closeWaiting();
 }
 
@@ -4787,10 +4804,10 @@ function checkRes() {
             ['确认'],
             function(e) {
               currentWebview.close();
-              mui.openWindow({
-                url: '../console/equipment.html',
-                id: './app/console/equipment.html'
-              });
+              // mui.openWindow({
+              //   url: '../console/equipment.html',
+              //   id: './app/console/equipment.html'
+              // });
             },
             'div'
           );
@@ -4802,10 +4819,10 @@ function checkRes() {
             ['确认'],
             function(e) {
               currentWebview.close();
-              mui.openWindow({
-                url: '../console/equipment.html',
-                id: './app/console/equipment.html'
-              });
+              // mui.openWindow({
+              //   url: '../console/equipment.html',
+              //   id: './app/console/equipment.html'
+              // });
             },
             'div'
           );
@@ -4817,10 +4834,10 @@ function checkRes() {
           ['确认'],
           function(e) {
             currentWebview.close();
-            mui.openWindow({
-              url: '../console/equipment.html',
-              id: './app/console/equipment.html'
-            });
+            // mui.openWindow({
+            //   url: '../console/equipment.html',
+            //   id: './app/console/equipment.html'
+            // });
           },
           'div'
         );
@@ -4834,10 +4851,10 @@ function checkRes() {
         ['确认'],
         function(e) {
           currentWebview.close();
-          mui.openWindow({
-            url: '../console/equipment.html',
-            id: './app/console/equipment.html'
-          });
+          // mui.openWindow({
+          //   url: '../console/equipment.html',
+          //   id: './app/console/equipment.html'
+          // });
         },
         'div'
       );

@@ -545,34 +545,21 @@
 								data: {
 									user_name: plus.storage.getItem('user_name'),
 									token: plus.storage.getItem('token'),
-									num_per_page: 10000
+									num_per_page: 50
 								},
 								dataType: 'json',
 								type: 'post',
 								timeout: 10000,
 								success: function(data) {
 									if(data.status === 0) {
-										//console.log(JSON.stringify(data));
-//										var tempData = data.recordList;
-//										var tempArray = [];
-//										// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
-//										for(var i = 0; i < tempData.length; i++) {
-//											if(tempData[i].status === 0) {
-//												tempArray.push(tempData[i]);
-//												tempData.splice(i, 1);
-//											}
-//										}
-//										for(var i = 0; i < tempArray.length; i++) {
-//											tempData.unshift(tempArray[i]);
-//										}
 //										// 完成排列处理的数组数据添加到页面上渲染
 										vm.deviceData = data.recordList;
-										//console.log(JSON.stringify(vm.deviceData));
 									} else if(data.status === 40004) {
 										mui.openWindow({
 											url: '../../login.html',
 											id: 'login'
 										});
+										plus.nativeUI.closeWaiting();
 									} else {
 										plus.nativeUI.toast(data.info);
 										setTimeout(function() {
@@ -593,7 +580,7 @@
 								data: {
 									user_name: plus.storage.getItem('user_name'),
 									token: plus.storage.getItem('token'),
-									num_per_page: 10000,
+									num_per_page: 50,
 									filter_sub_name: vm.keywords,
 									filter_work_group: vm.workGroup
 								},
@@ -627,6 +614,7 @@
 											url: '../../login.html',
 											id: 'login'
 										});
+										plus.nativeUI.toast(data.info);
 									} else {
 										plus.nativeUI.toast(data.info);
 										setTimeout(function() {

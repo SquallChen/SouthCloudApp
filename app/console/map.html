@@ -7,7 +7,6 @@
   <title>map</title>
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/custom.css" rel="stylesheet" />
-  <link href="../../css/input.css" rel="stylesheet" />
   <link href="../../css/ol.css" rel="stylesheet" />
   <link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
   <link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
@@ -26,17 +25,6 @@
       margin: 0;
     }
 
-    /*.mui-bar-nav.mui-bar :nth-child(1) {
-      position: relative;
-    }
-
-    .mui-bar-nav.mui-bar :nth-child(2) {
-      font-size: 28px;
-      padding: 10px 10px;
-      position: relative;
-      top: 23px;
-      left: -15px;
-    }*/
 		.mui-bar-nav.mui-bar .mui-icon{
 			margin-top: 20px;
 			padding-right: 14px;
@@ -148,9 +136,12 @@
       padding-left: 32px;
       padding-right: 20px;
     }
-		.mui-checkbox.mui-left input[type=checkbox], .mui-radio.mui-left input[type=radio]{
-			left:0;
-		}
+
+    .mui-checkbox.mui-left input[type=checkbox],
+    .mui-radio.mui-left input[type=radio] {
+      left: 0;
+    }
+
     #topPopover2 ul li div button,
     #topPopover2 ul li button {
       margin-right: 15px;
@@ -236,10 +227,6 @@
       background: white;
     }
 
-    #topPopover1 .mui-table-view-cell {
-      border-bottom: 1px solid #ddd;
-    }
-
     .mui-popover .mui-table-view {
       border-radius: 7px;
     }
@@ -252,48 +239,57 @@
 
     .popup-info p {
       color: #000;
-			margin-bottom: 0;
-			height: 28px;
-			line-height: 34px;
-			font-size: 14px;
+      margin-bottom: 0;
+      height: 28px;
+      line-height: 34px;
+      font-size: 14px;
     }
-    .popup-info p span{
-    	display: block;
-    	padding: 0 10px;
-    	height: 28px;
-    	line-height: 31px;
-    	color: #333;
+
+    .popup-info p span {
+      display: block;
+      padding: 0 10px;
+      height: 28px;
+      line-height: 31px;
+      color: #333;
     }
-		.popup-info p:after{
-			width: 100%;
-			height: 1px;
-			content: '';
-			display: block;
-			padding: 0;
-			position: relative;
-			-webkit-transform: scaleY(.5);
-			transform: scaleY(.5);
-			background-color: #ccc;
-		}
-		 p button{
-			border-radius: 0;
-			border: none;
-			width: 70px;
-			height: 35px;
-		}
-		#real{
-			margin-left: 10px;
-			margin-right: 10px;
-			margin-top: 10px;
-		}
-		#history,#real{
-			border:1px solid #ccc;
-			margin-top: 10px;
-		}
-		#history:active,#real:active{
-			background: #0b5fde;
-			border:none;
-		}
+
+    .popup-info p:after {
+      width: 100%;
+      height: 1px;
+      content: '';
+      display: block;
+      padding: 0;
+      position: relative;
+      -webkit-transform: scaleY(.5);
+      transform: scaleY(.5);
+      background-color: #ccc;
+    }
+
+    p button {
+      border-radius: 0;
+      border: none;
+      width: 70px;
+      height: 35px;
+    }
+
+    #real {
+      margin-left: 10px;
+      margin-right: 10px;
+      margin-top: 10px;
+    }
+
+    #history,
+    #real {
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    #history:active,
+    #real:active {
+      background: #0b5fde;
+      border: none;
+    }
+
     .icon-related,
     .icon-sign-out {
       color: #666;
@@ -314,20 +310,16 @@
 
     .ol-popup .closeBox {
       margin: 2px 2px 0 0;
-      background-color:white;
-      color:#333;
+      background-color: white;
+      color: #333;
     }
-		.ol-popup .closeBox:after{
-			content:"\00d7";
-			font-size: 30px;
-			/*font-family:"bodoni mt";*/
-			font-family:fantasy;
-			color: #999;
-		}
-    #topPopover1 .mui-table-view-cell {
-      border-bottom: 1px solid #e3e3e3;
-      height: 52px;
-      line-height: 26px;
+
+    .ol-popup .closeBox:after {
+      content: "\00d7";
+      font-size: 30px;
+      /*font-family:"bodoni mt";*/
+      font-family: fantasy;
+      color: #999;
     }
 
     .mui-popover .mui-table-view .mui-table-view-cell:first-child {
@@ -339,35 +331,23 @@
       padding: 11px 15px;
     }
 
-    #topPopover1 .mui-table-view-cell a span {
-      position: relative;
-      display: inline-block;
-      width: 68px;
-      text-align: center;
-      font-size: 15px;
-      color: #666;
-    }
-
     .mui-table-view-cell:after {
       height: 0;
     }
 
-    #topPopover1 .mui-table-view-cell a {
-      border-bottom: 0;
+    .ol-popup.default {
+      border: 1px solid #0b60de;
+      border-radius: 4px;
     }
-    .ol-popup.default{
-    	border:1px solid #0b60de;
-    	border-radius: 4px;
-    }
-    .ol-popup .content{
-    	padding: 0;
+
+    .ol-popup .content {
+      padding: 0;
     }
   </style>
 </head>
 
 <body>
   <header class="mui-bar mui-bar-nav">
-    <!--<a id="menu" class="mui-action-menu mui-icon mui-icon-plusempty mui-pull-right lists" href="#topPopover1"></a>-->
     <a id="menu2" class="mui-icon mui-pull-right" href="#topPopover2">
       <span class="icon-list"></span>
     </a>
@@ -430,20 +410,17 @@
   <script src="../../js/vue.min.js"></script>
   <script type="text/javascript">
     var popup = null;
+    var url, urlAdd;
+
     var vm = new Vue({
       el: '#app',
       data: {
         workGroup: '',
-        equipmentNum: 'SG6075117213416',
+        equipmentNum: '',
         equipmentOnline: true,
         equipmentOffline: true
       },
-      methods: {
-        test: function () {
-          mui.toast('此处调用关联接口....');
-          mui('#topPopover1').popover('hide');
-        }
-      },
+      methods: {},
       created: function () {
       }
     });
@@ -477,12 +454,12 @@
           url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
         })
       });
-      var tianDiTuSatellite = new ol.layer.Tile({
+      /*  var tianDiTuSatellite = new ol.layer.Tile({
         title: '天地图卫星影像',
         source: new ol.source.XYZ({
-          url: 'http://t3.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}'/**/
+          url: 'http://t3.tianditu.com/DataServer?T=img_w&x={x}&y={y}&l={z}'
         })
-      });
+      }); */
 
       // 设备图层资源
       /*  var vectorSource = new ol.source.Vector({
@@ -502,12 +479,16 @@
       });
       document.getElementById('reset').addEventListener('tap', function () {
         vm.workGroup = '';
+        vm.equipmentNum = '';
         vm.equipmentOnline = false;
         vm.equipmentOffline = false;
+        urlAdd = ';state1:1;state2:0';
+        url = monitorUrlAddress + urlAdd;
+        filterMapData(url);
+        mui('#topPopover2').popover('hide');
       });
 
       document.getElementById('set').addEventListener('tap', function () {
-        var url, urlAdd;
         if (vm.equipmentNum === '') {
           if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
             urlAdd = ';state1:1;state2:0';
@@ -637,7 +618,7 @@
               }
             }
           }
-          mapCenter([105.2652664185, 30.1349929688], 4);
+          mapCenter([115.2652664185, 28.1349929688], 5);
           /* if (coordinatesArr.length === 1) {
             mapCenter(coordinatesArr[0], 8);
           } else {
@@ -671,30 +652,16 @@
         identifyCode = deviceItemInfo.identify_code;
         status = deviceItemInfo.online_status;
         var content = '<div class="popup-info">';
-        content += '<p>' + '<span>&nbsp;'+'</span>'+ '</p>';
-        content += '<p>' + '<span>'+deviceItemInfo.identify_code + '</span>'+ '</p>';
-        /* if (deviceItemInfo.online_status === 1) {
-          content += '<p>连接时间:' + timeTrans(deviceItemInfo.connect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
-        } else {
-          content += '<p>断开时间:' + timeTrans(deviceItemInfo.disconnect_time, 'yyyy-MM-dd HH:mm:ss') + '</p>';
-        } */
-        /* var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
-
-        content += '<p>经度:' + formatDegree(deviceItemInfo.longitude) + '</p>';
-        content += '<p>纬度:' + formatDegree(deviceItemInfo.latitude) + '</p>';
-        content += '<p>用户名:' + upDataUserName + '</p>';*/
+        content += '<p>' + '<span>&nbsp;' + '</span>' + '</p>';
+        content += '<p>' + '<span>' + deviceItemInfo.identify_code + '</span>' + '</p>';
         var upDataCompanyInfo = deviceItemInfo.up_data_company_info ? deviceItemInfo.up_data_company_info : '-';
         var upDataUserName = deviceItemInfo.up_data_user_name ? deviceItemInfo.up_data_user_name : '-';
         companyInfo = upDataCompanyInfo;
-        content += '<p>' + '<span>'+upDataUserName + '</span>'+ '</p>';
-        content += '<p>' + '<span>'+upDataCompanyInfo + '</span>'+ '</p></div>';
+        content += '<p>' + '<span>' + upDataUserName + '</span>' + '</p>';
+        content += '<p>' + '<span>' + upDataCompanyInfo + '</span>' + '</p></div>';
         content += '<p><button id="real" style="margin-right:8px">实时轨迹</button><button id="history">历史轨迹</button></p></div>';
 
         popup.show(selectFeature.getGeometry().getCoordinates(), content);
-      }
-      function test() {
-        mui.toast('此处调用关联接口....');
-        console.log(FeaturesArr.length);
       }
 
       // 筛选地图显示设备功能
@@ -734,11 +701,16 @@
 
         });
       }
-    });
 
-    window.addEventListener('closeTopPopover', function () {
-      mui('#topPopover1').popover('hide');
-      mui('#topPopover2').popover('hide');
+      window.addEventListener('closeTopPopover', function (event) {
+        if (event.detail.id === 'app/console/map.html') {
+          if (url) {
+            filterMapData(url);
+          } else {
+            filterMapData('http://119.23.161.165:7070/geoserver/cloud_rtkonline/ows?service=WFS&versio…:4326&viewparams=userId:4028eef85ebb9f55015ebd4e123d0044;state1:1;state2:0');
+          }
+        }
+      });
     });
 
     $(document).on('click', '#history', function () {
@@ -767,7 +739,6 @@
         });
       }
     });
-
   </script>
 </body>
 

@@ -12,29 +12,29 @@
 			[v-cloak] {
 				display: none;
 			}
-			
+
 			* {
 				padding: 0;
 				margin: 0;
 			}
-			
+
 			.mui-input-row label {
 				text-align: left;
 			}
-			
+
 			.mui-content {
 				padding-top: 0;
 				font-size: 15px;
 			}
-			
+
 			.mui-input-group .mui-input-row {
 				height: 36px;
 			}
-			
+
 			.mui-input-row {
 				padding-left: 15px;
 			}
-			
+
 			.mui-input-row label {
 				padding: 10px 15px 10px 0;
 			}
@@ -48,32 +48,32 @@
 				line-height: 40px;
 				/*padding-left: 26px;*/
 			}
-			
+
 			.mui-input-row span:nth-child(1) {
 				width: 91px;
 				text-align: right;
 				color: #999;
 				margin-right: 10px;
 			}
-			
+
 			.title {
 				font-size: 15px;
 				line-height: 15px;
 				color: #333;
 			}
-			
+
 			.titlebg {
 				background: #e8e8e8;
 			}
-			
+
 			input[type=text] {
 				height: 50px;
 			}
-			
+
 			body {
 				background: #fff;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -81,15 +81,15 @@
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.mui-input-group .mui-input-row:after {
 				left: 0;
 			}
-			
+
 			.mui-input-group .mui-input-row:after {
 				top: 0px;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -97,7 +97,7 @@
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.back {
 				display: block;
 				width: 10px;
@@ -106,7 +106,7 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			
+
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
@@ -170,7 +170,8 @@
 					</div>
 					<div class="mui-input-row">
 						<span>UTC时间：</span>
-						<span>{{gnssLocationData.datatime | fromtTime}}</span>
+						<!-- <span>{{gnssLocationData.datatime | fromtTime}}</span> -->
+						<span>{{basic.localTimestamp | fromtTime}}</span>
 					</div>
 					<div class="mui-input-row">
 						<span>PDOP：</span>
@@ -231,147 +232,148 @@
 		<script src="../../js/vue.min.js"></script>
 		<script>
 			var vm = new Vue({
-				el: '#app',
-				data: {
-					basic: '',
-					gnssLocationData: '',
-					gnssRefStationData: '',
-					base: '',
-					appVer: '',
-					powerFree: '',
-					deviceData: ''
-				},
-				methods: {
+			  el: '#app',
+			  data: {
+			    basic: '',
+			    gnssLocationData: '',
+			    gnssRefStationData: '',
+			    base: '',
+			    appVer: '',
+			    powerFree: '',
+			    deviceData: ''
+			  },
+			  methods: {
 
-				},
-				created: function() {
-					mui.plusReady(function() {
-						mui.init({});
-						var self = plus.webview.currentWebview();
-						var obj = self.infoObj;
-						vm.basic = obj.basic;
-						vm.gnssLocationData = obj.detail.gnssLocationData;
-						vm.gnssRefStationData = obj.detail.gnssRefStationData;
-						vm.deviceData = obj.detail.deviceData;
-						vm.appVer = obj.detail.deviceData.deviceInfo.appVer;
-						vm.powerFree = obj.detail.deviceData.powerFree ? obj.detail.deviceData.powerFree + '%' : '-';
-					});
-				},
+			  },
+			  created: function () {
+			    mui.plusReady(function () {
+			      mui.init({});
+			      var self = plus.webview.currentWebview();
+			      var obj = self.infoObj;
+			      vm.basic = obj.basic;
+			      vm.gnssLocationData = obj.detail.gnssLocationData;
+			      vm.gnssRefStationData = obj.detail.gnssRefStationData;
+			      vm.deviceData = obj.detail.deviceData;
+			      vm.appVer = obj.detail.deviceData.deviceInfo.appVer;
+			      vm.powerFree = obj.detail.deviceData.powerFree ? obj.detail.deviceData.powerFree + '%' : '-';
+			    });
+			  },
 
-				computed: {
-					getDisance: function() {
-						var lat1 = this.basic.latitude;
-						var lng1 = this.basic.longitude;
-						var lat2 = this.gnssRefStationData.latitude;
-						var lng2 = this.gnssRefStationData.longitude;
-						var dis = 0;
-						var radLat1 = toRad(lat1);
-						var radLat2 = toRad(lat2);
-						var deltaLat = radLat1 - radLat2;
-						var deltaLng = toRad(lng1) - toRad(lng2);
-						var dis = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(deltaLng / 2), 2)));
-						var space = dis * 6378137;
-						var res;
-						if(isNaN(space)) {
-							return '-';
-						} else {
-							if(space > 1000) {
-								res = (space / 1000).toFixed(4) + 'Km';
-							} else {
-								res = space.toFixed(0) + 'm';
-							}
-							return res;
-						}
-					}
-				},
+			  computed: {
+			    getDisance: function () {
+			      var lat1 = this.basic.latitude;
+			      var lng1 = this.basic.longitude;
+			      var lat2 = this.gnssRefStationData.latitude;
+			      var lng2 = this.gnssRefStationData.longitude;
+			      var dis = 0;
+			      var radLat1 = toRad(lat1);
+			      var radLat2 = toRad(lat2);
+			      var deltaLat = radLat1 - radLat2;
+			      var deltaLng = toRad(lng1) - toRad(lng2);
+			      var dis = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin(deltaLat / 2), 2) + Math.cos(radLat1) * Math.cos(radLat2) * Math.pow(Math.sin(deltaLng / 2), 2)));
+			      var space = dis * 6378137;
+			      var res;
+			      if (isNaN(space)) {
+			        return '-';
+			      } else {
+			        if (space > 1000) {
+			          res = (space / 1000).toFixed(4) + 'Km';
+			        } else {
+			          res = space.toFixed(0) + 'm';
+			        }
+			        return res;
+			      }
+			    }
+			  },
 
-				filters: {
-					checkNull: function(val) {
-						if(val === 0 && val !== '') {
-							return val;
-						} else {
-							return val || '-';
-						}
-					},
+			  filters: {
+			    checkNull: function (val) {
+			      if (val === 0 && val !== '') {
+			        return val;
+			      } else {
+			        return val || '-';
+			      }
+			    },
 
-					trans: function(val) {
-						return formatDegree(val);
-					},
+			    trans: function (val) {
+			      return formatDegree(val);
+			    },
 
-					fromtTime: function(val) {
-						if(!val) return '-';
-						var hour = val.hour < 10 ? '0' + val.hour : val.hour;
-						var minute = val.minute < 10 ? '0' + val.minute : val.minute;
-						var second = val.second < 10 ? '0' + val.second : val.second;
-						datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
-						return datetime_string;
-					},
+			    fromtTime: function (val) {
+			      return val ? timeTrans(val * 1000, 'yyyy-MM-dd HH:mm:ss') : '-';
+			      /* if (!val) return '-';
+			      var hour = val.hour < 10 ? '0' + val.hour : val.hour;
+			      var minute = val.minute < 10 ? '0' + val.minute : val.minute;
+			      var second = val.second < 10 ? '0' + val.second : val.second;
+			      datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+			      return datetime_string; */
+			    },
 
-					transSolutionType: function(val) {
-						if(!val) return '-';
-						var solutionValue = '';
-						switch(val) {
-							case 'ST_INVALID_FIX':
-								solutionValue = '无效解';
-								break;
-							case 'ST_GPS_FIX':
-								solutionValue = '单点解';
-								break;
-							case 'ST_DGPS_FIX':
-								solutionValue = '差分3D';
-								break;
-							case 'ST_RTK_FIX':
-								solutionValue = '固定解';
-								break;
-							case 'ST_FRTK_FIX':
-								solutionValue = '浮点解';
-								break;
-							case 'ST_FIXEDPOS_FIX':
-								solutionValue = '基站';
-								break;
-						}
-						return solutionValue;
-					},
-					sysModel: function(val) {
-						var sysModelVal = '';
-						switch(val) {
-							case 'BASE':
-								sysModelVal = '基准站';
-								break;
-							case 'ROVER':
-								sysModelVal = '移动站';
-								break;
-							case 'STATIC':
-								sysModelVal = '静态站';
-								break;
-							default:
-								sysModelVal = '-';
-								break;
-						}
-						return sysModelVal;
-					},
+			    transSolutionType: function (val) {
+			      if (!val) return '-';
+			      var solutionValue = '';
+			      switch (val) {
+			        case 'ST_INVALID_FIX':
+			          solutionValue = '无效解';
+			          break;
+			        case 'ST_GPS_FIX':
+			          solutionValue = '单点解';
+			          break;
+			        case 'ST_DGPS_FIX':
+			          solutionValue = '差分3D';
+			          break;
+			        case 'ST_RTK_FIX':
+			          solutionValue = '固定解';
+			          break;
+			        case 'ST_FRTK_FIX':
+			          solutionValue = '浮点解';
+			          break;
+			        case 'ST_FIXEDPOS_FIX':
+			          solutionValue = '基站';
+			          break;
+			      }
+			      return solutionValue;
+			    },
+			    sysModel: function (val) {
+			      var sysModelVal = '';
+			      switch (val) {
+			        case 'BASE':
+			          sysModelVal = '基准站';
+			          break;
+			        case 'ROVER':
+			          sysModelVal = '移动站';
+			          break;
+			        case 'STATIC':
+			          sysModelVal = '静态站';
+			          break;
+			        default:
+			          sysModelVal = '-';
+			          break;
+			      }
+			      return sysModelVal;
+			    },
 
-					dataLinkType: function(v) {
-						var dataLinkVal = '';
-						switch(v) {
-							case 'CELLULAR_NET':
-								dataLinkVal = '移动网络';
-								break;
-							case 'UHF':
-								dataLinkVal = '内置电台';
-								break;
-							default:
-								dataLinkVal = '-';
-								break;
-						}
-						return dataLinkVal;
-					}
-				}
+			    dataLinkType: function (v) {
+			      var dataLinkVal = '';
+			      switch (v) {
+			        case 'CELLULAR_NET':
+			          dataLinkVal = '移动网络';
+			          break;
+			        case 'UHF':
+			          dataLinkVal = '内置电台';
+			          break;
+			        default:
+			          dataLinkVal = '-';
+			          break;
+			      }
+			      return dataLinkVal;
+			    }
+			  }
 
 			});
 
 			function toRad(d) {
-				return d * Math.PI / 180;
+			  return d * Math.PI / 180;
 			}
 		</script>
 	</body>

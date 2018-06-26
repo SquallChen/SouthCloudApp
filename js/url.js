@@ -8,7 +8,7 @@ var apiUrl = {
   phone_code: str + '/user/phone_code',
   module_desc: str + '/user/module_desc',
   register: str + '/user/register',
-  check_token: str + '/user/checkk_token',
+  check_token: str + '/user/check_token',
   stuff_lists: str + '/user/stuff_lists',
   add_stuff: str + '/user/add_stuff',
   get_depart_info: str + '/user/get_depart_info',

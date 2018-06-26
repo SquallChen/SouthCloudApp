@@ -180,7 +180,10 @@
 				},
 				methods: {
 					changeGroup: function() {
-						mui.ajax(apiUrl.update_user_additional_info, {
+						if(vm.wrok_group===''){
+							plus.webview.currentWebview().close();
+						}else{
+							mui.ajax(apiUrl.update_user_additional_info, {
 							data: {
 								user_name: vm.user_name,
 								token: vm.token,
@@ -205,6 +208,8 @@
 								plus.nativeUI.closeWaiting();
 							}
 						});
+						}
+						
 
 					}
 				},
@@ -216,7 +221,7 @@
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
 						vm.username = self.username;
-						vm.wrok_group = self.wrok_group;
+						vm.wrok_group = self.wrok_group!=='undefined'?self.wrok_group:'';
 						vm.realname = self.realname;
 						vm.userId = self.userId;
 					})

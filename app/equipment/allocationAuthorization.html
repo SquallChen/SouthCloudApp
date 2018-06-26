@@ -305,8 +305,15 @@
 										type: 'post',
 										timeout: 20000,
 										success: function(data) {
-											getUserInfo();
-											mui.toast('删除授权用户成功！')
+											console.log(JSON.stringify(data))
+											if(data.status===0){
+												getUserInfo();
+												mui.toast('删除授权用户成功！')
+											}else{
+												mui.toast(data.info);
+											}
+											
+											
 										},
 										error: function(xhr, type, errorThrown) {
 											// 异常处理；
@@ -378,7 +385,8 @@
 					type: 'post',
 					timeout: 20000,
 					success: function(data) {
-						if(data.recordList.length === 0) {
+						console.log(JSON.stringify(data))
+						if(data.totalCount === 0) {
 							vm.hasData = false;
 //							mui.toast('该用户下没有关联设备。');
 						} else {

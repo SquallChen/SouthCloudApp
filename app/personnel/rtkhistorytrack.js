@@ -99,7 +99,7 @@ function initHistoryVecrtorLayer(pointUrl, lineUrl, deviceId, beginTime, endTime
     if (history_line_vertor_layer.getSource().getState() === 'ready') {
       lineGeometry = history_line_vertor_layer.getSource().getFeatures()[0].getGeometry();
       addPositionsToHistoryVertoryLayer(lineGeometry.getCoordinates());
-      move_Trial(lineGeometry.getCoordinates());
+      // move_Trial(lineGeometry.getCoordinates());
 
       var extent = ol.extent.boundingExtent(lineGeometry.getCoordinates());
       olMap.getView().fit(extent, olMap.getSize());
@@ -147,7 +147,7 @@ highAlpColor = highAlpColor.slice();
 highAlpColor[3] = 0.9;
 var pointStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 4,
+    radius: 3,
     fill: new ol.style.Fill({
       color: highAlpColor
     })
@@ -155,7 +155,7 @@ var pointStyle = new ol.style.Style({
 });
 var pointSelectStyle = new ol.style.Style({
   image: new ol.style.Circle({
-    radius: 3,
+    radius: 8,
     fill: new ol.style.Fill({
       color: 'yellow'
     })
@@ -191,14 +191,15 @@ var olMap = new ol.Map({
 
 // 监听地图层级变化, 根据地图的放大级数不同, 修改点图标的大小, 大于指定级数, 才能看见点图层
 // modify xiaojing 2017年11月6日 14:37:45
-/* olMap.getView().on('change:resolution', function () {
-  pointStyle.getImage().setRadius(this.getZoom() > 10 ? (this.getZoom() / 5) * 2.0 : 0);
+olMap.getView().on('change:resolution', function () {
+  /* pointStyle.getImage().setRadius(this.getZoom() > 10 ? (this.getZoom() / 5) * 2.0 : 0); */
+  pointStyle.getImage().setRadius(this.getZoom() > 18 ? 10 : 3);
   if (this.getZoom() >= 14) {
     olMap.addInteraction(pointLayerSelect);
   } else {
     olMap.removeInteraction(pointLayerSelect);
   }
-}); */
+});
 
 // 根据返回的历史轨迹点生成线, historyLineTracklayers
 // modify xiaojing 2017年11月6日 14:08:22
@@ -322,7 +323,7 @@ olMap.on('singleclick', function (evt) {
   getPointInfo(pointInfo.rand_uuid);
 }, pointLayerSelect);
 
-var moveFeature;
+/* var moveFeature;
 var speed = 1;
 function move_Trial(thePoints) {
   var now;
@@ -370,7 +371,7 @@ function move_Trial(thePoints) {
     olMap.on('postcompose', moveFeature);
     olMap.render();
   }
-}
+} */
 
 function transSolution(val) {
   if (!val) return '-';

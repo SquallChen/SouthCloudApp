@@ -13,11 +13,11 @@
 				background: #fff;
 				font-size: 15px;
 			}
-
+			
 			input {
 				font-size: 15px;
 			}
-
+			
 			.mui-content div {
 				padding-right: 20px;
 				padding-left: 20px;
@@ -25,11 +25,11 @@
 				display: flex;
 				position: relative;
 			}
-
+			
 			.mui-content div:nth-child(2) {
 				margin-bottom: 5px;
 			}
-
+			
 			.mui-content div span {
 				display: inline-block;
 				position: absolute;
@@ -42,15 +42,15 @@
 				border-bottom: 0px solid rgba(0, 0, 0, 0);
 				border-left: 5px solid rgba(0, 0, 0, 0);
 			}
-
+			
 			.mui-content div:nth-child(1) {
 				padding-top: 20px;
 			}
-
+			
 			.mui-content div:nth-child(2) {
 				position: relative;
 			}
-
+			
 			.mui-content div label {
 				width: 45px;
 				text-align: left;
@@ -58,13 +58,13 @@
 				padding: 7px 0 8px 0;
 				color: #999;
 			}
-
+			
 			.mui-content div input {
 				flex: 1;
 				margin-bottom: 0;
 				height: 36px;
 			}
-
+			
 			.mui-content select {
 				flex: 1;
 				height: 36px;
@@ -73,7 +73,7 @@
 				color: #333;
 				padding: 0 0 0 6px;
 			}
-
+			
 			.down {
 				width: 16px;
 				height: 16px;
@@ -81,7 +81,7 @@
 				top: 20px;
 				right: 30px;
 			}
-
+			
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -89,12 +89,12 @@
 				display: flex;
 				align-items: center;
 			}
-
+			
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
 			}
-
+			
 			.back {
 				display: block;
 				width: 10px;
@@ -103,7 +103,7 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-
+			
 			.management {
 				margin-left: 6%;
 				width: 88%;
@@ -117,29 +117,36 @@
 				border: none;
 				border-radius: 4px;
 			}
-
+			
 			.management:active {
 				background: #0b5fde !important;
 			}
-
+			
 			.padding_top {
 				height: 21px;
 				background: #f2f2f2;
 				margin-bottom: 20px;
 			}
-
+			
 			.mui-content {
 				background: white;
 			}
-
+			
 			input[type=text] {
 				border: 1px solid #ccc;
 			}
-
+			
 			input[type=text]:focus {
 				border: 1px solid #333;
 			}
-
+			.meg{
+				display: block;
+				text-align:center;
+				height: 80px;
+				line-height: 80px;
+				color: #999;
+				font-size: 15px;
+			}
 			[v-cloak] {
 				display: none;
 			}
@@ -168,7 +175,9 @@
 					</select>
 					<span></span>
 				</div>
-				<button class="management" v-on:tap="send">完  成</button>
+				<button class="management" v-on:tap="send" v-show="hasResult===true">完  成</button>
+				<button class="management"disabled v-show="hasResult===false">完  成</button>
+				<span v-show="hasResult===false" class="meg">该用户下没有工作组信息，不能筛选</span>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -183,6 +192,7 @@
 					keywords: '',
 					workGroupValue: '',
 					workGroup: [],
+					hasResult:true
 				},
 				methods: {
 					send: function() {
@@ -223,14 +233,21 @@
 							timeout: 20000,
 							success: function(data) {
 								console.log('工作组数据为：' + JSON.stringify(data));
-								var tempGroup = [];
-								var tempData = data.groupList;
-								for(var i = 0; i < tempData.length; i++) {
-									if(tempGroup.indexOf(tempData[i]) == -1) {
-										tempGroup.push(tempData[i]);
+								if(data.groupList === null) {
+									mui.toast('该账户下没有工作组信息')
+									vm.hasResult=false;
+								} else {
+									vm.hasResult=true;
+									var tempGroup = [];
+									var tempData = data.groupList;
+									for(var i = 0; i < tempData.length; i++) {
+										if(tempGroup.indexOf(tempData[i]) == -1) {
+											tempGroup.push(tempData[i]);
+										}
 									}
+									vm.workGroup = tempGroup;
 								}
-								vm.workGroup = tempGroup;
+
 							},
 							error: function(xhr, type, errorThrown) {
 								// 异常处理；

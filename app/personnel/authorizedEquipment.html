@@ -50,19 +50,24 @@
 				background: white;
 				font-size: 13px;
 			}
-			.mui-slider-handle{
+			
+			.mui-slider-handle {
 				height: 60px;
 			}
-			.mui-content span{
+			
+			.mui-content span {
 				line-height: 18px;
 				font-size: 12px;
 			}
-			.mui-content span:nth-child(2){
+			
+			.mui-content span:nth-child(2) {
 				font-size: 15px;
 			}
-			.mui-content .name{
+			
+			.mui-content .name {
 				font-size: 15px;
 			}
+			
 			.personnelInfo .mui-table-cell {
 				display: flex;
 				height: 60px;
@@ -221,6 +226,10 @@
 					openpage: function(item) {
 						var data_url = event.target.dataset.href;
 						var el = event.target.parentNode.parentNode;
+						 // 如果设备离线并且点击的是在线配置的页面
+					     if(item.onlineStatus === 0 && data_url === 'realTimeTrack.html'){
+					      	mui.toast('设备离线，无法查看实时轨迹');
+					      }else {
 						mui.openWindow({
 							url: data_url,
 							id: data_url,
@@ -228,10 +237,11 @@
 								upDataUserName: item.upDataUserName,
 								upDataCompanyInfo: item.upDataCompanyInfo,
 								identifyCode: item.identifyCode,
-								item:item
+								item: item
 							}
 						});
 						mui.swipeoutClose(el);
+						}
 					}
 				},
 				created: function() {
@@ -254,15 +264,26 @@
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
-								console.log('此用户拥有的设备信息为：' + JSON.stringify(data));
+								var tempData = data.list;
+								var tempArray = [];
 								if(data.list === null) {
 									vm.hasData = false;
 									mui.toast('该用户下没有关联设备。');
 								} else {
-									//console.log('此用户拥有的设备信息为：'+JSON.stringify(data));
 									vm.hasData = true;
-									vm.equipmentInfo = data.list;
-									console.log(JSON.stringify(vm.equipmentInfo))
+									// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+									for(var i = 0; i < tempData.length; i++) {
+										if(tempData[i].onlineStatus === 1) {
+											tempArray.push(tempData[i]);
+											tempData.splice(i, 1);
+										}
+									}
+									for(var i = 0; i < tempArray.length; i++) {
+										tempData.unshift(tempArray[i]);
+									}
+									// 完成排列处理的数组数据添加到页面上渲染
+									vm.equipmentInfo = tempData;
+									plus.nativeUI.closeWaiting();
 								}
 
 							},

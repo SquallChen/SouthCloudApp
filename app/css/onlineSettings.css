@@ -38,7 +38,7 @@
 				width: 75%;
 				margin-right: 6px;
 			}
-			.roverContent li>div:nth-child(2),.staticContent li>div:nth-child(2){
+			.roverContent li>div:nth-child(2),.staticContent li>div:nth-child(2),.cellularNet li>div:nth-child(2),.uhf li>div:nth-child(2){
 				width: 60%;
 				margin-right: 0;
 			}
@@ -52,17 +52,22 @@
 				text-align: right;
 				margin-right: 20px;
 			}
-			/*.baseContent li>div:nth-child(2) {
-				width: 65%;
-				margin-right: 6px;
-			}*/
 
 			.baseContent li>div:nth-child(2) {
 				width: 60%;
 				margin-right: 0;
 			}
-			.baseContent li>div:nth-child(3) {
+			.baseContent li>div:nth-child(3),.uhf li>div:nth-child(3) {
 				width: 8%;
+			}
+			.channelststus div{
+				height: 39px;
+				margin-bottom: 6px;
+			}
+			.channelststus span{
+				position: relative;
+				top:6px;
+				left:2px;
 			}
 			.size {
 				font-size: 24px;

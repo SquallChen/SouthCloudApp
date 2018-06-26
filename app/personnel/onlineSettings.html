@@ -7,7 +7,6 @@
 	<title>在线配置</title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/custom.css" rel="stylesheet" />
-	<link href="../../css/input.css" rel="stylesheet" />
 	<link href="../css/onlineSettings.css" rel="stylesheet" />
 	<link href="../../css/iconfont.css" rel="stylesheet" />
 	<style>
@@ -153,7 +152,7 @@
 										<input name="radio2" type="radio" value="2" v-model="bVal.baseLaunch">
 									</div>
 									<div class="mui-input-row mui-radio mui-left">
-										<label>杠高</label>
+										<label>杆高</label>
 										<input name="radio2" type="radio" value="16" v-model="bVal.baseLaunch">
 									</div>
 									<div class="mui-input-row mui-radio mui-left">
@@ -281,7 +280,7 @@
 								</div>
 							</li>
 							<li class="btn">
-								<button class="setting" v-on:tap="baseSet">设 置</button>
+								<button class="setting" v-on:tap="baseSet">确定修改</button>
 								<button class="start" v-show="bVal.show === 'start'" v-on:tap="baseStartOrBreak('start')">启 动</button>
 								<button class="stop" v-show="bVal.show !== 'start'" v-on:tap="baseStartOrBreak('break')">断 开</button>
 							</li>
@@ -303,7 +302,7 @@
 								</div>
 							</li>
 							<li class="btn">
-								<button class="setting resetBtn" v-on:tap="roverSet()">设 置</button>
+								<button class="setting resetBtn" v-on:tap="roverSet()">确定修改</button>
 							</li>
 						</ul>
 						<!--*********************静态站**********************-->
@@ -367,7 +366,7 @@
 										<input name="radio3" type="radio" value="2" v-model="sVal.staticLaunch">
 									</div>
 									<div class="mui-input-row mui-radio mui-left">
-										<label>杠高</label>
+										<label>杆高</label>
 										<input name="radio3" type="radio" value="16" v-model="sVal.staticLaunch">
 									</div>
 									<div class="mui-input-row mui-radio mui-left">
@@ -411,7 +410,7 @@
 								</div>
 							</li>
 							<li class="btn">
-								<button class="setting" v-on:tap="staticSet()">设 置</button>
+								<button class="setting" v-on:tap="staticSet()">确定修改</button>
 								<button class="start" v-show="sVal.show === 'start'" v-on:tap="staticStartOrBreak('start')">启 动</button>
 								<button class="stop" v-show="sVal.show !== 'start'" v-on:tap="staticStartOrBreak('break')">断 开</button>
 							</li>
@@ -426,18 +425,25 @@
 									<span>选择链路</span>
 								</div>
 								<div>
-									<button v-for="(item,index) in linktype" :id="item.id" v-on:tap="changeLink(index)" :class="{active:lActive == item.id}">{{item.name}}</button>
+									<button v-for="(item,index) in linktype" :id="item.id" v-on:tap="changeLink(index)" :class="{active:lActive == item.id}"
+									 class="scale-1px">{{item.name}}</button>
 								</div>
 							</li>
 						</ul>
 						<!--*********************移动网络**********************-->
-						<ul v-show="lActive === 'CELLULAR_NET'">
+						<ul v-show="lActive === 'CELLULAR_NET'" class="cellularNet">
 							<li>
 								<div>
 									<span>ip地址</span>
 								</div>
 								<div>
 									<input type="text" placeholder="ip地址" v-model="nVal.ip" />
+								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
 								</div>
 							</li>
 							<li>
@@ -447,6 +453,12 @@
 								<div>
 									<input type="text" placeholder="端口号" v-model="nVal.port" />
 								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
+								</div>
 							</li>
 							<li>
 								<div>
@@ -455,6 +467,12 @@
 								<div>
 									<input type="text" placeholder="账户ID" v-model="nVal.account" />
 								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
+								</div>
 							</li>
 							<li>
 								<div>
@@ -462,6 +480,12 @@
 								</div>
 								<div>
 									<input type="text" placeholder="密码" v-model="nVal.pw" />
+								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
 								</div>
 							</li>
 							<li>
@@ -474,6 +498,12 @@
 									</select>
 									<img src="../../public/img/down.png" alt="" class="down" />
 								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
+								</div>
 							</li>
 							<li>
 								<div>
@@ -481,6 +511,12 @@
 								</div>
 								<div>
 									<input type="text" placeholder="接入点" v-model="nVal.linkAccessPoint" />
+								</div>
+								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="transportationNtripWorkpara === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
 								</div>
 							</li>
 							<li>
@@ -490,6 +526,12 @@
 								<div>
 									<input type="text" placeholder="密码" v-model="nVal.apnSrver" />
 								</div>
+								<div v-show="apnServerStatus === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="apnServerStatus === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
+								</div>
 							</li>
 							<li>
 								<div>
@@ -497,6 +539,12 @@
 								</div>
 								<div>
 									<input type="text" placeholder="密码" v-model="nVal.apnUser" />
+								</div>
+								<div v-show="apnUserStatus === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="apnUserStatus === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
 								</div>
 							</li>
 							<li>
@@ -506,13 +554,19 @@
 								<div>
 									<input type="password" placeholder="密码" v-model="nVal.apnPassword" />
 								</div>
+								<div v-show="apnPassWordStatus === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="apnPassWordStatus === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
+								</div>
 							</li>
 							<li class="btn" style="margin-bottom: 10px;">
-								<button class="setting resetBtn" v-on:tap="netSet()">设 置</button>
+								<button class="setting resetBtn" v-on:tap="netSet()">确定修改</button>
 							</li>
 						</ul>
 						<!--*********************内置电台**********************-->
-						<ul v-show="lActive === 'UHF'">
+						<ul v-show="lActive === 'UHF'" class="uhf">
 							<li>
 								<div>
 									<span>通道设置</span>
@@ -522,6 +576,12 @@
 										<option v-for="item in channel" :value="item.value">{{item.label}}</option>
 									</select>
 									<img src="../../public/img/down.png" alt="" class="down" />
+								</div>
+								<div v-show="uhfCurChannel === true && hasSetting===true">
+									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+								</div>
+								<div v-show="uhfCurChannel === false && hasSetting===true">
+									<span class="mui-icon mui-icon-closeempty size red"></span>
 								</div>
 							</li>
 							<li class="channel_content">
@@ -594,6 +654,72 @@
 										<input type="text" v-model="channelValue1" />
 									</div>
 								</div>
+								<div class="channelststus">
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+									<div>
+										<div v-show="uhfFrequency === true && hasSetting===true">
+											<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+										</div>
+										<div v-show="uhfFrequency === false && hasSetting===true">
+											<span class="mui-icon mui-icon-closeempty size red"></span>
+										</div>
+									</div>
+								</div>
 							</li>
 							<li>
 								<div>
@@ -605,6 +731,12 @@
 									</select>
 									<img src="../../public/img/down.png" alt="" class="down" />
 								</div>
+								<div v-show="uhfPower === true && hasSetting===true">
+										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+									</div>
+									<div v-show="uhfPower === false && hasSetting===true">
+										<span class="mui-icon mui-icon-closeempty size red"></span>
+									</div>
 							</li>
 							<li>
 								<div>
@@ -616,6 +748,12 @@
 									</select>
 									<img src="../../public/img/down.png" alt="" class="down" />
 								</div>
+								<div v-show="uhfBaudrateAir === true && hasSetting===true">
+										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+									</div>
+									<div v-show="uhfBaudrateAir === false && hasSetting===true">
+										<span class="mui-icon mui-icon-closeempty size red"></span>
+									</div>
 							</li>
 							<li>
 								<div>
@@ -627,9 +765,15 @@
 									</select>
 									<img src="../../public/img/down.png" alt="" class="down" />
 								</div>
+								<div v-show="uhfProtocol === true && hasSetting===true">
+										<span class="mui-icon mui-icon-checkmarkempty size green"></span>
+									</div>
+									<div v-show="uhfProtocol === false && hasSetting===true">
+										<span class="mui-icon mui-icon-closeempty size red"></span>
+									</div>
 							</li>
 							<li class="btn" style="margin-bottom: 10px;">
-								<button class="setting resetBtn" v-on:tap="uhfSet()">设 置</button>
+								<button class="setting resetBtn" v-on:tap="uhfSet()">确定修改</button>
 							</li>
 						</ul>
 					</div>
@@ -752,7 +896,7 @@
 										<a @click="otherSet('RESET')">
 											<span class="icon-reset"></span>
 										</a>
-										<span>重置</span>
+										<span>重启</span>
 									</div>
 									<div>
 										<a @click="otherSet('POWEROFF')">

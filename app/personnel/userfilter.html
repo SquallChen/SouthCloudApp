@@ -97,6 +97,7 @@
 				margin-bottom: 0;
 				border: 1px solid #ccc !important;
 			}
+			
 			.down {
 				width: 16px;
 				height: 16px;
@@ -157,7 +158,14 @@
 			input[type=text]:focus {
 				border: 1px solid #0b60de;
 			}
-			
+			.meg{
+				display: block;
+				text-align:center;
+				height: 80px;
+				line-height: 80px;
+				color: #999;
+				font-size: 15px;
+			}
 			[v-cloak] {
 				display: none;
 			}
@@ -186,7 +194,9 @@
 					</select>
 					<span></span>
 				</div>
-				<button class="management" v-on:tap="send">完  成</button>
+				<button class="management" v-on:tap="send" v-show="hasResult===true">完  成</button>
+				<button class="management" disabled v-show="hasResult===false">完  成</button>
+				<span v-show="hasResult===false" class="meg">该用户下没有子用户信息，不能筛选</span>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -202,7 +212,8 @@
 					keywords: '',
 					workGroupValue: '',
 					workGroup: [],
-					parentPage: ''
+					parentPage: '',
+					hasResult:true
 				},
 				methods: {
 					send: function() {
@@ -213,14 +224,13 @@
 							equipment_user_authorized_page = plus.webview.getWebviewById('./equipment-user-authorized.html');
 						};
 						if(vm.parentPage === 'user') {
-							console.log(11111)
+							console.log(plus.webview.currentWebview().id)
 							mui.fire(user_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue
 							});
 							plus.webview.currentWebview().close();
-						}else if(vm.parentPage === 'equipment-user-authorized'){
-							console.log(22222)
+						} else if(vm.parentPage === 'equipment-user-authorized') {
 							mui.fire(equipment_user_authorized_page, 'userDataFilter', {
 								keywords: vm.keywords,
 								workGroup: vm.workGroupValue
@@ -248,14 +258,21 @@
 							timeout: 20000,
 							success: function(data) {
 								console.log('工作组数据为：' + JSON.stringify(data));
-								var tempGroup = [];
-								var tempData = data.groupList;
-								for(var i = 0; i < tempData.length; i++) {
-									if(tempGroup.indexOf(tempData[i]) == -1) {
-										tempGroup.push(tempData[i]);
+								if(data.groupList === null) {
+									vm.hasResult=false;
+									mui.toast('该账户下没有工作组信息')
+								} else {
+									vm.hasResult=true;
+									var tempGroup = [];
+									var tempData = data.groupList;
+									for(var i = 0; i < tempData.length; i++) {
+										if(tempGroup.indexOf(tempData[i]) == -1) {
+											tempGroup.push(tempData[i]);
+										}
 									}
+									vm.workGroup = tempGroup;
 								}
-								vm.workGroup = tempGroup;
+
 							},
 							error: function(xhr, type, errorThrown) {
 								// 异常处理；
