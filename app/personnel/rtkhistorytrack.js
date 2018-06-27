@@ -45,7 +45,6 @@ var map_to_line = false;
 var history_point_vector_layer = new ol.layer.Vector({
   source: new ol.source.Vector({
     format: new ol.format.GeoJSON()
-
   }),
   style: function (feature, resolution) {
     return pointStyle;
@@ -168,7 +167,7 @@ var olMap = new ol.Map({
     tianDiTuMapLayer, tianDiTuAnnotation, history_line_vertor_layer, history_point_vector_layer, custom_layer
   ],
   target: 'map',
-  interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
+  interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false, doubleClickZoom: false }),
   controls: ol.control.defaults({
     attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
       collapsible: false

@@ -206,7 +206,7 @@
 					</li>
 					<li>
 						<span>
-							<label>状态：</label>{{basic.isOnline == true ? '在线' : '-'}}</span>
+							<label>状态：</label>{{gnssLocationData.solutionType | transSolutionType}}</span>
 					</li>
 					<li>
 						<span style="display: inline-block; width: 49%">
@@ -500,7 +500,7 @@
 		  highAlpColor[3] = 0.9;
 		  var pointStyle = new ol.style.Style({
 		    image: new ol.style.Circle({
-		      radius: 6,
+		      radius: 3,
 		      fill: new ol.style.Fill({
 		        color: highAlpColor
 		      })
@@ -508,7 +508,7 @@
 		  });
 		  var pointSelectStyle = new ol.style.Style({
 		    image: new ol.style.Circle({
-		      radius: 3,
+		      radius: 8,
 		      fill: new ol.style.Fill({
 		        color: 'yellow'
 		      })
@@ -522,7 +522,7 @@
 		    ],
 		    overlays: [popup],
 		    target: 'map',
-		    interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
+		    interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false, doubleClickZoom: false }),
 		    controls: ol.control.defaults({
 		      attributionOptions: ({
 		        collapsible: false
@@ -559,6 +559,15 @@
 		    console.log(pointInfo);
 		    getPointInfo(pointInfo.object.randUuid);
 		  }, pointLayerSelect);
+
+		  olMap.getView().on('change:resolution', function () {
+		    pointStyle.getImage().setRadius(this.getZoom() > 18 ? 10 : 3);
+		    if (this.getZoom() >= 14) {
+		      olMap.addInteraction(pointLayerSelect);
+		    } else {
+		      olMap.removeInteraction(pointLayerSelect);
+		    }
+		  });
 
 		  function getPointInfo(rand_uuid) {
 		    plus.nativeUI.showWaiting();
@@ -597,7 +606,9 @@
 		        } else {
 		          plus.nativeUI.toast(data.info);
 		        }
-		        plus.nativeUI.closeWaiting();
+		        setTimeout(function () {
+		          plus.nativeUI.closeWaiting();
+		        }, 500);
 		      },
 		      error: function (xhr, type, errorThrown) {
 		        // 异常处理；
@@ -607,7 +618,7 @@
 		    });
 		  }
 
-		  var lastTrackPointInfo = undefined;
+		  var lastTrackPointInfo;
 		  function addPositionsToHistoryVertoryLayer(trackPointInfoArray) {
 		    if (trackPointInfoArray == undefined || trackPointInfoArray == null || trackPointInfoArray.length == 0) return;
 		    var is_first = lastTrackPointInfo == undefined;
@@ -680,8 +691,8 @@
 		      historyLineTracklayers.getSource().addFeature(blueLineFeature);
 		    }
 		    /* 添加所有点至图层 */
-		    var endFeature = undefined;
-		    var startFeature = undefined;
+		    var endFeature;
+		    var startFeature;
 		    for (var i = 0; i < trackPointInfoArray.length; i++) {
 		      var trackPointInfo = trackPointInfoArray[i];
 		      var pointFeature = new ol.Feature({

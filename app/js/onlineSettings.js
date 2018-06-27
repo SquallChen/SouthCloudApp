@@ -40,7 +40,6 @@ var vm = new Vue({
     currentIdentifyCode: '',
     currentSatelliteIndex: '',
     currentTrackIndex: '',
-    currentTabIndex: 1,
     workMode: '',
     linkMode: '',
     clientUUid: '',
@@ -83,6 +82,8 @@ var vm = new Vue({
     uhfPower:false,
     uhfProtocol:false,
     uhfFrequency:false,
+    baseStartData:'',
+    baseRunTip:'',
     // 基准
     bVal: {
       rtmRadios: 'RTCA',
@@ -2327,7 +2328,7 @@ var vm = new Vue({
               success: function callback(data) {
                 if (data.status === ERR_NO) {
                   plus.nativeUI.closeWaiting();
-                  mui.toast('清除星历成功！');
+                  //mui.toast('清除星历成功！');
                   mui('#clearEphemeris').popover('toggle');
                   timeFun(
                     data,
@@ -2459,7 +2460,6 @@ var vm = new Vue({
         type: 'post',
         timeout: 10000,
         success: function callback(data) {
-          console.log('-----'+JSON.stringify(data));
           if (data.status === ERR_NO) {
             //plus.nativeUI.closeWaiting();
             //mui.toast('设置卫星频段成功！');
@@ -2582,6 +2582,10 @@ var vm = new Vue({
 
     // 基站启动/断开
     baseStartOrBreak: function(v) {
+      plus.nativeUI.showWaiting('正在启动中...', {
+        height: '100px',
+        width: '150px'
+      });
       var thefun, baseRunTip, baseSwith;
       if (v == 'start') {
         thefun = baseStart;
@@ -2592,10 +2596,6 @@ var vm = new Vue({
         baseRunTip = '断开失败,请稍候再试！';
         baseSwith = 'STOP';
       }
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -2610,6 +2610,8 @@ var vm = new Vue({
         timeout: 10000,
         success: function(data) {
           if (data.status == 0) {
+            vm.baseStartData = data;
+            vm.baseRunTip = baseRunTip;
             timeFun(data, thefun, baseRunTip);
           } else {
             mui.toast(data.info);
@@ -2730,7 +2732,7 @@ var vm = new Vue({
     },
     // 静态站启动/断开
     staticStartOrBreak: function(v) {
-      plus.nativeUI.showWaiting('正在设置中...', {
+      plus.nativeUI.showWaiting('正在启动中...', {
         height: '100px',
         width: '150px'
       });
@@ -3158,7 +3160,7 @@ var vm = new Vue({
             mui.toast('设置超时，操作失败！');
           }
           if (vm.showWaiting !== true) {
-            plus.nativeUI.closeWaiting();
+           // plus.nativeUI.closeWaiting();
             vm.showWaiting = false;
           }
           /* jsonObj = ''; */
@@ -3166,7 +3168,7 @@ var vm = new Vue({
       });
 
       socket.on('ConnectStatus', function(replyData) {
-        var noteObj = eval('(' + replyData.data + ')');
+        var noteObj = JSON.parse(replyData.data);
         console.log(noteObj);
         if (noteObj.connectStatus === false) {
           mui.confirm(
@@ -3196,6 +3198,11 @@ var vm = new Vue({
           mui.toast('设备已上线！');
         }
         plus.nativeUI.closeWaiting();
+      });
+
+      socket.on('CommandStatus', function(replyData) {
+        var valueObj = JSON.parse(replyData.data);
+        console.log('CommandStatus'+valueObj);
       });
 
       // 获取屏幕高度减去上面title等占用的高度,剩余高度全部赋予tab内容页，自适应不同屏幕尺寸
@@ -3639,10 +3646,10 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
                 ['确认'],
                 function(e) {
                   currentWebview.close();
+                  plus.nativeUI.closeWaiting();
                 },
                 'div'
               );
-              plus.nativeUI.closeWaiting();
             } else if (data.errorId === 'ERROR_THE_CONFIG_EVENT_INTERRUPTED') {
               errTip(typeModel);
               mui.toast('设备操作被中断，请稍后再试!');
@@ -3680,8 +3687,7 @@ function getConfigWorkModePageInfo(hd) {
     if (hd[i].status === true) {
       //  静态站启动状态
       if (hd[i].hitSicData === 'GET:DEVICE.RECORD.STATUS') {
-        if (hd[i].value === 'RECORDING' || hd[i].value == 1) {
-          console.log('111222333');
+        if (hd[i].value === 'RECORDING' || hd[i].value == 2) {
           vm.sVal.show = 'break';
         } else {
           vm.sVal.show = 'start';
@@ -3735,7 +3741,7 @@ function getConfigWorkModePageInfo(hd) {
         vm.bVal.launch = hd[i].value;
         //  基准站启动状态
       } else if (hd[i].hitSicData === 'GET:GNSS.BASE.STATUS') {
-        if (hd[i].value === 2 || hd[i].value === 1) {
+        if (hd[i].value == 2) {
           vm.bVal.show = 'break';
         } else {
           vm.bVal.show = 'start';
@@ -3831,13 +3837,10 @@ function getConfigWorkModePageInfo(hd) {
       }
     }
   }
-  vm.currentTabIndex = 1;
-  //  plus.nativeUI.closeWaiting();
 }
 
 // 申请监控设备在线通知
 function rtknote() {
-  // ****************************接口有问题********************************************
   mui.ajax(apiUrl.doRequestConnectStatusMonitor, {
     data: {
       user_name: vm.user_name,
@@ -3851,6 +3854,29 @@ function rtknote() {
     success: function(data) {
       if (data.status === 0) {
         console.log('listenting rtk');
+      } else {
+        mui.toast(data.info);
+      }
+    },
+    error: function(data) {}
+  });
+}
+
+function mointorChanged(v) {
+  alert(2);
+  mui.ajax(apiUrl.monitor_command_value_changed, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      identify_code: vm.currentIdentifyCode,
+      command_data:'GNSS.BASE.STATUS'
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function(data) {
+      if (data.status === 0) {
+        console.log('listenting monitor_command_value_changed');
       } else {
         mui.toast(data.info);
       }
@@ -4019,10 +4045,6 @@ function getSicError(msg) {
     ['确认'],
     function(e) {
       currentWebview.close();
-      // mui.openWindow({
-      //   url: '../console/equipment.html',
-      //   id: './app/console/equipment.html'
-      // });
     },
     'div'
   );
@@ -4031,15 +4053,25 @@ function getSicError(msg) {
 /* 基准站启动*/
 function baseStart(hd) {
   for (var i = 0; i < hd.length; i++) {
-    if (hd[i].hitSicData == 'SET:GNSS.BASE.START_BASE') {
-      if (hd[i].status == true) {
-        vm.bVal.show = 'break';
-        plus.nativeUI.closeWaiting();
-        mui.toast('启动成功!');
+    if (hd[i].hitSicData == 'GET:GNSS.BASE.STATUS') {
+      if (hd[i].status == true ) {
+        if(hd[i].value == 2) {
+          vm.bVal.show = 'break';
+          mui.toast('启动成功!');
+          plus.nativeUI.closeWaiting();
+        } else if(hd[i].value == 1 || hd[i].value == 0) {
+          setTimeout(function() {
+            baseStartAgain();
+          }, 3000);
+        } else {
+          vm.bVal.show = 'start';
+          mui.toast('启动失败!');
+          plus.nativeUI.closeWaiting();
+        }
       } else {
-        vm.bVal.show = 'START';
-        plus.nativeUI.closeWaiting();
+        vm.bVal.show = 'start';
         mui.toast('启动失败!');
+        plus.nativeUI.closeWaiting();
       }
     }
   }
@@ -4047,7 +4079,6 @@ function baseStart(hd) {
 
 /* 基准站断开*/
 function baseBreak(hd) {
-  console.log('++++++'+JSON.stringify(hd));
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].hitSicData == 'SET:GNSS.BASE.STOP_BASE') {
       if (hd[i].status == true) {
@@ -4164,9 +4195,7 @@ function staticSet(hd) {
       }
     } else if (hd[i].hitSicData == 'SET:DEVICE.RECORD.AUTO_REC') {
       if (hd[i].status == true) {
-        // vm.staticS.record = true;
       } else {
-        // vm.staticE.record = true;
         vm.sVal.record = !vm.sVal.record;
       }
     }
@@ -4178,14 +4207,22 @@ function staticSet(hd) {
 /* 静态站启动*/
 function staticStart(hd) {
   for (var i = 0; i < hd.length; i++) {
-    if (hd[i].hitSicData == 'SET:DEVICE.RECORD.START_RECORD') {
-      if (hd[i].value == 'RECORDING' || hd[i].status == true) {
+    if (hd[i].hitSicData == 'GET:DEVICE.RECORD.STATUS') {
+      if (hd[i].value == 2 && hd[i].status == true) {
         vm.sVal.show = 'break';
-        plus.nativeUI.closeWaiting();
         mui.toast('启动成功！');
+        plus.nativeUI.closeWaiting();
+      }else if(hd[i].value == 0|| hd[i].value == 1){
+        //staticStartAgain();
+        setTimeout(function() {
+          staticStartAgain();
+        }, 3000);
       } else {
+        vm.sVal.show = 'start';
         mui.toast('启动失败！');
+        plus.nativeUI.closeWaiting();
       }
+
     }
   }
 }
@@ -4313,6 +4350,7 @@ function datalinkUHF(hd) {
 
 // 获取卫星设置页面数据
 function getConfigSatellitePageInfo(hd) {
+  console.log(JSON.stringify(hd));
   for (var i = 0; i < hd.length; i++) {
     if (hd[i].status === true) {
       if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.ENABLE.GPS') {
@@ -4408,10 +4446,17 @@ function getConfigSatellitePageInfo(hd) {
       } else if (hd[i].hitSicData === 'GET:GNSS.SATELLITE.TRACK.GALILEO') {
         if (hd[i].value === '') {
           vm.Satellite[5].trackChecked = '暂无设置';
-        } else {
+        }else {
           vm.Satellite[5].trackChecked = hd[i].value;
           vm.Satellite[5].channelsChecked = String(hd[i].value).split('|');
         }
+      }else if(hd[i].hitSicData === "SET:GNSS.CLEAN_SATELLITE"){
+          mui.toast('清除卫星星历成功!');
+      }
+    }
+    if(hd[i].status === false){
+      if(hd[i].hitSicData === "SET:GNSS.CLEAN_SATELLITE"){
+        toastr.success('清除卫星星历失败!');
       }
     }
   }
@@ -4693,7 +4738,6 @@ function getConfigOtherPageInfo(hd) {
       }
     }
   }
-  vm.currentTabIndex = 4;
   plus.nativeUI.closeWaiting();
 }
 // 字符串数组转为number数组方法
@@ -4861,6 +4905,59 @@ function checkRes() {
     }
   });
 }
+
+ function baseStartAgain() {
+  // plus.nativeUI.showWaiting('正在设置中...', {
+  //   height: '100px',
+  //   width: '150px'
+  // });
+  mui.ajax(url, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      clientUUid: vm.clientUUid,
+      identifyCode: vm.currentIdentifyCode,
+      requestType: 'getRunStopBaseStation',
+      operationCode: 'START'
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function(data) {
+      if (data.status == 0) {
+        timeFun(data, baseStart, '启动超时,请稍候再试！');
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    }
+  });
+};
+
+function staticStartAgain() {
+  mui.ajax(url, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      clientUUid: vm.clientUUid,
+      identifyCode: vm.currentIdentifyCode,
+      requestType: 'getRunStopStaticStation',
+      operationCode: 'START'
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function(data) {
+      if (data.status == 0) {
+        timeFun(data, staticStart, '启动超时,请稍候再试！');
+      } else {
+        mui.toast(data.info);
+        plus.nativeUI.closeWaiting();
+      }
+    }
+  });
+};
+
 window.addEventListener('authRes', function(event) {
   checkRes();
   clearTimeout(resTime);

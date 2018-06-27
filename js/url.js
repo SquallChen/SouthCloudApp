@@ -30,6 +30,7 @@ var apiUrl = {
 
   // doSendConfig: str + '/device/doSendConfig',
   doRequestConnectStatusMonitor: str + '/device/monitor_connect_status',
+  monitor_command_value_changed: str + '/device/monitor_command_value_changed',
   doGetUniqueIdInfo: str + '/device/do_get_uniqueid_Info',
   // doGetUniqueIdInfo: str + '/device/doGetUniqueIdInfo',
   track_info_page: str + '/device/track_info_page',

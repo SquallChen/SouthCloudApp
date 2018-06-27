@@ -13,37 +13,37 @@
 			.mui-content {
 				background: #e1e7eb;
 			}
-			
+
 			.wrapper {
 				min-height: 100%;
 				margin-bottom: -80px;
 				background: #e1e7eb;
 			}
-			
+
 			.mui-content {
 				padding-top: 0;
 			}
-			
+
 			.footer,
 			.push {
 				height: 80px;
 				background: #e1e7eb;
 			}
-			
+
 			.logo-wrapper>img {
 				height: 40%;
 				width: 100%;
 			}
-			
+
 			.inputWrapper {
 				margin-top: 35px;
 			}
-			
+
 			.inputWrapper>div {
 				margin-left: 25px;
 				margin-right: 25px;
 			}
-			
+
 			.png {
 				position: absolute;
 				top: 10px;
@@ -51,11 +51,11 @@
 				width: 24px;
 				height: 24px;
 			}
-			
+
 			.mui-password {
 				margin-top: 5px
 			}
-			
+
 			input[type=text],
 			input[type=password],
 			.lab {
@@ -64,23 +64,23 @@
 				border: 1px solid #ccc;
 				padding-left: 40px
 			}
-			
+
 			input {
 				font-size: 16px
 			}
-			
+
 			.mui-input-row .mui-input-clear~.mui-icon-clear,
 			.mui-input-row .mui-input-password~.mui-icon-eye,
 			.mui-input-row .mui-input-speech~.mui-icon-speech {
 				top: 15px;
 			}
-			
+
 			.mui-btn-primary {
 				height: 50px;
 				line-height: 50px;
 				font-size: 18px;
 			}
-			
+
 			.reg-wrapper {
 				margin-top: 20px;
 				text-align: center;
@@ -136,81 +136,81 @@
 			var map_page = null;
 			var me_page = null;
 
-			var vm = new Vue({
-				el: '#app',
-				data: {
-					userName: 'xiaojing',
-					password: '123456',
-					version: ''
-				},
-				methods: {
-					login: function() {
-						if(!this.userName || !this.password) {
-							mui.toast('帐号或密码不能为空！');
-							return;
-						} else {
-							setTimeout(function() {
-								plus.nativeUI.showWaiting();
-							}, 300);
-						}
-						// plus.nativeUI.showWaiting('', {width:"60px",height:'60px'});
-						mui.ajax(apiUrl.login, {
-							data: {
-								user_name: vm.userName,
-								signature: hex_sha1(vm.password)
-							},
-							dataType: 'json',
-							type: 'post',
-							timeout: 20000,
-							success: function(data) {
-								console.log(JSON.stringify(data));
-								if(data.status === 0) {
-									var ws = plus.webview.getWebviewById('main');
-									plus.webview.close(ws);
-									var token = data.token;
-									var realName = data.realName;
-									var workGroup = data.additionalInfo.wrokGroup;
-									var userLoginId = data.additionalInfo.id;
-									var signature = hex_sha1(vm.password);
-									plus.storage.setItem('token', token);
-									plus.storage.setItem('user_name', vm.userName);
-									plus.storage.setItem('passWord', vm.password);
-									plus.storage.setItem('realName', realName);
-									plus.storage.setItem('workGroup', workGroup);
-									plus.storage.setItem('signature', signature);
-									plus.storage.setItem('userLoginId', userLoginId);
-									var additionalInfo = JSON.stringify(data.additionalInfo);
-									var departInfo = JSON.stringify(data.departInfo[0]);
-									plus.storage.setItem('additionalInfo', additionalInfo);
-									plus.storage.setItem('departInfo', departInfo);
-									plus.webview.getLaunchWebview().reload();
-									mui.fire(plus.webview.getWebviewById('app/console/user.html'), 'refreshUser');
-									plus.storage.setItem('linkCode', 'none');
-									setTimeout(function() {
-										plus.nativeUI.closeWaiting();
-										plus.webview.currentWebview().close();
-									}, 500);
-								} else {
-									plus.nativeUI.toast(data.info);
-									setTimeout(function() {
-										plus.nativeUI.closeWaiting();
-									}, 1000);
-								}
-							},
-							error: function(xhr, type, errorThrown) {
-								// 异常处理；
-								onNetChange();
-								plus.nativeUI.closeWaiting();
-							}
-						});
-					}
-				},
-				created: function() {
-					mui.plusReady(function() {
-						mui.init({});
-						plus.storage.removeItem('user_name');
-						plus.storage.removeItem('token');
-						vm.version = plus.runtime.version;
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    userName: '',
+		    password: '',
+		    version: ''
+		  },
+		  methods: {
+		    login: function () {
+		      if (!this.userName || !this.password) {
+		        mui.toast('帐号或密码不能为空！');
+		        return;
+		      } else {
+		        setTimeout(function () {
+		          plus.nativeUI.showWaiting();
+		        }, 300);
+		      }
+		      // plus.nativeUI.showWaiting('', {width:"60px",height:'60px'});
+		      mui.ajax(apiUrl.login, {
+		        data: {
+		          user_name: vm.userName,
+		          signature: hex_sha1(vm.password)
+		        },
+		        dataType: 'json',
+		        type: 'post',
+		        timeout: 20000,
+		        success: function (data) {
+		          console.log(JSON.stringify(data));
+		          if (data.status === 0) {
+		            var ws = plus.webview.getWebviewById('main');
+		            plus.webview.close(ws);
+		            var token = data.token;
+		            var realName = data.realName;
+		            var workGroup = data.additionalInfo.wrokGroup;
+		            var userLoginId = data.additionalInfo.id;
+		            var signature = hex_sha1(vm.password);
+		            plus.storage.setItem('token', token);
+		            plus.storage.setItem('user_name', vm.userName);
+		            plus.storage.setItem('passWord', vm.password);
+		            plus.storage.setItem('realName', realName);
+		            plus.storage.setItem('workGroup', workGroup);
+		            plus.storage.setItem('signature', signature);
+		            plus.storage.setItem('userLoginId', userLoginId);
+		            var additionalInfo = JSON.stringify(data.additionalInfo);
+		            var departInfo = JSON.stringify(data.departInfo[0]);
+		            plus.storage.setItem('additionalInfo', additionalInfo);
+		            plus.storage.setItem('departInfo', departInfo);
+		            plus.webview.getLaunchWebview().reload();
+		            mui.fire(plus.webview.getWebviewById('app/console/user.html'), 'refreshUser');
+		            plus.storage.setItem('linkCode', 'none');
+		            setTimeout(function () {
+		              plus.nativeUI.closeWaiting();
+		              plus.webview.currentWebview().close();
+		            }, 500);
+		          } else {
+		            plus.nativeUI.toast(data.info);
+		            setTimeout(function () {
+		              plus.nativeUI.closeWaiting();
+		            }, 1000);
+		          }
+		        },
+		        error: function (xhr, type, errorThrown) {
+		          // 异常处理；
+		          onNetChange();
+		          plus.nativeUI.closeWaiting();
+		        }
+		      });
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () {
+		      mui.init({});
+		      plus.storage.removeItem('user_name');
+		      plus.storage.removeItem('token');
+		      vm.version = plus.runtime.version;
 
 						// 关闭guide页
 						var guidews = plus.webview.getWebviewById('guide');

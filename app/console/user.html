@@ -516,10 +516,6 @@
 							}
 						});
 						mui.swipeoutClose(el);
-					},
-					test: function() {
-						mui.toast('此处调用关联接口....');
-						mui('#topPopover').popover('hide');
 					}
 				},
 				created: function() {
@@ -533,7 +529,16 @@
 									contentrefresh: '正在加载...',
 									callback: pullupRefresh
 								}
-							}
+							},
+							gestureConfig:{
+								tap: true, //默认为true
+								doubletap: true, //默认为false
+								longtap: true, //默认为false
+								swipe: true, //默认为true
+								drag: false, //默认为true
+								hold:false,//默认为false，不监听
+								release:false//默认为false，不监听
+								}
 						});
 						// 页面顶部筛选按钮跳转
 						mui('.filter-ul').on('tap', '.filter-li', function(e) {
@@ -726,7 +731,7 @@
 					mui('#pullrefresh').pullRefresh().endPullupToRefresh((vm.pageCount >= vm.endPageIndex)); //参数为true代表没有更多数据了。
 					getUserData();
 				}, 1500);
-				console.log('上拉加载数据')
+				//console.log('上拉加载数据')
 			}
 		</script>
 	</body>

@@ -563,7 +563,7 @@
         overlays: [popup],
         target: 'map',
         // 禁止在移动端旋转设备
-        interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false }),
+        interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false, doubleClickZoom: false }),
         controls: ol.control.defaults({
           attributionOptions: ({
             collapsible: false

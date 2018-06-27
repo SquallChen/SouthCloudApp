@@ -1,1566 +1,1566 @@
 {
-	"index.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"public/images/index_storage.jpg",
-			"public/images/index_track.jpg",
-			"public/images/index_position.jpg",
-			"public/images/card_back1_bg.png",
-			"public/images/card_back_bg.png",
-			"public/images/card_back2_bg.png",
-			"public/images/card_bg.png",
-			"public/images/Childuser_menu_normal.png",
-			"public/images/rtkonline_menu_normal.png",
-			"public/images/taskmanager_menu_normal.png",
-			"public/images/onlinemonitor_menu_normal.png",
-			"/js/feedback.js",
-			"public/images/datamanage_menu_normal.png",
-			"js/mui.view.js",
-			"public/images/logo.png",
-			"examples/tab-webview-main.html",
-			"tab-webview-subpage-chat.html",
-			"tab-webview-subpage-about.html",
-			"html/home.html",
-			"index/home.html",
-			"app/index/home.html",
-			"public/images/data_manager_opened.png",
-			"public/images/task_manager_opened.png",
-			"public/images/rtk_manager_opened.png",
-			"css/my.css",
-			"js/timetrans.js",
-			"js/app.js",
-			"public/images/cloud.png",
-			"js/sha1.js",
-			"css/style.css",
-			"js/mui.enterfocus.js",
-			"js/url.js",
-			"js/network.js",
-			"public/images/rtk.png",
-			"public/images/data.png",
-			"public/images/task.png",
-			"js/transcoor.js",
-			"public/images/user.png",
-			"js/converse/strophe.min.js",
-			"public/images/map.png",
-			"js/vue.min.js",
-			"public/img/index_track.png",
-			"public/img/index_storage.png",
-			"public/img/index_position.png",
-			"css/custom.css",
-			"public/img/rtk.png",
-			"public/img/task.png",
-			"public/img/file.png",
-			"public/img/map.png",
-			"public/img/slidertop.png",
-			"app/console/console.html",
-			"app/console/user.html",
-			"app/personnel/onlineSettings.html"
-		],
-		"refer": [
-			"examples/tab-webview-main.html",
-			"tab-webview-subpage-chat.html",
-			"tab-webview-subpage-about.html",
-			"tab-webview-subpage-setting.html",
-			"tab-webview-subpage-contact.html",
-			"tab.html",
-			"index/setting.html",
-			"html/setting.html",
-			"html/message.html",
-			"html/home.html",
-			"index/console.html",
-			"index/home.html",
-			"app/index/console.html",
-			"app/index/setting.html",
-			"app/index/home.html",
-			"app/index/login.html",
-			"app/rtkonline/rtklist.html",
-			"app/taskmanager/taskmanager.html",
-			"app/datamanager/datalist.html",
-			"main.html",
-			"login.html",
-			"app/index/guide.html",
-			"geo.html",
-			"app/user/user.html",
-			"app/user/chat.html",
-			"app/mapmonitor/rtkmap.html",
-			"app/mapmonitor/web.html",
-			"app/mapmonitor/map.html",
-			"app/taskmanager/tasklist.html",
-			"app/index/resetpw.html",
-			"app/rtkonline/barcode_scan.html",
-			"app/index/info.html",
-			"app/index/feedback.html",
-			"app/index/index.html",
-			"app/settings/settings.html",
-			"app/subpage_chat/subpage_chat.html",
-			"app/console/console.html",
-			"app/subpage_contact/subpage_contact.html",
-			"app/console/settings.html",
-			"app/console/subpage_contact.html",
-			"app/console/subpage_chat.html",
-			"app/console/user.html",
-			"app/console/equipment.html",
-			"app/console/map.html",
-			"app/console/me.html",
-			"app/personnel/onlineSettings.html",
-			"app/rtkonline/rtkset.html",
-			"confirm.html"
-		]
-	},
-	"examples/tab-webview-main.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"examples/tab-webview-subpage-about.html",
-			"index.html"
-		],
-		"refer": [
-			"examples/tab-webview-subpage-setting.html",
-			"examples/tab-webview-subpage-chat.html",
-			"examples/tab-webview-subpage-contact.html",
-			"examples/tab-webview-subpage-about.html",
-			"index.html"
-		]
-	},
-	"examples/tab-webview-subpage-about.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"tab-webview-subpage-about.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"tab-webview-subpage-chat.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"tab-webview-subpage-contact.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"tab-webview-subpage-setting.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"tab.html": {
-		"resources": [
-			"tab-webview-subpage-about.html"
-		],
-		"refer": [
-			"tab-webview-subpage-about.html",
-			"tab-webview-subpage-setting.html",
-			"tab-webview-subpage-chat.html",
-			"tab-webview-subpage-contact.html"
-		]
-	},
-	"index/setting.html": {
-		"resources": [
-			"js/feedback.js",
-			"js/mui.view.js",
-			"index/tab-webview-subpage-about.html",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/feedback.css"
-		],
-		"refer": [
-			"index/tab-webview-subpage-setting.html",
-			"index/tab-webview-subpage-chat.html",
-			"index/tab-webview-subpage-about.html",
-			"index/tab-webview-subpage-contact.html"
-		]
-	},
-	"index/home.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"public/images/card_back1_bg.png",
-			"public/images/index_storage.jpg",
-			"public/images/index_track.jpg",
-			"public/images/card_back_bg.png",
-			"public/images/card_back2_bg.png",
-			"public/images/index_position.jpg",
-			"public/images/card_bg.png"
-		],
-		"refer": []
-	},
-	"index/console.html": {
-		"resources": [
-			"public/images/Childuser_menu_normal.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"public/images/taskmanager_menu_normal.png",
-			"css/mui.min.css",
-			"public/images/onlinemonitor_menu_normal.png",
-			"public/images/rtkonline_menu_normal.png",
-			"public/images/datamanage_menu_normal.png"
-		],
-		"refer": []
-	},
-	"app/index/home.html": {
-		"resources": [
-			"public/images/card_back1_bg.png",
-			"public/images/index_storage.jpg",
-			"public/images/index_track.jpg",
-			"public/images/card_back_bg.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"public/images/card_back2_bg.png",
-			"public/images/index_position.jpg",
-			"public/images/card_bg.png"
-		],
-		"refer": []
-	},
-	"app/index/console.html": {
-		"resources": [
-			"public/images/Childuser_menu_normal.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"public/images/taskmanager_menu_normal.png",
-			"css/mui.min.css",
-			"public/images/onlinemonitor_menu_normal.png",
-			"public/images/rtkonline_menu_normal.png",
-			"public/images/datamanage_menu_normal.png",
-			"app/rtkonline/rtklist.html",
-			"app/childuser/childuserlist.html",
-			"app/datamanager/datalist.html"
-		],
-		"refer": [
-			"app/rtkonline/rtklist.html",
-			"app/mapmonitor/map.html",
-			"app/datamanager/datalist.html",
-			"app/taskmanager/tasklist.html",
-			"app/childuser/childuserlist.html",
-			"app/index/login.html",
-			"login.html",
-			"aa.html",
-			"app/taskmanager/taskmanager.html",
-			"app/index/login1.html"
-		]
-	},
-	"app/index/setting.html": {
-		"resources": [
-			"css/feedback.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/feedback.js",
-			"js/mui.view.js",
-			"js/app.js",
-			"js/mui.locker.js",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"js/url.js",
-			"css/common.css",
-			"css/style.css",
-			"js/sha1.js"
-		],
-		"refer": [
-			"app/index/login.html",
-			"app/index/feedback.html",
-			"app/index/about.html",
-			"login.html"
-		]
-	},
-	"app/rtkonline/rtklist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/rtkonline/pullrefresh_sub.html",
-			"app/rtkonline/rtklistdata.html",
-			"css/barTitle.css",
-			"css/datamanager.css",
-			"css/common.css",
-			"css/custom.css",
-			"js/vue.min.js",
-			"js/url.js",
-			"js/h.min.js"
-		],
-		"refer": [
-			"index.html",
-			"app/rtkonline/pullrefresh_sub.html",
-			"app/rtkonline/rtklistdata.html"
-		]
-	},
-	"app/mapmonitor/map.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/common.css",
-			"js/url.js"
-		],
-		"refer": []
-	},
-	"app/datamanager/datalist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"public/images/fdisk.png",
-			"app/datamanager/road.html",
-			"public/images/fdir.png",
-			"css/datamanager.css",
-			"css/barTitle.css",
-			"js/network.js",
-			"css/common.css",
-			"js/url.js",
-			"css/custom.css",
-			"public/img/point.png",
-			"public/img/road.png",
-			"public/img/layer.png",
-			"public/img/coor.png",
-			"public/img/workarea.png"
-		],
-		"refer": [
-			"app/datamanager/road.html",
-			"app/datamanager/lofting.html",
-			"app/datamanager/point.html",
-			"app/datamanager/coord.html",
-			"app/datamanager/workarea.html",
-			"app/datamanager/data.html"
-		]
-	},
-	"app/taskmanager/tasklist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf",
-			"app/taskmanager/tasklistdata.html",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/tasklistdata.html",
-			"app/taskmanager/taskadd.html"
-		]
-	},
-	"app/childuser/childuserlist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/index/login.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.enterfocus.js",
-			"fonts/mui.ttf",
-			"js/sha1.js",
-			"public/images/cloud.png",
-			"css/input.css",
-			"css/my.css",
-			"js/timetrans.js"
-		],
-		"refer": [
-			"app/index/main.html",
-			"app/index/reg.html",
-			"app/index/forget_password.html",
-			"app/index/setting.html",
-			"app/index/setting111.html",
-			"app/index/unlock.html",
-			"app/index/forgetpw.html",
-			"index.html"
-		]
-	},
-	"app/index/reg.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/style.css",
-			"app/index/reg.html",
-			"css/input.css",
-			"css/my.css",
-			"js/url.js",
-			"js/vue.min.js",
-			"css/custom.css",
-			"css/inputlist.css"
-		],
-		"refer": [
-			"app/index/reg.html",
-			"app/index/login.html"
-		]
-	},
-	"main.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/my.css",
-			"public/images/data_manager_opened.png",
-			"public/images/task_manager_opened.png",
-			"public/images/card_bg.png",
-			"public/images/rtk_manager_opened.png",
-			"js/timetrans.js",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"setting.html",
-			"app/datamanager/datalist.html",
-			"index.html",
-			"app/rtkonline/rtklist.html",
-			"app/taskmanager/taskmanager.html"
-		]
-	},
-	"login.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.enterfocus.js",
-			"public/images/cloud.png",
-			"js/sha1.js",
-			"js/timetrans.js",
-			"css/my.css",
-			"fonts/mui.ttf",
-			"js/url.js",
-			"js/vue.min.js",
-			"public/img/login.png",
-			"public/img/foot.png",
-			"css/custom.css",
-			"public/img/user.png",
-			"public/img/pw.png"
-		],
-		"refer": [
-			"main.html",
-			"app/index/reg.html",
-			"app/index/forgetpw.html",
-			"index.html",
-			"app/index/register.html",
-			"app/console/equipment.html",
-			"app/console/user.html",
-			"app/personnel/userinfo.html",
-			"app/console/me.html"
-		]
-	},
-	"setting.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/mui.locker.js",
-			"js/feedback.js",
-			"css/feedback-page.css",
-			"js/feedback-page.js",
-			"js/mui.view.js"
-		],
-		"refer": []
-	},
-	"app/index/main.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"app/index/setting.html"
-		]
-	},
-	"app/index/forget_password.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"app/index/resetpw.html"
-		]
-	},
-	"app/index/setting111.html": {
-		"resources": [
-			"css/feedback.css",
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/mui.locker.js",
-			"js/feedback.js",
-			"js/feedback-page.js",
-			"js/mui.view.js"
-		],
-		"refer": []
-	},
-	"app/index/unlock.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"js/mui.locker.js"
-		],
-		"refer": [
-			"app/index/main.html"
-		]
-	},
-	"app/rtkonline/pullrefresh_sub.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/index/resetpw.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/style.css",
-			"css/my.css",
-			"js/url.js",
-			"css/custom.css",
-			"js/sha1.js",
-			"js/vue.min.js",
-			"css/input.css"
-		],
-		"refer": [
-			"login.html"
-		]
-	},
-	"app/index/forgetpw.html": {
-		"resources": [
-			"js/app.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/style.css",
-			"css/input.css",
-			"css/my.css",
-			"js/url.js"
-		],
-		"refer": []
-	},
-	"aa.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/rtkonline/rtklistdata.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"css/common.css",
-			"js/vue.min.js",
-			"css/custom.css",
-			"public/img/on.png",
-			"public/img/alias.png",
-			"public/img/off.png",
-			"public/img/user1.png",
-			"css/list.css"
-		],
-		"refer": [
-			"app/rtkonline/rtkdetail.html",
-			"app/rtkonline/rtkset.html",
-			"app/rtkonline/rtktrack.html",
-			"login.html"
-		]
-	},
-	"app/datamanager/road.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/datamanager/roaddata.html",
-			"app/datamanager/datalist.html",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/roaddata.html",
-			"app/datamanager/datalist.html"
-		]
-	},
-	"app/datamanager/roaddata.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"public/images/ffile.png",
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"js/data.js",
-			"css/common.css"
-		],
-		"refer": []
-	},
-	"app/datamanager/lofting.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/datamanager/loftingdata.html",
-			"css/barTitle.css",
-			"js/url.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/loftingdata.html"
-		]
-	},
-	"app/datamanager/loftingdata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"public/images/ffile.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"js/data.js",
-			"css/common.css"
-		],
-		"refer": []
-	},
-	"app/datamanager/point.html": {
-		"resources": [
-			"app/datamanager/pointdata.html",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/pointdata.html"
-		]
-	},
-	"app/datamanager/pointdata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"public/images/ffile.png",
-			"css/datamanager.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/url.js",
-			"css/barTitle.css",
-			"js/network.js",
-			"js/data.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/datalist.html"
-		]
-	},
-	"app/datamanager/coord.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/datamanager/coorddata.html",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/coorddata.html"
-		]
-	},
-	"app/datamanager/coorddata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"public/images/ffile.png",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"js/data.js",
-			"css/common.css"
-		],
-		"refer": []
-	},
-	"app/datamanager/workarea.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/datamanager/workareadata.html",
-			"css/barTitle.css"
-		],
-		"refer": [
-			"app/datamanager/workareadata.html"
-		]
-	},
-	"app/datamanager/workareadata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"public/images/ffile.png",
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"js/data.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/datamanager/datalist.html"
-		]
-	},
-	"app/rtkonline/rtkdetail.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"fonts/mui.ttf",
-			"js/timetrans.js",
-			"css/barTitle.css",
-			"js/url.js",
-			"css/common.css",
-			"js/vue.min.js",
-			"css/custom.css",
-			"public/img/on.png",
-			"public/img/off.png"
-		],
-		"refer": [
-			"login.html"
-		]
-	},
-	"app/taskmanager/taskmanager.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"public/images/fdir.png",
-			"css/mui.min.css",
-			"css/datamanager.css",
-			"css/barTitle.css",
-			"js/network.js",
-			"js/url.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/tasklist.html",
-			"app/taskmanager/achieveist.html",
-			"app/taskmanager/achievelist.html"
-		]
-	},
-	"app/taskmanager/tasklistdata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/taskdetail.html",
-			"app/taskmanager/tasklog.html",
-			"login.html",
-			"app/taskmanager/taskmanager.html"
-		]
-	},
-	"app/taskmanager/taskdetail.html": {
-		"resources": [
-			"js/timetrans.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/url.js",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/taskdetailfiles.html",
-			"app/taskmanager/taskmark.html",
-			"app/taskmanager/taskdetailwm.html"
-		]
-	},
-	"app/index/feedback.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/app.js",
-			"js/sha1.js",
-			"js/feedback.js",
-			"css/feedback.css",
-			"js/url.js",
-			"css/custom.css"
-		],
-		"refer": []
-	},
-	"app/rtkonline/rtkset.html": {
-		"resources": [
-			"js/socket.io.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/rtkonline/reksetting.js",
-			"app/rtkonline/rtksetother.html",
-			"css/barTitle.css",
-			"js/url.js",
-			"css/common.css",
-			"app/rtkonline/rtksetting.js",
-			"public/images/wifi2.png",
-			"public/images/loading.gif",
-			"js/vue.min.js",
-			"css/custom.css",
-			"app/rtkonline/rtkset.js"
-		],
-		"refer": [
-			"app/rtkonline/rtksetother.html",
-			"app/rtkonline/rtklist.html",
-			"app/rtkonline/rtklistdata.html",
-			"login.html"
-		]
-	},
-	"app/index/about.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/rtkonline/rtksetother.html": {
-		"resources": [
-			"js/mui.min.js",
-			"js/socket.io.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"app/rtkonline/rtkset.html"
-		],
-		"refer": [
-			"app/rtkonline/rtkset.html"
-		]
-	},
-	"app/index/login1.html": {
-		"resources": [
-			"js/app.js",
-			"js/sha1.js",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/mui.enterfocus.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"app/index/forgetpw.html",
-			"app/index/reg.html"
-		]
-	},
-	"app/taskmanager/achieveist.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"app/taskmanager/achievelistdata.html"
-		],
-		"refer": [
-			"app/taskmanager/achievelistdata.html"
-		]
-	},
-	"app/taskmanager/achievelistdata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"css/datamanager.css",
-			"css/mui.min.css",
-			"js/mui.min.js",
-			"css/barTitle.css",
-			"js/url.js",
-			"js/network.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/taskdetail.html",
-			"app/taskmanager/achievecontent.html"
-		]
-	},
-	"app/taskmanager/achievelist.html": {
-		"resources": [
-			"app/taskmanager/achievelistdata.html",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/achievelistdata.html"
-		]
-	},
-	"app/taskmanager/tasklogdata.html": {
-		"resources": [
-			"css/mui.min.css",
-			"css/datamanager.css",
-			"js/network.js",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": []
-	},
-	"app/taskmanager/tasklog.html": {
-		"resources": [
-			"app/taskmanager/tasklogdata.html",
-			"js/timetrans.js",
-			"js/url.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/tasklogdata.html"
-		]
-	},
-	"app/taskmanager/achievecontentdata.html": {
-		"resources": [
-			"css/datamanager.css",
-			"js/network.js",
-			"css/mui.min.css",
-			"css/barTitle.css",
-			"js/timetrans.js",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/achievelist.html"
-		]
-	},
-	"app/taskmanager/achievecontent.html": {
-		"resources": [
-			"app/taskmanager/achievecontentdata.html",
-			"css/mui.min.css",
-			"js/timetrans.js",
-			"js/url.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/barTitle.css",
-			"css/common.css"
-		],
-		"refer": [
-			"app/taskmanager/achievecontentdata.html"
-		]
-	},
-	"app/taskmanager/taskdetailfiles.html": {
-		"resources": [
-			"css/mui.min.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf"
-		],
-		"refer": []
-	},
-	"app/datamanager/datadetail.html": {
-		"resources": [
-			"public/images/ffile.png",
-			"js/url.js",
-			"css/mui.min.css",
-			"css/common.css",
-			"css/list.css",
-			"public/img/on.png",
-			"public/img/alias.png",
-			"public/img/off.png",
-			"public/img/user1.png",
-			"js/mui.min.js",
-			"js/vue.min.js"
-		],
-		"refer": [
-			"app/datamanager/datalist.html"
-		]
-	},
-	"app/datamanager/data.html": {
-		"resources": [
-			"app/datamanager/datadetail.html",
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/custom.css"
-		],
-		"refer": [
-			"app/datamanager/datadetail.html"
-		]
-	},
-	"app/taskmanager/taskadd.html": {
-		"resources": [
-			"js/mui.picker.min.js",
-			"css/mui.picker.min.css",
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"app/taskmanager/taskdetailfiles.html",
-			"app/taskmanager/taskworkman.html",
-			"app/taskmanager/taskdatafiles.html",
-			"app/taskmanager/taskaddfiles.html",
-			"app/taskmanager/taskaddfilesdetail.html",
-			"app/taskmanager/taskaddworkman.html",
-			"app/taskmanager/taskaddworkmandetail.html"
-		]
-	},
-	"app/taskmanager/taskmark.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/taskmanager/taskworkman.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css",
-			"app/taskmanager/taskworkmandata.html",
-			"css/common.css",
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"app/taskmanager/taskworkmandata.html",
-			"app/taskmanager/taskadd.html"
-		]
-	},
-	"app/taskmanager/taskworkmandata.html": {
-		"resources": [
-			"js/timetrans.js",
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"app/taskmanager/taskadd.html"
-		]
-	},
-	"app/taskmanager/taskdatafiles.html": {
-		"resources": [
-			"app/taskmanager/taskdatafileslist.html",
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"app/taskmanager/taskdatafileslist.html",
-			"app/taskmanager/taskadd.html"
-		]
-	},
-	"app/taskmanager/taskdatafileslist.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"public/images/ffile.png"
-		],
-		"refer": [
-			"app/taskmanager/taskadd.html",
-			"login.html"
-		]
-	},
-	"app/taskmanager/taskaddfiles.html": {
-		"resources": [
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/url.js"
-		],
-		"refer": [
-			"login.html",
-			"app/taskmanager/taskadd.html"
-		]
-	},
-	"app/taskmanager/taskaddfilesdetail.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/taskmanager/taskaddworkman.html": {
-		"resources": [
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"js/url.js",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/index/guide.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": [
-			"login.html"
-		]
-	},
-	"app/taskmanager/taskaddworkmandetail.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/taskmanager/taskdetailwm.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/user/user.html": {
-		"resources": [
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/url.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.pullToRefresh.material.js",
-			"js/converse/converse.css",
-			"js/converse/converse.js",
-			"js/converse/icomoon.ttf",
-			"js/converse/converse-mobile.js",
-			"js/converse/pingstream.js",
-			"js/converse/strophe.min.js",
-			"public/images/msg.png",
-			"css/feedback.css",
-			"js/mui.view.js",
-			"js/sha1.js",
-			"js/feedback.js",
-			"js/arttmpl.js",
-			"app/user/indexedDB.js",
-			"app/user/user.css"
-		],
-		"refer": [
-			"app/user/chat.html",
-			"login.html"
-		]
-	},
-	"app/user/chat.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.pullToRefresh.js",
-			"js/mui.min.js",
-			"js/mui.pullToRefresh.material.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/converse/converse.js",
-			"js/converse/converse.css",
-			"js/converse/icomoon.ttf",
-			"css/app.css",
-			"css/mui.imageviewer.css",
-			"js/mui.imageViewer.js",
-			"js/arttmpl.js",
-			"js/converse/strophe.min.js",
-			"js/converse/pingstream.js"
-		],
-		"refer": []
-	},
-	"app/rtkonline/rtktrack.html": {
-		"resources": [
-			"app/rtkonline/rtktrackdata.html",
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/custom.css"
-		],
-		"refer": [
-			"app/rtkonline/rtktrackdata.html"
-		]
-	},
-	"app/rtkonline/rtktrackdata.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"css/mui.min.css",
-			"public/img/time.png",
-			"css/list.css",
-			"js/vue.min.js",
-			"css/custom.css"
-		],
-		"refer": [
-			"app/rtkonline/rtktrackday.html",
-			"login.html",
-			"app/rtkonline/rtklist.html"
-		]
-	},
-	"app/rtkonline/rtktrackday.html": {
-		"resources": [
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/url.js",
-			"css/ol.css",
-			"css/ol3-layerswitcher.css",
-			"js/ol.js",
-			"js/ol3-layerswitcher.js",
-			"css/map.css",
-			"js/v4.2.0-dist/ol.js",
-			"css/map_popup.css",
-			"js/v4.2.0-dist/ol.css",
-			"public/images/start.png",
-			"public/images/end.png",
-			"public/img/map_monitor_identifycode_tips.png",
-			"css/map_popup1.css",
-			"public/img/start.png",
-			"public/img/end.png"
-		],
-		"refer": []
-	},
-	"app/mapmonitor/rtkmap.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"js/v4.2.0-dist/ol.js",
-			"css/map_popup.css",
-			"js/v4.2.0-dist/ol.css",
-			"css/custom.css",
-			"public/img/device_offline.png",
-			"css/list.css",
-			"public/img/converge.png",
-			"public/img/map_monitor_identifycode_tips.png",
-			"public/img/device_online.png",
-			"public/img/off.png"
-		],
-		"refer": [
-			"app/mapmonitor/rtkinfo.html",
-			"login.html",
-			"app/mapmonitor/rtkInfoList.html"
-		]
-	},
-	"app/mapmonitor/web.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.min.js",
-			"css/common.css",
-			"fonts/mui.ttf",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/index/register.html": {
-		"resources": [
-			"js/url.js",
-			"js/app.js",
-			"css/my.css",
-			"js/mui.min.js",
-			"fonts/mui.ttf",
-			"css/mui.min.css",
-			"css/style.css",
-			"js/vue.min.js"
-		],
-		"refer": []
-	},
-	"app/index/info.html": {
-		"resources": [
-			"js/app.js",
-			"css/mui.min.css",
-			"js/url.js",
-			"js/mui.min.js",
-			"js/vue.min.js",
-			"css/custom.css",
-			"fonts/mui.ttf",
-			"css/input.css"
-		],
-		"refer": [
-			"login.html",
-			"index.html"
-		]
-	},
-	"app/mapmonitor/rtkInfoList.html": {
-		"resources": [
-			"js/url.js",
-			"js/mui.min.js",
-			"css/mui.min.css"
-		],
-		"refer": []
-	},
-	"app/index/index.html": {
-		"refer": [
-			"app/rtkonline/rtklist.html",
-			"app/mapmonitor/rtkmap.html",
-			"app/datamanager/datalist.html",
-			"app/subpage_contact/subpage_contact.html",
-			"app/settings/settings.html",
-			"app/subpage_chat/subpage_chat.html",
-			"app/console/console.html"
-		],
-		"resources": [
-			"app/console/console.html"
-		]
-	},
-	"app/console/console.html": {
-		"refer": [
-			"app/rtkonline/rtklist.html",
-			"app/mapmonitor/rtkmap.html",
-			"app/datamanager/datalist.html",
-			"app/map/map.html",
-			"app/personnel/personnel.html"
-		]
-	},
-	"app/settings/settings.html": {
-		"refer": [
-			"app/index/info.html",
-			"app/index/resetpw.html",
-			"app/index/feedback.html",
-			"login.html",
-			"app/rtkonline/rtklist.html",
-			"app/mapmonitor/rtkmap.html",
-			"app/datamanager/datalist.html"
-		]
-	},
-	"app/console/settings.html": {
-		"refer": [
-			"app/index/info.html",
-			"app/index/resetpw.html",
-			"login.html",
-			"app/index/feedback.html"
-		]
-	},
-	"app/map/map.html": {
-		"refer": [
-			"app/rtkonline/rtklist.html",
-			"app/datamanager/datalist.html",
-			"app/mapmonitor/rtkmap.html"
-		]
-	},
-	"app/personnel/personnel.html": {
-		"refer": [
-			"app/personnel/informationsetting.html",
-			"app/personnel/informationSetting.html",
-			"app/personnel/userEntry.html",
-			"app/personnel/equipmentManagement.html"
-		]
-	},
-	"app/personnel/userEntry.html": {
-		"refer": [
-			"app/personnel/personnel.html",
-			"app/personnel/deviceStatus.html",
-			"app/personnel/userinfo.html",
-			"login.html"
-		]
-	},
-	"app/personnel/equipmentManagement.html": {
-		"refer": [
-			"app/personnel/personnel.html",
-			"app/personnel/informationsetting.html",
-			"app/personnel/deviceStatus.html"
-		]
-	},
-	"app/personnel/informationsetting.html": {
-		"refer": [
-			"app/personnel/deviceStatus.html"
-		]
-	},
-	"app/personnel/deviceStatus.html": {
-		"refer": [
-			"app/personnel/userEntry.html",
-			"app/personnel/equipmentManagement.html",
-			"app/personnel/onlineSettings.html"
-		]
-	},
-	"app/personnel/onlineSettings.html": {
-		"refer": [
-			"app/personnel/deviceStatus.html",
-			"login.html",
-			"app/console/equipment.html"
-		]
-	},
-	"app/console/subpage_chat.html": {
-		"resources": [
-			"js/layim/layui.js",
-			"js/im/adapter.js",
-			"js/im/strophe-1.2.8.min.js",
-			"js/layim/css/layui.mobile.css",
-			"js/im/websdk-1.4.10.js",
-			"js/im/webim.config.js",
-			"js/im/webrtc-1.4.10.js"
-		]
-	},
-	"app/console/user.html": {
-		"refer": [
-			"app/personnel/userEntry.html",
-			"app/personnel/userfilter.html",
-			"app/personnel/userinfo.html",
-			"app/personnel/authorizedEquipment.html",
-			"app/personnel/workGroup.html",
-			"app/index/info.html",
-			"app/datamanager/datalist.html",
-			"app/mapmonitor/rtkinfo.html",
-			"app/mapmonitor/rtkmap.html",
-			"app/rtkonline/realtrace.html",
-			"app/rtkonline/rtkdetail.html",
-			"app/rtkonline/rtkset.html",
-			"app/rtkonline/rtktrack.html",
-			"app/taskmanager/achievecontent.html",
-			"app/taskmanager/taskmanager.html",
-			"index.html",
-			"login.html",
-			"app/personnel/subUserinfo.html",
-			"confirm.html"
-		],
-		"resources": [
-			"public/img/related.png",
-			"public/img/01.jpg",
-			"public/img/avatar.png"
-		]
-	},
-	"app/personnel/userinfo.html": {
-		"refer": [
-			"app/personnel/userEntry.html",
-			"app/personnel/userInfoModify.html",
-			"login.html"
-		]
-	},
-	"app/personnel/userInfoModify.html": {
-		"refer": [
-			"app/personnel/userinfo.html"
-		]
-	},
-	"app/personnel/authorizedEquipment.html": {
-		"refer": [
-			"app/personnel/userinfo.html",
-			"app/personnel/realTimeTrack.html",
-			"app/personnel/historicalTrack.html",
-			"app/personnel/currentLocation.html"
-		]
-	},
-	"app/personnel/realTimeTrack.html": {
-		"refer": [
-			"app/personnel/coordinateDetails.html"
-		]
-	},
-	"app/personnel/coordinateDetails.html": {
-		"refer": [
-			"app/personnel/realTimeTrack.html",
-			"app/personnel/historicalTrack.html"
-		]
-	},
-	"app/personnel/historicalTrack.html": {
-		"refer": [
-			"app/personnel/coordinateDetails.html"
-		]
-	},
-	"app/console/equipment.html": {
-		"refer": [
-			"app/equipment/deviceEntry.html",
-			"app/personnel/userEntry.html",
-			"app/equipment/equipmentFilter.html",
-			"app/personnel/realTimeTrack.html",
-			"app/personnel/historicalTrack.html",
-			"app/personnel/currentLocation.html",
-			"app/personnel/onlineSettings.html",
-			"login.html",
-			"app/personnel/allocationAuthorization.html",
-			"app/equipment/allocationAuthorization.html"
-		],
-		"resources": [
-			"public/img/user_icon01.png",
-			"public/img/user_icon02.png",
-			"js/url.js",
-			"js/mui.min.js",
-			"js/vue.min.js"
-		]
-	},
-	"app/console/me.html": {
-		"refer": [
-			"app/personnel/userEntry.html",
-			"app/personnel/userinfo.html",
-			"login.html"
-		],
-		"resources": [
-			"fonts/mui.ttf",
-			"public/img/me_bg.png",
-			"js/url.js",
-			"public/img/01.jpg",
-			"js/mui.min.js",
-			"js/vue.min.js"
-		]
-	},
-	"app/console/map.html": {
-		"resources": [
-			"fonts/mui.ttf"
-		],
-		"refer": [
-			"app/personnel/historicalTrack.html",
-			"app/personnel/realTimeTrack.html"
-		]
-	},
-	"app/equipment/deviceEntry.html": {
-		"refer": [
-			"app/console/equipment.html",
-			"app/equipment/deviceEntry.html"
-		]
-	},
-	"app/personnel/subUserinfo.html": {
-		"refer": [
-			"app/personnel/userInfoModify.html"
-		]
-	},
-	"app/equipment/allocationAuthorization.html": {
-		"refer": [
-			"app/equipment/equipment-user-authorized.html"
-		]
-	},
-	"app/equipment/equipment-user-authorized.html": {
-		"refer": [
-			"app/personnel/userfilter.html",
-			"login.html",
-			"app/personnel/userEntry.html",
-			"app/console/user.html"
-		]
-	}
+  "index.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "public/images/index_storage.jpg",
+      "public/images/index_track.jpg",
+      "public/images/index_position.jpg",
+      "public/images/card_back1_bg.png",
+      "public/images/card_back_bg.png",
+      "public/images/card_back2_bg.png",
+      "public/images/card_bg.png",
+      "public/images/Childuser_menu_normal.png",
+      "public/images/rtkonline_menu_normal.png",
+      "public/images/taskmanager_menu_normal.png",
+      "public/images/onlinemonitor_menu_normal.png",
+      "/js/feedback.js",
+      "public/images/datamanage_menu_normal.png",
+      "js/mui.view.js",
+      "public/images/logo.png",
+      "examples/tab-webview-main.html",
+      "tab-webview-subpage-chat.html",
+      "tab-webview-subpage-about.html",
+      "html/home.html",
+      "index/home.html",
+      "app/index/home.html",
+      "public/images/data_manager_opened.png",
+      "public/images/task_manager_opened.png",
+      "public/images/rtk_manager_opened.png",
+      "css/my.css",
+      "js/timetrans.js",
+      "js/app.js",
+      "public/images/cloud.png",
+      "js/sha1.js",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "js/url.js",
+      "js/network.js",
+      "public/images/rtk.png",
+      "public/images/data.png",
+      "public/images/task.png",
+      "js/transcoor.js",
+      "public/images/user.png",
+      "js/converse/strophe.min.js",
+      "public/images/map.png",
+      "js/vue.min.js",
+      "public/img/index_track.png",
+      "public/img/index_storage.png",
+      "public/img/index_position.png",
+      "css/custom.css",
+      "public/img/rtk.png",
+      "public/img/task.png",
+      "public/img/file.png",
+      "public/img/map.png",
+      "public/img/slidertop.png",
+      "app/console/console.html",
+      "app/console/user.html",
+      "app/personnel/onlineSettings.html"
+    ],
+    "refer": [
+      "examples/tab-webview-main.html",
+      "tab-webview-subpage-chat.html",
+      "tab-webview-subpage-about.html",
+      "tab-webview-subpage-setting.html",
+      "tab-webview-subpage-contact.html",
+      "tab.html",
+      "index/setting.html",
+      "html/setting.html",
+      "html/message.html",
+      "html/home.html",
+      "index/console.html",
+      "index/home.html",
+      "app/index/console.html",
+      "app/index/setting.html",
+      "app/index/home.html",
+      "app/index/login.html",
+      "app/rtkonline/rtklist.html",
+      "app/taskmanager/taskmanager.html",
+      "app/datamanager/datalist.html",
+      "main.html",
+      "login.html",
+      "app/index/guide.html",
+      "geo.html",
+      "app/user/user.html",
+      "app/user/chat.html",
+      "app/mapmonitor/rtkmap.html",
+      "app/mapmonitor/web.html",
+      "app/mapmonitor/map.html",
+      "app/taskmanager/tasklist.html",
+      "app/index/resetpw.html",
+      "app/rtkonline/barcode_scan.html",
+      "app/index/info.html",
+      "app/index/feedback.html",
+      "app/index/index.html",
+      "app/settings/settings.html",
+      "app/subpage_chat/subpage_chat.html",
+      "app/console/console.html",
+      "app/subpage_contact/subpage_contact.html",
+      "app/console/settings.html",
+      "app/console/subpage_contact.html",
+      "app/console/subpage_chat.html",
+      "app/console/user.html",
+      "app/console/equipment.html",
+      "app/console/map.html",
+      "app/console/me.html",
+      "app/personnel/onlineSettings.html",
+      "app/rtkonline/rtkset.html",
+      "confirm.html"
+    ]
+  },
+  "examples/tab-webview-main.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "examples/tab-webview-subpage-about.html",
+      "index.html"
+    ],
+    "refer": [
+      "examples/tab-webview-subpage-setting.html",
+      "examples/tab-webview-subpage-chat.html",
+      "examples/tab-webview-subpage-contact.html",
+      "examples/tab-webview-subpage-about.html",
+      "index.html"
+    ]
+  },
+  "examples/tab-webview-subpage-about.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tab-webview-subpage-about.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tab-webview-subpage-chat.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tab-webview-subpage-contact.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tab-webview-subpage-setting.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "tab.html": {
+    "resources": [
+      "tab-webview-subpage-about.html"
+    ],
+    "refer": [
+      "tab-webview-subpage-about.html",
+      "tab-webview-subpage-setting.html",
+      "tab-webview-subpage-chat.html",
+      "tab-webview-subpage-contact.html"
+    ]
+  },
+  "index/setting.html": {
+    "resources": [
+      "js/feedback.js",
+      "js/mui.view.js",
+      "index/tab-webview-subpage-about.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/feedback.css"
+    ],
+    "refer": [
+      "index/tab-webview-subpage-setting.html",
+      "index/tab-webview-subpage-chat.html",
+      "index/tab-webview-subpage-about.html",
+      "index/tab-webview-subpage-contact.html"
+    ]
+  },
+  "index/home.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "public/images/card_back1_bg.png",
+      "public/images/index_storage.jpg",
+      "public/images/index_track.jpg",
+      "public/images/card_back_bg.png",
+      "public/images/card_back2_bg.png",
+      "public/images/index_position.jpg",
+      "public/images/card_bg.png"
+    ],
+    "refer": []
+  },
+  "index/console.html": {
+    "resources": [
+      "public/images/Childuser_menu_normal.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "public/images/taskmanager_menu_normal.png",
+      "css/mui.min.css",
+      "public/images/onlinemonitor_menu_normal.png",
+      "public/images/rtkonline_menu_normal.png",
+      "public/images/datamanage_menu_normal.png"
+    ],
+    "refer": []
+  },
+  "app/index/home.html": {
+    "resources": [
+      "public/images/card_back1_bg.png",
+      "public/images/index_storage.jpg",
+      "public/images/index_track.jpg",
+      "public/images/card_back_bg.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "public/images/card_back2_bg.png",
+      "public/images/index_position.jpg",
+      "public/images/card_bg.png"
+    ],
+    "refer": []
+  },
+  "app/index/console.html": {
+    "resources": [
+      "public/images/Childuser_menu_normal.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "public/images/taskmanager_menu_normal.png",
+      "css/mui.min.css",
+      "public/images/onlinemonitor_menu_normal.png",
+      "public/images/rtkonline_menu_normal.png",
+      "public/images/datamanage_menu_normal.png",
+      "app/rtkonline/rtklist.html",
+      "app/childuser/childuserlist.html",
+      "app/datamanager/datalist.html"
+    ],
+    "refer": [
+      "app/rtkonline/rtklist.html",
+      "app/mapmonitor/map.html",
+      "app/datamanager/datalist.html",
+      "app/taskmanager/tasklist.html",
+      "app/childuser/childuserlist.html",
+      "app/index/login.html",
+      "login.html",
+      "aa.html",
+      "app/taskmanager/taskmanager.html",
+      "app/index/login1.html"
+    ]
+  },
+  "app/index/setting.html": {
+    "resources": [
+      "css/feedback.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/feedback.js",
+      "js/mui.view.js",
+      "js/app.js",
+      "js/mui.locker.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "js/url.js",
+      "css/common.css",
+      "css/style.css",
+      "js/sha1.js"
+    ],
+    "refer": [
+      "app/index/login.html",
+      "app/index/feedback.html",
+      "app/index/about.html",
+      "login.html"
+    ]
+  },
+  "app/rtkonline/rtklist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/rtkonline/pullrefresh_sub.html",
+      "app/rtkonline/rtklistdata.html",
+      "css/barTitle.css",
+      "css/datamanager.css",
+      "css/common.css",
+      "css/custom.css",
+      "js/vue.min.js",
+      "js/url.js",
+      "js/h.min.js"
+    ],
+    "refer": [
+      "index.html",
+      "app/rtkonline/pullrefresh_sub.html",
+      "app/rtkonline/rtklistdata.html"
+    ]
+  },
+  "app/mapmonitor/map.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/common.css",
+      "js/url.js"
+    ],
+    "refer": []
+  },
+  "app/datamanager/datalist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "public/images/fdisk.png",
+      "app/datamanager/road.html",
+      "public/images/fdir.png",
+      "css/datamanager.css",
+      "css/barTitle.css",
+      "js/network.js",
+      "css/common.css",
+      "js/url.js",
+      "css/custom.css",
+      "public/img/point.png",
+      "public/img/road.png",
+      "public/img/layer.png",
+      "public/img/coor.png",
+      "public/img/workarea.png"
+    ],
+    "refer": [
+      "app/datamanager/road.html",
+      "app/datamanager/lofting.html",
+      "app/datamanager/point.html",
+      "app/datamanager/coord.html",
+      "app/datamanager/workarea.html",
+      "app/datamanager/data.html"
+    ]
+  },
+  "app/taskmanager/tasklist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "app/taskmanager/tasklistdata.html",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/tasklistdata.html",
+      "app/taskmanager/taskadd.html"
+    ]
+  },
+  "app/childuser/childuserlist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/index/login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "fonts/mui.ttf",
+      "js/sha1.js",
+      "public/images/cloud.png",
+      "css/input.css",
+      "css/my.css",
+      "js/timetrans.js"
+    ],
+    "refer": [
+      "app/index/main.html",
+      "app/index/reg.html",
+      "app/index/forget_password.html",
+      "app/index/setting.html",
+      "app/index/setting111.html",
+      "app/index/unlock.html",
+      "app/index/forgetpw.html",
+      "index.html"
+    ]
+  },
+  "app/index/reg.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "app/index/reg.html",
+      "css/input.css",
+      "css/my.css",
+      "js/url.js",
+      "js/vue.min.js",
+      "css/custom.css",
+      "css/inputlist.css"
+    ],
+    "refer": [
+      "app/index/reg.html",
+      "app/index/login.html"
+    ]
+  },
+  "main.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/my.css",
+      "public/images/data_manager_opened.png",
+      "public/images/task_manager_opened.png",
+      "public/images/card_bg.png",
+      "public/images/rtk_manager_opened.png",
+      "js/timetrans.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "setting.html",
+      "app/datamanager/datalist.html",
+      "index.html",
+      "app/rtkonline/rtklist.html",
+      "app/taskmanager/taskmanager.html"
+    ]
+  },
+  "login.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "public/images/cloud.png",
+      "js/sha1.js",
+      "js/timetrans.js",
+      "css/my.css",
+      "fonts/mui.ttf",
+      "js/url.js",
+      "js/vue.min.js",
+      "public/img/login.png",
+      "public/img/foot.png",
+      "css/custom.css",
+      "public/img/user.png",
+      "public/img/pw.png"
+    ],
+    "refer": [
+      "main.html",
+      "app/index/reg.html",
+      "app/index/forgetpw.html",
+      "index.html",
+      "app/index/register.html",
+      "app/console/equipment.html",
+      "app/console/user.html",
+      "app/personnel/userinfo.html",
+      "app/console/me.html"
+    ]
+  },
+  "setting.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "css/feedback-page.css",
+      "js/feedback-page.js",
+      "js/mui.view.js"
+    ],
+    "refer": []
+  },
+  "app/index/main.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "app/index/setting.html"
+    ]
+  },
+  "app/index/forget_password.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "app/index/resetpw.html"
+    ]
+  },
+  "app/index/setting111.html": {
+    "resources": [
+      "css/feedback.css",
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/mui.locker.js",
+      "js/feedback.js",
+      "js/feedback-page.js",
+      "js/mui.view.js"
+    ],
+    "refer": []
+  },
+  "app/index/unlock.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "js/mui.locker.js"
+    ],
+    "refer": [
+      "app/index/main.html"
+    ]
+  },
+  "app/rtkonline/pullrefresh_sub.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/index/resetpw.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "css/my.css",
+      "js/url.js",
+      "css/custom.css",
+      "js/sha1.js",
+      "js/vue.min.js",
+      "css/input.css"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "app/index/forgetpw.html": {
+    "resources": [
+      "js/app.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "css/input.css",
+      "css/my.css",
+      "js/url.js"
+    ],
+    "refer": []
+  },
+  "aa.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/rtkonline/rtklistdata.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "css/common.css",
+      "js/vue.min.js",
+      "css/custom.css",
+      "public/img/on.png",
+      "public/img/alias.png",
+      "public/img/off.png",
+      "public/img/user1.png",
+      "css/list.css"
+    ],
+    "refer": [
+      "app/rtkonline/rtkdetail.html",
+      "app/rtkonline/rtkset.html",
+      "app/rtkonline/rtktrack.html",
+      "login.html"
+    ]
+  },
+  "app/datamanager/road.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/datamanager/roaddata.html",
+      "app/datamanager/datalist.html",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/roaddata.html",
+      "app/datamanager/datalist.html"
+    ]
+  },
+  "app/datamanager/roaddata.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "public/images/ffile.png",
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "js/data.js",
+      "css/common.css"
+    ],
+    "refer": []
+  },
+  "app/datamanager/lofting.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/datamanager/loftingdata.html",
+      "css/barTitle.css",
+      "js/url.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/loftingdata.html"
+    ]
+  },
+  "app/datamanager/loftingdata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "public/images/ffile.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "js/data.js",
+      "css/common.css"
+    ],
+    "refer": []
+  },
+  "app/datamanager/point.html": {
+    "resources": [
+      "app/datamanager/pointdata.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/pointdata.html"
+    ]
+  },
+  "app/datamanager/pointdata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "public/images/ffile.png",
+      "css/datamanager.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/url.js",
+      "css/barTitle.css",
+      "js/network.js",
+      "js/data.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/datalist.html"
+    ]
+  },
+  "app/datamanager/coord.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/datamanager/coorddata.html",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/coorddata.html"
+    ]
+  },
+  "app/datamanager/coorddata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "public/images/ffile.png",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "js/data.js",
+      "css/common.css"
+    ],
+    "refer": []
+  },
+  "app/datamanager/workarea.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/datamanager/workareadata.html",
+      "css/barTitle.css"
+    ],
+    "refer": [
+      "app/datamanager/workareadata.html"
+    ]
+  },
+  "app/datamanager/workareadata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "public/images/ffile.png",
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "js/data.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/datamanager/datalist.html"
+    ]
+  },
+  "app/rtkonline/rtkdetail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "fonts/mui.ttf",
+      "js/timetrans.js",
+      "css/barTitle.css",
+      "js/url.js",
+      "css/common.css",
+      "js/vue.min.js",
+      "css/custom.css",
+      "public/img/on.png",
+      "public/img/off.png"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "app/taskmanager/taskmanager.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "public/images/fdir.png",
+      "css/mui.min.css",
+      "css/datamanager.css",
+      "css/barTitle.css",
+      "js/network.js",
+      "js/url.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/tasklist.html",
+      "app/taskmanager/achieveist.html",
+      "app/taskmanager/achievelist.html"
+    ]
+  },
+  "app/taskmanager/tasklistdata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/taskdetail.html",
+      "app/taskmanager/tasklog.html",
+      "login.html",
+      "app/taskmanager/taskmanager.html"
+    ]
+  },
+  "app/taskmanager/taskdetail.html": {
+    "resources": [
+      "js/timetrans.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/url.js",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/taskdetailfiles.html",
+      "app/taskmanager/taskmark.html",
+      "app/taskmanager/taskdetailwm.html"
+    ]
+  },
+  "app/index/feedback.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/app.js",
+      "js/sha1.js",
+      "js/feedback.js",
+      "css/feedback.css",
+      "js/url.js",
+      "css/custom.css"
+    ],
+    "refer": []
+  },
+  "app/rtkonline/rtkset.html": {
+    "resources": [
+      "js/socket.io.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/rtkonline/reksetting.js",
+      "app/rtkonline/rtksetother.html",
+      "css/barTitle.css",
+      "js/url.js",
+      "css/common.css",
+      "app/rtkonline/rtksetting.js",
+      "public/images/wifi2.png",
+      "public/images/loading.gif",
+      "js/vue.min.js",
+      "css/custom.css",
+      "app/rtkonline/rtkset.js"
+    ],
+    "refer": [
+      "app/rtkonline/rtksetother.html",
+      "app/rtkonline/rtklist.html",
+      "app/rtkonline/rtklistdata.html",
+      "login.html"
+    ]
+  },
+  "app/index/about.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/rtkonline/rtksetother.html": {
+    "resources": [
+      "js/mui.min.js",
+      "js/socket.io.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "app/rtkonline/rtkset.html"
+    ],
+    "refer": [
+      "app/rtkonline/rtkset.html"
+    ]
+  },
+  "app/index/login1.html": {
+    "resources": [
+      "js/app.js",
+      "js/sha1.js",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/mui.enterfocus.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "app/index/forgetpw.html",
+      "app/index/reg.html"
+    ]
+  },
+  "app/taskmanager/achieveist.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "app/taskmanager/achievelistdata.html"
+    ],
+    "refer": [
+      "app/taskmanager/achievelistdata.html"
+    ]
+  },
+  "app/taskmanager/achievelistdata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "css/datamanager.css",
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "css/barTitle.css",
+      "js/url.js",
+      "js/network.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/taskdetail.html",
+      "app/taskmanager/achievecontent.html"
+    ]
+  },
+  "app/taskmanager/achievelist.html": {
+    "resources": [
+      "app/taskmanager/achievelistdata.html",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/achievelistdata.html"
+    ]
+  },
+  "app/taskmanager/tasklogdata.html": {
+    "resources": [
+      "css/mui.min.css",
+      "css/datamanager.css",
+      "js/network.js",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": []
+  },
+  "app/taskmanager/tasklog.html": {
+    "resources": [
+      "app/taskmanager/tasklogdata.html",
+      "js/timetrans.js",
+      "js/url.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/tasklogdata.html"
+    ]
+  },
+  "app/taskmanager/achievecontentdata.html": {
+    "resources": [
+      "css/datamanager.css",
+      "js/network.js",
+      "css/mui.min.css",
+      "css/barTitle.css",
+      "js/timetrans.js",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/achievelist.html"
+    ]
+  },
+  "app/taskmanager/achievecontent.html": {
+    "resources": [
+      "app/taskmanager/achievecontentdata.html",
+      "css/mui.min.css",
+      "js/timetrans.js",
+      "js/url.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/barTitle.css",
+      "css/common.css"
+    ],
+    "refer": [
+      "app/taskmanager/achievecontentdata.html"
+    ]
+  },
+  "app/taskmanager/taskdetailfiles.html": {
+    "resources": [
+      "css/mui.min.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf"
+    ],
+    "refer": []
+  },
+  "app/datamanager/datadetail.html": {
+    "resources": [
+      "public/images/ffile.png",
+      "js/url.js",
+      "css/mui.min.css",
+      "css/common.css",
+      "css/list.css",
+      "public/img/on.png",
+      "public/img/alias.png",
+      "public/img/off.png",
+      "public/img/user1.png",
+      "js/mui.min.js",
+      "js/vue.min.js"
+    ],
+    "refer": [
+      "app/datamanager/datalist.html"
+    ]
+  },
+  "app/datamanager/data.html": {
+    "resources": [
+      "app/datamanager/datadetail.html",
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/custom.css"
+    ],
+    "refer": [
+      "app/datamanager/datadetail.html"
+    ]
+  },
+  "app/taskmanager/taskadd.html": {
+    "resources": [
+      "js/mui.picker.min.js",
+      "css/mui.picker.min.css",
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "app/taskmanager/taskdetailfiles.html",
+      "app/taskmanager/taskworkman.html",
+      "app/taskmanager/taskdatafiles.html",
+      "app/taskmanager/taskaddfiles.html",
+      "app/taskmanager/taskaddfilesdetail.html",
+      "app/taskmanager/taskaddworkman.html",
+      "app/taskmanager/taskaddworkmandetail.html"
+    ]
+  },
+  "app/taskmanager/taskmark.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/taskmanager/taskworkman.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css",
+      "app/taskmanager/taskworkmandata.html",
+      "css/common.css",
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "app/taskmanager/taskworkmandata.html",
+      "app/taskmanager/taskadd.html"
+    ]
+  },
+  "app/taskmanager/taskworkmandata.html": {
+    "resources": [
+      "js/timetrans.js",
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "app/taskmanager/taskadd.html"
+    ]
+  },
+  "app/taskmanager/taskdatafiles.html": {
+    "resources": [
+      "app/taskmanager/taskdatafileslist.html",
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "app/taskmanager/taskdatafileslist.html",
+      "app/taskmanager/taskadd.html"
+    ]
+  },
+  "app/taskmanager/taskdatafileslist.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "public/images/ffile.png"
+    ],
+    "refer": [
+      "app/taskmanager/taskadd.html",
+      "login.html"
+    ]
+  },
+  "app/taskmanager/taskaddfiles.html": {
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/url.js"
+    ],
+    "refer": [
+      "login.html",
+      "app/taskmanager/taskadd.html"
+    ]
+  },
+  "app/taskmanager/taskaddfilesdetail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/taskmanager/taskaddworkman.html": {
+    "resources": [
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/url.js",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/index/guide.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": [
+      "login.html"
+    ]
+  },
+  "app/taskmanager/taskaddworkmandetail.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/taskmanager/taskdetailwm.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/user/user.html": {
+    "resources": [
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/url.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.pullToRefresh.material.js",
+      "js/converse/converse.css",
+      "js/converse/converse.js",
+      "js/converse/icomoon.ttf",
+      "js/converse/converse-mobile.js",
+      "js/converse/pingstream.js",
+      "js/converse/strophe.min.js",
+      "public/images/msg.png",
+      "css/feedback.css",
+      "js/mui.view.js",
+      "js/sha1.js",
+      "js/feedback.js",
+      "js/arttmpl.js",
+      "app/user/indexedDB.js",
+      "app/user/user.css"
+    ],
+    "refer": [
+      "app/user/chat.html",
+      "login.html"
+    ]
+  },
+  "app/user/chat.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.pullToRefresh.js",
+      "js/mui.min.js",
+      "js/mui.pullToRefresh.material.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/converse/converse.js",
+      "js/converse/converse.css",
+      "js/converse/icomoon.ttf",
+      "css/app.css",
+      "css/mui.imageviewer.css",
+      "js/mui.imageViewer.js",
+      "js/arttmpl.js",
+      "js/converse/strophe.min.js",
+      "js/converse/pingstream.js"
+    ],
+    "refer": []
+  },
+  "app/rtkonline/rtktrack.html": {
+    "resources": [
+      "app/rtkonline/rtktrackdata.html",
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/custom.css"
+    ],
+    "refer": [
+      "app/rtkonline/rtktrackdata.html"
+    ]
+  },
+  "app/rtkonline/rtktrackdata.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "css/mui.min.css",
+      "public/img/time.png",
+      "css/list.css",
+      "js/vue.min.js",
+      "css/custom.css"
+    ],
+    "refer": [
+      "app/rtkonline/rtktrackday.html",
+      "login.html",
+      "app/rtkonline/rtklist.html"
+    ]
+  },
+  "app/rtkonline/rtktrackday.html": {
+    "resources": [
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/url.js",
+      "css/ol.css",
+      "css/ol3-layerswitcher.css",
+      "js/ol.js",
+      "js/ol3-layerswitcher.js",
+      "css/map.css",
+      "js/v4.2.0-dist/ol.js",
+      "css/map_popup.css",
+      "js/v4.2.0-dist/ol.css",
+      "public/images/start.png",
+      "public/images/end.png",
+      "public/img/map_monitor_identifycode_tips.png",
+      "css/map_popup1.css",
+      "public/img/start.png",
+      "public/img/end.png"
+    ],
+    "refer": []
+  },
+  "app/mapmonitor/rtkmap.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "js/v4.2.0-dist/ol.js",
+      "css/map_popup.css",
+      "js/v4.2.0-dist/ol.css",
+      "css/custom.css",
+      "public/img/device_offline.png",
+      "css/list.css",
+      "public/img/converge.png",
+      "public/img/map_monitor_identifycode_tips.png",
+      "public/img/device_online.png",
+      "public/img/off.png"
+    ],
+    "refer": [
+      "app/mapmonitor/rtkinfo.html",
+      "login.html",
+      "app/mapmonitor/rtkInfoList.html"
+    ]
+  },
+  "app/mapmonitor/web.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.min.js",
+      "css/common.css",
+      "fonts/mui.ttf",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/index/register.html": {
+    "resources": [
+      "js/url.js",
+      "js/app.js",
+      "css/my.css",
+      "js/mui.min.js",
+      "fonts/mui.ttf",
+      "css/mui.min.css",
+      "css/style.css",
+      "js/vue.min.js"
+    ],
+    "refer": []
+  },
+  "app/index/info.html": {
+    "resources": [
+      "js/app.js",
+      "css/mui.min.css",
+      "js/url.js",
+      "js/mui.min.js",
+      "js/vue.min.js",
+      "css/custom.css",
+      "fonts/mui.ttf",
+      "css/input.css"
+    ],
+    "refer": [
+      "login.html",
+      "index.html"
+    ]
+  },
+  "app/mapmonitor/rtkInfoList.html": {
+    "resources": [
+      "js/url.js",
+      "js/mui.min.js",
+      "css/mui.min.css"
+    ],
+    "refer": []
+  },
+  "app/index/index.html": {
+    "refer": [
+      "app/rtkonline/rtklist.html",
+      "app/mapmonitor/rtkmap.html",
+      "app/datamanager/datalist.html",
+      "app/subpage_contact/subpage_contact.html",
+      "app/settings/settings.html",
+      "app/subpage_chat/subpage_chat.html",
+      "app/console/console.html"
+    ],
+    "resources": [
+      "app/console/console.html"
+    ]
+  },
+  "app/console/console.html": {
+    "refer": [
+      "app/rtkonline/rtklist.html",
+      "app/mapmonitor/rtkmap.html",
+      "app/datamanager/datalist.html",
+      "app/map/map.html",
+      "app/personnel/personnel.html"
+    ]
+  },
+  "app/settings/settings.html": {
+    "refer": [
+      "app/index/info.html",
+      "app/index/resetpw.html",
+      "app/index/feedback.html",
+      "login.html",
+      "app/rtkonline/rtklist.html",
+      "app/mapmonitor/rtkmap.html",
+      "app/datamanager/datalist.html"
+    ]
+  },
+  "app/console/settings.html": {
+    "refer": [
+      "app/index/info.html",
+      "app/index/resetpw.html",
+      "login.html",
+      "app/index/feedback.html"
+    ]
+  },
+  "app/map/map.html": {
+    "refer": [
+      "app/rtkonline/rtklist.html",
+      "app/datamanager/datalist.html",
+      "app/mapmonitor/rtkmap.html"
+    ]
+  },
+  "app/personnel/personnel.html": {
+    "refer": [
+      "app/personnel/informationsetting.html",
+      "app/personnel/informationSetting.html",
+      "app/personnel/userEntry.html",
+      "app/personnel/equipmentManagement.html"
+    ]
+  },
+  "app/personnel/userEntry.html": {
+    "refer": [
+      "app/personnel/personnel.html",
+      "app/personnel/deviceStatus.html",
+      "app/personnel/userinfo.html",
+      "login.html"
+    ]
+  },
+  "app/personnel/equipmentManagement.html": {
+    "refer": [
+      "app/personnel/personnel.html",
+      "app/personnel/informationsetting.html",
+      "app/personnel/deviceStatus.html"
+    ]
+  },
+  "app/personnel/informationsetting.html": {
+    "refer": [
+      "app/personnel/deviceStatus.html"
+    ]
+  },
+  "app/personnel/deviceStatus.html": {
+    "refer": [
+      "app/personnel/userEntry.html",
+      "app/personnel/equipmentManagement.html",
+      "app/personnel/onlineSettings.html"
+    ]
+  },
+  "app/personnel/onlineSettings.html": {
+    "refer": [
+      "app/personnel/deviceStatus.html",
+      "login.html",
+      "app/console/equipment.html"
+    ]
+  },
+  "app/console/subpage_chat.html": {
+    "resources": [
+      "js/layim/layui.js",
+      "js/im/adapter.js",
+      "js/im/strophe-1.2.8.min.js",
+      "js/layim/css/layui.mobile.css",
+      "js/im/websdk-1.4.10.js",
+      "js/im/webim.config.js",
+      "js/im/webrtc-1.4.10.js"
+    ]
+  },
+  "app/console/user.html": {
+    "refer": [
+      "app/personnel/userEntry.html",
+      "app/personnel/userfilter.html",
+      "app/personnel/userinfo.html",
+      "app/personnel/authorizedEquipment.html",
+      "app/personnel/workGroup.html",
+      "app/index/info.html",
+      "app/datamanager/datalist.html",
+      "app/mapmonitor/rtkinfo.html",
+      "app/mapmonitor/rtkmap.html",
+      "app/rtkonline/realtrace.html",
+      "app/rtkonline/rtkdetail.html",
+      "app/rtkonline/rtkset.html",
+      "app/rtkonline/rtktrack.html",
+      "app/taskmanager/achievecontent.html",
+      "app/taskmanager/taskmanager.html",
+      "index.html",
+      "login.html",
+      "app/personnel/subUserinfo.html",
+      "confirm.html"
+    ],
+    "resources": [
+      "public/img/related.png",
+      "public/img/01.jpg",
+      "public/img/avatar.png"
+    ]
+  },
+  "app/personnel/userinfo.html": {
+    "refer": [
+      "app/personnel/userEntry.html",
+      "app/personnel/userInfoModify.html",
+      "login.html"
+    ]
+  },
+  "app/personnel/userInfoModify.html": {
+    "refer": [
+      "app/personnel/userinfo.html"
+    ]
+  },
+  "app/personnel/authorizedEquipment.html": {
+    "refer": [
+      "app/personnel/userinfo.html",
+      "app/personnel/realTimeTrack.html",
+      "app/personnel/historicalTrack.html",
+      "app/personnel/currentLocation.html"
+    ]
+  },
+  "app/personnel/realTimeTrack.html": {
+    "refer": [
+      "app/personnel/coordinateDetails.html"
+    ]
+  },
+  "app/personnel/coordinateDetails.html": {
+    "refer": [
+      "app/personnel/realTimeTrack.html",
+      "app/personnel/historicalTrack.html"
+    ]
+  },
+  "app/personnel/historicalTrack.html": {
+    "refer": [
+      "app/personnel/coordinateDetails.html"
+    ]
+  },
+  "app/console/equipment.html": {
+    "refer": [
+      "app/equipment/deviceEntry.html",
+      "app/personnel/userEntry.html",
+      "app/equipment/equipmentFilter.html",
+      "app/personnel/realTimeTrack.html",
+      "app/personnel/historicalTrack.html",
+      "app/personnel/currentLocation.html",
+      "app/personnel/onlineSettings.html",
+      "login.html",
+      "app/personnel/allocationAuthorization.html",
+      "app/equipment/allocationAuthorization.html"
+    ],
+    "resources": [
+      "public/img/user_icon01.png",
+      "public/img/user_icon02.png",
+      "js/url.js",
+      "js/mui.min.js",
+      "js/vue.min.js"
+    ]
+  },
+  "app/console/me.html": {
+    "refer": [
+      "app/personnel/userEntry.html",
+      "app/personnel/userinfo.html",
+      "login.html"
+    ],
+    "resources": [
+      "fonts/mui.ttf",
+      "public/img/me_bg.png",
+      "js/url.js",
+      "public/img/01.jpg",
+      "js/mui.min.js",
+      "js/vue.min.js"
+    ]
+  },
+  "app/console/map.html": {
+    "resources": [
+      "fonts/mui.ttf"
+    ],
+    "refer": [
+      "app/personnel/historicalTrack.html",
+      "app/personnel/realTimeTrack.html"
+    ]
+  },
+  "app/equipment/deviceEntry.html": {
+    "refer": [
+      "app/console/equipment.html",
+      "app/equipment/deviceEntry.html"
+    ]
+  },
+  "app/personnel/subUserinfo.html": {
+    "refer": [
+      "app/personnel/userInfoModify.html"
+    ]
+  },
+  "app/equipment/allocationAuthorization.html": {
+    "refer": [
+      "app/equipment/equipment-user-authorized.html"
+    ]
+  },
+  "app/equipment/equipment-user-authorized.html": {
+    "refer": [
+      "app/personnel/userfilter.html",
+      "login.html",
+      "app/personnel/userEntry.html",
+      "app/console/user.html"
+    ]
+  }
 }

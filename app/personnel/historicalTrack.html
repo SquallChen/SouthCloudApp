@@ -273,7 +273,7 @@
           </li>
           <li>
             <span>
-              <label>状态：</label>{{basic.isOnline == true ? '在线' : '-'}}</span>
+              <label>状态：</label>{{gnssLocationData.solutionType | transSolutionType}}</span>
           </li>
           <li>
             <span style="display: inline-block; width: 49%">
@@ -554,6 +554,7 @@
               vm.appVer = data.detail.deviceData.deviceInfo.appVer;
               vm.powerFree = data.detail.deviceData.powerFree ? data.detail.deviceData.powerFree + '%' : '-';
               vm.deviceData = data.detail.deviceData;
+              console.log('++++++'+JSON.stringify(data.detail));
             }
             if (data.basic) {
               vm.basic = data.basic;
