@@ -1562,5 +1562,10 @@
       "app/personnel/userEntry.html",
       "app/console/user.html"
     ]
+  },
+  "app/personnel/currentLocation.html": {
+    "refer": [
+      "app/personnel/coordinateDetails.html"
+    ]
   }
 }

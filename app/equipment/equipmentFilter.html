@@ -232,7 +232,6 @@
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
-								console.log('工作组数据为：' + JSON.stringify(data));
 								if(data.groupList === null) {
 									mui.toast('该账户下没有工作组信息')
 									vm.hasResult=false;

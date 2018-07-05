@@ -4,10 +4,10 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
-  <title>map</title>
+  <title>地图</title>
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/custom.css" rel="stylesheet" />
-  <link href="../../css/ol.css" rel="stylesheet" />
+  <link href="../../js/v4.6.5-dist/ol.css" rel="stylesheet" />
   <link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
   <link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
   <link href="../../css/map.css" rel="stylesheet" />
@@ -401,7 +401,7 @@
     </div>
   </div>
 
-  <script src="../../js/ol.js"></script>
+  <script src="../../js/v4.6.5-dist/ol.js"></script>
   <script src="../../js/ol3-layerswitcher.js"></script>
   <script src="../../js/overlay/popupoverlay.js"></script>
   <script src="../../js/mui.min.js"></script>
@@ -539,9 +539,6 @@
         })
       });
 
-      // 比例尺控件
-      var scaleLineControl = new ol.control.ScaleLine();
-
       /**
         * 调用外部的JS创建弹出框
         * Create xiaoJing 2017年11月7日 09:34:25
@@ -567,7 +564,6 @@
         controls: ol.control.defaults({
           attributionOptions: ({
             collapsible: false
-
           }),
           attribution: false,
           // 不显示旋转控件
@@ -576,7 +572,7 @@
           zoom: false
         }).extend([
           // 添加比例尺控制到地图上
-          scaleLineControl
+          new ol.control.ScaleLine()
         ]),
         view: new ol.View({
           // 指定投影使用EPSG:4326
@@ -720,7 +716,8 @@
         id: '../personnel/historicalTrack.html',
         extras: {
           identifyCode: identifyCode,
-          upDataCompanyInfo: companyInfo
+          upDataCompanyInfo: companyInfo,
+          item: { identifyCode: identifyCode }
         }
       });
     });
@@ -734,7 +731,8 @@
           url: '../personnel/realTimeTrack.html',
           id: '../personnel/realTimeTrack.html',
           extras: {
-            identifyCode: identifyCode
+            identifyCode: identifyCode,
+            item: { identifyCode: identifyCode }
           }
         });
       }

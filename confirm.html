@@ -121,7 +121,7 @@
 			</a>
 			<h1 class="mui-title">确认授权</h1>
 		</header>
-		<div class="mui-content">
+		<div class="mui-content" id="app">
 			<div class="main-content">
 				<div class="bg-content">
 					<div class="header">
@@ -129,8 +129,8 @@
 					</div>
 					<div class="textcontent">
 						<span>南方云</span>
-						<span>nanfangyun</span>
-						<span>nanfangyun向您请求授权</span>
+						<span>{{dataInfo.userName}}</span>
+						<span>{{dataInfo.userName}} 向您请求授权</span>
 					</div>
 					<div class="btn-content">
 						<button class="mui-btn-danger" id="refuse">拒 绝</button>
@@ -159,7 +159,7 @@
 						// 获取上层页面传递过来的参数
 						var self = plus.webview.currentWebview();
 						vm.dataInfo = self.data;
-						console.log(vm.dataInfo)
+						console.log(JSON.stringify(vm.dataInfo))
 						var indexWb = plus.webview.getLaunchWebview();
 						document.getElementById('allow').addEventListener('tap', function() {
 							mui.fire(indexWb, 'ifAuth', {

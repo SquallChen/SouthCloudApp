@@ -169,11 +169,11 @@
 					</div>
 					<div class="mui-input-row">
 						<label>办公电话</label>
-						<input v-model="officephone" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" onkeyup="value=value.replace(/[^0-9-]/g,'');">
+						<input v-model="officephone" id="mobile" type="text" class="mui-input-clear mui-input" placeholder="请输入办公电话" >
 					</div>
 					<div class="mui-input-row">
 						<label>常用邮箱</label>
-						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" onkeyup="value=value.replace(/[^\a-\z\A-\Z0-9\@\.]/g,'')">
+						<input v-model="email" id="email" type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" >
 					</div>
 				</form>
 				<div class="btncontent">
@@ -190,6 +190,7 @@
 			var phoneNum =/^[0-9]{11}$/;
 			var MpNum =/^[0-9-]+$/;
 			var emailtype = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+			var cn = /[^\u4E00-\u9FA5]$/g;
 			var userinfo_page = null;
 			var me_page = null;
 			var user_page = null;
@@ -221,8 +222,16 @@
 							mui.toast('请输入用户名称!');
 							return;
 						}
+						if(this.realName.indexOf(" ")>0){
+							mui.toast('用户名称不能输入空格!');
+							return;
+						}
 						if(this.workGroup === '') {
 							mui.toast('请输入工作组!');
+							return;
+						}
+						if(this.workGroup.indexOf(" ")>0){
+							mui.toast('工作组不能输入空格!');
 							return;
 						}
 						if(this.mobilePhone === '') {
@@ -230,17 +239,33 @@
 							return;
 						}
 						if(!phoneNum.test(this.mobilePhone)) {
-							mui.toast('手机号码只能由11位数字或组成!');
+							mui.toast('手机号码只能由11位数字组成!');
+							return;
+						}
+						if(this.officephone.indexOf(" ")>0){
+							mui.toast('办公号码不能输入空格!');
 							return;
 						}
 						if(this.officephone !== '' && !MpNum.test(this.officephone)) {
-							mui.toast('办公电话格式应为XXX-XXXXXX！');
+							console.log(!MpNum.test(this.officephone))
+							console.log(this.officephone)
+							console.log(this.officephone.length)
+							mui.toast('办公电话不能输入中文、英文或特殊字符！');
+							return;
+						}
+						if(this.email.indexOf(" ")>0){
+							mui.toast('邮箱不能输入空格!');
+							return;
+						}
+						if(this.email !== '' && !cn.test(this.email)) {
+							mui.toast('邮箱不能包含中文！');
 							return;
 						}
 						if(this.email !== '' && !emailtype.test(this.email)) {
-							mui.toast('邮箱格式应该为XXX@XXX.XXX！');
+							mui.toast('邮箱格式应该为XXX@XXX.XXX!');
 							return;
 						}
+						
 						mui.ajax(apiUrl.update_user_additional_info, {
 							data: {
 								user_name: vm.user_name,

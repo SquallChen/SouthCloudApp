@@ -7,7 +7,6 @@
 		<title>坐标点信息</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
 		<style>
 			[v-cloak] {
 				display: none;
@@ -250,6 +249,7 @@
 			      mui.init({});
 			      var self = plus.webview.currentWebview();
 			      var obj = self.infoObj;
+			      console.log(JSON.stringify(obj))
 			      vm.basic = obj.basic;
 			      vm.gnssLocationData = obj.detail.gnssLocationData;
 			      vm.gnssRefStationData = obj.detail.gnssRefStationData;

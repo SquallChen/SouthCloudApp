@@ -484,31 +484,6 @@
 							</ul>
 						</div>
 					</div>
-					<!--<ul class="mui-table-view">
-						<li class="mui-table-view-cell" v-for="(item,index) in deviceData">
-							<div class="mui-slider-right mui-disabled">
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/realTimeTrack.html">实时<br />轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/historicalTrack.html">历史<br />轨迹</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/currentLocation.html">位置</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../personnel/onlineSettings.html">在线<br />配置</a>
-								<a class="mui-btn" href="#" v-on:tap="openpage(index, item)" data-href="../equipment/allocationAuthorization.html">分发<br />授权</a>
-							</div>
-							<div class="mui-slider-handle">
-								<div class="mui-table-cell">
-									<div class="main-content" v-cloak>
-										<div>
-											<span class="name">{{item.identifyCode}}</span>
-											<span class="status" :class="{active:item.onlineStatus!==0}"></span>
-										</div>
-										<div>
-											<span class="upDataUserName">{{item.upDataUserName?item.upDataUserName:'暂无信息'}}</span>
-											<span class="group">{{item.upDataCompanyInfo?item.upDataCompanyInfo:'暂无信息'}}</span>
-										</div>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>-->
 				</div>
 			</div>
 
@@ -543,8 +518,9 @@
 					keywords: '',
 					workGroup: '',
 					hasResult: true,
-					pageCount: 0,
-					endPageIndex: 10 //任意与pageCount初始值不相同的数字
+					pageCount: 1,
+					endPageIndex: 10, //任意与pageCount初始值不相同的数字
+					dataSource: 'equipment'
 				},
 				methods: {
 					openpage: function(index, item) {
@@ -582,7 +558,7 @@
 							pullRefresh: {
 								container: '#pullrefresh',
 								up: {
-									auto: true,
+									auto: false,
 									contentrefresh: '正在加载...',
 									callback: pullupRefresh
 								}
@@ -614,7 +590,7 @@
 						getDeviceListData();
 
 						window.addEventListener('equipmentDataFilter', function(event) {
-							console.log('刷新equipment页面数据.....');
+							vm.pageCount = 1;
 							vm.keywords = event.detail.keywords;
 							vm.workGroup = event.detail.workGroup;
 							if(vm.keywords === '' && vm.workGroup === '') {
@@ -624,8 +600,9 @@
 							}
 						});
 						window.addEventListener('equipmentKeywordsFilter', function(event) {
-							console.log('刷新equipment页面数据.....');
+							vm.pageCount = 1;
 							vm.keywords = event.detail.keywords;
+							vm.workGroup = ''
 							if(vm.keywords === '' && vm.workGroup === '') {
 								getDeviceListData();
 							} else {
@@ -652,10 +629,11 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
-						console.log(JSON.stringify(data))
 						if(data.status === 0) {
 							var tempData = data.recordList;
 							var tempArray = [];
+							var tempGroup = [];
+							vm.deviceData = [];
 							vm.endPageIndex = data.endPageIndex;
 							if(data.totalCount > 0) {
 								vm.hasResult = true;
@@ -675,8 +653,8 @@
 							for(var i = 0; i < tempArray.length; i++) {
 								vm.deviceData.unshift(tempArray[i]);
 							}
+							//vm.deviceData = tempGroup;
 							// 完成排列处理的数组数据添加到页面上渲染
-							//vm.deviceData = tempData;
 							plus.nativeUI.closeWaiting();
 						} else if(data.status === 40004) {
 							mui.openWindow({
@@ -701,6 +679,7 @@
 			}
 
 			function getKeywordsFilterDviceListData() {
+				console.log(vm.keywords)
 				plus.nativeUI.showWaiting('正在加载设备信息...', {
 					height: '100px',
 					width: '180px'
@@ -736,14 +715,14 @@
 								for(var i = 0; i < tempData.length; i++) {
 									if(tempData[i].onlineStatus === 1) {
 										tempArray.push(tempData[i]);
-										tempData.splice(i, 1);
+										vm.deviceData.splice(i, 1);
 									}
 								}
 								for(var i = 0; i < tempArray.length; i++) {
-									tempData.unshift(tempArray[i]);
+									vm.deviceData.unshift(tempArray[i]);
 								}
 								// 完成排列处理的数组数据添加到页面上渲染
-								vm.deviceData = tempData;
+								//vm.deviceData = tempData;
 								plus.nativeUI.closeWaiting();
 							} else if(data.status === 40004) {
 								mui.openWindow({
@@ -782,7 +761,6 @@
 					type: 'post',
 					timeout: 10000,
 					success: function(data) {
-						console.log('请求筛选设备' + JSON.stringify(data));
 						if(data.list == null) {
 							vm.deviceData = [];
 							vm.hasResult = false;
@@ -793,21 +771,24 @@
 								var tempArray = [];
 								if(tempData.length > 0) {
 									vm.hasResult = true;
+									vm.deviceData = [];
 								} else {
 									vm.hasResult = false;
 								}
-								// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的
+								// 当设备onlineStatus===1（在线时），在线设备push进临时数组，原数组删除该条元素，最后将临时数组unshift回原数组，达到排列到队列前面的目的						
 								for(var i = 0; i < tempData.length; i++) {
 									if(tempData[i].onlineStatus === 1) {
 										tempArray.push(tempData[i]);
 										tempData.splice(i, 1);
 									}
 								}
-								for(var i = 0; i < tempArray.length; i++) {
-									tempData.unshift(tempArray[i]);
+								for(var i = 0; i < tempData.length; i++) {
+									vm.deviceData.push(tempData[i]);
 								}
-								// 完成排列处理的数组数据添加到页面上渲染
-								vm.deviceData = tempData;
+								console.log('deviceData:'+JSON.stringify(vm.deviceData))
+								for(var i = 0; i < tempArray.length; i++) {
+									vm.deviceData.unshift(tempArray[i]);
+								}
 							} else if(data.status === 40004) {
 								mui.openWindow({
 									url: '../../login.html',
@@ -835,8 +816,8 @@
 			window.addEventListener('closeTopPopover', function() {
 				mui('#topPopover').popover('hide');
 				if(event.detail.id === 'app/console/equipment.html') {
-					vm.pageCount=1;
-					vm.deviceData=[];
+					vm.pageCount = 1;
+					vm.deviceData = [];
 					//重置上拉刷新
 					mui('#pullrefresh').pullRefresh().refresh(true);
 					getDeviceListData();
@@ -844,19 +825,21 @@
 			});
 
 			window.addEventListener('refreshDeviceInfo', function() {
-				console.log('要刷新设备页面数据了！！！！');
 				vm.pageCount = 1;
 				vm.deviceData = [];
 				getDeviceListData();
 			});
 
 			function pullupRefresh() {
-				setTimeout(function() {
-					vm.pageCount += 1;
-					mui('#pullrefresh').pullRefresh().endPullupToRefresh((vm.pageCount >= vm.endPageIndex)); //参数为true代表没有更多数据了。
-					getDeviceListData();
-				}, 1500);
-				//console.log('上拉加载数据')
+				if(vm.pageCount >= vm.endPageIndex) {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				} else {
+					setTimeout(function() {
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((vm.pageCount >= vm.endPageIndex)); //参数为true代表没有更多数据了。
+						vm.pageCount += 1;
+						getDeviceListData();
+					}, 1500);
+				}
 			}
 		</script>
 	</body>

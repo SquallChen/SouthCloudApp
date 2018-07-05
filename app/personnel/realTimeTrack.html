@@ -7,8 +7,7 @@
 	<title>实时轨迹</title>
 	<link href="../../css/mui.min.css" rel="stylesheet" />
 	<link href="../../css/custom.css" rel="stylesheet" />
-	<link href="../../css/input.css" rel="stylesheet" />
-	<link href="../../css/ol.css" rel="stylesheet" />
+	<link href="../../js/v4.6.5-dist/ol.css" rel="stylesheet" />
 	<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
 	<link href="../../css/map.css" rel="stylesheet" />
 	<link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
@@ -17,6 +16,8 @@
 		body {
 			background: #fff;
 			font-size: 20px;
+			display: flex;
+			flex-direction: column;
 		}
 
 		ul {
@@ -30,23 +31,31 @@
 		ul li {
 			margin-bottom: 10px;
 			font-size: 13px;
+			display: flex;
 		}
 
-		ul li:nth-child(2) span {
+		ul li:nth-child(2) span:nth-child(1) {
 			display: inline-block;
-			width: 50%;
+			width: 45%;
 			color: #333;
 		}
-
+		ul li:nth-child(2) span:nth-child(2) {
+			display: inline-block;
+			width: 55%;
+			color: #333;
+		}
 		ul li label {
 			color: #999;
 		}
 
-		ul li:nth-child(3) span {
+		ul li:nth-child(3) span:nth-child(1) {
 			display: inline-block;
-			width: 49%;
+			width: 45%;
 		}
-
+		ul li:nth-child(3) span:nth-child(2) {
+			display: inline-block;
+			width: 55%;
+		}
 		ul li:nth-child(4) {
 			padding: 0 10px;
 		}
@@ -143,9 +152,8 @@
 			line-height: 24px;
 		}
 
-
 		.s-map-wrap {
-			top: 73px;
+			/*top: 73px;*/
 		}
 
 		.popup-info {
@@ -179,6 +187,11 @@
 			content: '';
 		}
 
+		.mui-bar-nav~.mui-content {
+			padding-top: 0;
+			margin-top: 71px;
+		}
+
 		[v-cloak] {
 			display: none;
 		}
@@ -200,18 +213,18 @@
 				</div>
 				<ul v-show="mode===0">
 					<li>
-						<span>
-							<!-- <label>时间：</label>{{gnssLocationData.datatime | fromtTime}}</span> -->
-							<label>时间：</label>{{basic.localTimestamp| fromtTime}}</span>
+						<span>{{currentDeviceInfo.identifyCode}}</span>
 					</li>
 					<li>
 						<span>
 							<label>状态：</label>{{gnssLocationData.solutionType | transSolutionType}}</span>
+						<span>
+							<label>时间：</label>{{basic.localTimestamp| fromtTime}}</span>
 					</li>
 					<li>
-						<span style="display: inline-block; width: 49%">
+						<span style="display: inline-block;">
 							<label>工作模式：</label>{{deviceData.curSysmode | sysModel}}</span>
-						<span style="display: inline-block; width: 49%">
+						<span style="display: inline-block;">
 							<label>数据链：</label>{{deviceData.curDatalink | dataLinkType}}</span>
 					</li>
 					<li>
@@ -225,7 +238,7 @@
 			<div style="height: 100%;" id="map" class="map"> </div>
 		</div>
 	</div>
-	<script src="../../js/ol.js"></script>
+	<script src="../../js/v4.6.5-dist/ol.js"></script>
 	<script src="../../js/ol3-layerswitcher.js"></script>
 	<script src="../../js/mui.min.js"></script>
 	<script src="../../js/url.js"></script>
@@ -239,13 +252,16 @@
 		var vm = new Vue({
 		  el: '#app',
 		  data: {
-		    isActive: false,
+		    isActive: true,
 		    mode: 0,
-		    modetype: [/* {
-		      name: '轨迹'
-		    },  */{
+		    modetype: [
+		      /* {
+										name: '轨迹'
+									},  */
+		      {
 		        name: '坐标点'
-		      }],
+		      }
+		    ],
 		    basic: '',
 		    gnssLocationData: '',
 		    gnssRefStationData: '',
@@ -253,7 +269,8 @@
 		    deviceData: '',
 		    disance: '-',
 		    powerFree: '-',
-		    appVer: '-'
+		    appVer: '-',
+		    currentDeviceInfo: ''
 		  },
 		  methods: {
 		    changestatus: function () {
@@ -353,11 +370,11 @@
 		    fromtTime: function (val) {
 		      return val ? timeTrans(val * 1000, 'yyyy-MM-dd HH:mm:ss') : '-';
 		      /* if (!val) return '-';
-		      var hour = val.hour < 10 ? '0' + val.hour : val.hour;
-		      var minute = val.minute < 10 ? '0' + val.minute : val.minute;
-		      var second = val.second < 10 ? '0' + val.second : val.second;
-		      datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
-		      return datetime_string; */
+					var hour = val.hour < 10 ? '0' + val.hour : val.hour;
+					var minute = val.minute < 10 ? '0' + val.minute : val.minute;
+					var second = val.second < 10 ? '0' + val.second : val.second;
+					datetime_string = val.year + '-' + val.month + '-' + val.day + ' ' + hour + ':' + minute + ':' + second;
+					return datetime_string; */
 		    }
 		  },
 		  created: function () { }
@@ -373,7 +390,9 @@
 		    softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
 		  });
 
+		  // 获取上层页面传递过来的参数
 		  var self = plus.webview.currentWebview();
+		  vm.currentDeviceInfo = self.item;
 		  var deviceInfo = self.item;
 		  identify_code = self.identifyCode;
 		  user_name = plus.storage.getItem('user_name');
@@ -409,14 +428,14 @@
 		    })
 		  });
 
-		  // 比例尺控件
-		  var scaleLineControl = new ol.control.ScaleLine();
 		  var popup = new ol.Overlay.Popup({
 		    popupClass: 'black', // "tooltips", "warning" "black" "default", "tips", "shadow",
 		    closeBox: true,
 		    positioning: 'auto',
 		    autoPan: true,
-		    autoPanAnimation: { duration: 250 }
+		    autoPanAnimation: {
+		      duration: 250
+		    }
 		  });
 
 		  function mapCenter(position, zoom) {
@@ -450,7 +469,6 @@
 		        // 异常处理；
 		        onNetChange();
 		        setTimeout(function () {
-		          console.log(latestTrackTime);
 		          updatePoints(latestTrackTime);
 		        }, 3000);
 		      }
@@ -522,17 +540,20 @@
 		    ],
 		    overlays: [popup],
 		    target: 'map',
-		    interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false, doubleClickZoom: false }),
+		    interactions: ol.interaction.defaults({
+		      altShiftDragRotate: false,
+		      pinchRotate: false,
+		      doubleClickZoom: false
+		    }),
 		    controls: ol.control.defaults({
 		      attributionOptions: ({
 		        collapsible: false
-
 		      }),
 		      attribution: false,
 		      rotate: false,
 		      zoom: false
 		    }).extend([
-		      scaleLineControl
+		      new ol.control.ScaleLine()
 		    ]),
 		    view: new ol.View({
 		      projection: 'EPSG:4326',
@@ -556,7 +577,6 @@
 		    });
 		    if (feature === null || feature === undefined) return;
 		    var pointInfo = feature.getProperties();
-		    console.log(pointInfo);
 		    getPointInfo(pointInfo.object.randUuid);
 		  }, pointLayerSelect);
 
@@ -576,7 +596,6 @@
 		        user_name: user_name,
 		        token: token,
 		        identifyCode: identify_code,
-		        // identifyCode: 'SG607A117234038',
 		        randUuid: rand_uuid
 		      },
 		      dataType: 'json',
@@ -584,6 +603,7 @@
 		      timeout: 10000,
 		      success: function (data) {
 		        if (data.status === 0) {
+		          vm.isActive = false;
 		          infoObj = data;
 		          if (data.detail) {
 		            vm.gnssLocationData = data.detail.gnssLocationData;
@@ -619,6 +639,7 @@
 		  }
 
 		  var lastTrackPointInfo;
+
 		  function addPositionsToHistoryVertoryLayer(trackPointInfoArray) {
 		    if (trackPointInfoArray == undefined || trackPointInfoArray == null || trackPointInfoArray.length == 0) return;
 		    var is_first = lastTrackPointInfo == undefined;
@@ -642,7 +663,10 @@
 		        if (distance > 100) {
 		          if (trackPointInfoArrayTemp.length === 1) {
 		            /* 绘制红线 */
-		            var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
+		            var redLinePostions = [
+		              [trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude],
+		              [trackPointInfo.longitude, trackPointInfo.latitude]
+		            ];
 		            var redLineFeature = new ol.Feature({
 		              geometry: new ol.geom.LineString(redLinePostions, 'XY')
 		            });
@@ -662,7 +686,10 @@
 		            blueLineFeature.setStyle(lineBlue);
 		            historyLineTracklayers.getSource().addFeature(blueLineFeature);
 		            /* 绘制红线 */
-		            var redLinePostions = [[trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude], [trackPointInfo.longitude, trackPointInfo.latitude]];
+		            var redLinePostions = [
+		              [trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].longitude, trackPointInfoArrayTemp[trackPointInfoArrayTemp.length - 1].latitude],
+		              [trackPointInfo.longitude, trackPointInfo.latitude]
+		            ];
 		            var redLineFeature = new ol.Feature({
 		              geometry: new ol.geom.LineString(redLinePostions, 'XY')
 		            });
@@ -698,7 +725,9 @@
 		      var pointFeature = new ol.Feature({
 		        geometry: new ol.geom.Point([trackPointInfo.longitude, trackPointInfo.latitude], 'XY')
 		      });
-		      pointFeature.setProperties({ 'object': trackPointInfo });
+		      pointFeature.setProperties({
+		        'object': trackPointInfo
+		      });
 		      pointFeature.setId(trackPointInfo.randUuid);
 		      if (i === 0) {
 		        pointFeature.setStyle(new ol.style.Style({

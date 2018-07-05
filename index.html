@@ -140,6 +140,7 @@
         });
         return;
       }
+      plus.storage.setItem('linkCode', 'none');
       var exist = plus.webview.getWebviewById('app/console/user.html');
       if (exist) {
         plus.webview.hide(plus.webview.getWebviewById('app/console/me.html'));

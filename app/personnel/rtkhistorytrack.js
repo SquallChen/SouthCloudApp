@@ -36,9 +36,8 @@ var tianDiTuAnnotation = new ol.layer.Tile({
 function mapCenter(position, zoom) {
   olMap.getView().animate({
     center: position,
-    duration: 1500,
     zoom: zoom,
-    maxZoom: 18
+    duration: 0
   });
 }
 var map_to_line = false;
@@ -63,7 +62,6 @@ function initHistoryVecrtorLayer(pointUrl, lineUrl, deviceId, beginTime, endTime
   map_to_line = false;
   var params = '&viewparams=machineId:' + deviceId + ';beginTime:' + beginTime + ';endTime:' + endTime;
   var thePointUrl = pointUrl + params;
-  console.log(thePointUrl);
   history_point_vector_layer.setSource(
     new ol.source.Vector({
       format: new ol.format.GeoJSON(),
@@ -97,13 +95,20 @@ function initHistoryVecrtorLayer(pointUrl, lineUrl, deviceId, beginTime, endTime
   history_line_vertor_layer.getSource().once('change', function (e) {
     if (history_line_vertor_layer.getSource().getState() === 'ready') {
       lineGeometry = history_line_vertor_layer.getSource().getFeatures()[0].getGeometry();
-      addPositionsToHistoryVertoryLayer(lineGeometry.getCoordinates());
-      // move_Trial(lineGeometry.getCoordinates());
-
-      var extent = ol.extent.boundingExtent(lineGeometry.getCoordinates());
-      olMap.getView().fit(extent, olMap.getSize());
-      olMap.updateSize();
-      olMap.render();
+      if (!lineGeometry) {
+        history_point_vector_layer.getSource().once('change', function (e) {
+          var onePoint = lineGeometry = history_point_vector_layer.getSource().getFeatures()[0].getGeometry();
+          mapCenter(onePoint.getCoordinates(), 18);
+          mui.toast('此轨迹只有一个点!');
+        });
+      } else {
+        addPositionsToHistoryVertoryLayer(lineGeometry.getCoordinates());
+        // move_Trial(lineGeometry.getCoordinates());
+        var extent = ol.extent.boundingExtent(lineGeometry.getCoordinates());
+        olMap.getView().fit(extent, olMap.getSize());
+        olMap.updateSize();
+        olMap.render();
+      }
     }
   });
 }
@@ -175,7 +180,9 @@ var olMap = new ol.Map({
     attribution: false,
     rotate: false,
     zoom: false
-  }),
+  }).extend([
+    new ol.control.ScaleLine()
+  ]),
   view: new ol.View({
     // 指定投影使用EPSG:4326
     projection: 'EPSG:4326',
@@ -183,7 +190,7 @@ var olMap = new ol.Map({
     enableRotation: false,
     center: [113.2652664185, 23.1349929688],
     zoom: 12,
-    minZoom: 4,
+    minZoom: 0,
     maxZoom: 24
   })
 });
@@ -192,7 +199,7 @@ var olMap = new ol.Map({
 // modify xiaojing 2017年11月6日 14:37:45
 olMap.getView().on('change:resolution', function () {
   /* pointStyle.getImage().setRadius(this.getZoom() > 10 ? (this.getZoom() / 5) * 2.0 : 0); */
-  pointStyle.getImage().setRadius(this.getZoom() > 18 ? 10 : 3);
+  pointStyle.getImage().setRadius(this.getZoom() >= 18 ? 10 : 3);
   if (this.getZoom() >= 14) {
     olMap.addInteraction(pointLayerSelect);
   } else {

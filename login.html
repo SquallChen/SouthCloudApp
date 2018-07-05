@@ -106,7 +106,8 @@
 						<input type="password" class="mui-input-password" placeholder="请输入密码" v-model="password">
 					</div>
 					<div style="margin-top: 30px">
-						<button class="mui-btn mui-btn-block mui-btn-primary" @click="login">登&nbsp;&nbsp;录</button>
+						<button class="mui-btn mui-btn-block mui-btn-primary" @click="login" v-show="isClick===false">登&nbsp;&nbsp;录</button>
+						<button class="mui-btn mui-btn-block mui-btn-primary"  v-show="isClick===true" disabled>登&nbsp;&nbsp;录</button>
 					</div>
 					<!-- <div class="reg-wrapper">
           <a style="color: #1d77bf" @click="register">注 册</a>
@@ -141,7 +142,8 @@
 		  data: {
 		    userName: '',
 		    password: '',
-		    version: ''
+		    version: '',
+		    isClick:false
 		  },
 		  methods: {
 		    login: function () {
@@ -154,10 +156,12 @@
 		        }, 300);
 		      }
 		      // plus.nativeUI.showWaiting('', {width:"60px",height:'60px'});
+		      vm.isClick = true;
 		      mui.ajax(apiUrl.login, {
 		        data: {
 		          user_name: vm.userName,
-		          signature: hex_sha1(vm.password)
+		          signature: hex_sha1(vm.password),
+		          domain:'southCloundApp'
 		        },
 		        dataType: 'json',
 		        type: 'post',
@@ -165,6 +169,7 @@
 		        success: function (data) {
 		          console.log(JSON.stringify(data));
 		          if (data.status === 0) {
+		          	vm.isClick = false;
 		            var ws = plus.webview.getWebviewById('main');
 		            plus.webview.close(ws);
 		            var token = data.token;
@@ -191,6 +196,7 @@
 		              plus.webview.currentWebview().close();
 		            }, 500);
 		          } else {
+		          	vm.isClick = false;
 		            plus.nativeUI.toast(data.info);
 		            setTimeout(function () {
 		              plus.nativeUI.closeWaiting();
@@ -198,6 +204,7 @@
 		          }
 		        },
 		        error: function (xhr, type, errorThrown) {
+		        	vm.isClick = false;
 		          // 异常处理；
 		          onNetChange();
 		          plus.nativeUI.closeWaiting();

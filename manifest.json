@@ -7,7 +7,7 @@
 	"id": "H54EE62D4",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "SouthCloud",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.4.7",/*应用版本名称*/
+		"name": "1.5.3",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -1743,6 +1743,13 @@
 					"app/personnel/userfilter.html",
 					"app/personnel/userEntry.html",
 					"app/console/user.html"
+				],
+				"priority": 0
+			},
+			"app/personnel/currentLocation.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/coordinateDetails.html"
 				],
 				"priority": 0
 			}

@@ -177,7 +177,7 @@
 									<span>天线高</span>
 								</div>
 								<div>
-									<input type="text" placeholder="0-100，支持3位小数" v-model="bVal.antenna" />
+									<input type="text" placeholder="0-9，支持3位小数" v-model="bVal.antenna" />
 								</div>
 
 								<div v-show="antennaHeightStatus === true && hasSetting===true">
@@ -192,7 +192,7 @@
 									<span>基站坐标</span>
 								</div>
 								<div class="checkbox">
-									<button>获取坐标</button>
+									<button v-on:tap="getCoordinate">获取坐标</button>
 									<div class="mui-input-row mui-checkbox mui-left">
 										<label>度分秒格式</label>
 										<input name="checkbox" value="0" type="checkbox" v-model="DMSchecked">
@@ -479,7 +479,7 @@
 									<span>密码</span>
 								</div>
 								<div>
-									<input type="text" placeholder="密码" v-model="nVal.pw" />
+									<input type="password" placeholder="密码" v-model="nVal.pw" />
 								</div>
 								<div v-show="transportationNtripWorkpara === true && hasSetting===true">
 									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
@@ -524,7 +524,7 @@
 									<span>ANP服务器</span>
 								</div>
 								<div>
-									<input type="text" placeholder="密码" v-model="nVal.apnSrver" />
+									<input type="text" placeholder="服务器" v-model="nVal.apnSrver" />
 								</div>
 								<div v-show="apnServerStatus === true && hasSetting===true">
 									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
@@ -538,7 +538,7 @@
 									<span>ANP用户名</span>
 								</div>
 								<div>
-									<input type="text" placeholder="密码" v-model="nVal.apnUser" />
+									<input type="test" placeholder="用户名" v-model="nVal.apnUser" />
 								</div>
 								<div v-show="apnUserStatus === true && hasSetting===true">
 									<span class="mui-icon mui-icon-checkmarkempty size green"></span>
@@ -595,63 +595,63 @@
 									</div>
 									<div class="changePart">
 										<span>02</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue2" />
 									</div>
 									<div class="changePart">
 										<span>03</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue3" />
 									</div>
 									<div class="changePart">
 										<span>04</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue4" />
 									</div>
 									<div class="changePart">
 										<span>05</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue5" />
 									</div>
 									<div class="changePart">
 										<span>06</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue6" />
 									</div>
 									<div class="changePart">
 										<span>07</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue7" />
 									</div>
 									<div class="changePart">
 										<span>08</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue8" />
 									</div>
 									<div class="changePart">
 										<span>09</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue9" />
 									</div>
 									<div class="changePart">
 										<span>10</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue10" />
 									</div>
 									<div class="changePart">
 										<span>11</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue11" />
 									</div>
 									<div class="changePart">
 										<span>12</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue12" />
 									</div>
 									<div class="changePart">
 										<span>13</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue13" />
 									</div>
 									<div class="changePart">
 										<span>14</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue14" />
 									</div>
 									<div class="changePart">
 										<span>15</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue15" />
 									</div>
 									<div class="changePart">
 										<span>16</span>
-										<input type="text" v-model="channelValue1" />
+										<input type="text" v-model="channelValue16" />
 									</div>
 								</div>
 								<div class="channelststus">
