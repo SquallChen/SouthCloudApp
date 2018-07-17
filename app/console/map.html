@@ -7,7 +7,7 @@
   <title>地图</title>
   <link href="../../css/mui.min.css" rel="stylesheet" />
   <link href="../../css/custom.css" rel="stylesheet" />
-  <link href="../../js/v4.6.5-dist/ol.css" rel="stylesheet" />
+  <link href="../../js/v5.0.3-dist/ol.css" rel="stylesheet" />
   <link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
   <link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
   <link href="../../css/map.css" rel="stylesheet" />
@@ -25,13 +25,15 @@
       margin: 0;
     }
 
-		.mui-bar-nav.mui-bar .mui-icon{
-			margin-top: 20px;
-			padding-right: 14px;
-		}
-		.icon-list{
-			font-size: 30px;
-		}
+    .mui-bar-nav.mui-bar .mui-icon {
+      margin-top: 20px;
+      padding-right: 14px;
+    }
+
+    .icon-list {
+      font-size: 30px;
+    }
+
     #topPopover1 .mui-popover-arrow {
       left: 146px !important;
     }
@@ -166,6 +168,7 @@
     }
 
     #topPopover2 .group_title {
+      min-width: 65px;
       font-size: 15px;
       color: #999;
       padding-left: 20px;
@@ -368,7 +371,10 @@
             <ul>
               <li>
                 <span class="group_title">工作组</span>
-                <input type="text" v-model="workGroup" placeholder="请输入工作组" />
+                <select name="" v-model="workGroupValue" style="margin-bottom: 0; padding: 0" @change="checkedGroup">
+                  <option value="ALL">全部</option>
+                  <option v-for="item in workGroup" :value="item">{{item}}</option>
+                </select>
                 <div class="line"></div>
               </li>
               <li>
@@ -401,7 +407,7 @@
     </div>
   </div>
 
-  <script src="../../js/v4.6.5-dist/ol.js"></script>
+  <script src="../../js/v5.0.3-dist/ol.js"></script>
   <script src="../../js/ol3-layerswitcher.js"></script>
   <script src="../../js/overlay/popupoverlay.js"></script>
   <script src="../../js/mui.min.js"></script>
@@ -410,36 +416,85 @@
   <script src="../../js/vue.min.js"></script>
   <script type="text/javascript">
     var popup = null;
-    var url, urlAdd;
+    var urlAdd, oldValue;
+    var monitorUrlAddress = '';
+    var monitorUrlAddressUserId = '';
+    var initMapurl = '';
+    var identifyCode = '';
+    var status = '';
+    var companyInfo = '';
 
     var vm = new Vue({
       el: '#app',
       data: {
-        workGroup: '',
+        workGroupValue: 'ALL',
+        workGroup: [],
         equipmentNum: '',
         equipmentOnline: true,
-        equipmentOffline: true
+        equipmentOffline: true,
+        groupUser: []
       },
-      methods: {},
-      created: function () {
-      }
+      methods: {
+        checkedGroup: function () {
+          if (this.workGroupValue === 'ALL') {
+            this.groupUser = [];
+            return false;
+          }
+          oldValue = this.workGroupValue;
+          plus.nativeUI.showWaiting();
+          mui.ajax(apiUrl.stuff_lists, {
+            data: {
+              user_name: plus.storage.getItem('user_name'),
+              token: plus.storage.getItem('token'),
+              num_per_page: 50,
+              filter_sub_name: '',
+              filter_work_group: vm.workGroupValue
+            },
+            dataType: 'json',
+            type: 'post',
+            timeout: 10000,
+            success: function (data) {
+              if (data.status === 0) {
+                if (data.totalCount === 0) {
+                  mui.toast('没有匹配的用户信息！');
+                } else {
+                  data.recordList.forEach(function (v, k) {
+                    // vm.groupUser.push("'" + v.id + "'");
+                    vm.groupUser.push(v.id);
+                  });
+                }
+              }
+              plus.nativeUI.closeWaiting();
+            },
+            error: function (xhr, type, errorThrown) {
+              // 异常处理；
+              // onNetChange();
+              mui.toast('切换工作组失败!');
+              vm.this.workGroupValue = oldValue;
+              plus.nativeUI.closeWaiting();
+            }
+          });
+        }
+      },
+      created: function () { }
     });
+
     // 获取设备图层加载的数据源 url
-    var monitorUrlAddress = '';
-    var identifyCode = '';
-    var status = '';
-    var companyInfo = '';
     mui.plusReady(function () {
       /* 初始化mui控件 */
       mui.init({
         beforeback: function () { }
       });
+      getworkGroup();
 
       plus.webview.currentWebview().setStyle({
         softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
       });
 
-      monitorUrlAddress = plus.storage.getItem('monitor');
+      var mapUrl = plus.storage.getItem('monitor');
+      monitorUrlAddress = mapUrl.substr(0, mapUrl.lastIndexOf('=') + 1);
+      monitorUrlAddressUserId = mapUrl.substr(mapUrl.lastIndexOf(':') + 1);
+      initMapurl = monitorUrlAddress + 'state1:1;state2:0' + "&cql_filter=user_id in ('" + monitorUrlAddressUserId + "')";
       // 天地图加载资源
       var tianDiTuMapLayer = new ol.layer.Tile({
         title: '天地图路网',
@@ -469,7 +524,7 @@
       var device_vector_layer = new ol.layer.Vector({
         source: new ol.source.Vector({
           format: new ol.format.GeoJSON(),
-          url: monitorUrlAddress + ';state1:1;state2:0'
+          url: initMapurl
         }),
         style: function (feature, resolution) {
           var featureProperties = feature.getProperties();
@@ -478,48 +533,64 @@
         }
       });
       document.getElementById('reset').addEventListener('tap', function () {
-        vm.workGroup = '';
+        vm.groupUser = [];
+        vm.workGroupValue = 'ALL';
         vm.equipmentNum = '';
         vm.equipmentOnline = false;
         vm.equipmentOffline = false;
-        urlAdd = ';state1:1;state2:0';
-        url = monitorUrlAddress + urlAdd;
-        filterMapData(url);
+        filterMapData(initMapurl);
         mui('#topPopover2').popover('hide');
       });
-
+      document.getElementById('menu2').addEventListener('tap', function () {
+        getworkGroup();
+      });
       document.getElementById('set').addEventListener('tap', function () {
-        if (vm.equipmentNum === '') {
-          if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
-            urlAdd = ';state1:1;state2:0';
-            url = monitorUrlAddress + urlAdd;
-          } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
-            urlAdd = ';state1:1;state2:1';
-            url = monitorUrlAddress + urlAdd;
-          } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
-            urlAdd = ';state1:0;state2:0';
-            url = monitorUrlAddress + urlAdd;
+        console.log(vm.groupUser);
+        urlAdd = '';
+        if (vm.groupUser.length === 0) {
+          if (vm.equipmentNum === '') {
+            if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
+              urlAdd = 'state1:1;state2:0';
+            } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
+              urlAdd = 'state1:1;state2:1';
+            } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
+              urlAdd = 'state1:0;state2:0';
+            }
           } else {
-            mui.toast('你并没有进行筛选！');
-            mui('#topPopover2').popover('hide');
-            return;
+            if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
+              urlAdd = 'state1:1;state2:0;code:' + vm.equipmentNum;
+            } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
+              urlAdd = 'state1:1;state2:1;code:' + vm.equipmentNum;
+            } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
+              urlAdd = 'state1:0;state2:0;code:' + vm.equipmentNum;
+            } else {
+              urlAdd = 'state1:1;state2:0;code:' + vm.equipmentNum;
+            }
           }
+          urlAdd += "&cql_filter=user_id in ('" + monitorUrlAddressUserId + "')";
         } else {
-          if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
-            urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
-            url = monitorUrlAddress + urlAdd;
-          } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
-            urlAdd = ';state1:1;state2:1;code:' + vm.equipmentNum;
-            url = monitorUrlAddress + urlAdd;
-          } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
-            urlAdd = ';state1:0;state2:0;code:' + vm.equipmentNum;
-            url = monitorUrlAddress + urlAdd;
+          if (vm.equipmentNum === '') {
+            if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
+              urlAdd = 'state1:1;state2:0';
+            } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
+              urlAdd = 'state1:1;state2:1';
+            } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
+              urlAdd = 'state1:0;state2:0';
+            }
           } else {
-            urlAdd = ';state1:1;state2:0;code:' + vm.equipmentNum;
-            url = monitorUrlAddress + urlAdd;
+            if (vm.equipmentOnline === true && vm.equipmentOffline === true) {
+              urlAdd = 'state1:1;state2:0;code:' + vm.equipmentNum;
+            } else if (vm.equipmentOnline === true && vm.equipmentOffline === false) {
+              urlAdd = 'state1:1;state2:1;code:' + vm.equipmentNum;
+            } else if (vm.equipmentOnline === false && vm.equipmentOffline === true) {
+              urlAdd = 'state1:0;state2:0;code:' + vm.equipmentNum;
+            } else {
+              urlAdd = 'state1:1;state2:0;code:' + vm.equipmentNum;
+            }
           }
+          urlAdd += "&cql_filter=user_id in ('" + vm.groupUser.join(',') + "')";
         }
-        filterMapData(url);
+        filterMapData(monitorUrlAddress + urlAdd);
         mui('#topPopover2').popover('hide');
       });
 
@@ -540,15 +611,17 @@
       });
 
       /**
-        * 调用外部的JS创建弹出框
-        * Create xiaoJing 2017年11月7日 09:34:25
-        */
+       * 调用外部的JS创建弹出框
+       * Create xiaoJing 2017年11月7日 09:34:25
+       */
       popup = new ol.Overlay.Popup({
         popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
         closeBox: true,
         positioning: 'bottom-center',
         autoPan: true,
-        autoPanAnimation: { duration: 250 }
+        autoPanAnimation: {
+          duration: 250
+        }
       });
 
       var olMap = new ol.Map({
@@ -560,7 +633,11 @@
         overlays: [popup],
         target: 'map',
         // 禁止在移动端旋转设备
-        interactions: ol.interaction.defaults({ altShiftDragRotate: false, pinchRotate: false, doubleClickZoom: false }),
+        interactions: ol.interaction.defaults({
+          altShiftDragRotate: false,
+          pinchRotate: false,
+          doubleClickZoom: false
+        }),
         controls: ol.control.defaults({
           attributionOptions: ({
             collapsible: false
@@ -615,12 +692,6 @@
             }
           }
           mapCenter([115.2652664185, 28.1349929688], 5);
-          /* if (coordinatesArr.length === 1) {
-            mapCenter(coordinatesArr[0], 8);
-          } else {
-            fitCenter(coordinatesArr);
-          } */
-          // device_vector_layer.getSource().unByKey(listenerKey); // 注销监听器
         }
       });
 
@@ -661,9 +732,11 @@
       }
 
       // 筛选地图显示设备功能
-      function filterMapData(url) {
+      function filterMapData(getMapUrl) {
+        console.log(getMapUrl);
         popup.hide();
-        mui.ajax(url, {
+        plus.nativeUI.showWaiting();
+        mui.ajax(getMapUrl, {
           dataType: 'json',
           type: 'get',
           success: function (datas) {
@@ -693,20 +766,25 @@
               }
               FeaturesArr = features;
             }
+            plus.nativeUI.closeWaiting();
+          },
+          error: function (xhr, type, errorThrown) {
+            // 异常处理；
+            onNetChange();
+            plus.nativeUI.closeWaiting();
           }
 
         });
       }
-
-      window.addEventListener('closeTopPopover', function (event) {
+      /* window.addEventListener('closeTopPopover', function (event) {
         if (event.detail.id === 'app/console/map.html') {
           if (url) {
             filterMapData(url);
           } else {
-            filterMapData('http://119.23.161.165:7070/geoserver/cloud_rtkonline/ows?service=WFS&versio…:4326&viewparams=userId:4028eef85ebb9f55015ebd4e123d0044;state1:1;state2:0');
+            filterMapData(initMapurl);
           }
         }
-      });
+      }); */
     });
 
     $(document).on('click', '#history', function () {
@@ -717,7 +795,9 @@
         extras: {
           identifyCode: identifyCode,
           upDataCompanyInfo: companyInfo,
-          item: { identifyCode: identifyCode }
+          item: {
+            identifyCode: identifyCode
+          }
         }
       });
     });
@@ -732,11 +812,41 @@
           id: '../personnel/realTimeTrack.html',
           extras: {
             identifyCode: identifyCode,
-            item: { identifyCode: identifyCode }
+            item: {
+              identifyCode: identifyCode
+            }
           }
         });
       }
     });
+
+    function getworkGroup() {
+      mui.ajax(apiUrl.get_work_group, {
+        data: {
+          user_name: plus.storage.getItem('user_name'),
+          token: plus.storage.getItem('token')
+        },
+        dataType: 'json',
+        type: 'post',
+        timeout: 20000,
+        success: function (data) {
+          if (data.groupList === null || data.groupList.length === 0) {
+            vm.hasResult = false;
+            mui.toast('该账户下没有工作组信息');
+          } else {
+            vm.hasResult = true;
+            var tempGroup = [];
+            var tempData = data.groupList;
+            for (var i = 0; i < tempData.length; i++) {
+              if (tempGroup.indexOf(tempData[i]) == -1) {
+                tempGroup.push(tempData[i]);
+              }
+            }
+            vm.workGroup = tempGroup;
+          }
+        }
+      });
+    }
   </script>
 </body>
 

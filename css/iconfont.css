@@ -23,7 +23,30 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-
+.icon-delete:before {
+  content: "\e92c";
+}
+.icon-password:before {
+  content: "\e92b";
+}
+.icon-username:before {
+  content: "\e92d";
+}
+.icon-registration:before {
+  content: "\e926";
+}
+.icon-record:before {
+  content: "\e927";
+}
+.icon-technical-feedback:before {
+  content: "\e928";
+}
+.icon-service:before {
+  content: "\e929";
+}
+.icon-submit-feedback:before {
+  content: "\e92a";
+}
 .icon-restore:before {
   content: "\e910";
 }

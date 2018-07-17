@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>维修登记</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/iconfont.css">
+	<style>
+		html,
+		body {
+			background: #fff;
+		}
+
+		#app {
+			height: 100%;
+			background: #fff;
+		}
+
+		.mui-content .spacing {
+			height: 21px;
+			background: #f2f2f2;
+			padding: 0;
+			width: 100%;
+			display: block;
+			position: relative;
+		}
+
+		.mui-content .border_top,
+		.mui-content .border_bottom {
+			width: 100%;
+			height: 1px;
+			padding-top: 0 !important;
+			padding-right: 0;
+			padding-left: 0;
+			padding-bottom: 0;
+			-webkit-transform: scaleY(.2);
+			transform: scaleY(.2);
+			background-color: #ccc;
+		}
+
+		.mui-content .border_bottom {
+			position: absolute !important;
+			bottom: 1px;
+		}
+
+		.mui-content div label {
+			color: #333;
+		}
+
+		.mui-content div:nth-child(2) {
+			padding-top: 20px;
+		}
+
+		.mui-content div {
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-bottom: 15px;
+			display: flex;
+			position: relative;
+		}
+
+		.mui-content>div span {
+			display: inline-block;
+			position: absolute;
+			right: 28px;
+			top: 16px;
+			width: 0px;
+			height: 0px;
+			border-top: 8px solid #666;
+			border-right: 5px solid rgba(0, 0, 0, 0);
+			border-bottom: 50px solid rgba(0, 0, 0, 0);
+			border-left: 5px solid rgba(0, 0, 0, 0);
+		}
+
+		.mui-content div:nth-child(1) {
+			padding-top: 20px;
+		}
+
+		.mui-content div:nth-child(2) {
+			position: relative;
+		}
+
+		.mui-content div label {
+			width: 60px;
+			margin-right: 30px;
+			text-align: right;
+			padding: 0;
+			line-height: 36px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.mui-content div input {
+			flex: 1;
+			margin-bottom: 0;
+			height: 36px;
+			font-size: 15px;
+			padding-left: 10px;
+		}
+
+		.mui-content select {
+			font-size: 15px;
+			padding: 0 0 0 6px;
+			color: #333;
+			flex: 1;
+			height: 36px;
+			margin-bottom: 0;
+			border: 1px solid #ccc !important;
+		}
+
+		.down {
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 20px;
+			right: 30px;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		.management {
+			margin-left: 6%;
+			width: 88%;
+			height: 36px;
+			line-height: 18px;
+			border-radius: 0;
+			background: #3a89fb;
+			color: white;
+			font-size: 15px;
+			margin-top: 25px;
+			border: none;
+			border-radius: 4px;
+		}
+
+		.management:active {
+			background: #0b5fde !important;
+		}
+
+		.problemDescription {
+			display: block;
+			padding-top: 20px;
+			padding-left: 15px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.selectBtn {
+			background: transparent;
+			border: none;
+			color: white;
+			float: right;
+			position: relative;
+			top: 32px;
+			left: 8px;
+			font-size: 17px;
+		}
+
+		input[type=text] {
+			border: 1px solid #ccc;
+		}
+
+		input[type=text]:focus {
+			border: 1px solid #0b60de;
+		}
+
+		.mui-radio {
+			padding: 0 !important;
+			padding-bottom: 0 !important;
+		}
+
+		.mui-radio label {
+			padding-left: 40px !important;
+			width: 20px !important;
+		}
+
+		.mui-radio.mui-left input[type=radio] {
+			left: 0;
+			padding-left: 0;
+		}
+
+		.meg {
+			display: block;
+			text-align: center;
+			height: 80px;
+			line-height: 80px;
+			color: #999;
+			font-size: 15px;
+		}
+
+		textarea {
+			margin-bottom: 0;
+		}
+
+		.mui-table-view {
+			width: 100%;
+			position: relative;
+		}
+
+		.mui-checkbox {
+			/*position: absolute !important;
+			padding-right: 6px !important;*/
+			padding-right: 0px !important;
+			display: inline-block !important;
+		}
+
+		.mui-collapse-content {
+			padding-right: 0 !important;
+		}
+
+		.mui-table-view-cell {
+			width: 100%;
+			padding-left: 0;
+			padding-right: 0;
+			padding-top: 0;
+			padding-bottom: 0;
+			/*padding-left: 30px !important;*/
+			/*border:1px solid #ddd;*/
+			/*border-radius: 4px;*/
+		}
+
+		.mui-table-view-cell:after {
+			left: 0;
+		}
+		
+		.mui-table-view-cell.mui-collapse .mui-collapse-content {
+			background: #ececec;
+			padding-bottom: 0;
+			padding-top: 4px;
+			margin-top: 0;
+			margin-bottom: 0;
+			margin-left: 0;
+			margin-right: 0;
+		}
+
+		.line{
+			z-index: 2;
+			top: 1px;
+			position: absolute;
+			padding-bottom: 0 !important;
+			padding-top: 0 !important;
+			width: 100%;
+			height: 1px;
+			content: '';
+			display: block;
+			padding: 0;
+			position: relative;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #ccc;
+			}
+		.mui-table-view-cell.mui-collapse>.mui-navigate-right:after,
+		.mui-table-view-cell.mui-collapse>.mui-push-right:after,
+		.mui-table-view-cell.mui-collapse.mui-active>.mui-navigate-right:after,
+		.mui-table-view-cell.mui-collapse.mui-active>.mui-push-right:after {
+			content: '';
+		}
+
+		.mui-navigate-right {
+			padding-left: 37px !important;
+			margin: 0 !important;
+			padding-top: 0 !important;
+			height: 35px;
+			line-height: 38px;
+		}
+
+		.mui-checkbox.mui-left input[type=checkbox] {
+			margin-top: 3px;
+			left: 0px;
+			padding-left: 0;
+			z-index: 2;
+		}
+		.titleCheckBox input[type=checkbox] {
+			left: 8px !important;
+		}
+		.mui-checkbox input[type=checkbox]:before,
+		.mui-radio input[type=radio]:before {
+			font-size: 23px;
+		}
+
+		.container>.mui-checkbox input[type=checkbox]:checked:before,
+		.mui-radio input[type=radio]:checked:before {
+			color: #19bc9a;
+		}
+
+		.mui-collapse-content .mui-checkbox.mui-left input[type=checkbox] {
+			margin-top: 0px;
+		}
+
+		.mui-collapse-content {
+			/*height: 60px;*/
+		}
+
+		.mui-collapse-content {
+			display: flex;
+			flex-wrap: wrap;
+			overflow: auto;
+			padding-left: 32px !important;
+		}
+
+		.mui-checkbox {
+			/*max-width: 48%;*/
+		}
+
+		.mui-collapse-content .mui-checkbox {
+			padding-top: 0 !important;
+			padding-left: 0 !important;
+			padding-bottom: 0 !important;
+			margin-right: 14px;
+		}
+
+		.mui-collapse-content div label {
+			margin-right: 0;
+			width: 100%;
+			padding-left: 24px !important;
+			padding-right: 0 !important;
+			font-size: 14px;
+			color: #333;
+			height: 24px;
+			line-height: 32px;
+		}
+
+		.mui-table-view>li>.mui-checkbox input[type=checkbox]:checked:before,
+		.mui-radio input[type=radio]:checked:before {
+			color: #19bc9a;
+		}
+
+		.titleCheckBox {
+			position: absolute !important;
+			padding-left: 29px !important;
+			z-index: 2;
+			left: 0;
+		}
+
+		.mui-table-view-cell.mui-active {
+			background: #ececec;
+			margin-top: 0 !important;
+			border-color: #236fe1;
+		}
+
+		.mui-collapse-content .mui-checkbox input[type=checkbox]:checked:before,
+			{
+			color: #19bc9a;
+		}
+
+		.mui-table-view:before,
+		.mui-table-view:after {
+			height: 0;
+		}
+
+		.mui-table-view {
+			border: 1px solid #ddd;
+			border-radius: 4px;
+		}
+
+		.mui-table-view-cell:after {
+			/*height: 0;*/
+		}
+
+		.errorType {
+			border: 1px solid #ccc;
+			flex: 1;
+			padding: 0 !important;
+			border-radius: 4px;
+			flex-wrap: wrap;
+		}
+
+		.errorType div {
+			padding: 0;
+			padding-top: 5px !important;
+			padding-left: 5px;
+		}
+
+		.errorType div label:nth-child(1) {
+			margin-right: 0;
+			width: auto;
+		}
+
+		.errorType div label:nth-child(2) {
+			margin-right: 10px;
+			width: 20px;
+			font-size: 26px;
+		}
+
+		.errorType div span {
+			border: 0;
+			width: 20px;
+			height: 20px;
+		}
+
+		.container {
+			padding: 0 !important;
+			flex-wrap: wrap;
+		}
+
+		.container:after {
+			width: 100%;
+			height: 1px;
+			content: '';
+			display: block;
+			padding: 0;
+			position: relative;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #ccc;
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<button class="selectBtn" v-on:tap="submit">完 成</button>
+			<h1 class="mui-title">维修登记</h1>
+		</header>
+		<div class="mui-content">
+			<div class="spacing"></div>
+			<div>
+				<label>单位名称</label>
+				<input v-model="customer_unit" type="text" placeholder="请输入单位名称">
+			</div>
+			<div>
+				<label>单位电话</label>
+				<input v-model="customer_unit_phone" type="text" placeholder="请输入单位电话号码">
+			</div>
+			<div>
+				<label>单位地址</label>
+				<input v-model="customer_unit_address" type="text" placeholder="请输入单位地址">
+			</div>
+			<div>
+				<label>单位邮编</label>
+				<input v-model="customer_unit_postcode" type="text" placeholder="请输入单位邮编">
+			</div>
+			<div>
+				<label>机&nbsp;&nbsp;身&nbsp;&nbsp;号</label>
+				<input v-model="machine_sn" type="text" @blur="getrtkInfo" placeholder="请输入机身号">
+			</div>
+			<!-- <div>
+				<label>维修类别</label>
+				<select v-model="product_type" @change="toggleError" >
+					<option value="0">导航产品</option>
+					<option value="1">全站仪</option>
+					<option value="2">水准仪</option>
+				</select>
+				<span></span>
+			</div> -->
+			<div>
+				<label>设备系列</label>
+				<input v-model="machine_type_group" type="text" disabled>
+			</div>
+			<div>
+				<label>设备机型</label>
+				<input v-model="machine_type" type="text" disabled>
+			</div>
+			<div>
+				<label>出厂日期</label>
+				<input v-model="factory_date" type="text" disabled>
+			</div>
+			<div>
+				<label>故障类型</label>
+				<div style="padding: 0; flex:1;overflow: auto;">
+					<ul class="mui-table-view">
+						<div v-for="(item,k) in rtkErrorType" class="container">
+							<div class="mui-input-row mui-checkbox mui-left titleCheckBox">
+								<input name="checkbox" type="checkbox" @click="toggleBox(item.subItems, k)" :id="k">
+							</div>
+							<li class="mui-table-view-cell mui-collapse">
+								<a class="mui-navigate-right" href="#">{{item.mainDes}}</a>
+								<div class="line"></div>
+								<div class="mui-collapse-content">
+									<div class="mui-input-row mui-checkbox mui-left" v-for="subItem in item.subItems">
+										<label>{{subItem.subDes}}</label>
+										<input name="checkbox" type="checkbox" :value="subItem.id" v-model="trouble_ids">
+									</div>
+								</div>
+							</li>
+						</div>
+					</ul>
+				</div>
+			</div>
+			<div>
+				<label>返厂保修</label>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>是</label>
+					<input name="radio1" type="radio" v-model="return_factory" value="1">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>否</label>
+					<input name="radio1" type="radio" v-model="return_factory" value="0">
+				</div>
+			</div>
+			<div>
+				<label>是否过保</label>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>是</label>
+					<input name="radio2" type="radio" v-model="expires" value="1">
+				</div>
+				<div class="mui-input-row mui-radio mui-left">
+					<label>否</label>
+					<input name="radio2" type="radio" v-model="expires" value="0">
+				</div>
+			</div>
+			<div>
+				<label>维修费用</label>
+				<input v-model="order_amount" type="text" placeholder="请输入维修费用">
+			</div>
+			<div>
+				<label>消耗配件</label>
+				<input v-model="part" type="text" placeholder="请输入消耗配件">
+			</div>
+			<div class="spacing" style="margin-top: 5px;">
+				<div class="border_top"></div>
+				<div class="border_bottom"></div>
+			</div>
+			<span class="problemDescription">故障描述</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px;padding-bottom: 0;">
+				<textarea rows="5" v-model="trouble_des" placeholder="故障描述..."></textarea>
+			</div>
+			<span class="problemDescription">问题核查</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px; padding-bottom: 0;">
+				<textarea rows="5" v-model="trouble_checked" placeholder="问题核查..."></textarea>
+			</div>
+			<span class="problemDescription">备注</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px; padding-bottom: 30px;">
+				<textarea rows="5" v-model="remark" placeholder="添加备注..."></textarea>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/rtkError.js"></script>
+	<script src="../../js/rktType.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var maintenanceRecords_page = null;
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    customer_unit: '',
+		    customer_unit_phone: '',
+		    customer_unit_address: '',
+		    customer_unit_postcode: '',
+		    machine_sn: '',
+		    factory_date: '',
+		    return_factory: '1',
+		    expires: '0',
+		    order_amount: '0',
+		    part: '',
+		    trouble_des: '',
+		    trouble_checked: '',
+		    remark: '',
+		    product_type: 0,
+		    machine_type_group: '',
+		    machine_type: '',
+		    rtkErrorType: southGnssErrorList,
+		    trouble_ids: []
+		  },
+		  methods: {
+		    toggleBox: function (v, id) {
+		      var ele = document.getElementById(id).checked;
+		      // 如果全选，该组数据push进数组
+		      if (ele) {
+		        for (var i = 0; i < v.length; i++) {
+		          this.trouble_ids.push(v[i].id);
+		        }
+		        // 如果全不选，该组数据push进临时数组
+		      } else {
+		        var temp = [];
+		        for (var i = 0; i < v.length; i++) {
+		          temp.push(v[i].id);
+		        }
+		        var tempArray1 = [];// 临时数组1
+		        var tempArray2 = [];// 临时数组2
+		        for (var i = 0; i < temp.length; i++) {
+		          tempArray1[temp[i]] = true;
+		        }
+
+		        for (var i = 0; i < this.trouble_ids.length; i++) {
+		          if (!tempArray1[this.trouble_ids[i]]) {
+		            tempArray2.push(this.trouble_ids[i]);
+		          }
+		        }
+		        this.trouble_ids = tempArray2;
+		      }
+		    },
+		    toggleError: function () {
+		      if (this.product_type == 1) {
+		        this.rtkErrorType = totalStationErrorList;
+		      } else if (this.product_type == 2) {
+		        this.rtkErrorType = waterStationErrorList;
+		      } else {
+		        this.rtkErrorType = southGnssErrorList;
+		      }
+		    },
+		    getrtkInfo: function () {
+		      var isUnique = /^[0-9A-Z]*$/;
+		      if (vm.machine_sn.length > 15 && vm.machine_sn.length < 8) {
+		        vm.factory_date = '未能识别到出厂日期';
+		        vm.machine_type = '未能识别出机型';
+		        return;
+		      }
+		      if (isUnique.test(vm.machine_sn) == false) {
+		        vm.factory_date = '未能识别到出厂日期';
+		        vm.machine_type = '未能识别出机型';
+		        return;
+		      }
+		      mui.ajax('http://120.76.223.87:81/device_fail_reg/southgnss_machine_ckinfo', {
+		        dataType: 'XML',
+		        type: 'POST',
+		        timeout: 20000,
+		        data: {
+		          'machine_sn': vm.machine_sn
+		        },
+		        success: function (data) {
+		          if (data) {
+		            // var dataStr = $(data).find('string').html();
+		            var dataStr = data.substr(data.lastIndexOf('"') + 2).replace(/<\/string>/g, '');
+		            if (dataStr == 'NOT') {
+		              vm.factory_date = '未能识别到出厂日期';
+		              vm.machine_type = '未能识别出机型';
+		            } else {
+		              var arr = dataStr.split(',');
+		              vm.machine_type = arr[0];
+		              var factory_date = arr[2];
+		              vm.factory_date = factory_date.replace(/\//g, '-');
+		              if (factory_date == '') {
+		                vm.factory_date = '未能识别到出厂日期';
+		              }
+		            }
+		          } else {
+		            vm.factory_date = '未能识别到出厂日期';
+		            vm.machine_type = '未能识别出机型';
+		          }
+		          vm.iShow = false;
+		        },
+		        error: function () {
+		          vm.factory_date = '未能识别到出厂日期';
+		          vm.machine_type = '未能识别出机型';
+		        }
+		      });
+		    },
+		    submit: function () {
+		      if (this.machine_sn == '') {
+		        mui.toast('请填写机身号！');
+		        return;
+		      }
+
+		      if (/^[0-9A-Z]*$/.test(this.machine_sn) === false) {
+		        mui.toast('机身号大写字母与数字组合！');
+		        return;
+		      }
+		      if (this.trouble_des == '') {
+		        mui.toast('填写故障描述！');
+		        return;
+		      }
+		      if (this.trouble_checked == '') {
+		        mui.toast('填写问题查核！');
+		        return;
+		      }
+
+		      if (this.trouble_ids.length === 0) {
+		        mui.toast('请选择故障类型！');
+		        return;
+		      }
+		      var reg = /^[0-9]*$/;
+		      if (reg.test(this.order_amount) == false) {
+		        mui.toast('维修费用请填写数字！');
+		        return;
+		      }
+		      if (this.order_amount == '') {
+		        mui.toast('无维修费用时请填写0！');
+		      }
+
+		      plus.nativeUI.showWaiting();
+		      mui.ajax(apiUrl.create_order, {
+		        data: {
+		          token: plus.storage.getItem('tokenQC'),
+		          user_name: plus.storage.getItem('userNameQC'),
+		          customer_unit: vm.customer_unit,
+		          customer_unit_address: vm.customer_unit_address,
+		          customer_unit_phone: vm.customer_unit_phone,
+		          customer_unit_postcode: vm.customer_unit_postcode,
+		          machine_sn: vm.machine_sn,
+		          machine_type_group: vm.machine_type_group,
+		          machine_type: vm.machine_type,
+		          factory_date: vm.factory_date,
+		          trouble_ids: vm.trouble_ids.join('-'),
+		          trouble_des: vm.trouble_des,
+		          trouble_checked: vm.trouble_checked,
+		          return_factory: vm.return_factory,
+		          expires: vm.expires,
+		          order_amount: vm.order_amount,
+		          remark: vm.remark,
+		          part: vm.part,
+		          operation_type: 0,
+		          product_type: vm.product_type,
+		          order_id: ''
+		        },
+		        dataType: 'json',
+		        type: 'post',
+		        timeout: 20000,
+		        success: function (data) {
+		          if (data.status === 0) {
+		            var orderTempId = data.orderTempId;
+		            mui.ajax(apiUrl.create_lists_order, {
+		              data: {
+		                token: plus.storage.getItem('tokenQC'),
+		                user_name: plus.storage.getItem('userNameQC'),
+		                customer_unit: vm.customer_unit,
+		                customer_unit_address: vm.customer_unit_address,
+		                customer_unit_phone: vm.customer_unit_phone,
+		                customer_unit_postcode: vm.customer_unit_postcode,
+		                ids: orderTempId,
+		                operation_type: 0
+		              },
+		              dataType: 'json',
+		              type: 'post',
+		              timeout: 20000,
+		              success: function (data) {
+		                if (data.status === 0) {
+		                    mui.toast('维修订单提交成功!');
+		                    if(maintenanceRecords_page == null) {
+								maintenanceRecords_page = plus.webview.getWebviewById('maintenanceRecords.html');
+							};
+							mui.fire(maintenanceRecords_page, 'refreshInfo', {
+								// 暂时没有需要传的参数
+							});
+		                    mui.openWindow({
+		                      url: './maintenanceRecords.html',
+		                      id: 'maintenanceRecords.html'
+		                    });
+		                    plus.webview.currentWebview().close('none');
+		                } else {
+		                  mui.toast(data.info);
+		                }
+		                plus.nativeUI.closeWaiting();
+		              },
+		              error: function (xhr, type, errorThrown) {
+		                onNetChange();
+		                plus.nativeUI.closeWaiting();
+		              }
+		            });
+		          } else {
+		            mui.toast(data.info);
+		          }
+		          plus.nativeUI.closeWaiting();
+		        },
+		        error: function (xhr, type, errorThrown) {
+		          onNetChange();
+		          plus.nativeUI.closeWaiting();
+		        }
+		      });
+		    }
+		  },
+		  watch: {
+		    machine_sn: {
+		      handler: function (val, oldVal) {
+		        for (var n = 3; n < 10; n++) {
+		          var init = val.substr(0, n);
+		          var flag = false;
+		          for (var i = 0; i < rtkInfo.length; i++) {
+		            if (init == rtkInfo[i].identification) {
+		              this.machine_type_group = rtkInfo[i].machineTypeGroup;
+		              flag = true;
+		            }
+		          }
+		          if (flag == true) {
+		            break;
+		          } else {
+		            this.machine_type_group = rtkInfo[0].machineTypeGroup;
+		          }
+		        }
+		      },
+		      deep: true
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () { });
+		  }
+		});
+	</script>
+</body>
+
+</html>

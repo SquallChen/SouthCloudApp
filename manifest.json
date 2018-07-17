@@ -7,7 +7,7 @@
 	"id": "H54EE62D4",/*应用的标识，创建应用时自动生成，勿手动修改*/
 	"name": "SouthCloud",/*应用名称，程序桌面图标名称*/
 	"version": {
-		"name": "1.5.3",/*应用版本名称*/
+		"name": "1.0.4",/*应用版本名称*/
 		"code": "83"
 	},
 	"description": "",/*应用描述信息*/
@@ -163,7 +163,7 @@
 						"landscape-retina7": "public/img/background.png"
 					}
 				},
-				"android": {"hdpi":"public/img/background.png","xhdpi":"public/img/background.png","xxhdpi":"public/img/background.png"
+				"android": {"hdpi":"public/img/480.png","xhdpi":"public/img/720.png","xxhdpi":"public/img/1080.png"
 					/*普通屏启动图片，分辨率：240x282*/
 					 /*大屏启动图片，分辨率：320x442*/
 					 /*高分屏启动图片，分辨率：480x762*/
@@ -1685,7 +1685,10 @@
 					"app/personnel/onlineSettings.html",
 					"login.html",
 					"app/personnel/allocationAuthorization.html",
-					"app/equipment/allocationAuthorization.html"
+					"app/equipment/allocationAuthorization.html",
+					"app/service/service_login.html",
+					"app/service/serviceLogin.html",
+					"app/service/serviceList.html"
 				],
 				"priority": 0
 			},
@@ -1750,6 +1753,55 @@
 				"resources": [],
 				"refer": [
 					"app/personnel/coordinateDetails.html"
+				],
+				"priority": 0
+			},
+			"app/service/serviceLogin.html": {
+				"resources": [],
+				"refer": [
+					"app/service/serviceList.html"
+				],
+				"priority": 0
+			},
+			"app/service/serviceList.html": {
+				"resources": [],
+				"refer": [
+					"app/personnel/userEntry.html",
+					"app/personnel/userfilter.html",
+					"app/service/submitFeedback.html",
+					"app/service/technicalFeedback.html",
+					"app/service/maintenanceRegistration.html",
+					"app/service/maintenanceRecords.html",
+					"app/console/equipment.html"
+				],
+				"priority": 0
+			},
+			"app/service/technicalFeedback.html": {
+				"resources": [],
+				"refer": [
+					"app/service/feedbackDetail.html"
+				],
+				"priority": 0
+			},
+			"app/service/maintenanceRecords.html": {
+				"resources": [],
+				"refer": [
+					"app/service/feedbackDetail.html",
+					"app/service/maintenanceDetail.html"
+				],
+				"priority": 0
+			},
+			"app/service/maintenanceRegistration.html": {
+				"resources": [],
+				"refer": [
+					"app/service/maintenanceRecords.html"
+				],
+				"priority": 0
+			},
+			"app/service/submitFeedback.html": {
+				"resources": [],
+				"refer": [
+					"app/service/technicalFeedback.html"
 				],
 				"priority": 0
 			}

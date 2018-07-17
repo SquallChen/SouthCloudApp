@@ -1,0 +1,455 @@
+<!doctype html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>维修记录</title>
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="../../css/mui.min.css" rel="stylesheet" />
+		<!--<link rel="stylesheet" href="../../css/custom.css">-->
+		<link rel="stylesheet" href="../../css/iconfont.css">
+		<style>
+			* {
+				padding: 0;
+				margin: 0;
+				box-sizing: border-box;
+			}
+			
+			html,
+			body,
+			#vm {
+				height: 100%;
+				background: #fff;
+			}
+			
+			a {
+				color: #333;
+			}
+			
+			.filter {
+				width: 100%;
+			}
+			
+			.filter a {
+				display: block;
+				width: 80%;
+				height: 50px;
+				line-height: 50px;
+				font-size: 15px;
+				padding-left: 20px;
+			}
+			
+			.btn {
+				background: none;
+				border: none;
+				color: white;
+				font-size: 40px;
+				line-height: 24px;
+				width: 48px;
+				height: 48px;
+				float: right;
+				right: -4px;
+			}
+			
+			.filter li:after {
+				width: 100%;
+				height: 1px;
+				content: '';
+				display: block;
+				padding: 0;
+				position: relative;
+				-webkit-transform: scaleY(.5);
+				transform: scaleY(.5);
+				background-color: #ccc;
+			}
+			
+			.filter .top {
+				padding: 0 10px;
+				display: flex;
+				justify-content: space-between;
+				margin-top: -12px;
+			}
+			
+			.filter .middle {
+				padding: 10px;
+				font-size: 15px;
+			}
+			
+			.filter .middle span {
+				margin-right: 20px;
+				color: #999;
+			}
+			
+			.filter .Num {
+				flex: 1;
+				overflow: hidden;
+				white-space: nowrap;
+				text-overflow: ellipsis;
+				font-size: 18px;
+				color: #333;
+				line-height: 28px;
+			}
+			
+			.filter .transStatus {
+				flex: 0 74px;
+				font-size: 14px;
+				width: 74px;
+				height: 28px;
+				line-height: 28px;
+				text-align: center;
+				color: white;
+			}
+			
+			.filter .wcheck {
+				background: #999;
+			}
+			
+			.filter .hcheck {
+				background: #3b88fb;
+			}
+			
+			.filter .quote {
+				background: #2ba5f0;
+			}
+			
+			.filter .repairging {
+				background: #f55559;
+			}
+			
+			.filter .repairCompleted {
+				background: #49cb5f;
+			}
+			
+			.filter .pickUp {
+				background: #00b58f;
+			}
+			
+			.mui-bar .mui-icon {
+				font-size: 32px;
+			}
+			
+			.mui-bar .mui-title {
+				right: 50px;
+				left: 50px;
+				color: white;
+				margin-top: 29px;
+				font-size: 20px;
+			}
+			
+			.mui-content {
+				background: white;
+				flex: 1;
+			}
+			
+			.mui-popover {
+				height: 300px;
+			}
+			
+			.mui-popover {
+				width: 180px;
+				height: 166px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			.mui-backdrop {
+				background: transparent;
+			}
+			
+			.mui-popover .mui-scroll-wrapper {
+				margin: 0;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+			.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+				border-bottom-left-radius: 0;
+				border-bottom-right-radius: 0;
+				border-top-left-radius: 0;
+				border-top-right-radius: 0;
+			}
+			
+			.userEntryImg {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon01.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 15px;
+			}
+			
+			.userfilter {
+				display: inline-block;
+				width: 22px;
+				height: 22px;
+				background: url(../../public/img/user_icon02.png) no-repeat;
+				background-size: 19px 22px;
+				margin-left: 15px;
+			}
+			
+			.mui-content .mui-icon {
+				color: #ccc;
+				position: absolute;
+				right: 15px;
+				top: 13px;
+			}
+			
+			.mui-popover {
+				width: 122px;
+				height: 50px;
+				box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+				background: white;
+			}
+			
+			.mui-popover .mui-table-view .mui-table-view-cell:first-child {
+				border-top-left-radius: 12px;
+				border-top-right-radius: 12px;
+			}
+			
+			.mui-table-view-cell {
+				padding: 11px 15px;
+			}
+			
+			.padding_top {
+				height: 21px;
+				background: #e8e8e8;
+			}
+			
+			.mui-toast-container {
+				bottom: 60% !important;
+			}
+			
+			.mui-pull {
+				height: 40px;
+				bottom: 0;
+			}
+			
+			.mui-bar-nav.mui-bar .mui-icon {
+				width: 73px;
+				height: 52px;
+				top: 21px;
+				display: flex;
+				align-items: center;
+			}
+			
+			.mui-pull-caption {
+				height: 40px;
+				line-height: 40px;
+			}
+			
+			.mui-icon-back:before,
+			.mui-icon-left-nav:before {
+				content: '';
+			}
+			
+			.mui-bar-nav~.mui-content {
+				height: 100%;
+				background: white;
+			}
+			
+			.back {
+				display: block;
+				width: 10px;
+				height: 16px;
+				background: url('../../public/img/back.png') no-repeat;
+				background-size: 10px 16px;
+				margin-left: 10px;
+			}
+			
+			[v-cloak] {
+				display: none;
+			}
+			
+			.mui-bar-nav {
+				height: 73px;
+				background: #0b60de;
+			}
+			
+			.mui-bar-nav~.mui-content {
+				padding-top: 0;
+				flex: 1;
+				padding-top: 73px;
+			}
+			
+			#vm {
+				display: flex;
+				flex-direction: column;
+			}
+			
+			.mui-scroll-wrapper {
+				overflow: auto;
+			}
+			
+			.mui-scroll-wrapper {}
+		</style>
+	</head>
+
+	<body>
+		<div id="vm">
+			<header class="mui-bar mui-bar-nav">
+				<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+					<span class="back"></span>
+				</a>
+				<h1 class="mui-title">维修记录</h1>
+			</header>
+			<!--<div style="height: 73px;"></div>-->
+			<div class="mui-content">
+				<div class="padding_top"></div>
+				<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+					<div class="filter">
+						<ul class="filter-ul">
+							<li class="filter-li" v-for="(v,k) in list" @tap="detail(v)">
+								<div class="top">
+									<span class="Num">{{v.machineType}}</span>
+									<span class="transStatus hcheck" v-if="v.status===1">{{v.status | transStatus}}</span>
+									<span class="transStatus quote" v-else-if="v.status===2">{{v.status | transStatus}}</span>
+									<span class="transStatus repairging" v-else-if="v.status===3">{{v.status | transStatus}}</span>
+									<span class="transStatus repairCompleted" v-else-if="v.status===4">{{v.status | transStatus}}</span>
+									<span class="transStatus pickUp" v-else-if="v.status===5">{{v.status | transStatus}}</span>
+									<span class="transStatus wcheck" v-else>{{v.status | transStatus}}</span>
+								</div>
+								<div class="middle">
+									<span>{{v.machineSn}}</span>
+									<span>{{v.customerUnit}}</span>
+								</div>
+								<div style="padding-left: 10px; color: #333; padding-bottom: 10px;">
+									<span style="color: #999;">故障类型：</span>
+									<span style="line-height: 24px;">{{v.troubleIdsDes}}</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src="../../js/mui.min.js"></script>
+		<script src="../../js/url.js"></script>
+		<script src="../../js/vue.min.js"></script>
+		<script type="text/javascript">
+			var vm = new Vue({
+				el: '#vm',
+				data: {
+					list: [],
+					page_num: 1,
+					pageCount: ''
+				},
+				methods: {
+					detail: function(v) {
+						mui.openWindow({
+							url: './maintenanceDetail.html',
+							id: './maintenanceDetail.html',
+							extras: {
+								info: v
+							}
+						});
+					}
+				},
+				filters: {
+					transStatus: function(v) {
+						var str = '';
+						if(v === 1) {
+							str = '接收检查';
+						} else if(v === 2) {
+							str = '维修报价';
+						} else if(v === 3) {
+							str = '维修中';
+						} else if(v === 4) {
+							str = '维修完成';
+						} else if(v === 5) {
+							str = '取机完成';
+						} else {
+							str = '等待检查';
+						}
+						return str;
+					}
+				},
+				created: function() {
+					mui.plusReady(function() {
+						mui.init({
+							pullRefresh: {
+								container: '#pullrefresh',
+								down: {
+									style: 'circle', // 必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+									auto: false, // 可选,默认false.首次加载自动上拉刷新一次
+									callback: pulldownRefresh // 必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+								},
+								up: {
+									auto: false,
+									contentrefresh: '正在加载...',
+									callback: pullupRefresh
+								}
+							}
+						});
+						mui.back = function() {
+							mui.openWindow({
+								url: './serviceList.html',
+								id: 'serviceList.html'
+							});
+							plus.nativeUI.closeWaiting();
+							plus.webview.currentWebview().close('none');
+						};
+						orderPage();
+					});
+				}
+			});
+
+			function pullupRefresh() {
+				if(vm.page_num >= vm.pageCount) {
+					mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+				} else {
+					setTimeout(function() {
+						vm.page_num += 1;
+						mui('#pullrefresh').pullRefresh().endPullupToRefresh((vm.page_num >= vm.pageCount)); // 参数为true代表没有更多数据了。
+						orderPage();
+					}, 1500);
+				}
+			}
+
+			function pulldownRefresh() {
+				vm.list = [];
+				vm.page_num = 1;
+				orderPage();
+			}
+
+			function orderPage() {
+				mui.ajax(apiUrl.order_page, {
+					data: {
+						token: plus.storage.getItem('tokenQC'),
+						user_name: plus.storage.getItem('userNameQC'),
+						page_num: vm.page_num,
+						num_per_page: 10
+					},
+					dataType: 'json',
+					type: 'post',
+					timeout: 20000,
+					success: function(data) {
+						if(data.status === 0 && data.recordList.length > 0) {
+							var temp = data.recordList;
+							var templength = temp.length;
+							for(var i = 0; i < templength; i++) {
+								vm.list.push(temp[i]);
+							}
+							vm.pageCount = data.pageCount;
+							mui('#pullrefresh').pullRefresh().endPulldown();
+						} else {
+							mui.toast(data.info);
+						}
+						plus.nativeUI.closeWaiting();
+					},
+					error: function(xhr, type, errorThrown) {
+						onNetChange();
+						plus.nativeUI.closeWaiting();
+					}
+				});
+			}
+			
+			window.addEventListener('refreshInfo', function() {
+				vm.list = [];
+				vm.page_num = 1;
+				orderPage();
+			});
+		</script>
+	</body>
+
+</html>

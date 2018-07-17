@@ -139,14 +139,16 @@
 			input[type=text]:focus {
 				border: 1px solid #333;
 			}
-			.meg{
+			
+			.meg {
 				display: block;
-				text-align:center;
+				text-align: center;
 				height: 80px;
 				line-height: 80px;
 				color: #999;
 				font-size: 15px;
 			}
+			
 			[v-cloak] {
 				display: none;
 			}
@@ -176,7 +178,7 @@
 					<span></span>
 				</div>
 				<button class="management" v-on:tap="send" v-show="hasResult===true">完  成</button>
-				<button class="management"disabled v-show="hasResult===false">完  成</button>
+				<button class="management" disabled v-show="hasResult===false">完  成</button>
 				<span v-show="hasResult===false" class="meg">该用户下没有工作组信息，不能筛选</span>
 			</div>
 		</div>
@@ -192,19 +194,10 @@
 					keywords: '',
 					workGroupValue: '',
 					workGroup: [],
-					hasResult:true
+					hasResult: true
 				},
 				methods: {
 					send: function() {
-						if(vm.workGroupValue === '') {
-							if(equipment_page == null) {
-								equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
-							}
-							mui.fire(equipment_page, 'equipmentKeywordsFilter', {
-								keywords: vm.keywords,
-							});
-							plus.webview.currentWebview().close();
-						} else {
 							if(equipment_page == null) {
 								equipment_page = plus.webview.getWebviewById('app/console/equipment.html');
 							}
@@ -213,8 +206,6 @@
 								workGroup: vm.workGroupValue
 							});
 							plus.webview.currentWebview().close();
-						}
-
 					}
 				},
 				created: function() {
@@ -234,9 +225,9 @@
 							success: function(data) {
 								if(data.groupList === null) {
 									mui.toast('该账户下没有工作组信息')
-									vm.hasResult=false;
+									vm.hasResult = false;
 								} else {
-									vm.hasResult=true;
+									vm.hasResult = true;
 									var tempGroup = [];
 									var tempData = data.groupList;
 									for(var i = 0; i < tempData.length; i++) {

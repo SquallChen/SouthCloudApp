@@ -1505,7 +1505,10 @@
       "app/personnel/onlineSettings.html",
       "login.html",
       "app/personnel/allocationAuthorization.html",
-      "app/equipment/allocationAuthorization.html"
+      "app/equipment/allocationAuthorization.html",
+      "app/service/service_login.html",
+      "app/service/serviceLogin.html",
+      "app/service/serviceList.html"
     ],
     "resources": [
       "public/img/user_icon01.png",
@@ -1566,6 +1569,43 @@
   "app/personnel/currentLocation.html": {
     "refer": [
       "app/personnel/coordinateDetails.html"
+    ]
+  },
+  "app/service/serviceLogin.html": {
+    "refer": [
+      "app/service/serviceList.html"
+    ]
+  },
+  "app/service/serviceList.html": {
+    "refer": [
+      "app/personnel/userEntry.html",
+      "app/personnel/userfilter.html",
+      "app/service/submitFeedback.html",
+      "app/service/technicalFeedback.html",
+      "app/service/maintenanceRegistration.html",
+      "app/service/maintenanceRecords.html",
+      "app/console/equipment.html"
+    ]
+  },
+  "app/service/technicalFeedback.html": {
+    "refer": [
+      "app/service/feedbackDetail.html"
+    ]
+  },
+  "app/service/maintenanceRecords.html": {
+    "refer": [
+      "app/service/feedbackDetail.html",
+      "app/service/maintenanceDetail.html"
+    ]
+  },
+  "app/service/maintenanceRegistration.html": {
+    "refer": [
+      "app/service/maintenanceRecords.html"
+    ]
+  },
+  "app/service/submitFeedback.html": {
+    "refer": [
+      "app/service/technicalFeedback.html"
     ]
   }
 }

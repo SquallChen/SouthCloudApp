@@ -78,7 +78,14 @@
 				height: 38px;
 				border-radius: 50px;
 			}
-			
+			.info .user_info .header{
+				display: inline-block;
+				width: 38px;
+				height: 38px;
+				border-radius: 50px;
+				background: url('../../public/img/user-header.png') no-repeat 2px -1px;
+				background-size: 32px 32px;
+			}
 			.info .user_info div {
 				padding: 0 10px;
 			}
@@ -181,7 +188,8 @@
 					<ul class="filter-ul">
 						<li href="../personnel/userInfoModify.html" class="filter-li">
 							<div class="user_info">
-								<img src="../../public/img/user-header.png" alt="" />
+								<!--<img src="../../public/img/user-header.png" alt="" />-->
+								<span class="header"></span>
 								<div>
 									<span>{{realname}}</span>
 								</div>

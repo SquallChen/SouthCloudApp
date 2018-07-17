@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>南方服务</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/iconfont.css">
+	<style>
+		html,
+		body {
+			background: #fff;
+		}
+
+		#app {
+			height: 100%;
+			background: #f2f2f2;
+		}
+
+		.mui-content .spacing {
+			height: 21px;
+			background: #f2f2f2;
+			padding: 0;
+		}
+
+		.mui-content .spacing:after {
+			width: 100%;
+			height: 1px;
+			content: '';
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #c8c7cc;
+		}
+
+		.mui-content div label {
+			color: #333;
+		}
+
+		.mui-content div:nth-child(2) {
+			padding-top: 20px;
+		}
+
+		.mui-content div {
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-bottom: 15px;
+			display: flex;
+			position: relative;
+		}
+
+		.mui-content div span {
+			display: inline-block;
+			position: absolute;
+			right: 28px;
+			top: 16px;
+			width: 0px;
+			height: 0px;
+			border-top: 8px solid #666;
+			border-right: 5px solid rgba(0, 0, 0, 0);
+			border-bottom: 50px solid rgba(0, 0, 0, 0);
+			border-left: 5px solid rgba(0, 0, 0, 0);
+		}
+
+		.mui-content div:nth-child(1) {
+			padding-top: 20px;
+		}
+
+		.mui-content div:nth-child(2) {
+			position: relative;
+		}
+
+		.mui-content div label {
+			width: 45px;
+			margin-right: 30px;
+			text-align: right;
+			padding: 0;
+			line-height: 36px;
+			font-size: 15px;
+			color: #acacac;
+		}
+
+		.mui-content div input {
+			flex: 1;
+			margin-bottom: 0;
+			height: 50px;
+			line-height: 50px;
+			font-size: 15px;
+			padding-left: 50px;
+		}
+
+		.mui-content select {
+			font-size: 15px;
+			padding: 0 0 0 6px;
+			color: #333;
+			flex: 1;
+			height: 36px;
+			margin-bottom: 0;
+			border: 1px solid #ccc !important;
+		}
+
+		.down {
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 20px;
+			right: 30px;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		.management {
+			margin-left: 6%;
+			width: 88%;
+			height: 40px;
+			line-height: 18px;
+			border-radius: 0;
+			background: #3b88fb;
+			color: white;
+			font-size: 16px;
+			margin-top: 25px;
+			border: none;
+			border-radius: 4px;
+		}
+
+		.management:active {
+			background: #0b5fde !important;
+		}
+
+		input[type=text],
+		input[type=password] {
+			border-top: none !important;
+			border-left: none !important;
+			border-right: none !important;
+			border-radius: 0;
+			border-bottom: 1px solid #0b5fde !important;
+			padding-bottom: 0;
+		}
+
+		input[type=text]:focus {
+			border: 1px solid #0b60de;
+		}
+
+		.meg {
+			display: block;
+			text-align: center;
+			height: 80px;
+			line-height: 80px;
+			color: #999;
+			font-size: 15px;
+		}
+
+		.mui-input-row .mui-input-password~.mui-icon-eye {
+			right: 20px;
+			top: 18px;
+			border-top: 0;
+		}
+
+		.bg {
+			height: 240px;
+			width: 100%;
+			background: url('../../public/img/servicebg.png') no-repeat center 60%;
+			background-size: 200px 142px;
+		}
+
+		.icon-username,
+		.icon-password {
+			position: absolute;
+			left: 16px;
+			top: 10px;
+			font-size: 30px !important;
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+
+
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">南方服务</h1>
+		</header>
+		<div class="mui-content">
+			<div class="bg"></div>
+			<div style="position: relative; padding-top: 0;">
+				<label class="icon-username"></label>
+				<input v-model="username" type="text" placeholder="请输入用户名">
+			</div>
+			<div class="mui-input-row mui-password" style="position: relative;">
+				<label class="icon-password"></label>
+				<input type="password" class="mui-input-password" placeholder="请输入密码" v-model="password">
+			</div>
+			<button class="management" v-on:tap="login"> 登 录</button>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/sha1.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    /*  username: 'hello',
+				 password: 'south8684' */
+		    username: '',
+		    password: ''
+		  },
+		  methods: {
+		    login: function () {
+		      if (this.username === '' || this.password === '') {
+		        mui.toast('用户名或密码不能为空');
+		        return false;
+		      }
+		      plus.nativeUI.showWaiting();
+		      mui.ajax(apiUrl.loginQC, {
+		        data: {
+		          user_name: vm.username,
+		          signature: hex_sha1(vm.password)
+		        },
+		        dataType: 'json',
+		        type: 'post',
+		        timeout: 20000,
+		        success: function (data) {
+		          if (data.status === 0) {
+		            plus.storage.setItem('tokenQC', data.token);
+		            plus.storage.setItem('userNameQC', vm.username);
+		            mui.ajax(apiUrl.auth_rules_page, {
+		              data: {
+		                token: data.token,
+		                user_name: vm.username,
+		                num_per_page: 500
+		              },
+		              dataType: 'json',
+		              type: 'post',
+		              timeout: 20000,
+		              success: function (data) {
+		                if (data.status === 0) {
+		                  var authList = data.recordList;
+		                  var authListArr = [];
+		                  for (var i = 0; i < authList.length; i++) {
+		                    if (authList[i].module === 'QualityTracking') {
+		                      authListArr.push(authList[i].name);
+		                    }
+		                  }
+		                  plus.storage.setItem('authList', authListArr);
+		                  mui.openWindow({
+		                    url: './serviceList.html',
+		                    id: 'serviceList.html'
+		                  });
+		                } else {
+		                  mui.toast(data.info);
+		                }
+		                plus.nativeUI.closeWaiting();
+		              }
+		            });
+		          } else {
+		            mui.toast(data.info);
+		          }
+		          plus.nativeUI.closeWaiting();
+		        },
+		        error: function (xhr, type, errorThrown) {
+		          onNetChange();
+		          plus.nativeUI.closeWaiting();
+		        }
+		      });
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () { });
+		  }
+		});
+	</script>
+</body>
+
+</html>

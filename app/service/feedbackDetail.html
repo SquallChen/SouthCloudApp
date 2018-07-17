@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>反馈详情</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<style>
+		html,body {
+			background: #fff;
+		}
+
+		#app {
+			height: 100%;
+			background: #fff;
+		}
+
+		.mui-content .spacing {
+			height: 21px;
+			background: #f2f2f2;
+			padding: 0;
+			width: 100%;
+			display: block;
+			position: relative;
+		}
+
+		.mui-content .border_top,
+		.mui-content .border_bottom {
+			width: 100%;
+			height: 1px;
+			padding-top: 0 !important;
+			padding-right: 0;
+			padding-left: 0;
+			padding-bottom: 0;
+			-webkit-transform: scaleY(.2);
+			transform: scaleY(.2);
+			background-color: #ccc;
+		}
+
+		.mui-content .border_bottom {
+			position: absolute !important;
+			bottom: 1px;
+		}
+
+		.mui-content div label {
+			color: #333;
+		}
+
+		.mui-content div:nth-child(2) {
+			padding-top: 20px;
+		}
+
+		.mui-content div {
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-bottom: 15px;
+			display: flex;
+			position: relative;
+		}
+
+		.mui-content>div span {
+			display: inline-block;
+			position: absolute;
+			right: 28px;
+			top: 16px;
+			width: 0px;
+			height: 0px;
+			border-top: 8px solid #666;
+			border-right: 5px solid rgba(0, 0, 0, 0);
+			border-bottom: 50px solid rgba(0, 0, 0, 0);
+			border-left: 5px solid rgba(0, 0, 0, 0);
+		}
+
+		.mui-content div:nth-child(1) {
+			padding-top: 20px;
+		}
+
+		.mui-content div:nth-child(2) {
+			position: relative;
+		}
+
+		.mui-content div label {
+			width: 60px;
+			margin-right: 30px;
+			text-align: right;
+			padding: 0;
+			line-height: 36px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.mui-content div input {
+			flex: 1;
+			margin-bottom: 0;
+			height: 36px;
+			font-size: 15px;
+			padding-left: 10px;
+		}
+
+		.mui-content select {
+			font-size: 15px;
+			padding: 0 0 0 6px;
+			color: #333;
+			flex: 1;
+			height: 36px;
+			margin-bottom: 0;
+			border: 1px solid #ccc !important;
+		}
+
+		.down {
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 20px;
+			right: 30px;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		.management {
+			margin-left: 6%;
+			width: 88%;
+			height: 36px;
+			line-height: 18px;
+			border-radius: 0;
+			background: #3a89fb;
+			color: white;
+			font-size: 15px;
+			margin-top: 25px;
+			border: none;
+			border-radius: 4px;
+		}
+
+		.management:active {
+			background: #0b5fde !important;
+		}
+
+		.problemDescription {
+			display: block;
+			padding-top: 20px;
+			padding-left: 15px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.selectBtn {
+			background: transparent;
+			border: none;
+			color: white;
+			float: right;
+			position: relative;
+			top: 32px;
+			left: 8px;
+			font-size: 17px;
+		}
+
+		input[type=text] {
+			border: 1px solid #ccc;
+		}
+
+		input[type=text]:focus {
+			border: 1px solid #0b60de;
+		}
+
+		.meg {
+			display: block;
+			text-align: center;
+			height: 80px;
+			line-height: 80px;
+			color: #999;
+			font-size: 15px;
+		}
+		.down {
+			display: inline-block;
+			position: absolute;
+			right: 28px;
+			top: 16px;
+			width: 0px;
+			height: 0px;
+			border-top: 8px solid #666;
+			border-right: 5px solid rgba(0, 0, 0, 0);
+			border-bottom: 50px solid rgba(0, 0, 0, 0);
+			border-left: 5px solid rgba(0, 0, 0, 0);
+		}
+		textarea{
+			padding-bottom: 0;
+			margin-bottom: 0;
+		}
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">反馈详情</h1>
+			<button class="selectBtn" v-on:tap="submit">完 成</button>
+		</header>
+		<div class="mui-content">
+			<div class="spacing"></div>
+			<div>
+				<label>客户姓名</label>
+				<input v-model="real_name" type="text" disabled>
+			</div>
+			<div>
+				<label>客户电话</label>
+				<input v-model="mobile" type="text" disabled>
+			</div>
+			<div>
+				<label>设备类别</label>
+				<input v-model="machine_type_group" type="text" disabled>
+			</div>
+			<div>
+				<label>设备类型</label>
+				<input v-model="machine_type" type="text" disabled>
+			</div>
+			<div>
+				<label>机&nbsp;&nbsp;器&nbsp;&nbsp;号</label>
+				<input v-model="machine_sn" type="text" disabled>
+			</div>
+			<div class="spacing" style="margin-top: 5px;">
+				<div class="border_top"></div>
+				<div class="border_bottom"></div>
+			</div>
+
+			<span class="problemDescription">问题描述</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px; padding-bottom: 0;">
+				<textarea rows="5" v-model="description" disabled></textarea>
+			</div>
+
+			<span class="problemDescription">处理意见</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px;">
+				<textarea rows="5" v-model="process_opinions"></textarea>
+			</div>
+
+			<div>
+				<label>处理结果</label>
+				<select class="form-control" v-model="process_result">
+					<option value="日常答复表">日常答复表</option>
+					<option value="问题确认存留系统">问题确认存留系统</option>
+					<option value="回复整理存入技术文集">回复整理存入技术文集</option>
+					<option value="安排测试">安排测试</option>
+					<option value="提交变更">提交变更</option>
+					<option value="自定义">自定义</option>
+				</select>
+				<span class="down"></span>
+			</div>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px;" v-show="process_result === '自定义'">
+				<textarea rows="5" v-model="custom_process_result" placeholder="请输入处理结果"></textarea>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    real_name: '',
+		    mobile: '',
+		    machine_type_group: '',
+		    machine_type: '',
+		    machine_sn: '',
+		    description: '',
+		    order_id: '',
+		    process_opinions: '',
+		    process_result: '自定义',
+		    custom_process_result: ''
+		  },
+		  methods: {
+		    submit: function () {
+		      var process_result = '';
+		      if (this.process_result === '自定义') {
+		        process_result = this.custom_process_result;
+		      } else {
+		        process_result = this.process_result;
+		      }
+		      plus.nativeUI.showWaiting();
+		      mui.ajax(apiUrl.tech_edit_order, {
+		        data: {
+		          token: plus.storage.getItem('tokenQC'),
+		          user_name: plus.storage.getItem('userNameQC'),
+		          order_id: vm.order_id,
+		          process_opinions: vm.process_opinions,
+		          process_result: process_result
+		        },
+		        dataType: 'json',
+		        type: 'post',
+		        timeout: 20000,
+		        success: function (data) {
+		          if (data.status === 0) {
+		            mui.toast('编辑技术订单成功!');
+		            plus.webview.getWebviewById('./technicalFeedback.html').reload();
+		            setTimeout(function () {
+		              plus.webview.currentWebview().close('none');
+		            }, 300);
+		          } else {
+		            mui.toast(data.info);
+		          }
+		          plus.nativeUI.closeWaiting();
+		        },
+		        error: function (xhr, type, errorThrown) {
+		          onNetChange();
+		          plus.nativeUI.closeWaiting();
+		        }
+		      });
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () {
+		      var item = plus.webview.currentWebview().info;
+		      vm.order_id = item.id;
+		      vm.real_name = item.realName;
+		      vm.mobile = item.mobile || '-';
+		      if (item.machineTypeGroup === 'host') {
+		        vm.machine_type_group = '主机';
+		      } else if (item.machineTypeGroup === 'handbook') {
+		        vm.machine_type_group = '手簿';
+		      } else if (item.machineTypeGroup === 'station') {
+		        vm.machine_type_group = '电台';
+		      } else if (item.machineTypeGroup === 'software') {
+		        vm.machine_type_group = '软件';
+		      }
+		      vm.machine_type = item.machineType;
+		      vm.machine_sn = item.machineSn || '-';
+		      vm.description = item.description;
+		      vm.process_opinions = item.processOpinions;
+		      var processResult = item.processResult;
+		      var arr = ['日常答复表', '问题确认存留系统', '回复整理存入技术文集', '安排测试', '提交变更'];
+		      if (arr.indexOf(processResult) >= 0) {
+		        vm.process_result = processResult;
+		      } else {
+		        vm.process_result = '自定义';
+		        vm.custom_process_result = processResult;
+		      }
+		    });
+		  }
+		});
+	</script>
+</body>
+
+</html>

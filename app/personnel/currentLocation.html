@@ -7,7 +7,7 @@
 		<title>位置</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../js/v4.6.5-dist/ol.css" rel="stylesheet" />
+		<link href="../../js/v5.0.3-dist/ol.css" rel="stylesheet" />
 		<link href="../../css/ol3-layerswitcher.css" rel="stylesheet" />
 		<link href="../../js/overlay/popupoverlay.css" rel="stylesheet">
 		<link href="../../css/map.css" rel="stylesheet" />
@@ -17,7 +17,7 @@
 				background: #fff;
 				font-size: 20px;
 			}
-			
+
 			.mui-bar-nav.mui-bar .mui-icon {
 				width: 73px;
 				height: 52px;
@@ -25,22 +25,22 @@
 				display: flex;
 				align-items: center;
 			}
-			
+
 			.popup-info {
 				padding: 0;
 				text-align: left;
 			}
-			
+
 			.ol-popup .content {
 				padding: 0;
 			}
-			
+
 			.popup-info p {
 				color: #333;
 				margin-bottom: 0;
 				height: 28px;
 			}
-			
+
 			.popup-info p span {
 				display: block;
 				height: 28px;
@@ -48,11 +48,11 @@
 				padding: 0 10px;
 				font-size: 14px;
 			}
-			
+
 			.ol-popup .closeBox {
 				margin: 13px 0 0 0;
 			}
-			
+
 			.ol-popup .closeBox {
 				background: none;
 				color: #999;
@@ -60,14 +60,14 @@
 				right: 4px;
 				top: -10px;
 			}
-			
+
 			.ol-popup .closeBox:after {
 				content: "\00d7";
 				font-size: 30px;
 				font-family: fantasy;
 				color: #999;
 			}
-			
+
 			.popup-info p:after {
 				width: 100%;
 				height: 1px;
@@ -79,17 +79,17 @@
 				transform: scaleY(.5);
 				background-color: #ccc;
 			}
-			
+
 			.btn {
 				width: 100%;
 				text-align: center;
 				padding-top: 10px;
 			}
-			
+
 			.btn button:active {
 				background: #0b5fde;
 			}
-			
+
 			.back {
 				display: block;
 				width: 10px;
@@ -98,12 +98,12 @@
 				background-size: 10px 16px;
 				margin-left: 10px;
 			}
-			
+
 			.mui-icon-back:before,
 			.mui-icon-left-nav:before {
 				content: '';
 			}
-			
+
 			.mui-bar-nav~.mui-content,
 			#app {
 				height: 100%;
@@ -123,7 +123,7 @@
 				<div style="height: 100%;" id="map" class="map"> </div>
 			</div>
 		</div>
-		<script src="../../js/v4.6.5-dist/ol.js"></script>
+		<script src="../../js/v5.0.3-dist/ol.js"></script>
 		<script src="../../js/ol3-layerswitcher.js"></script>
 		<script src="../../js/overlay/popupoverlay.js"></script>
 		<script src="../../js/mui.min.js"></script>
@@ -132,196 +132,221 @@
 		<script src="../../js/vue.min.js"></script>
 		<script type="text/javascript">
 			var vm = new Vue({
-				el: '#app',
-				data: {
-					user_name: '',
-					token: '',
-					deviceInfo: '',
-					currentIdentifyCode: '',
-					currentPointInfo:'',
-				},
-				methods: {},
-				created: function() {}
+			  el: '#app',
+			  data: {
+			    user_name: '',
+			    token: '',
+			    deviceInfo: '',
+			    currentIdentifyCode: '',
+			    currentPointInfo: ''
+			  },
+			  methods: {},
+			  created: function () {}
 			});
-			mui.plusReady(function() {
-				/* 初始化mui控件 */
-				mui.init({
-					beforeback: function() {}
-				});
-				// 获取上层页面传递过来的参数
-				var self = plus.webview.currentWebview();
-				vm.deviceInfo = self.item;
-				vm.currentIdentifyCode = vm.deviceInfo.identifyCode;
-				// 登陆时存放到本地的数据
-				vm.token = plus.storage.getItem('token');
-				vm.user_name = plus.storage.getItem('user_name');
-				plus.webview.currentWebview().setStyle({
-					softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
-				});
+			mui.plusReady(function () {
+			  /* 初始化mui控件 */
+			  mui.init({
+			    beforeback: function () {}
+			  });
+			  // 获取上层页面传递过来的参数
+			  var self = plus.webview.currentWebview();
+			  vm.deviceInfo = self.item;
+			  vm.currentIdentifyCode = vm.deviceInfo.identifyCode;
+			  // 登陆时存放到本地的数据
+			  vm.token = plus.storage.getItem('token');
+			  vm.user_name = plus.storage.getItem('user_name');
+			  plus.webview.currentWebview().setStyle({
+			    softinputMode: 'adjustResize' // 弹出软键盘时自动改变webview的高度
+			  });
 
-				var self = plus.webview.currentWebview();
-				var deviceInfo = self.item;
-				
-				mui.ajax(apiUrl.detail_info, {
-					data: {
-						user_name: vm.user_name,
-						token: vm.token,
-						identify_code: vm.currentIdentifyCode,
-					},
-					dataType: 'json',
-					type: 'post',
-					timeout: 10000,
-					success: function(data) {
-						if(data.status == 0) {
-							vm.currentPointInfo = data;
-						} else {
-							mui.toast(data.info)
-						}
-					},
-					error: function(xhr, type, errorThrown) {
-						// 异常处理；
-						onNetChange();
-						plus.nativeUI.closeWaiting();
-					}
-				});
-				// 天地图加载资源
-				var tianDiTuMapLayer = new ol.layer.Tile({
-					title: '天地图路网',
-					preload: Infinity,
-					source: new ol.source.XYZ({
-						url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
-					})
-				});
-				var tianDiTuAnnotation = new ol.layer.Tile({
-					title: '天地图文字标注',
-					source: new ol.source.XYZ({
-						url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
-					})
-				});
+			  var self = plus.webview.currentWebview();
+			  var deviceInfo = self.item;
 
-				// 设备在线样式
-				var pointOnlineStyle = new ol.style.Style({
-					image: new ol.style.Icon({
-						src: '../../public/img/device_online.png',
-						anchor: [0.5, 0.5] // 设置图标位置
-					})
-				});
+			  mui.ajax(apiUrl.detail_info, {
+			    data: {
+			      user_name: vm.user_name,
+			      token: vm.token,
+			      identify_code: vm.currentIdentifyCode
+			    },
+			    dataType: 'json',
+			    type: 'post',
+			    timeout: 10000,
+			    success: function (data) {
+			      if (data.status == 0) {
+			        vm.currentPointInfo = data;
+			      } else {
+			        mui.toast(data.info);
+			      }
+			    },
+			    error: function (xhr, type, errorThrown) {
+			      // 异常处理；
+			      onNetChange();
+			      plus.nativeUI.closeWaiting();
+			    }
+			  });
 
-				// 设备离线样式
-				var pointOfflineStyle = new ol.style.Style({
-					image: new ol.style.Icon({
-						src: '../../public/img/device_offline.png',
-						anchor: [0.5, 0.5] // 设置图标位置
-					})
-				});
+  //			  mui.ajax(apiUrl.rtkTrackPointDetail, {
+  //			    data: {
+  //			      user_name: vm.user_name,
+  //			      token: vm.token,
+  //			      identify_code: vm.currentIdentifyCode,
+  //				  randUuid: rand_uuid
+  //			    },
+  //			    dataType: 'json',
+  //			    type: 'post',
+  //			    timeout: 10000,
+  //			    success: function (data) {
+  //			      if (data.status == 0) {
+  //			        vm.currentPointInfo = data;
+  //			      } else {
+  //			        mui.toast(data.info);
+  //			      }
+  //			    },
+  //			    error: function (xhr, type, errorThrown) {
+  //			      // 异常处理；
+  //			      onNetChange();
+  //			      plus.nativeUI.closeWaiting();
+  //			    }
+  //			  });
+			  // 天地图加载资源
+			  var tianDiTuMapLayer = new ol.layer.Tile({
+			    title: '天地图路网',
+			    preload: Infinity,
+			    source: new ol.source.XYZ({
+			      url: 'http://t4.tianditu.com/DataServer?T=vec_w&x={x}&y={y}&l={z}'
+			    })
+			  });
+			  var tianDiTuAnnotation = new ol.layer.Tile({
+			    title: '天地图文字标注',
+			    source: new ol.source.XYZ({
+			      url: 'http://t3.tianditu.com/DataServer?T=cva_w&x={x}&y={y}&l={z}'
+			    })
+			  });
 
-				var pointLayers = new ol.layer.Vector({
-					source: new ol.source.Vector({
-						features: [new ol.Feature({
-							geometry: new ol.geom.Point([deviceInfo.longitude, deviceInfo.latitude])
-						})]
-					}),
-					style: function(feature, resolution) {
-						return deviceInfo.onlineStatus === 1 ? pointOnlineStyle : pointOfflineStyle;
-					}
-				});
+			  // 设备在线样式
+			  var pointOnlineStyle = new ol.style.Style({
+			    image: new ol.style.Icon({
+			      src: '../../public/img/device_online.png',
+			      anchor: [0.5, 0.5] // 设置图标位置
+			    })
+			  });
 
-				// 比例尺控件
-				var scaleLineControl = new ol.control.ScaleLine();
+			  // 设备离线样式
+			  var pointOfflineStyle = new ol.style.Style({
+			    image: new ol.style.Icon({
+			      src: '../../public/img/device_offline.png',
+			      anchor: [0.5, 0.5] // 设置图标位置
+			    })
+			  });
 
-				/** * 调用外部的JS创建弹出框 */
-				var popup = new ol.Overlay.Popup({
-					popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
-					closeBox: true,
-					positioning: 'bottom-center',
-					autoPan: true,
-					autoPanAnimation: {
-						duration: 250
-					}
-				});
+			  var pointLayers = new ol.layer.Vector({
+			    source: new ol.source.Vector({
+			      features: [new ol.Feature({
+			        geometry: new ol.geom.Point([deviceInfo.longitude, deviceInfo.latitude])
+			      })]
+			    }),
+			    style: function (feature, resolution) {
+			      return deviceInfo.onlineStatus === 1 ? pointOnlineStyle : pointOfflineStyle;
+			    }
+			  });
 
-				var olMap = new ol.Map({
-					// 图层
-					layers: [
-						tianDiTuMapLayer, tianDiTuAnnotation, pointLayers
-					],
-					overlays: [popup],
-					target: 'map',
-					// 禁止在移动端旋转设备
-					interactions: ol.interaction.defaults({
-						altShiftDragRotate: false,
-						pinchRotate: false,
-						doubleClickZoom: false
-					}),
-					controls: ol.control.defaults({
-						attributionOptions: ({
-							collapsible: false
-						}),
-						attribution: false,
-						// 不显示旋转控件
-						rotate: false,
-						// 不显示缩放控件
-						zoom: false
-					}).extend([
-						// 添加比例尺控制到地图上
-						scaleLineControl
-					]),
-					view: new ol.View({
-						// 指定投影使用EPSG:4326
-						projection: 'EPSG:4326',
-						constrainRotation: false,
-						enableRotation: false,
-						center: [deviceInfo.longitude, deviceInfo.latitude],
-						zoom: 10,
-						minZoom: 0,
-						maxZoom: 24
-					})
-				});
+			  // 比例尺控件
+			  var scaleLineControl = new ol.control.ScaleLine();
 
-				olMap.on('singleclick', function(evt) {
-					if(evt.dragging) {
-						return;
-					}
-					var pixel = olMap.getEventPixel(evt.originalEvent);
-					var feature = olMap.forEachFeatureAtPixel(pixel, function(feature, layer) {
-						return feature;
-					});
-					if(feature === null || feature === undefined) return;
-					displayDeviceInfoOverlay();
-				}, pointLayers);
+			  /** * 调用外部的JS创建弹出框 */
+			  var popup = new ol.Overlay.Popup({
+			    popupClass: 'default', // "tooltips", "warning" "black" "default", "tips", "shadow",
+			    closeBox: true,
+			    positioning: 'bottom-center',
+			    autoPan: true,
+			    autoPanAnimation: {
+			      duration: 250
+			    }
+			  });
 
-				function displayDeviceInfoOverlay(selectFeature) {
-					popup.hide();
-					var content = '<div class="popup-info">';
-					content += '<p>' + '<span>&nbsp;' + '</span>' + '</p>';
-					content += '<p>' + '<span>设备编号 :&nbsp;' + deviceInfo.identifyCode + '</span>' + '</p>';
-					if(deviceInfo.onlineStatus === 1) {
-						content += '<p>' + '<span>连接时间 :&nbsp;' + timeTrans(deviceInfo.connectTime, 'yyyy-MM-dd HH:mm:ss') + '</span>' + '</p>';
-					} else {
-						content += '<p>' + '<span>断开时间 :&nbsp;' + timeTrans(deviceInfo.disconnectTime, 'yyyy-MM-dd HH:mm:ss') + '</span>' + '</p>';
-					}
-					var upDataUserName = deviceInfo.upDataUserName ? deviceInfo.upDataUserName : '-';
-					var upDataCompanyInfo = deviceInfo.upDataCompanyInfo ? deviceInfo.upDataCompanyInfo : '-';
-					content += '<p>' + '<span>经度 :&nbsp;' + formatDegree(deviceInfo.longitude) + '</span>' + '</p>';
-					content += '<p>' + '<span>纬度 :&nbsp;' + formatDegree(deviceInfo.latitude) + '</span>' + '</p>';
-					content += '<p>' + '<span>用户名 :&nbsp;' + upDataUserName + '</span>' + '</p>';
-					content += '<p>' + '<span >用户单位 :&nbsp;' + upDataCompanyInfo + '</span>' + '</p>';
-					content += '<div class="btn"><button id="details">查看详情</button></div></div>';
-					content += '<div style="height:10px">' + '</div></div>';
-					popup.show([deviceInfo.longitude, deviceInfo.latitude], content);
-				}
-				$(document).on('click', '#details', function() {
-					popup.hide();
-					console.log(JSON.stringify(vm.currentPointInfo))
-					mui.openWindow({
-						url: './coordinateDetails.html',
-						id: './coordinateDetails.html',
-						extras: {
-							infoObj: vm.currentPointInfo
-						}
-					});
+			  var olMap = new ol.Map({
+			    // 图层
+			    layers: [
+			      tianDiTuMapLayer, tianDiTuAnnotation, pointLayers
+			    ],
+			    overlays: [popup],
+			    target: 'map',
+			    // 禁止在移动端旋转设备
+			    interactions: ol.interaction.defaults({
+			      altShiftDragRotate: false,
+			      pinchRotate: false,
+			      doubleClickZoom: false
+			    }),
+			    controls: ol.control.defaults({
+			      attributionOptions: ({
+			        collapsible: false
+			      }),
+			      attribution: false,
+			      // 不显示旋转控件
+			      rotate: false,
+			      // 不显示缩放控件
+			      zoom: false
+			    }).extend([
+			      // 添加比例尺控制到地图上
+			      scaleLineControl
+			    ]),
+			    view: new ol.View({
+			      // 指定投影使用EPSG:4326
+			      projection: 'EPSG:4326',
+			      constrainRotation: false,
+			      enableRotation: false,
+			      center: [deviceInfo.longitude, deviceInfo.latitude],
+			      zoom: 10,
+			      minZoom: 0,
+			      maxZoom: 24
+			    })
+			  });
 
-				});
+			  olMap.on('singleclick', function (evt) {
+			    if (evt.dragging) {
+			      return;
+			    }
+			    var pixel = olMap.getEventPixel(evt.originalEvent);
+			    var feature = olMap.forEachFeatureAtPixel(pixel, function (feature, layer) {
+			      return feature;
+			    });
+			    if (feature === null || feature === undefined) return;
+			    var pointInfo = feature.getProperties();
+			    console.log(pointInfo);
+			    displayDeviceInfoOverlay();
+			  }, pointLayers);
+
+			  function displayDeviceInfoOverlay(selectFeature) {
+			    popup.hide();
+			    var content = '<div class="popup-info">';
+			    content += '<p>' + '<span>&nbsp;' + '</span>' + '</p>';
+			    content += '<p>' + '<span>设备编号 :&nbsp;' + deviceInfo.identifyCode + '</span>' + '</p>';
+			    if (deviceInfo.onlineStatus === 1) {
+			      content += '<p>' + '<span>连接时间 :&nbsp;' + timeTrans(deviceInfo.connectTime, 'yyyy-MM-dd HH:mm:ss') + '</span>' + '</p>';
+			    } else {
+			      content += '<p>' + '<span>断开时间 :&nbsp;' + timeTrans(deviceInfo.disconnectTime, 'yyyy-MM-dd HH:mm:ss') + '</span>' + '</p>';
+			    }
+			    var upDataUserName = deviceInfo.upDataUserName ? deviceInfo.upDataUserName : '-';
+			    var upDataCompanyInfo = deviceInfo.upDataCompanyInfo ? deviceInfo.upDataCompanyInfo : '-';
+			    content += '<p>' + '<span>经度 :&nbsp;' + formatDegree(deviceInfo.longitude) + '</span>' + '</p>';
+			    content += '<p>' + '<span>纬度 :&nbsp;' + formatDegree(deviceInfo.latitude) + '</span>' + '</p>';
+			    content += '<p>' + '<span>用户名 :&nbsp;' + upDataUserName + '</span>' + '</p>';
+			    content += '<p>' + '<span >用户单位 :&nbsp;' + upDataCompanyInfo + '</span>' + '</p>';
+			    content += '<div class="btn"><button id="details">查看详情</button></div></div>';
+			    content += '<div style="height:10px">' + '</div></div>';
+			    popup.show([deviceInfo.longitude, deviceInfo.latitude], content);
+			  }
+			  $(document).on('click', '#details', function () {
+			    popup.hide();
+			    console.log(JSON.stringify(vm.currentPointInfo));
+			    mui.openWindow({
+			      url: './coordinateDetails.html',
+			      id: './coordinateDetails.html',
+			      extras: {
+			        infoObj: vm.currentPointInfo
+			      }
+			    });
+			  });
 			});
 		</script>
 	</body>

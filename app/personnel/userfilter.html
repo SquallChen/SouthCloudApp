@@ -7,7 +7,6 @@
 		<title>用户筛选</title>
 		<link href="../../css/mui.min.css" rel="stylesheet" />
 		<link href="../../css/custom.css" rel="stylesheet" />
-		<link href="../../css/input.css" rel="stylesheet" />
 		<style>
 			body {
 				background: #f2f2f2;
@@ -194,9 +193,10 @@
 					</select>
 					<span></span>
 				</div>
-				<button class="management" v-on:tap="send" v-show="hasResult===true">完  成</button>
-				<button class="management" disabled v-show="hasResult===false">完  成</button>
-				<span v-show="hasResult===false" class="meg">该用户下没有子用户信息，不能筛选</span>
+				<button class="management" v-on:tap="send">完  成</button>
+				<!--<button class="management" v-on:tap="send" v-show="hasResult===true">完  成</button>
+				<button class="management" disabled v-show="hasResult===false">完  成</button>-->
+				<span v-show="hasResult===false" class="meg">该用户下没有工作组信息</span>
 			</div>
 		</div>
 		<script src="../../js/mui.min.js"></script>
@@ -247,6 +247,8 @@
 						var self = plus.webview.currentWebview();
 						vm.parentPage = self.parentPage;
 						//请求工作组数据
+						console.log(plus.storage.getItem('user_name'))
+						console.log(plus.storage.getItem('token'))
 						mui.ajax(apiUrl.get_work_group, {
 							data: {
 								user_name: vm.user_name,
@@ -256,7 +258,7 @@
 							type: 'post',
 							timeout: 20000,
 							success: function(data) {
-								if(data.groupList === null) {
+								if(data.groupList === null||data.groupList.length===0) {
 									vm.hasResult=false;
 									mui.toast('该账户下没有工作组信息')
 								} else {

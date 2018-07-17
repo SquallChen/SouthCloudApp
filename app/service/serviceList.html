@@ -1,0 +1,322 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>南方服务</title>
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link rel="stylesheet" href="../../css/custom.css">
+	<link rel="stylesheet" href="../../css/iconfont.css">
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		html,
+		body,
+		#vm {
+			height: 100%;
+		}
+
+		a {
+			color: #333;
+		}
+
+		.filter {
+			width: 100%;
+			usertitle;
+		}
+
+		.filter a {
+			display: block;
+			width: 80%;
+			height: 50px;
+			line-height: 50px;
+			font-size: 15px;
+			padding-left: 10px;
+			position: absolute;
+			left: 56px;
+		}
+
+		.btn {
+			background: none;
+			border: none;
+			color: white;
+			font-size: 40px;
+			line-height: 24px;
+			width: 48px;
+			height: 48px;
+			float: right;
+			right: -4px;
+		}
+
+		.filter {
+			height: 102px;
+		}
+
+		.filter ul li {
+			display: flex;
+			align-items: center;
+			position: relative;
+			flex-wrap: wrap;
+			position: relative;
+			height: 50px;
+		}
+
+		.filter ul li:after {
+			width: 100%;
+			height: 1px;
+			content: '';
+			display: block;
+			padding: 0;
+			position: relative;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #ccc;
+		}
+
+		.filter ul li img {
+			width: 38px;
+			height: 44px;
+		}
+
+		.filter .userentry {
+			border-bottom: 1px solid #ccc;
+		}
+
+		.filter .border_bottom {
+			display: block;
+			width: 100%;
+			height: 1px;
+			background: #ccc;
+			left: 30px;
+			bottom: 0px;
+			-webkit-transform: scaleY(.5);
+		}
+
+		.mui-bar .mui-icon {
+			font-size: 32px;
+		}
+
+		.mui-bar .mui-title {
+			right: 50px;
+			left: 50px;
+		}
+
+		.mui-content {
+			background: white;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.mui-popover {
+			height: 300px;
+		}
+
+		.mui-popover {
+			width: 180px;
+			height: 166px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+			background: white;
+		}
+
+		.mui-backdrop {
+			background: transparent;
+		}
+
+
+		.mui-popover .mui-scroll-wrapper {
+			margin: 0;
+		}
+
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+		.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.userEntryImg {
+			display: inline-block;
+			width: 22px;
+			height: 22px;
+			background-size: 19px 22px;
+			margin-left: 15px;
+		}
+
+		.userfilter {
+			display: inline-block;
+			width: 22px;
+			height: 22px;
+			background: url(../../public/img/user_icon02.png) no-repeat;
+			background-size: 19px 22px;
+			margin-left: 15px;
+		}
+
+		.mui-content .mui-icon {
+			color: #ccc;
+			position: absolute;
+			right: 15px;
+			top: 13px;
+		}
+
+		.mui-popover {
+			width: 122px;
+			height: 50px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+			background: white;
+		}
+
+
+		.mui-popover .mui-table-view .mui-table-view-cell:first-child {
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+		}
+
+		.mui-table-view-cell {
+			padding: 11px 15px;
+		}
+
+		.padding_top {
+			height: 21px;
+			background: #e8e8e8;
+		}
+
+		.mui-toast-container {
+			bottom: 60% !important;
+		}
+
+		.mui-pull {
+			height: 40px;
+			bottom: 0;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-pull-caption {
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		.icon-registration,
+		.icon-record,
+		.icon-technical-feedback,
+		.icon-submit-feedback {
+			font-size: 40px;
+			color: #888;
+			margin-left: 15px;
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="vm">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">南方服务</h1>
+		</header>
+		<div class="mui-content">
+			<div class="padding_top"></div>
+			<div class="filter">
+				<ul class="filter-ul">
+					<li href="./submitFeedback.html" class="filter-li">
+						<span class="icon-submit-feedback" style="font-size: 44px; margin-left: 12px;"></span>
+						<a href="#">提交反馈</a>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</li>
+					<li href="./technicalFeedback.html" class="filter-li">
+						<span class="icon-technical-feedback" style="font-size: 48px; margin-left: 10px;"></span>
+						<a href="#">技术反馈</a>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</li>
+					<li href="./maintenanceRegistration.html" class="filter-li">
+						<span class="icon-registration"></span>
+						<a href="#">维修登记</a>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</li>
+					<li href="./maintenanceRecords.html" class="filter-li">
+						<span class="icon-record" style="font-size: 44px; margin-left: 12px;"></span>
+						<a href="#">维修记录</a>
+						<span class="mui-icon mui-icon-arrowright"></span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script type="text/javascript">
+		var vm = new Vue({
+		  el: '#vm',
+		  user_name: '',
+		  token: '',
+		  data: {
+		  },
+		  methods: {
+		  },
+		  created: function () {
+		    mui.plusReady(function () {
+		      mui.init({});
+		      var old_back = mui.back;
+		      mui.back = function () {
+		        mui.openWindow({
+		          url: '../console/equipment.html',
+		          id: 'equipment.html'
+		        });
+		        plus.nativeUI.closeWaiting();
+		        old_back();
+		      };
+		      // 页面顶部筛选按钮跳转
+		      mui('.filter-ul').on('tap', '.filter-li', function (e) {
+		        var url = this.getAttribute('href');
+		        console.log(url);
+		        mui.openWindow({
+		          url: url,
+		          id: url
+		        });
+		      });
+		    });
+		  }
+		});
+	</script>
+</body>
+
+</html>

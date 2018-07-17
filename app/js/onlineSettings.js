@@ -201,1734 +201,1766 @@ var vm = new Vue({
     checkedTrack: false,
     checkedTrackArr: [],
     trackArr: [],
-    DIFFTYPE: [{
-      label: 'RTCA',
-      value: 'RTCA'
-    },
-    {
-      label: 'TRCM',
-      value: 'TRCM'
-    },
-    {
-      label: 'RTCM23',
-      value: 'RTCM23'
-    },
-    {
-      label: 'RTCM3',
-      value: 'RTCM3'
-    },
-    {
-      label: 'RTCM30',
-      value: 'RTCM30'
-    },
-    {
-      label: 'RTCM32',
-      value: 'RTCM32'
-    },
-    {
-      label: 'RTD',
-      value: 'RTD'
-    },
-    {
-      label: 'CMR',
-      value: 'CMR'
-    },
-    {
-      label: 'SCMRX',
-      value: 'SCMRX'
-    },
-    {
-      label: 'CMRX',
-      value: 'CMRX'
-    },
-    {
-      label: 'NOVATELX',
-      value: 'NOVATELX'
-    }
+    DIFFTYPE: [
+      {
+        label: 'RTCA',
+        value: 'RTCA'
+      },
+      {
+        label: 'TRCM',
+        value: 'TRCM'
+      },
+      {
+        label: 'RTCM23',
+        value: 'RTCM23'
+      },
+      {
+        label: 'RTCM3',
+        value: 'RTCM3'
+      },
+      {
+        label: 'RTCM30',
+        value: 'RTCM30'
+      },
+      {
+        label: 'RTCM32',
+        value: 'RTCM32'
+      },
+      {
+        label: 'RTD',
+        value: 'RTD'
+      },
+      {
+        label: 'CMR',
+        value: 'CMR'
+      },
+      {
+        label: 'SCMRX',
+        value: 'SCMRX'
+      },
+      {
+        label: 'CMRX',
+        value: 'CMRX'
+      },
+      {
+        label: 'NOVATELX',
+        value: 'NOVATELX'
+      }
     ],
-    collectionInterval: [{
-      label: '0.02S',
-      value: 0.02
-    },
-    {
-      label: '0.05S',
-      value: 0.05
-    },
-    {
-      label: '0.1S',
-      value: 0.1
-    },
-    {
-      label: '0.2S',
-      value: 0.2
-    },
-    {
-      label: '0.5S',
-      value: 0.5
-    },
-    {
-      label: '1S',
-      value: 1
-    },
-    {
-      label: '2S',
-      value: 2
-    },
-    {
-      label: '5S',
-      value: 5
-    },
-    {
-      label: '10S',
-      value: 10
-    }
+    collectionInterval: [
+      {
+        label: '0.02S',
+        value: 0.02
+      },
+      {
+        label: '0.05S',
+        value: 0.05
+      },
+      {
+        label: '0.1S',
+        value: 0.1
+      },
+      {
+        label: '0.2S',
+        value: 0.2
+      },
+      {
+        label: '0.5S',
+        value: 0.5
+      },
+      {
+        label: '1S',
+        value: 1
+      },
+      {
+        label: '2S',
+        value: 2
+      },
+      {
+        label: '5S',
+        value: 5
+      },
+      {
+        label: '10S',
+        value: 10
+      }
     ],
-    accessMode: [{
-      label: 'SOUTH',
-      value: 'SOUTH'
-    },
-    {
-      label: 'NTRIP',
-      value: 'NTRIP'
-    },
-    {
-      label: 'TCPIP',
-      value: 'TCPIP'
-    }
+    accessMode: [
+      {
+        label: 'SOUTH',
+        value: 'SOUTH'
+      },
+      {
+        label: 'NTRIP',
+        value: 'NTRIP'
+      },
+      {
+        label: 'TCPIP',
+        value: 'TCPIP'
+      }
     ],
 
     // modetype: ['基准站', '移动站', '静态站'],
-    modetype: [{
-      key: 1,
-      id: 'BASE',
-      name: '基准站'
-    },
-    {
-      key: 2,
-      id: 'ROVER',
-      name: '移动站'
-    },
-    {
-      key: 3,
-      id: 'STATIC',
-      name: '静态站'
-    }
+    modetype: [
+      {
+        key: 1,
+        id: 'BASE',
+        name: '基准站'
+      },
+      {
+        key: 2,
+        id: 'ROVER',
+        name: '移动站'
+      },
+      {
+        key: 3,
+        id: 'STATIC',
+        name: '静态站'
+      }
     ],
-    linktype: [{
-      name: '移动网络',
-      index: 1,
-      id: 'CELLULAR_NET'
-    },
-    {
-      name: '内置电台',
-      index: 2,
-      id: 'UHF'
-    }
+    linktype: [
+      {
+        name: '移动网络',
+        index: 1,
+        id: 'CELLULAR_NET'
+      },
+      {
+        name: '内置电台',
+        index: 2,
+        id: 'UHF'
+      }
     ],
-    channel: [{
-      label: '0',
-      value: 0
-    },
-    {
-      label: '1',
-      value: 1
-    },
-    {
-      label: '2',
-      value: 2
-    },
-    {
-      label: '3',
-      value: 3
-    },
-    {
-      label: '4',
-      value: 4
-    },
-    {
-      label: '5',
-      value: 5
-    },
-    {
-      label: '6',
-      value: 6
-    },
-    {
-      label: '7',
-      value: 7
-    },
-    {
-      label: '8',
-      value: 8
-    },
-    {
-      label: '9',
-      value: 9
-    },
-    {
-      label: '10',
-      value: 10
-    },
-    {
-      label: '11',
-      value: 11
-    },
-    {
-      label: '12',
-      value: 12
-    },
-    {
-      label: '13',
-      value: 13
-    },
-    {
-      label: '14',
-      value: 14
-    },
-    {
-      label: '15',
-      value: 15
-    },
-    {
-      label: '16',
-      value: 16
-    }
+    channel: [
+      {
+        label: '0',
+        value: 0
+      },
+      {
+        label: '1',
+        value: 1
+      },
+      {
+        label: '2',
+        value: 2
+      },
+      {
+        label: '3',
+        value: 3
+      },
+      {
+        label: '4',
+        value: 4
+      },
+      {
+        label: '5',
+        value: 5
+      },
+      {
+        label: '6',
+        value: 6
+      },
+      {
+        label: '7',
+        value: 7
+      },
+      {
+        label: '8',
+        value: 8
+      },
+      {
+        label: '9',
+        value: 9
+      },
+      {
+        label: '10',
+        value: 10
+      },
+      {
+        label: '11',
+        value: 11
+      },
+      {
+        label: '12',
+        value: 12
+      },
+      {
+        label: '13',
+        value: 13
+      },
+      {
+        label: '14',
+        value: 14
+      },
+      {
+        label: '15',
+        value: 15
+      },
+      {
+        label: '16',
+        value: 16
+      }
     ],
-    powerPosition: [{
-      label: '高',
-      value: 'HIGH'
-    },
-    {
-      label: '中',
-      value: 'MIDDLE'
-    },
-    {
-      label: '低',
-      value: 'LOW'
-    }
+    powerPosition: [
+      {
+        label: '高',
+        value: 'HIGH'
+      },
+      {
+        label: '中',
+        value: 'MIDDLE'
+      },
+      {
+        label: '低',
+        value: 'LOW'
+      }
     ],
-    baudRate: [{
-      label: '9600',
-      value: 9600
-    },
-    {
-      label: '19200',
-      value: 19200
-    },
-    {
-      label: '38400',
-      value: 38400
-    },
-    {
-      label: '57600',
-      value: 57600
-    },
-    {
-      label: '115200',
-      value: 115200
-    }
+    baudRate: [
+      {
+        label: '9600',
+        value: 9600
+      },
+      {
+        label: '19200',
+        value: 19200
+      },
+      {
+        label: '38400',
+        value: 38400
+      },
+      {
+        label: '57600',
+        value: 57600
+      },
+      {
+        label: '115200',
+        value: 115200
+      }
     ],
-    protocol: [{
-      label: 'TRIMMARKLL',
-      value: 'TRIMMARKLL'
-    },
-    {
-      label: 'SOUTH',
-      value: 'SOUTH'
-    },
-    {
-      label: 'TRIMTALK',
-      value: 'TRIMTALK'
-    },
-    {
-      label: 'SATEL',
-      value: 'SATEL'
-    },
-    {
-      label: 'TT450S',
-      value: 'TT450S'
-    },
-    {
-      label: 'TRIMMARK3',
-      value: 'TRIMMARK3'
-    },
-    {
-      label: 'TRANSEOT',
-      value: 'TRANSEOT'
-    }
+    protocol: [
+      {
+        label: 'TRIMMARKLL',
+        value: 'TRIMMARKLL'
+      },
+      {
+        label: 'SOUTH',
+        value: 'SOUTH'
+      },
+      {
+        label: 'TRIMTALK',
+        value: 'TRIMTALK'
+      },
+      {
+        label: 'SATEL',
+        value: 'SATEL'
+      },
+      {
+        label: 'TT450S',
+        value: 'TT450S'
+      },
+      {
+        label: 'TRIMMARK3',
+        value: 'TRIMMARK3'
+      },
+      {
+        label: 'TRANSEOT',
+        value: 'TRANSEOT'
+      }
     ],
     SatelliteNumber: {
-      gps: [{
-        label: '1',
-        value: 1
-      },
-      {
-        label: '2',
-        value: 2
-      },
-      {
-        label: '3',
-        value: 3
-      },
-      {
-        label: '4',
-        value: 4
-      },
-      {
-        label: '5',
-        value: 5
-      },
-      {
-        label: '6',
-        value: 6
-      },
-      {
-        label: '7',
-        value: 7
-      },
-      {
-        label: '8',
-        value: 8
-      },
-      {
-        label: '9',
-        value: 9
-      },
-      {
-        label: '10',
-        value: 10
-      },
-      {
-        label: '11',
-        value: 11
-      },
-      {
-        label: '12',
-        value: 12
-      },
-      {
-        label: '13',
-        value: 13
-      },
-      {
-        label: '14',
-        value: 14
-      },
-      {
-        label: '15',
-        value: 15
-      },
-      {
-        label: '16',
-        value: 16
-      },
-      {
-        label: '17',
-        value: 17
-      },
-      {
-        label: '18',
-        value: 18
-      },
-      {
-        label: '19',
-        value: 19
-      },
-      {
-        label: '20',
-        value: 20
-      },
-      {
-        label: '21',
-        value: 21
-      },
-      {
-        label: '22',
-        value: 22
-      },
-      {
-        label: '23',
-        value: 23
-      },
-      {
-        label: '24',
-        value: 24
-      },
-      {
-        label: '25',
-        value: 25
-      },
-      {
-        label: '26',
-        value: 26
-      },
-      {
-        label: '27',
-        value: 27
-      },
-      {
-        label: '28',
-        value: 28
-      },
-      {
-        label: '29',
-        value: 29
-      },
-      {
-        label: '30',
-        value: 30
-      },
-      {
-        label: '31',
-        value: 31
-      },
-      {
-        label: '32',
-        value: 32
-      }
+      gps: [
+        {
+          label: '1',
+          value: 1
+        },
+        {
+          label: '2',
+          value: 2
+        },
+        {
+          label: '3',
+          value: 3
+        },
+        {
+          label: '4',
+          value: 4
+        },
+        {
+          label: '5',
+          value: 5
+        },
+        {
+          label: '6',
+          value: 6
+        },
+        {
+          label: '7',
+          value: 7
+        },
+        {
+          label: '8',
+          value: 8
+        },
+        {
+          label: '9',
+          value: 9
+        },
+        {
+          label: '10',
+          value: 10
+        },
+        {
+          label: '11',
+          value: 11
+        },
+        {
+          label: '12',
+          value: 12
+        },
+        {
+          label: '13',
+          value: 13
+        },
+        {
+          label: '14',
+          value: 14
+        },
+        {
+          label: '15',
+          value: 15
+        },
+        {
+          label: '16',
+          value: 16
+        },
+        {
+          label: '17',
+          value: 17
+        },
+        {
+          label: '18',
+          value: 18
+        },
+        {
+          label: '19',
+          value: 19
+        },
+        {
+          label: '20',
+          value: 20
+        },
+        {
+          label: '21',
+          value: 21
+        },
+        {
+          label: '22',
+          value: 22
+        },
+        {
+          label: '23',
+          value: 23
+        },
+        {
+          label: '24',
+          value: 24
+        },
+        {
+          label: '25',
+          value: 25
+        },
+        {
+          label: '26',
+          value: 26
+        },
+        {
+          label: '27',
+          value: 27
+        },
+        {
+          label: '28',
+          value: 28
+        },
+        {
+          label: '29',
+          value: 29
+        },
+        {
+          label: '30',
+          value: 30
+        },
+        {
+          label: '31',
+          value: 31
+        },
+        {
+          label: '32',
+          value: 32
+        }
       ],
-      qzss: [{
-        label: '1',
-        value: 1
-      },
-      {
-        label: '2',
-        value: 2
-      },
-      {
-        label: '3',
-        value: 3
-      },
-      {
-        label: '4',
-        value: 4
-      },
-      {
-        label: '5',
-        value: 5
-      }
+      qzss: [
+        {
+          label: '1',
+          value: 1
+        },
+        {
+          label: '2',
+          value: 2
+        },
+        {
+          label: '3',
+          value: 3
+        },
+        {
+          label: '4',
+          value: 4
+        },
+        {
+          label: '5',
+          value: 5
+        }
       ],
-      glonass: [{
-        label: '1',
-        value: 1
-      },
-      {
-        label: '2',
-        value: 2
-      },
-      {
-        label: '3',
-        value: 3
-      },
-      {
-        label: '4',
-        value: 4
-      },
-      {
-        label: '5',
-        value: 5
-      },
-      {
-        label: '6',
-        value: 6
-      },
-      {
-        label: '7',
-        value: 7
-      },
-      {
-        label: '8',
-        value: 8
-      },
-      {
-        label: '9',
-        value: 9
-      },
-      {
-        label: '10',
-        value: 10
-      },
-      {
-        label: '11',
-        value: 11
-      },
-      {
-        label: '12',
-        value: 12
-      },
-      {
-        label: '13',
-        value: 13
-      },
-      {
-        label: '14',
-        value: 14
-      },
-      {
-        label: '15',
-        value: 15
-      },
-      {
-        label: '16',
-        value: 16
-      },
-      {
-        label: '17',
-        value: 17
-      },
-      {
-        label: '18',
-        value: 18
-      },
-      {
-        label: '19',
-        value: 19
-      },
-      {
-        label: '20',
-        value: 20
-      },
-      {
-        label: '21',
-        value: 21
-      },
-      {
-        label: '22',
-        value: 22
-      },
-      {
-        label: '23',
-        value: 23
-      },
-      {
-        label: '24',
-        value: 24
-      }
+      glonass: [
+        {
+          label: '1',
+          value: 1
+        },
+        {
+          label: '2',
+          value: 2
+        },
+        {
+          label: '3',
+          value: 3
+        },
+        {
+          label: '4',
+          value: 4
+        },
+        {
+          label: '5',
+          value: 5
+        },
+        {
+          label: '6',
+          value: 6
+        },
+        {
+          label: '7',
+          value: 7
+        },
+        {
+          label: '8',
+          value: 8
+        },
+        {
+          label: '9',
+          value: 9
+        },
+        {
+          label: '10',
+          value: 10
+        },
+        {
+          label: '11',
+          value: 11
+        },
+        {
+          label: '12',
+          value: 12
+        },
+        {
+          label: '13',
+          value: 13
+        },
+        {
+          label: '14',
+          value: 14
+        },
+        {
+          label: '15',
+          value: 15
+        },
+        {
+          label: '16',
+          value: 16
+        },
+        {
+          label: '17',
+          value: 17
+        },
+        {
+          label: '18',
+          value: 18
+        },
+        {
+          label: '19',
+          value: 19
+        },
+        {
+          label: '20',
+          value: 20
+        },
+        {
+          label: '21',
+          value: 21
+        },
+        {
+          label: '22',
+          value: 22
+        },
+        {
+          label: '23',
+          value: 23
+        },
+        {
+          label: '24',
+          value: 24
+        }
       ],
-      galileo: [{
-        label: '1',
-        value: 1
-      },
-      {
-        label: '2',
-        value: 2
-      },
-      {
-        label: '3',
-        value: 3
-      },
-      {
-        label: '4',
-        value: 4
-      },
-      {
-        label: '5',
-        value: 5
-      },
-      {
-        label: '6',
-        value: 6
-      },
-      {
-        label: '7',
-        value: 7
-      },
-      {
-        label: '8',
-        value: 8
-      },
-      {
-        label: '9',
-        value: 9
-      },
-      {
-        label: '10',
-        value: 10
-      },
-      {
-        label: '11',
-        value: 11
-      },
-      {
-        label: '12',
-        value: 12
-      },
-      {
-        label: '13',
-        value: 13
-      },
-      {
-        label: '14',
-        value: 14
-      },
-      {
-        label: '15',
-        value: 15
-      },
-      {
-        label: '16',
-        value: 16
-      },
-      {
-        label: '17',
-        value: 17
-      },
-      {
-        label: '18',
-        value: 18
-      },
-      {
-        label: '19',
-        value: 19
-      },
-      {
-        label: '20',
-        value: 20
-      },
-      {
-        label: '21',
-        value: 21
-      },
-      {
-        label: '22',
-        value: 22
-      },
-      {
-        label: '23',
-        value: 23
-      },
-      {
-        label: '24',
-        value: 24
-      },
-      {
-        label: '25',
-        value: 25
-      },
-      {
-        label: '26',
-        value: 26
-      },
-      {
-        label: '27',
-        value: 27
-      },
-      {
-        label: '28',
-        value: 28
-      },
-      {
-        label: '29',
-        value: 29
-      },
-      {
-        label: '30',
-        value: 30
-      },
-      {
-        label: '31',
-        value: 31
-      },
-      {
-        label: '32',
-        value: 32
-      },
-      {
-        label: '33',
-        value: 33
-      },
-      {
-        label: '34',
-        value: 34
-      },
-      {
-        label: '35',
-        value: 35
-      },
-      {
-        label: '36',
-        value: 36
-      }
+      galileo: [
+        {
+          label: '1',
+          value: 1
+        },
+        {
+          label: '2',
+          value: 2
+        },
+        {
+          label: '3',
+          value: 3
+        },
+        {
+          label: '4',
+          value: 4
+        },
+        {
+          label: '5',
+          value: 5
+        },
+        {
+          label: '6',
+          value: 6
+        },
+        {
+          label: '7',
+          value: 7
+        },
+        {
+          label: '8',
+          value: 8
+        },
+        {
+          label: '9',
+          value: 9
+        },
+        {
+          label: '10',
+          value: 10
+        },
+        {
+          label: '11',
+          value: 11
+        },
+        {
+          label: '12',
+          value: 12
+        },
+        {
+          label: '13',
+          value: 13
+        },
+        {
+          label: '14',
+          value: 14
+        },
+        {
+          label: '15',
+          value: 15
+        },
+        {
+          label: '16',
+          value: 16
+        },
+        {
+          label: '17',
+          value: 17
+        },
+        {
+          label: '18',
+          value: 18
+        },
+        {
+          label: '19',
+          value: 19
+        },
+        {
+          label: '20',
+          value: 20
+        },
+        {
+          label: '21',
+          value: 21
+        },
+        {
+          label: '22',
+          value: 22
+        },
+        {
+          label: '23',
+          value: 23
+        },
+        {
+          label: '24',
+          value: 24
+        },
+        {
+          label: '25',
+          value: 25
+        },
+        {
+          label: '26',
+          value: 26
+        },
+        {
+          label: '27',
+          value: 27
+        },
+        {
+          label: '28',
+          value: 28
+        },
+        {
+          label: '29',
+          value: 29
+        },
+        {
+          label: '30',
+          value: 30
+        },
+        {
+          label: '31',
+          value: 31
+        },
+        {
+          label: '32',
+          value: 32
+        },
+        {
+          label: '33',
+          value: 33
+        },
+        {
+          label: '34',
+          value: 34
+        },
+        {
+          label: '35',
+          value: 35
+        },
+        {
+          label: '36',
+          value: 36
+        }
       ]
     },
     track: {
-      gps: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A'
-      },
-      {
-        label: 'L1-P',
-        value: 'L1-P'
-      },
-      {
-        label: 'L2-C/A',
-        value: 'L2-C/A'
-      },
-      {
-        label: 'L2-P',
-        value: 'L2-P'
-      },
-      {
-        label: 'L5',
-        value: 'L5'
-      }
+      gps: [
+        {
+          label: 'L1-C/A',
+          value: 'L1-C/A'
+        },
+        {
+          label: 'L1-P',
+          value: 'L1-P'
+        },
+        {
+          label: 'L2-C/A',
+          value: 'L2-C/A'
+        },
+        {
+          label: 'L2-P',
+          value: 'L2-P'
+        },
+        {
+          label: 'L5',
+          value: 'L5'
+        }
       ],
-      bds: [{
-        label: 'B1',
-        value: 'B1'
-      },
-      {
-        label: 'B2',
-        value: 'B2'
-      },
-      {
-        label: 'B3',
-        value: 'B3'
-      }
+      bds: [
+        {
+          label: 'B1',
+          value: 'B1'
+        },
+        {
+          label: 'B2',
+          value: 'B2'
+        },
+        {
+          label: 'B3',
+          value: 'B3'
+        }
       ],
-      sbas: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A'
-      },
-      {
-        label: 'L5',
-        value: 'L5'
-      }
+      sbas: [
+        {
+          label: 'L1-C/A',
+          value: 'L1-C/A'
+        },
+        {
+          label: 'L5',
+          value: 'L5'
+        }
       ],
-      qzss: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A'
-      },
-      {
-        label: 'L1-SAIF',
-        value: 'L1-SAIF'
-      },
-      {
-        label: 'L2-C',
-        value: 'L2-C'
-      },
-      {
-        label: 'L5',
-        value: 'L5'
-      }
+      qzss: [
+        {
+          label: 'L1-C/A',
+          value: 'L1-C/A'
+        },
+        {
+          label: 'L1-SAIF',
+          value: 'L1-SAIF'
+        },
+        {
+          label: 'L2-C',
+          value: 'L2-C'
+        },
+        {
+          label: 'L5',
+          value: 'L5'
+        }
       ],
-      glonass: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A'
-      },
-      {
-        label: 'L1-P',
-        value: 'L1-P'
-      },
-      {
-        label: 'L2-C/A',
-        value: 'L2-C/A'
-      },
-      {
-        label: 'L2-P',
-        value: 'L2-P'
-      },
-      {
-        label: 'L3',
-        value: 'L3'
-      }
+      glonass: [
+        {
+          label: 'L1-C/A',
+          value: 'L1-C/A'
+        },
+        {
+          label: 'L1-P',
+          value: 'L1-P'
+        },
+        {
+          label: 'L2-C/A',
+          value: 'L2-C/A'
+        },
+        {
+          label: 'L2-P',
+          value: 'L2-P'
+        },
+        {
+          label: 'L3',
+          value: 'L3'
+        }
       ],
-      galileo: [{
-        label: 'E1',
-        value: 'E1'
-      },
-      {
-        label: 'E5',
-        value: 'E5'
-      },
-      {
-        label: 'E6',
-        value: 'E6'
-      },
-      {
-        label: 'E5-ALIBOC',
-        value: 'E5-ALIBOC'
-      }
+      galileo: [
+        {
+          label: 'E1',
+          value: 'E1'
+        },
+        {
+          label: 'E5',
+          value: 'E5'
+        },
+        {
+          label: 'E6',
+          value: 'E6'
+        },
+        {
+          label: 'E5-ALIBOC',
+          value: 'E5-ALIBOC'
+        }
       ]
     },
     SatelliteNumberChecked: [],
     channelsChecked: [],
-    Satellite: [{
-      name: 'gps',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'false'
+    Satellite: [
+      {
+        name: 'gps',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'false'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'false'
+          },
+          {
+            label: '3',
+            value: 3,
+            checked: 'true'
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          },
+          {
+            label: '6',
+            value: 6,
+            checked: 'true'
+          },
+          {
+            label: '7',
+            value: 7,
+            checked: 'true'
+          },
+          {
+            label: '8',
+            value: 8,
+            checked: 'true'
+          },
+          {
+            label: '9',
+            value: 9,
+            checked: 'true'
+          },
+          {
+            label: '10',
+            value: 10,
+            checked: 'true'
+          },
+          {
+            label: '11',
+            value: 11,
+            checked: 'true'
+          },
+          {
+            label: '12',
+            value: 12,
+            checked: 'true'
+          },
+          {
+            label: '13',
+            value: 13,
+            checked: 'true'
+          },
+          {
+            label: '14',
+            value: 14,
+            checked: 'true'
+          },
+          {
+            label: '15',
+            value: 15,
+            checked: 'true'
+          },
+          {
+            label: '16',
+            value: 16,
+            checked: 'true'
+          },
+          {
+            label: '17',
+            value: 17,
+            checked: 'true'
+          },
+          {
+            label: '18',
+            value: 18,
+            checked: 'true'
+          },
+          {
+            label: '19',
+            value: 19,
+            checked: 'true'
+          },
+          {
+            label: '20',
+            value: 20,
+            checked: 'true'
+          },
+          {
+            label: '21',
+            value: 21,
+            checked: 'true'
+          },
+          {
+            label: '22',
+            value: 22,
+            checked: 'true'
+          },
+          {
+            label: '23',
+            value: 23,
+            checked: 'true'
+          },
+          {
+            label: '24',
+            value: 24,
+            checked: 'true'
+          },
+          {
+            label: '25',
+            value: 25,
+            checked: 'true'
+          },
+          {
+            label: '26',
+            value: 26,
+            checked: 'true'
+          },
+          {
+            label: '27',
+            value: 27,
+            checked: 'true'
+          },
+          {
+            label: '28',
+            value: 28,
+            checked: 'true'
+          },
+          {
+            label: '29',
+            value: 29,
+            checked: 'true'
+          },
+          {
+            label: '30',
+            value: 30,
+            checked: 'true'
+          },
+          {
+            label: '31',
+            value: 31,
+            checked: 'true'
+          },
+          {
+            label: '32',
+            value: 32,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L1-P',
+            value: 'L1-P',
+            checked: 'true'
+          },
+          {
+            label: 'L2-C/A',
+            value: 'L2-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L2-P',
+            value: 'L2-P',
+            checked: 'true'
+          },
+          {
+            label: 'L5',
+            value: 'L5',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: '',
+        chooseNums: '',
+        notChoose: ''
       },
       {
-        label: '2',
-        value: 2,
-        checked: 'false'
+        name: 'bds',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'true'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'true'
+          },
+          {
+            label: '3',
+            value: 3,
+            checked: 'true'
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          },
+          {
+            label: '6',
+            value: 6,
+            checked: 'true'
+          },
+          {
+            label: '7',
+            value: 7,
+            checked: 'true'
+          },
+          {
+            label: '8',
+            value: 8,
+            checked: 'true'
+          },
+          {
+            label: '9',
+            value: 9,
+            checked: 'true'
+          },
+          {
+            label: '10',
+            value: 10,
+            checked: 'true'
+          },
+          {
+            label: '11',
+            value: 11,
+            checked: 'true'
+          },
+          {
+            label: '12',
+            value: 12,
+            checked: 'true'
+          },
+          {
+            label: '13',
+            value: 13,
+            checked: 'true'
+          },
+          {
+            label: '14',
+            value: 14,
+            checked: 'true'
+          },
+          {
+            label: '15',
+            value: 15,
+            checked: 'true'
+          },
+          {
+            label: '16',
+            value: 16,
+            checked: 'true'
+          },
+          {
+            label: '17',
+            value: 17,
+            checked: 'true'
+          },
+          {
+            label: '18',
+            value: 18,
+            checked: 'true'
+          },
+          {
+            label: '19',
+            value: 19,
+            checked: 'true'
+          },
+          {
+            label: '20',
+            value: 20,
+            checked: 'true'
+          },
+          {
+            label: '21',
+            value: 21,
+            checked: 'true'
+          },
+          {
+            label: '22',
+            value: 22,
+            checked: 'true'
+          },
+          {
+            label: '23',
+            value: 23,
+            checked: 'true'
+          },
+          {
+            label: '24',
+            value: 24,
+            checked: 'true'
+          },
+          {
+            label: '25',
+            value: 25,
+            checked: 'true'
+          },
+          {
+            label: '26',
+            value: 26,
+            checked: 'true'
+          },
+          {
+            label: '27',
+            value: 27,
+            checked: 'true'
+          },
+          {
+            label: '28',
+            value: 28,
+            checked: 'true'
+          },
+          {
+            label: '29',
+            value: 29,
+            checked: 'true'
+          },
+          {
+            label: '30',
+            value: 30,
+            checked: 'true'
+          },
+          {
+            label: '31',
+            value: 31,
+            checked: 'true'
+          },
+          {
+            label: '32',
+            value: 32,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'B1',
+            value: 'B1',
+            checked: 'true'
+          },
+          {
+            label: 'B2',
+            value: 'B2',
+            checked: 'true'
+          },
+          {
+            label: 'B3',
+            value: 'B3',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: ''
       },
       {
-        label: '3',
-        value: 3,
-        checked: 'true'
+        name: 'sbas',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'true'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'true'
+          },
+          {
+            label: '3',
+            checked: 'true',
+            value: 3
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          },
+          {
+            label: '6',
+            value: 6,
+            checked: 'true'
+          },
+          {
+            label: '7',
+            value: 7,
+            checked: 'true'
+          },
+          {
+            label: '8',
+            value: 8,
+            checked: 'true'
+          },
+          {
+            label: '9',
+            value: 9,
+            checked: 'true'
+          },
+          {
+            label: '10',
+            value: 10,
+            checked: 'true'
+          },
+          {
+            label: '11',
+            value: 11,
+            checked: 'true'
+          },
+          {
+            label: '12',
+            value: 12,
+            checked: 'true'
+          },
+          {
+            label: '13',
+            value: 13,
+            checked: 'true'
+          },
+          {
+            label: '14',
+            value: 14,
+            checked: 'true'
+          },
+          {
+            label: '15',
+            value: 15,
+            checked: 'true'
+          },
+          {
+            label: '16',
+            value: 16,
+            checked: 'true'
+          },
+          {
+            label: '17',
+            value: 17,
+            checked: 'true'
+          },
+          {
+            label: '18',
+            value: 18,
+            checked: 'true'
+          },
+          {
+            label: '19',
+            value: 19,
+            checked: 'true'
+          },
+          {
+            label: '20',
+            value: 20,
+            checked: 'true'
+          },
+          {
+            label: '21',
+            value: 21,
+            checked: 'true'
+          },
+          {
+            label: '22',
+            value: 22,
+            checked: 'true'
+          },
+          {
+            label: '23',
+            value: 23,
+            checked: 'true'
+          },
+          {
+            label: '24',
+            value: 24,
+            checked: 'true'
+          },
+          {
+            label: '25',
+            value: 25,
+            checked: 'true'
+          },
+          {
+            label: '26',
+            value: 26,
+            checked: 'true'
+          },
+          {
+            label: '27',
+            value: 27,
+            checked: 'true'
+          },
+          {
+            label: '28',
+            value: 28,
+            checked: 'true'
+          },
+          {
+            label: '29',
+            value: 29,
+            checked: 'true'
+          },
+          {
+            label: '30',
+            value: 30,
+            checked: 'true'
+          },
+          {
+            label: '31',
+            value: 31,
+            checked: 'true'
+          },
+          {
+            label: '32',
+            value: 32,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L5',
+            value: 'L5',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: ''
       },
       {
-        label: '4',
-        value: 4,
-        checked: 'true'
+        name: 'qzss',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'true'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'true'
+          },
+          {
+            label: '3',
+            value: 3,
+            checked: 'true'
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L1-SAIF',
+            value: 'L1-SAIF',
+            checked: 'true'
+          },
+          {
+            label: 'L2-C',
+            value: 'L2-C',
+            checked: 'true'
+          },
+          {
+            label: 'L5',
+            value: 'L5',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: ''
       },
       {
-        label: '5',
-        value: 5,
-        checked: 'true'
+        name: 'glonass',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'true'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'true'
+          },
+          {
+            label: '3',
+            value: 3,
+            checked: 'true'
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          },
+          {
+            label: '6',
+            value: 6,
+            checked: 'true'
+          },
+          {
+            label: '7',
+            value: 7,
+            checked: 'true'
+          },
+          {
+            label: '8',
+            value: 8,
+            checked: 'true'
+          },
+          {
+            label: '9',
+            value: 9,
+            checked: 'true'
+          },
+          {
+            label: '10',
+            value: 10,
+            checked: 'true'
+          },
+          {
+            label: '11',
+            value: 11,
+            checked: 'true'
+          },
+          {
+            label: '12',
+            value: 12,
+            checked: 'true'
+          },
+          {
+            label: '13',
+            value: 13,
+            checked: 'true'
+          },
+          {
+            label: '14',
+            value: 14,
+            checked: 'true'
+          },
+          {
+            label: '15',
+            value: 15,
+            checked: 'true'
+          },
+          {
+            label: '16',
+            value: 16,
+            checked: 'true'
+          },
+          {
+            label: '17',
+            value: 17,
+            checked: 'true'
+          },
+          {
+            label: '18',
+            value: 18,
+            checked: 'true'
+          },
+          {
+            label: '19',
+            value: 19,
+            checked: 'true'
+          },
+          {
+            label: '20',
+            value: 20,
+            checked: 'true'
+          },
+          {
+            label: '21',
+            value: 21,
+            checked: 'true'
+          },
+          {
+            label: '22',
+            value: 22,
+            checked: 'true'
+          },
+          {
+            label: '23',
+            value: 23,
+            checked: 'true'
+          },
+          {
+            label: '24',
+            value: 24,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'L1-C/A',
+            value: 'L1-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L1-P',
+            value: 'L1-P',
+            checked: 'true'
+          },
+          {
+            label: 'L2-C/A',
+            value: 'L2-C/A',
+            checked: 'true'
+          },
+          {
+            label: 'L2-P',
+            value: 'L2-P',
+            checked: 'true'
+          },
+          {
+            label: 'L3',
+            value: 'L3',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: ''
       },
       {
-        label: '6',
-        value: 6,
-        checked: 'true'
-      },
-      {
-        label: '7',
-        value: 7,
-        checked: 'true'
-      },
-      {
-        label: '8',
-        value: 8,
-        checked: 'true'
-      },
-      {
-        label: '9',
-        value: 9,
-        checked: 'true'
-      },
-      {
-        label: '10',
-        value: 10,
-        checked: 'true'
-      },
-      {
-        label: '11',
-        value: 11,
-        checked: 'true'
-      },
-      {
-        label: '12',
-        value: 12,
-        checked: 'true'
-      },
-      {
-        label: '13',
-        value: 13,
-        checked: 'true'
-      },
-      {
-        label: '14',
-        value: 14,
-        checked: 'true'
-      },
-      {
-        label: '15',
-        value: 15,
-        checked: 'true'
-      },
-      {
-        label: '16',
-        value: 16,
-        checked: 'true'
-      },
-      {
-        label: '17',
-        value: 17,
-        checked: 'true'
-      },
-      {
-        label: '18',
-        value: 18,
-        checked: 'true'
-      },
-      {
-        label: '19',
-        value: 19,
-        checked: 'true'
-      },
-      {
-        label: '20',
-        value: 20,
-        checked: 'true'
-      },
-      {
-        label: '21',
-        value: 21,
-        checked: 'true'
-      },
-      {
-        label: '22',
-        value: 22,
-        checked: 'true'
-      },
-      {
-        label: '23',
-        value: 23,
-        checked: 'true'
-      },
-      {
-        label: '24',
-        value: 24,
-        checked: 'true'
-      },
-      {
-        label: '25',
-        value: 25,
-        checked: 'true'
-      },
-      {
-        label: '26',
-        value: 26,
-        checked: 'true'
-      },
-      {
-        label: '27',
-        value: 27,
-        checked: 'true'
-      },
-      {
-        label: '28',
-        value: 28,
-        checked: 'true'
-      },
-      {
-        label: '29',
-        value: 29,
-        checked: 'true'
-      },
-      {
-        label: '30',
-        value: 30,
-        checked: 'true'
-      },
-      {
-        label: '31',
-        value: 31,
-        checked: 'true'
-      },
-      {
-        label: '32',
-        value: 32,
-        checked: 'true'
+        name: 'galileo',
+        status: true,
+        SatelliteNumber: [
+          {
+            label: '1',
+            value: 1,
+            checked: 'true'
+          },
+          {
+            label: '2',
+            value: 2,
+            checked: 'true'
+          },
+          {
+            label: '3',
+            value: 3,
+            checked: 'true'
+          },
+          {
+            label: '4',
+            value: 4,
+            checked: 'true'
+          },
+          {
+            label: '5',
+            value: 5,
+            checked: 'true'
+          },
+          {
+            label: '6',
+            value: 6,
+            checked: 'true'
+          },
+          {
+            label: '7',
+            value: 7,
+            checked: 'true'
+          },
+          {
+            label: '8',
+            value: 8,
+            checked: 'true'
+          },
+          {
+            label: '9',
+            value: 9,
+            checked: 'true'
+          },
+          {
+            label: '10',
+            value: 10,
+            checked: 'true'
+          },
+          {
+            label: '11',
+            value: 11,
+            checked: 'true'
+          },
+          {
+            label: '12',
+            value: 12,
+            checked: 'true'
+          },
+          {
+            label: '13',
+            value: 13,
+            checked: 'true'
+          },
+          {
+            label: '14',
+            value: 14,
+            checked: 'true'
+          },
+          {
+            label: '15',
+            value: 15,
+            checked: 'true'
+          },
+          {
+            label: '16',
+            value: 16,
+            checked: 'true'
+          },
+          {
+            label: '17',
+            value: 17,
+            checked: 'true'
+          },
+          {
+            label: '18',
+            value: 18,
+            checked: 'true'
+          },
+          {
+            label: '19',
+            value: 19,
+            checked: 'true'
+          },
+          {
+            label: '20',
+            value: 20,
+            checked: 'true'
+          },
+          {
+            label: '21',
+            value: 21,
+            checked: 'true'
+          },
+          {
+            label: '22',
+            value: 22,
+            checked: 'true'
+          },
+          {
+            label: '23',
+            value: 23,
+            checked: 'true'
+          },
+          {
+            label: '24',
+            value: 24,
+            checked: 'true'
+          },
+          {
+            label: '25',
+            value: 25,
+            checked: 'true'
+          },
+          {
+            label: '26',
+            value: 26,
+            checked: 'true'
+          },
+          {
+            label: '27',
+            value: 27,
+            checked: 'true'
+          },
+          {
+            label: '28',
+            value: 28,
+            checked: 'true'
+          },
+          {
+            label: '29',
+            value: 29,
+            checked: 'true'
+          },
+          {
+            label: '30',
+            value: 30,
+            checked: 'true'
+          },
+          {
+            label: '31',
+            value: 31,
+            checked: 'true'
+          },
+          {
+            label: '32',
+            value: 32,
+            checked: 'true'
+          },
+          {
+            label: '33',
+            value: 33,
+            checked: 'true'
+          },
+          {
+            label: '34',
+            value: 34,
+            checked: 'true'
+          },
+          {
+            label: '35',
+            value: 35,
+            checked: 'true'
+          },
+          {
+            label: '36',
+            value: 36,
+            checked: 'true'
+          }
+        ],
+        track: [
+          {
+            label: 'E1',
+            value: 'E1',
+            checked: 'true'
+          },
+          {
+            label: 'E5',
+            value: 'E5',
+            checked: 'true'
+          },
+          {
+            label: 'E6',
+            value: 'E6',
+            checked: 'true'
+          },
+          {
+            label: 'E5-ALIBOC',
+            value: 'E5-ALIBOC',
+            checked: 'true'
+          }
+        ],
+        SatelliteNumberChecked: [],
+        channelsChecked: [],
+        trackChecked: ''
       }
-      ],
-      track: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L1-P',
-        value: 'L1-P',
-        checked: 'true'
-      },
-      {
-        label: 'L2-C/A',
-        value: 'L2-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L2-P',
-        value: 'L2-P',
-        checked: 'true'
-      },
-      {
-        label: 'L5',
-        value: 'L5',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: '',
-      chooseNums: '',
-      notChoose: ''
-    },
-    {
-      name: 'bds',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        label: '2',
-        value: 2,
-        checked: 'true'
-      },
-      {
-        label: '3',
-        value: 3,
-        checked: 'true'
-      },
-      {
-        label: '4',
-        value: 4,
-        checked: 'true'
-      },
-      {
-        label: '5',
-        value: 5,
-        checked: 'true'
-      },
-      {
-        label: '6',
-        value: 6,
-        checked: 'true'
-      },
-      {
-        label: '7',
-        value: 7,
-        checked: 'true'
-      },
-      {
-        label: '8',
-        value: 8,
-        checked: 'true'
-      },
-      {
-        label: '9',
-        value: 9,
-        checked: 'true'
-      },
-      {
-        label: '10',
-        value: 10,
-        checked: 'true'
-      },
-      {
-        label: '11',
-        value: 11,
-        checked: 'true'
-      },
-      {
-        label: '12',
-        value: 12,
-        checked: 'true'
-      },
-      {
-        label: '13',
-        value: 13,
-        checked: 'true'
-      },
-      {
-        label: '14',
-        value: 14,
-        checked: 'true'
-      },
-      {
-        label: '15',
-        value: 15,
-        checked: 'true'
-      },
-      {
-        label: '16',
-        value: 16,
-        checked: 'true'
-      },
-      {
-        label: '17',
-        value: 17,
-        checked: 'true'
-      },
-      {
-        label: '18',
-        value: 18,
-        checked: 'true'
-      },
-      {
-        label: '19',
-        value: 19,
-        checked: 'true'
-      },
-      {
-        label: '20',
-        value: 20,
-        checked: 'true'
-      },
-      {
-        label: '21',
-        value: 21,
-        checked: 'true'
-      },
-      {
-        label: '22',
-        value: 22,
-        checked: 'true'
-      },
-      {
-        label: '23',
-        value: 23,
-        checked: 'true'
-      },
-      {
-        label: '24',
-        value: 24,
-        checked: 'true'
-      },
-      {
-        label: '25',
-        value: 25,
-        checked: 'true'
-      },
-      {
-        label: '26',
-        value: 26,
-        checked: 'true'
-      },
-      {
-        label: '27',
-        value: 27,
-        checked: 'true'
-      },
-      {
-        label: '28',
-        value: 28,
-        checked: 'true'
-      },
-      {
-        label: '29',
-        value: 29,
-        checked: 'true'
-      },
-      {
-        label: '30',
-        value: 30,
-        checked: 'true'
-      },
-      {
-        label: '31',
-        value: 31,
-        checked: 'true'
-      },
-      {
-        label: '32',
-        value: 32,
-        checked: 'true'
-      }
-      ],
-      track: [{
-        label: 'B1',
-        value: 'B1',
-        checked: 'true'
-      },
-      {
-        label: 'B2',
-        value: 'B2',
-        checked: 'true'
-      },
-      {
-        label: 'B3',
-        value: 'B3',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: ''
-    },
-    {
-      name: 'sbas',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        label: '2',
-        value: 2,
-        checked: 'true'
-      },
-      {
-        label: '3',
-        checked: 'true',
-        value: 3
-      },
-      {
-        label: '4',
-        value: 4,
-        checked: 'true'
-      },
-      {
-        label: '5',
-        value: 5,
-        checked: 'true'
-      },
-      {
-        label: '6',
-        value: 6,
-        checked: 'true'
-      },
-      {
-        label: '7',
-        value: 7,
-        checked: 'true'
-      },
-      {
-        label: '8',
-        value: 8,
-        checked: 'true'
-      },
-      {
-        label: '9',
-        value: 9,
-        checked: 'true'
-      },
-      {
-        label: '10',
-        value: 10,
-        checked: 'true'
-      },
-      {
-        label: '11',
-        value: 11,
-        checked: 'true'
-      },
-      {
-        label: '12',
-        value: 12,
-        checked: 'true'
-      },
-      {
-        label: '13',
-        value: 13,
-        checked: 'true'
-      },
-      {
-        label: '14',
-        value: 14,
-        checked: 'true'
-      },
-      {
-        label: '15',
-        value: 15,
-        checked: 'true'
-      },
-      {
-        label: '16',
-        value: 16,
-        checked: 'true'
-      },
-      {
-        label: '17',
-        value: 17,
-        checked: 'true'
-      },
-      {
-        label: '18',
-        value: 18,
-        checked: 'true'
-      },
-      {
-        label: '19',
-        value: 19,
-        checked: 'true'
-      },
-      {
-        label: '20',
-        value: 20,
-        checked: 'true'
-      },
-      {
-        label: '21',
-        value: 21,
-        checked: 'true'
-      },
-      {
-        label: '22',
-        value: 22,
-        checked: 'true'
-      },
-      {
-        label: '23',
-        value: 23,
-        checked: 'true'
-      },
-      {
-        label: '24',
-        value: 24,
-        checked: 'true'
-      },
-      {
-        label: '25',
-        value: 25,
-        checked: 'true'
-      },
-      {
-        label: '26',
-        value: 26,
-        checked: 'true'
-      },
-      {
-        label: '27',
-        value: 27,
-        checked: 'true'
-      },
-      {
-        label: '28',
-        value: 28,
-        checked: 'true'
-      },
-      {
-        label: '29',
-        value: 29,
-        checked: 'true'
-      },
-      {
-        label: '30',
-        value: 30,
-        checked: 'true'
-      },
-      {
-        label: '31',
-        value: 31,
-        checked: 'true'
-      },
-      {
-        label: '32',
-        value: 32,
-        checked: 'true'
-      }
-      ],
-      track: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L5',
-        value: 'L5',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: ''
-    },
-    {
-      name: 'qzss',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        label: '2',
-        value: 2,
-        checked: 'true'
-      },
-      {
-        label: '3',
-        value: 3,
-        checked: 'true'
-      },
-      {
-        label: '4',
-        value: 4,
-        checked: 'true'
-      },
-      {
-        label: '5',
-        value: 5,
-        checked: 'true'
-      }
-      ],
-      track: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L1-SAIF',
-        value: 'L1-SAIF',
-        checked: 'true'
-      },
-      {
-        label: 'L2-C',
-        value: 'L2-C',
-        checked: 'true'
-      },
-      {
-        label: 'L5',
-        value: 'L5',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: ''
-    },
-    {
-      name: 'glonass',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        label: '2',
-        value: 2,
-        checked: 'true'
-      },
-      {
-        label: '3',
-        value: 3,
-        checked: 'true'
-      },
-      {
-        label: '4',
-        value: 4,
-        checked: 'true'
-      },
-      {
-        label: '5',
-        value: 5,
-        checked: 'true'
-      },
-      {
-        label: '6',
-        value: 6,
-        checked: 'true'
-      },
-      {
-        label: '7',
-        value: 7,
-        checked: 'true'
-      },
-      {
-        label: '8',
-        value: 8,
-        checked: 'true'
-      },
-      {
-        label: '9',
-        value: 9,
-        checked: 'true'
-      },
-      {
-        label: '10',
-        value: 10,
-        checked: 'true'
-      },
-      {
-        label: '11',
-        value: 11,
-        checked: 'true'
-      },
-      {
-        label: '12',
-        value: 12,
-        checked: 'true'
-      },
-      {
-        label: '13',
-        value: 13,
-        checked: 'true'
-      },
-      {
-        label: '14',
-        value: 14,
-        checked: 'true'
-      },
-      {
-        label: '15',
-        value: 15,
-        checked: 'true'
-      },
-      {
-        label: '16',
-        value: 16,
-        checked: 'true'
-      },
-      {
-        label: '17',
-        value: 17,
-        checked: 'true'
-      },
-      {
-        label: '18',
-        value: 18,
-        checked: 'true'
-      },
-      {
-        label: '19',
-        value: 19,
-        checked: 'true'
-      },
-      {
-        label: '20',
-        value: 20,
-        checked: 'true'
-      },
-      {
-        label: '21',
-        value: 21,
-        checked: 'true'
-      },
-      {
-        label: '22',
-        value: 22,
-        checked: 'true'
-      },
-      {
-        label: '23',
-        value: 23,
-        checked: 'true'
-      },
-      {
-        label: '24',
-        value: 24,
-        checked: 'true'
-      }
-      ],
-      track: [{
-        label: 'L1-C/A',
-        value: 'L1-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L1-P',
-        value: 'L1-P',
-        checked: 'true'
-      },
-      {
-        label: 'L2-C/A',
-        value: 'L2-C/A',
-        checked: 'true'
-      },
-      {
-        label: 'L2-P',
-        value: 'L2-P',
-        checked: 'true'
-      },
-      {
-        label: 'L3',
-        value: 'L3',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: ''
-    },
-    {
-      name: 'galileo',
-      status: true,
-      SatelliteNumber: [{
-        label: '1',
-        value: 1,
-        checked: 'true'
-      },
-      {
-        label: '2',
-        value: 2,
-        checked: 'true'
-      },
-      {
-        label: '3',
-        value: 3,
-        checked: 'true'
-      },
-      {
-        label: '4',
-        value: 4,
-        checked: 'true'
-      },
-      {
-        label: '5',
-        value: 5,
-        checked: 'true'
-      },
-      {
-        label: '6',
-        value: 6,
-        checked: 'true'
-      },
-      {
-        label: '7',
-        value: 7,
-        checked: 'true'
-      },
-      {
-        label: '8',
-        value: 8,
-        checked: 'true'
-      },
-      {
-        label: '9',
-        value: 9,
-        checked: 'true'
-      },
-      {
-        label: '10',
-        value: 10,
-        checked: 'true'
-      },
-      {
-        label: '11',
-        value: 11,
-        checked: 'true'
-      },
-      {
-        label: '12',
-        value: 12,
-        checked: 'true'
-      },
-      {
-        label: '13',
-        value: 13,
-        checked: 'true'
-      },
-      {
-        label: '14',
-        value: 14,
-        checked: 'true'
-      },
-      {
-        label: '15',
-        value: 15,
-        checked: 'true'
-      },
-      {
-        label: '16',
-        value: 16,
-        checked: 'true'
-      },
-      {
-        label: '17',
-        value: 17,
-        checked: 'true'
-      },
-      {
-        label: '18',
-        value: 18,
-        checked: 'true'
-      },
-      {
-        label: '19',
-        value: 19,
-        checked: 'true'
-      },
-      {
-        label: '20',
-        value: 20,
-        checked: 'true'
-      },
-      {
-        label: '21',
-        value: 21,
-        checked: 'true'
-      },
-      {
-        label: '22',
-        value: 22,
-        checked: 'true'
-      },
-      {
-        label: '23',
-        value: 23,
-        checked: 'true'
-      },
-      {
-        label: '24',
-        value: 24,
-        checked: 'true'
-      },
-      {
-        label: '25',
-        value: 25,
-        checked: 'true'
-      },
-      {
-        label: '26',
-        value: 26,
-        checked: 'true'
-      },
-      {
-        label: '27',
-        value: 27,
-        checked: 'true'
-      },
-      {
-        label: '28',
-        value: 28,
-        checked: 'true'
-      },
-      {
-        label: '29',
-        value: 29,
-        checked: 'true'
-      },
-      {
-        label: '30',
-        value: 30,
-        checked: 'true'
-      },
-      {
-        label: '31',
-        value: 31,
-        checked: 'true'
-      },
-      {
-        label: '32',
-        value: 32,
-        checked: 'true'
-      },
-      {
-        label: '33',
-        value: 33,
-        checked: 'true'
-      },
-      {
-        label: '34',
-        value: 34,
-        checked: 'true'
-      },
-      {
-        label: '35',
-        value: 35,
-        checked: 'true'
-      },
-      {
-        label: '36',
-        value: 36,
-        checked: 'true'
-      }
-      ],
-      track: [{
-        label: 'E1',
-        value: 'E1',
-        checked: 'true'
-      },
-      {
-        label: 'E5',
-        value: 'E5',
-        checked: 'true'
-      },
-      {
-        label: 'E6',
-        value: 'E6',
-        checked: 'true'
-      },
-      {
-        label: 'E5-ALIBOC',
-        value: 'E5-ALIBOC',
-        checked: 'true'
-      }
-      ],
-      SatelliteNumberChecked: [],
-      channelsChecked: [],
-      trackChecked: ''
-    }
     ],
     SatelliteInfo: {
       gps: {
@@ -1962,30 +1994,31 @@ var vm = new Vue({
         track: ''
       }
     },
-    language: [{
-      name: '中文',
-      value: 'CHINESE'
-    },
-    {
-      name: '英文',
-      value: 'ENGLISH'
-    },
-    {
-      name: '俄文',
-      value: 'RUSSIAN'
-    },
-    {
-      name: '西班牙文',
-      value: 'SPANISH'
-    },
-    {
-      name: '韩文',
-      value: 'KOREAN'
-    },
-    {
-      name: '葡萄牙文',
-      value: 'PORTUGUESE'
-    }
+    language: [
+      {
+        name: '中文',
+        value: 'CHINESE'
+      },
+      {
+        name: '英文',
+        value: 'ENGLISH'
+      },
+      {
+        name: '俄文',
+        value: 'RUSSIAN'
+      },
+      {
+        name: '西班牙文',
+        value: 'SPANISH'
+      },
+      {
+        name: '韩文',
+        value: 'KOREAN'
+      },
+      {
+        name: '葡萄牙文',
+        value: 'PORTUGUESE'
+      }
     ],
     languageType: [],
     firmware: '',
@@ -2000,18 +2033,15 @@ var vm = new Vue({
 
   methods: {
     //  刷新页面
-    refresh: function () {
+    refresh: function() {
       //			vm.token = '123';
       //			console.log(vm.token)
-			    currentWebview.reload();
+      currentWebview.reload();
     },
     // 切换工作模式、数据链、其它
-    togglePage: function (v, event) {
+    togglePage: function(v, event) {
       vm.hasSetting = false;
-      plus.nativeUI.showWaiting('读取设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('读取设置中');
       this.pageChecked = this.navActive;
       this.navActive = v;
       var e = event.currentTarget;
@@ -2050,7 +2080,7 @@ var vm = new Vue({
                 url: '../../login.html',
                 id: 'login'
               });
-              setTimeout(function () {
+              setTimeout(function() {
                 plus.nativeUI.closeWaiting();
                 plus.webview.currentWebview().close('none');
               }, 500);
@@ -2060,7 +2090,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2092,7 +2122,7 @@ var vm = new Vue({
                 url: '../../login.html',
                 id: 'login'
               });
-              setTimeout(function () {
+              setTimeout(function() {
                 plus.nativeUI.closeWaiting();
                 plus.webview.currentWebview().close('none');
               }, 500);
@@ -2102,7 +2132,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2134,7 +2164,7 @@ var vm = new Vue({
                 url: '../../login.html',
                 id: 'login'
               });
-              setTimeout(function () {
+              setTimeout(function() {
                 plus.nativeUI.closeWaiting();
                 plus.webview.currentWebview().close('none');
               }, 500);
@@ -2144,7 +2174,7 @@ var vm = new Vue({
               plus.nativeUI.closeWaiting();
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2165,7 +2195,7 @@ var vm = new Vue({
               vm.firmwareList = data.recordList;
             }
           },
-          error: function (data) {
+          error: function(data) {
             plus.nativeUI.closeWaiting();
           }
         });
@@ -2175,11 +2205,11 @@ var vm = new Vue({
       }
     },
     // 获取坐标
-    getCoordinate: function () {
+    getCoordinate: function() {
       firstGetConfigWorkModePageInfo('again');
     },
     // 工作模式切换
-    changeMode: function (index) {
+    changeMode: function(index) {
       vm.hasSetting = false;
       switch (index) {
         case 0:
@@ -2200,13 +2230,11 @@ var vm = new Vue({
       var changeTip = '确认切换到' + vm.currentMode;
       mui.confirm(
         '',
-        changeTip, ['取消', '确认'],
-        function (e) {
+        changeTip,
+        ['取消', '确认'],
+        function(e) {
           if (e.index === 1) {
-            plus.nativeUI.showWaiting('读取设置中...', {
-              height: '100px',
-              width: '150px'
-            });
+            tipBox('读取设置中');
             mui.ajax(url, {
               data: {
                 user_name: vm.user_name,
@@ -2249,7 +2277,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -2259,7 +2287,7 @@ var vm = new Vue({
                 }
                 plus.nativeUI.closeWaiting();
               },
-              error: function (xhr, type, errorThrown) {
+              error: function(xhr, type, errorThrown) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -2269,7 +2297,7 @@ var vm = new Vue({
       );
     },
     // 数据链切换
-    changeLink: function (index) {
+    changeLink: function(index) {
       switch (index) {
         case 0:
           vm.linkMode = 'CELLULAR_NET';
@@ -2284,13 +2312,11 @@ var vm = new Vue({
       var changeTip = '确认切换到' + vm.currentLink;
       mui.confirm(
         '',
-        changeTip, ['取消', '确认'],
-        function (e) {
+        changeTip,
+        ['取消', '确认'],
+        function(e) {
           if (e.index === 1) {
-            plus.nativeUI.showWaiting('读取设置中...', {
-              height: '100px',
-              width: '150px'
-            });
+            tipBox('读取设置中');
             vm.linkChecked = vm.lActive;
             vm.lActive = vm.linkMode;
             vm.lshow = vm.linkMode;
@@ -2335,7 +2361,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -2345,7 +2371,7 @@ var vm = new Vue({
                 }
                 plus.nativeUI.closeWaiting();
               },
-              error: function (xhr, type, errorThrown) {
+              error: function(xhr, type, errorThrown) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -2354,11 +2380,12 @@ var vm = new Vue({
         'div'
       );
     },
-    clearEphemeris: function () {
+    clearEphemeris: function() {
       mui.confirm(
         '',
-        '确认清除星历?', ['取消', '确认'],
-        function (e) {
+        '确认清除星历?',
+        ['取消', '确认'],
+        function(e) {
           if (e.index === 1) {
             mui.ajax(url, {
               data: {
@@ -2389,7 +2416,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -2398,7 +2425,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('清除星历失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -2410,7 +2437,7 @@ var vm = new Vue({
     },
 
     // 点击按钮动态加载对应的数据再渲染页面
-    setSatelliteNum: function (index) {
+    setSatelliteNum: function(index) {
       this.currentSatellite = this.Satellite[index];
       this.currentSatelliteName = this.currentSatellite.name;
       this.SatelliteNumberChecked = this.Satellite[
@@ -2420,19 +2447,19 @@ var vm = new Vue({
       // 控制打开遮罩层
       mui('#setSatelliteNum').popover('toggle');
     },
-    clearEphemerisPage: function () {
+    clearEphemerisPage: function() {
       mui('#clearEphemeris').popover('toggle');
     },
     //  设置卫星号
-    setSatellite: function (index) {
+    setSatellite: function(index) {
       var chooseNums, wholeNums, notChoose, satelliteChecked;
       var currentType = vm.Satellite[index].name;
-      wholeNums = this.currentSatellite.SatelliteNumber.map(function (item) {
+      wholeNums = this.currentSatellite.SatelliteNumber.map(function(item) {
         return item.value;
       });
       if (
         this.SatelliteNumberChecked.length ===
-    this.currentSatellite.SatelliteNumber.length
+        this.currentSatellite.SatelliteNumber.length
       ) {
         chooseNums = 'ALL';
         notChoose = '';
@@ -2440,7 +2467,7 @@ var vm = new Vue({
         satelliteChecked = this.SatelliteNumberChecked;
         chooseNums = this.SatelliteNumberChecked.join('|');
         notChoose = wholeNums
-          .filter(function (v) {
+          .filter(function(v) {
             return satelliteChecked.indexOf(v) === -1;
           })
           .join('|');
@@ -2477,7 +2504,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2486,7 +2513,7 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           mui.toast('设置卫星号失败！');
           plus.nativeUI.closeWaiting();
         }
@@ -2494,20 +2521,17 @@ var vm = new Vue({
     },
 
     //  设置卫星跟踪频段
-    setTrack: function (index) {
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+    setTrack: function(index) {
+      tipBox('正在设置中');
       var choosedStr, wholeStr, notChoosedStr, channelsChecked;
       var currentType = vm.Satellite[index].name.toUpperCase();
-      wholeStr = this.currentSatellite.track.map(function (item) {
+      wholeStr = this.currentSatellite.track.map(function(item) {
         return item.value;
       });
       channelsChecked = this.channelsChecked;
       choosedStr = this.channelsChecked.join('|');
       notChoosedStr = wholeStr
-        .filter(function (v) {
+        .filter(function(v) {
           return channelsChecked.indexOf(v) === -1;
         })
         .join('|');
@@ -2543,7 +2567,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2553,14 +2577,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           mui.toast('设置卫星号失败！');
           plus.nativeUI.closeWaiting();
         }
       });
     },
     // 点击按钮动态加载对应的数据再渲染页面
-    settrackNum: function (index) {
+    settrackNum: function(index) {
       this.currentSatellite = this.Satellite[index];
       this.currentSatelliteName = this.currentSatellite.name;
       this.channelsChecked = this.Satellite[index].channelsChecked;
@@ -2569,26 +2593,27 @@ var vm = new Vue({
     },
 
     //  关闭弹窗事件
-    closeSetSatellite: function () {
+    closeSetSatellite: function() {
       mui('#setSatelliteNum').popover('toggle');
     },
-    closeSetTrack: function () {
+    closeSetTrack: function() {
       mui('#setTrack').popover('toggle');
     },
 
     //  设置基准站
-    baseSet: function () {
+    baseSet: function() {
       //  前端数据输入判断
-      if (!vm.currentIdentifyCode ||
-    vm.bVal.rtmRadios == '' ||
-    vm.bVal.launch == '' ||
-    vm.bVal.cutangle == '' ||
-    vm.bVal.pdop == '' ||
-    vm.bVal.baseLaunch == '' ||
-    vm.bVal.antenna == '' ||
-    vm.bVal.latitude == '' ||
-    vm.bVal.longitude == '' ||
-    vm.bVal.altitude == ''
+      if (
+        !vm.currentIdentifyCode ||
+        vm.bVal.rtmRadios == '' ||
+        vm.bVal.launch == '' ||
+        vm.bVal.cutangle == '' ||
+        vm.bVal.pdop == '' ||
+        vm.bVal.baseLaunch == '' ||
+        vm.bVal.antenna == '' ||
+        vm.bVal.latitude == '' ||
+        vm.bVal.longitude == '' ||
+        vm.bVal.altitude == ''
       ) {
         mui.toast('设置值不能为空！');
         return false;
@@ -2620,10 +2645,7 @@ var vm = new Vue({
         mui.toast('高程设置错误！');
         return false;
       }
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -2644,7 +2666,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, baseSet, '设置基准站超时，请稍候再试！');
           } else if (data.status === 40004) {
@@ -2653,7 +2675,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2666,21 +2688,15 @@ var vm = new Vue({
     },
 
     // 基站启动/断开
-    baseStartOrBreak: function (v) {
+    baseStartOrBreak: function(v) {
       var thefun, baseRunTip, baseSwith;
       if (v == 'start') {
-        plus.nativeUI.showWaiting('正在启动中...', {
-          height: '100px',
-          width: '150px'
-        });
+        tipBox('正在启动中');
         thefun = baseStart;
         baseRunTip = '启动超时,请稍候再试！';
         baseSwith = 'START';
       } else {
-        plus.nativeUI.showWaiting('', {
-          height: '100px',
-          width: '150px'
-        });
+        tipBox('');
         thefun = baseBreak;
         baseRunTip = '断开失败,请稍候再试！';
         baseSwith = 'STOP';
@@ -2697,7 +2713,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, thefun, baseRunTip);
           } else if (data.status === 40004) {
@@ -2706,7 +2722,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2718,7 +2734,7 @@ var vm = new Vue({
       });
     },
     // 移动站设置
-    roverSet: function () {
+    roverSet: function() {
       if (vm.rVal.cutangle === '') {
         mui.toast('截止角值不能为空！');
         return false;
@@ -2728,10 +2744,7 @@ var vm = new Vue({
         mui.toast('截止角设置值错误！');
         return false;
       }
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -2744,7 +2757,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, roverSet, '设置超时，请稍候再试！');
             plus.nativeUI.closeWaiting();
@@ -2754,7 +2767,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2763,19 +2776,20 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     },
     // 静态站设置
-    staticSet: function () {
-      if (!vm.currentIdentifyCode ||
-    vm.sVal.sampling == '' ||
-    vm.sVal.cutangle == '' ||
-    vm.sVal.pdop == '' ||
-    vm.sVal.staticLaunch == '' ||
-    vm.sVal.antenna == ''
+    staticSet: function() {
+      if (
+        !vm.currentIdentifyCode ||
+        vm.sVal.sampling == '' ||
+        vm.sVal.cutangle == '' ||
+        vm.sVal.pdop == '' ||
+        vm.sVal.staticLaunch == '' ||
+        vm.sVal.antenna == ''
       ) {
         mui.toast('设置值不能为空！');
         return false;
@@ -2803,10 +2817,7 @@ var vm = new Vue({
       } else {
         staticSwitch = 'OFF';
       }
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -2824,7 +2835,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, staticSet, '设置超时，请稍候再试！', 'staticSet');
             plus.nativeUI.closeWaiting();
@@ -2834,7 +2845,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2847,21 +2858,15 @@ var vm = new Vue({
       });
     },
     // 静态站启动/断开
-    staticStartOrBreak: function (v) {
+    staticStartOrBreak: function(v) {
       var thefun, staticRunTip, staticStartOrStop;
       if (v === 'start') {
-        plus.nativeUI.showWaiting('正在启动中...', {
-          height: '100px',
-          width: '150px'
-        });
+        tipBox('正在启动中');
         thefun = staticStart;
         staticRunTip = '启动超时,请稍候再试！';
         staticStartOrStop = 'START';
       } else {
-        plus.nativeUI.showWaiting('', {
-          height: '100px',
-          width: '150px'
-        });
+        tipBox('');
         thefun = staticBreak;
         staticRunTip = '断开失败,请稍候再试！';
         staticStartOrStop = 'STOP';
@@ -2878,7 +2883,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, thefun, staticRunTip);
           } else if (data.status === 40004) {
@@ -2887,7 +2892,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2900,17 +2905,18 @@ var vm = new Vue({
     },
 
     // 移动网设置
-    netSet: function () {
-      if (!vm.currentIdentifyCode ||
-    vm.nVal.ip === '' ||
-    vm.nVal.port === '' ||
-    vm.nVal.account === '' ||
-    vm.nVal.pw === '' ||
-    vm.nVal.linkMobileModel === '' ||
-    vm.nVal.linkAccessPoint === '' ||
-    vm.nVal.apnSrver === '' ||
-    vm.nVal.apnUser === '' ||
-    vm.nVal.apnPassword === ''
+    netSet: function() {
+      if (
+        !vm.currentIdentifyCode ||
+        vm.nVal.ip === '' ||
+        vm.nVal.port === '' ||
+        vm.nVal.account === '' ||
+        vm.nVal.pw === '' ||
+        vm.nVal.linkMobileModel === '' ||
+        vm.nVal.linkAccessPoint === '' ||
+        vm.nVal.apnSrver === '' ||
+        vm.nVal.apnUser === '' ||
+        vm.nVal.apnPassword === ''
       ) {
         mui.toast('设置值不能为空！');
         return false;
@@ -2924,18 +2930,14 @@ var vm = new Vue({
 
       if (
         vm.nVal.port < 1024 ||
-    vm.nVal.port > 65535 ||
-    isNaN(vm.nVal.port) ||
-    vm.nVal.port.length > 5
+        vm.nVal.port > 65535 ||
+        isNaN(vm.nVal.port) ||
+        vm.nVal.port.length > 5
       ) {
         mui.toast('端口号设置值错误！');
         return false;
       }
-
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -2956,7 +2958,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, networkSet, '设置超时，请稍候再试！');
           } else if (data.status === 40004) {
@@ -2965,7 +2967,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -2978,7 +2980,7 @@ var vm = new Vue({
     },
 
     // 内置电台设置
-    uhfSet: function () {
+    uhfSet: function() {
       // if (vm.uVal.link_channel == null || vm.uVal.braundrateAir == null || vm.uVal.UHFPowerRadios == null || vm.uVal.link_UHF_protocol == null) {
       // 	mui.toast('设置值不能为空！');
       // 	return false;
@@ -2992,11 +2994,7 @@ var vm = new Vue({
       } else if (vm.uVal.link_UHF_protocol == null) {
         mui.toast('link_UHF_protocol不能为空！');
       }
-
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -3012,7 +3010,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, datalinkUHF, '设置超时，请稍候再试！');
           } else if (data.status === 40004) {
@@ -3021,7 +3019,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -3034,16 +3032,13 @@ var vm = new Vue({
     },
 
     // 自检：
-    selfCheck: function (v) {
-      plus.nativeUI.showWaiting('正在自检中...', {
-        height: '100px',
-        width: '150px'
-      });
+    selfCheck: function(v) {
+      tipBox('正在自检中');
       getSelfCheck(v, 0);
     },
 
     // 其它设置
-    otherSet: function (v) {
+    otherSet: function(v) {
       var confirmTip = '';
       switch (v) {
         case 'FORMAT':
@@ -3061,17 +3056,11 @@ var vm = new Vue({
       }
       mui.confirm(
         '',
-        confirmTip, ['取消', '确认'],
-        function (e) {
+        confirmTip,
+        ['取消', '确认'],
+        function(e) {
           if (e.index == 1) {
-            plus.nativeUI.showWaiting('正在设置中...', {
-              height: '100px',
-              width: '150px'
-            });
-            plus.nativeUI.showWaiting('读取设置中...', {
-              height: '100px',
-              width: '180px'
-            });
+            tipBox('正在设置中');
             mui.ajax(url, {
               data: {
                 user_name: vm.user_name,
@@ -3093,7 +3082,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -3102,7 +3091,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 plus.nativeUI.closeWaiting();
               }
             });
@@ -3113,16 +3102,13 @@ var vm = new Vue({
     },
 
     // 更新注册码
-    regCode: function () {
+    regCode: function() {
       var reg_code_reg = /^[0-9a-zA-Z]{20}$|^[0-9a-zA-Z]{36}$/;
       if (reg_code_reg.test(vm.oVal.regCode) == false) {
         mui.toast('注册码为20或36位的数字、字母组合！');
         return false;
       }
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
+      tipBox('正在设置中');
       mui.ajax(url, {
         type: 'post',
         data: {
@@ -3144,7 +3130,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -3153,14 +3139,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     },
 
     // 固件升级
-    rtkUpdate: function () {
+    rtkUpdate: function() {
       mui.ajax(apiUrl.firmwareUpdate, {
         type: 'post',
         data: {
@@ -3182,7 +3168,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -3191,14 +3177,14 @@ var vm = new Vue({
             plus.nativeUI.closeWaiting();
           }
         },
-        error: function (data) {
+        error: function(data) {
           plus.nativeUI.closeWaiting();
         }
       });
     }
   },
   filters: {
-    transLan: function (val) {
+    transLan: function(val) {
       if (val === 'CHINESE') {
         return '中文';
       } else if (val === 'ENGLISH') {
@@ -3216,17 +3202,14 @@ var vm = new Vue({
   },
 
   watch: {
-    lanCheck: function (val, oldVal) {
+    lanCheck: function(val, oldVal) {
       this.oVal.oldLanCheck = oldVal;
       if (this.oVal.notSend === 0) {
         this.oVal.notSend = 1;
         return false;
       }
+      tipBox('正在设置中');
 
-      plus.nativeUI.showWaiting('正在设置中...', {
-        height: '100px',
-        width: '150px'
-      });
       mui.ajax(url, {
         data: {
           user_name: vm.user_name,
@@ -3239,7 +3222,7 @@ var vm = new Vue({
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status == 0) {
             timeFun(data, otherLanguaer, '设置语言失败！', 'language');
           } else if (data.status === 40004) {
@@ -3248,7 +3231,7 @@ var vm = new Vue({
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -3258,23 +3241,26 @@ var vm = new Vue({
             errTip('language');
           }
         },
-        error: function (data) {
+        error: function(data) {
           layer.close(layer.index);
         }
       });
     }
   },
 
-  created: function () {
-    mui.plusReady(function () {
+  created: function() {
+    mui.plusReady(function() {
       mui.init({});
+      var old_back = mui.back;
+      mui.back = function() {
+        plus.nativeUI.closeWaiting();
+        old_back();
+      };
       //  禁止tab左右滑动功能
       mui('.mui-slider').slider().stopped = true;
       currentWebview = plus.webview.currentWebview();
-      plus.nativeUI.showWaiting('正在初始化设置中...', {
-        height: '100px',
-        width: '180px'
-      });
+      tipBox('正在初始化设置中');
+
       // 获取上层页面传递过来的参数
       var self = plus.webview.currentWebview();
       vm.currentIdentifyCode = self.identifyCode;
@@ -3285,14 +3271,14 @@ var vm = new Vue({
       vm.user_name = plus.storage.getItem('user_name');
 
       // 第一次请求
-      vm.firstTimer = setTimeout(function () {
+      vm.firstTimer = setTimeout(function() {
         vm.onlyOne = 1;
         getSicVersion();
       }, 3000);
 
       // var socket = io.connect( 'http://' + '119.23.161.165:9110' + '/rtkTransferWeb' );
       var socket = io.connect('http://119.23.161.165:9010/rtkuniqueid');
-      socket.on('connect', function () {
+      socket.on('connect', function() {
         vm.clientUUid = socket.id;
         vm.disconnectCount = 0;
         console.log('socket is ok :' + vm.clientUUid);
@@ -3303,7 +3289,7 @@ var vm = new Vue({
         }
       });
 
-      socket.on('connect_failed', function () {
+      socket.on('connect_failed', function() {
         // 连接并赋值socketID
         vm.disconnectCount++;
         if (++onlyOne === 1) {
@@ -3319,7 +3305,7 @@ var vm = new Vue({
           clearTimeout(vm.ajaxTimer);
           if (
             jsonObj.errorId === 'ERROR_NULL' &&
-      jsonObj.hitSicDataReply !== undefined
+            jsonObj.hitSicDataReply !== undefined
           ) {
             // errTip(vm.socketTypeModel);
             vm.socketFun(jsonObj.hitSicDataReply);
@@ -3327,7 +3313,8 @@ var vm = new Vue({
             errTip(vm.socketTypeModel);
             mui.confirm(
               '',
-              '设备离线,操作失败!', ['确认'],
+              '设备离线,操作失败!',
+              ['确认'],
               function (e) {
                 currentWebview.close();
                 plus.nativeUI.closeWaiting();
@@ -3353,14 +3340,15 @@ var vm = new Vue({
         }
       });
 
-      socket.on('ConnectStatus', function (replyData) {
+      socket.on('ConnectStatus', function(replyData) {
         var noteObj = JSON.parse(replyData.data);
         console.log(noteObj);
         if (noteObj.connectStatus === false) {
           mui.confirm(
             '',
-            '设备离线,操作失败!', ['确认'],
-            function (e) {
+            '设备离线,操作失败!',
+            ['确认'],
+            function(e) {
               currentWebview.close();
               mui.openWindow({
                 url: '../../login.html',
@@ -3385,7 +3373,7 @@ var vm = new Vue({
         plus.nativeUI.closeWaiting();
       });
 
-      socket.on('CommandStatus', function (replyData) {
+      socket.on('CommandStatus', function(replyData) {
         var valueObj = JSON.parse(replyData.data);
         console.log('CommandStatus' + valueObj);
       });
@@ -3410,16 +3398,13 @@ var vm = new Vue({
         .setAttribute('style', 'height:' + resolutionHeight + 'px;');
 
       //  switch开关设置卫星使能
-      mui('#item3mobile .mui-switch').each(function (index) {
+      mui('#item3mobile .mui-switch').each(function(index) {
         //  循环所有toggle
-        this.addEventListener('toggle', function (event) {
+        this.addEventListener('toggle', function(event) {
           //  event.detail.isActive 可直接获取当前状态
           var currentType = vm.Satellite[index].name;
           if (event.detail.isActive) {
-            plus.nativeUI.showWaiting('正在设置设备中...', {
-              height: '100px',
-              width: '180px'
-            });
+            tipBox('正在设置中');
             mui.ajax(url, {
               type: 'post',
               data: {
@@ -3452,7 +3437,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -3461,16 +3446,13 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('启动卫星使能失败！');
                 plus.nativeUI.closeWaiting();
               }
             });
           } else {
-            plus.nativeUI.showWaiting('正在设置设备中...', {
-              height: '100px',
-              width: '180px'
-            });
+            tipBox('正在设置设备中');
             mui.ajax(url, {
               type: 'post',
               data: {
@@ -3501,7 +3483,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -3510,7 +3492,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('关闭卫星使能失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3520,15 +3502,12 @@ var vm = new Vue({
       });
 
       //  switch开关设置语音
-      mui('#item4mobile .mui-switch').each(function (index) {
+      mui('#item4mobile .mui-switch').each(function(index) {
         //  循环所有toggle
-        this.addEventListener('toggle', function (event) {
+        this.addEventListener('toggle', function(event) {
           //  event.detail.isActive 可直接获取当前状态
           if (event.detail.isActive) {
-            plus.nativeUI.showWaiting('正在打开语音...', {
-              height: '100px',
-              width: '180px'
-            });
+            tipBox('正在打开语音');
             mui.ajax(url, {
               type: 'post',
               data: {
@@ -3559,7 +3538,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -3568,16 +3547,13 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('打开语音失败！');
                 plus.nativeUI.closeWaiting();
               }
             });
           } else {
-            plus.nativeUI.showWaiting('正在关闭语音...', {
-              height: '100px',
-              width: '180px'
-            });
+            tipBox('正在关闭语音');
             mui.ajax(url, {
               type: 'post',
               data: {
@@ -3608,7 +3584,7 @@ var vm = new Vue({
                     url: '../../login.html',
                     id: 'login'
                   });
-                  setTimeout(function () {
+                  setTimeout(function() {
                     plus.nativeUI.closeWaiting();
                     plus.webview.currentWebview().close('none');
                   }, 500);
@@ -3617,7 +3593,7 @@ var vm = new Vue({
                   plus.nativeUI.closeWaiting();
                 }
               },
-              error: function (data) {
+              error: function(data) {
                 mui.toast('关闭语音失败！');
                 plus.nativeUI.closeWaiting();
               }
@@ -3626,7 +3602,7 @@ var vm = new Vue({
         });
       });
       // 监听window的resize
-      window.addEventListener('resize', function () {
+      window.addEventListener('resize', function() {
         var height = document.documentElement.clientHeight;
         var width = document.documentElement.clientWidth;
         console.log('可见区域高度:' + height);
@@ -3643,17 +3619,17 @@ var vm = new Vue({
   computed: {
     // 设置卫星号复选框全选方法
     satelliteAllChecked: {
-      get: function () {
+      get: function() {
         // 当前选中的数据长度等于该数据的总长度（全选状态）,显示按钮选中状态
         return (
           this.satelliteCheckedCount ===
-     this.currentSatellite.SatelliteNumber.length
+          this.currentSatellite.SatelliteNumber.length
         );
       },
-      set: function (value) {
+      set: function(value) {
         if (value) {
           this.SatelliteNumberChecked = this.currentSatellite.SatelliteNumber.map(
-            function (item) {
+            function(item) {
               return item.value;
             }
           );
@@ -3663,7 +3639,7 @@ var vm = new Vue({
       }
     },
     satelliteCheckedCount: {
-      get: function () {
+      get: function() {
         // 返回选中的数据长度
         return this.SatelliteNumberChecked.length;
       }
@@ -3671,13 +3647,13 @@ var vm = new Vue({
 
     // 修改跟踪频段复选框全选方法
     channelsAllChecked: {
-      get: function () {
+      get: function() {
         // 当前选中的数据长度等于该数据的总长度（全选状态）
         return this.channelsCheckedCount === this.currentSatellite.track.length;
       },
-      set: function (value) {
+      set: function(value) {
         if (value) {
-          this.channelsChecked = this.currentSatellite.track.map(function (
+          this.channelsChecked = this.currentSatellite.track.map(function(
             item
           ) {
             return item.value;
@@ -3688,7 +3664,7 @@ var vm = new Vue({
       }
     },
     channelsCheckedCount: {
-      get: function () {
+      get: function() {
         // 返回选中的数据总长度
         return this.channelsChecked.length;
       }
@@ -3696,96 +3672,96 @@ var vm = new Vue({
 
     //  切换度分秒格式时通过计算属性绑定同一个参数方便提交请求
     latitude_degree: {
-      get: function () {
+      get: function() {
         return Math.floor(this.bVal.latitude);
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(newValue) +
-     this.latitude_minute / 60 +
-     this.latitude_second / 3600
+          this.latitude_minute / 60 +
+          this.latitude_second / 3600
         ).toFixed(10);
       }
     },
     latitude_minute: {
-      get: function () {
+      get: function() {
         return Math.floor(
           (this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(this.latitude_degree) +
-     newValue / 60 +
-     this.latitude_second / 3600
+          newValue / 60 +
+          this.latitude_second / 3600
         ).toFixed(10);
       }
     },
     latitude_second: {
-      get: function () {
+      get: function() {
         return (
           Math.round(
             ((this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60 -
-       Math.floor(
-         (this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60
-       )) *
-      60 *
-      10000
+              Math.floor(
+                (this.bVal.latitude - Math.floor(this.bVal.latitude)) * 60
+              )) *
+              60 *
+              10000
           ) / 10000
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.latitude = (
           Number(this.latitude_degree) +
-     this.latitude_minute / 60 +
-     newValue / 3600
+          this.latitude_minute / 60 +
+          newValue / 3600
         ).toFixed(10);
       }
     },
     longitude_degree: {
-      get: function () {
+      get: function() {
         return Math.floor(this.bVal.longitude);
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(newValue) +
-     this.longitude_minute / 60 +
-     this.longitude_second / 3600
+          this.longitude_minute / 60 +
+          this.longitude_second / 3600
         ).toFixed(10);
       }
     },
     longitude_minute: {
-      get: function () {
+      get: function() {
         return Math.floor(
           (this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(this.longitude_degree) +
-     newValue / 60 +
-     this.longitude_second / 3600
+          newValue / 60 +
+          this.longitude_second / 3600
         ).toFixed(10);
       }
     },
     longitude_second: {
-      get: function () {
+      get: function() {
         return (
           Math.round(
             ((this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60 -
-       Math.floor(
-         (this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60
-       )) *
-      60 *
-      10000
+              Math.floor(
+                (this.bVal.longitude - Math.floor(this.bVal.longitude)) * 60
+              )) *
+              60 *
+              10000
           ) / 10000
         );
       },
-      set: function (newValue) {
+      set: function(newValue) {
         this.bVal.longitude = (
           Number(this.longitude_degree) +
-     this.longitude_minute / 60 +
-     newValue / 3600
+          this.longitude_minute / 60 +
+          newValue / 3600
         ).toFixed(10);
       }
     }
@@ -3817,7 +3793,7 @@ function getSicVersion() {
         });
       }
     },
-    error: function (data) {
+    error: function(data) {
       plus.nativeUI.closeWaiting();
     }
   });
@@ -3836,7 +3812,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
   // 如果请求唯一码返回数据成功
   if (data.status === ERR_NO) {
     // 生成setTimeout计时器并执行
-    vm.ajaxTimer = setTimeout(function () {
+    vm.ajaxTimer = setTimeout(function() {
       // 根据返回得到的唯一码请求相应的数据
       mui.ajax(apiUrl.doGetUniqueIdInfo, {
         data: {
@@ -3848,7 +3824,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
         dataType: 'json',
         type: 'post',
         timeout: 10000,
-        success: function (data) {
+        success: function(data) {
           if (data.status === 0) {
             tip = tip || data.info;
             var _data = data.data;
@@ -3867,8 +3843,9 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
               errTip(typeModel);
               mui.confirm(
                 '',
-                '设备离线,操作失败!', ['确认'],
-                function (e) {
+                '设备离线,操作失败!',
+                ['确认'],
+                function(e) {
                   currentWebview.close();
                   plus.nativeUI.closeWaiting();
                 },
@@ -3897,7 +3874,7 @@ function timeFun(data, func, tip, typeModel, timee, showWaiting) {
               url: '../../login.html',
               id: 'login'
             });
-            setTimeout(function () {
+            setTimeout(function() {
               plus.nativeUI.closeWaiting();
               plus.webview.currentWebview().close('none');
             }, 500);
@@ -3983,56 +3960,21 @@ function getConfigWorkModePageInfo(hd) {
         plus.nativeUI.closeWaiting();
         //  选择工作模式后请求对应数据（BASE/ROVER/STATIC）
       } else if (hd[i].hitSicData === 'GET:DEVICE.CUR_SYSMODE') {
-        plus.nativeUI.showWaiting('正在读取设备信息...', {
-          height: '100px',
-          width: '180px'
-        });
+        tipBox('正在读取设备信息');
         console.log(plus.storage.getItem('linkCode'));
-
-        if (hd[i].value === 'ROVER' && plus.storage.getItem('linkCode') === 'none' && vm.currentIdentifyCode !== plus.storage.getItem('linkCode')) {
-          plus.nativeUI.closeWaiting();
-          plus.nativeUI.showWaiting('正在等待对方授权中...', {
-            height: '100px',
-            width: '180px'
-          });
-          mui.ajax(apiUrl.send_hand_over, {
-            data: {
-              user_name: vm.user_name,
-              token: vm.token,
-              identifyCode: vm.currentIdentifyCode
-            },
-            dataType: 'json',
-            type: 'post',
-            timeout: 10000,
-            success: function callback(data) {
-              if (data.status === ERR_NO) {
-                vm.operationId = data.operationId;
-                resTime = setTimeout(function () {
-                  console.log('checkRes');
-                  checkRes();
-                }, 180000);
-              } else if (data.status === 40004) {
-                mui.toast(data.info);
-                mui.openWindow({
-                  url: '../../login.html',
-                  id: 'login'
-                });
-                setTimeout(function () {
-                  plus.nativeUI.closeWaiting();
-                  plus.webview.currentWebview().close('none');
-                }, 500);
-              } else {
-                plus.nativeUI.closeWaiting();
-                mui.confirm(
-                  '',
-                  '当前设备没有关联帐号!', ['确认'],
-                  function (e) {},
-                  'div'
-                );
-              }
-            },
-            error: function (data) {}
-          });
+        if (hd[i].value === 'ROVER') {
+          if (plus.storage.getItem('linkCode') !== 'none') {
+            if (plus.storage.getItem('linkCode') !== vm.currentIdentifyCode) {
+              sendAuth();
+            } else {
+              vm.workChecked = vm.wActive;
+              vm.wActive = hd[i].value;
+              vm.wshow = hd[i].value;
+              workModelInfo(hd[i].value, getConfigWorkModePageInfo);
+            }
+          } else {
+            sendAuth();
+          }
         } else {
           vm.workChecked = vm.wActive;
           vm.wActive = hd[i].value;
@@ -4059,20 +4001,14 @@ function workModelInfo(v, funcName) {
     timeout: 10000,
     success: function callback(data) {
       if (data.status === ERR_NO) {
-        timeFun(
-          data,
-          funcName,
-          '读取信息失败',
-          'pagesInfo',
-          3000
-        );
+        timeFun(data, funcName, '读取信息失败', 'pagesInfo', 3000);
       } else if (data.status === 40004) {
         mui.toast(data.info);
         mui.openWindow({
           url: '../../login.html',
           id: 'login'
         });
-        setTimeout(function () {
+        setTimeout(function() {
           plus.nativeUI.closeWaiting();
           plus.webview.currentWebview().close('none');
         }, 500);
@@ -4081,7 +4017,7 @@ function workModelInfo(v, funcName) {
         plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       plus.nativeUI.closeWaiting();
     }
   });
@@ -4099,14 +4035,14 @@ function rtknote() {
     dataType: 'json',
     type: 'post',
     timeout: 10000,
-    success: function (data) {
+    success: function(data) {
       if (data.status === 0) {
         console.log('listenting rtk');
       } else {
         mui.toast(data.info);
       }
     },
-    error: function (data) {}
+    error: function(data) {}
   });
 }
 
@@ -4121,29 +4057,33 @@ function mointorChanged(v) {
     dataType: 'json',
     type: 'post',
     timeout: 10000,
-    success: function (data) {
+    success: function(data) {
       if (data.status === 0) {
         console.log('listenting monitor_command_value_changed');
       } else {
         mui.toast(data.info);
       }
     },
-    error: function (data) {}
+    error: function(data) {}
   });
 }
 
 // 每240秒申请监控通知
-setInterval(function () {
+setInterval(function() {
   rtknote();
 }, 240000);
 
+function tipBox(tip) {
+  plus.nativeUI.showWaiting(tip, {
+    height: '100px',
+    width: '150px',
+    back: 'transmit'
+  });
+}
 // 第一次进入页面时设置时获取工作模式数据方法
 function firstGetConfigWorkModePageInfo(showOrhide) {
   if (showOrhide !== 'closeWaiting') {
-    plus.nativeUI.showWaiting('正在读取设备设置中...', {
-      height: '100px',
-      width: '150px'
-    });
+    tipBox('正在读取设备设置中');
   }
   mui.ajax(url, {
     data: {
@@ -4155,7 +4095,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
     dataType: 'json',
     type: 'post',
     timeout: 10000,
-    success: function (data) {
+    success: function(data) {
       if (data.status === ERR_NO) {
         timeFun(
           data,
@@ -4171,7 +4111,7 @@ function firstGetConfigWorkModePageInfo(showOrhide) {
           url: '../../login.html',
           id: 'login'
         });
-        setTimeout(function () {
+        setTimeout(function() {
           plus.nativeUI.closeWaiting();
           plus.webview.currentWebview().close('none');
         }, 500);
@@ -4196,13 +4136,11 @@ function getSic(hd) {
           // 如果以上不成立，先进行判断是否设置SIC_2.0协议，确认时，执行设置SIC_2.0协议的方法setSicVirsion
           mui.confirm(
             '',
-            '是否设置SIC_2.0协议?', ['取消', '确认'],
-            function (e) {
+            '是否设置SIC_2.0协议?',
+            ['取消', '确认'],
+            function(e) {
               if (e.index === 1) {
-                plus.nativeUI.showWaiting('正在设置中...', {
-                  height: '100px',
-                  width: '150px'
-                });
+                tipBox('正在设置中');
                 setSicVirsion();
               }
             },
@@ -4237,7 +4175,7 @@ function setSicVirsion() {
           url: '../../login.html',
           id: 'login'
         });
-        setTimeout(function () {
+        setTimeout(function() {
           plus.nativeUI.closeWaiting();
           plus.webview.currentWebview().close('none');
         }, 500);
@@ -4246,7 +4184,7 @@ function setSicVirsion() {
         plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       mui.toast(data.info);
       plus.nativeUI.closeWaiting();
     }
@@ -4300,8 +4238,9 @@ function getSicError(msg) {
   plus.nativeUI.closeWaiting();
   mui.confirm(
     '',
-    msg, ['确认'],
-    function (e) {
+    msg,
+    ['确认'],
+    function(e) {
       currentWebview.close();
     },
     'div'
@@ -4318,7 +4257,7 @@ function baseStart(hd) {
           mui.toast('启动成功!');
           plus.nativeUI.closeWaiting();
         } else if (hd[i].value == 1 || hd[i].value == 0) {
-          setTimeout(function () {
+          setTimeout(function() {
             workModelInfo('BASE', baseStart);
           }, 5000);
         } else {
@@ -4452,7 +4391,8 @@ function staticSet(hd) {
         vm.antennaMethodStatus = false;
       }
     } else if (hd[i].hitSicData == 'SET:DEVICE.RECORD.AUTO_REC') {
-      if (hd[i].status == true) {} else {
+      if (hd[i].status == true) {
+      } else {
         vm.sVal.record = !vm.sVal.record;
       }
     }
@@ -4718,7 +4658,7 @@ function getConfigSatellitePageInfo(hd) {
 }
 
 function timerCheck(type, status, check) {
-  setTimeout(function () {
+  setTimeout(function() {
     getSelfCheck(type, status, check);
   }, 3000);
 }
@@ -4762,7 +4702,7 @@ function getSelfCheck(checkType, status, checking) {
           url: '../../login.html',
           id: 'login'
         });
-        setTimeout(function () {
+        setTimeout(function() {
           plus.nativeUI.closeWaiting();
           plus.webview.currentWebview().close('none');
         }, 500);
@@ -4771,7 +4711,7 @@ function getSelfCheck(checkType, status, checking) {
         plus.nativeUI.closeWaiting();
       }
     },
-    error: function (data) {
+    error: function(data) {
       plus.nativeUI.closeWaiting();
     }
   });
@@ -4798,7 +4738,7 @@ function otherSelfCheck(hd) {
         timerCheck('checkOEM', 1, 'loading');
       } else if (
         hd[i].value === 'SUCCESS' ||
-    hd[i].value === 'ALLOEM SUCCESS'
+        hd[i].value === 'ALLOEM SUCCESS'
       ) {
         if (oemFist === 0) {
           oemFist = 1;
@@ -4826,7 +4766,7 @@ function otherSelfCheck(hd) {
         timerCheck('checkUHF', 1, 'loading');
       } else if (
         hd[i].value === 'SUCCESS' ||
-    hd[i].value === 'ALLUHF SUCCESS'
+        hd[i].value === 'ALLUHF SUCCESS'
       ) {
         if (uhffirst === 0) {
           uhffirst = 1;
@@ -4854,7 +4794,7 @@ function otherSelfCheck(hd) {
         timerCheck('checkNET', 1, 'loading');
       } else if (
         hd[i].value === 'SUCCESS' ||
-    hd[i].value === 'ALLUHF SUCCESS'
+        hd[i].value === 'ALLUHF SUCCESS'
       ) {
         if (netfirst === 0) {
           netfirst = 1;
@@ -4882,7 +4822,7 @@ function otherSelfCheck(hd) {
         timerCheck('checkWIFI', 1, 'loading');
       } else if (
         hd[i].value === 'SUCCESS' ||
-    hd[i].value === 'ALLUHF SUCCESS'
+        hd[i].value === 'ALLUHF SUCCESS'
       ) {
         if (wififirst === 0) {
           wififirst = 1;
@@ -5035,12 +4975,12 @@ function removeClass(elements, cName) {
   }
 }
 
-/* window.addEventListener('auth', function (event) {
+window.addEventListener('auth', function(event) {
   mui.confirm(
     '',
     '是否授权操作',
     ['拒绝', '允许'],
-    function (e) {
+    function(e) {
       console.log(e.index);
       if (e.index === 1) {
         mui.fire(indexWb, 'ifAuth', { flag: true });
@@ -5050,7 +4990,51 @@ function removeClass(elements, cName) {
     },
     'div'
   );
-}); */
+});
+
+function sendAuth() {
+  plus.nativeUI.closeWaiting();
+  tipBox('等待对方授权');
+  mui.ajax(apiUrl.send_hand_over, {
+    data: {
+      user_name: vm.user_name,
+      token: vm.token,
+      identifyCode: vm.currentIdentifyCode
+    },
+    dataType: 'json',
+    type: 'post',
+    timeout: 10000,
+    success: function callback(data) {
+      if (data.status === ERR_NO) {
+        vm.operationId = data.operationId;
+        resTime = setTimeout(function() {
+          console.log('checkRes');
+          checkRes();
+        }, 180000);
+      } else if (data.status === 40004) {
+        mui.toast(data.info);
+        mui.openWindow({
+          url: '../../login.html',
+          id: 'login'
+        });
+        setTimeout(function() {
+          plus.nativeUI.closeWaiting();
+          plus.webview.currentWebview().close('none');
+        }, 500);
+      } else {
+        plus.nativeUI.closeWaiting();
+        mui.confirm(
+          '',
+          '当前设备没有关联帐号!',
+          ['确认'],
+          function(e) {},
+          'div'
+        );
+      }
+    },
+    error: function(data) {}
+  });
+}
 
 function checkRes() {
   plus.nativeUI.closeWaiting();
@@ -5069,10 +5053,7 @@ function checkRes() {
         vm.operationId = data.operationId;
         if (data.result === true) {
           mui.toast('设备获取授权成功!');
-          plus.nativeUI.showWaiting('正在读取设备信息...', {
-            height: '100px',
-            width: '180px'
-          });
+          tipBox('正在读取设备信息');
           vm.wActive = 'ROVER';
           vm.wshow = 'ROVER';
           mui.ajax(url, {
@@ -5101,15 +5082,16 @@ function checkRes() {
                 plus.nativeUI.closeWaiting();
               }
             },
-            error: function (data) {
+            error: function(data) {
               plus.nativeUI.closeWaiting();
             }
           });
         } else if (data.result === false) {
           mui.confirm(
             '',
-            '对方拒绝授权!', ['确认'],
-            function (e) {
+            '对方拒绝授权!',
+            ['确认'],
+            function(e) {
               currentWebview.close();
             },
             'div'
@@ -5118,8 +5100,9 @@ function checkRes() {
         } else if (data.result === '') {
           mui.confirm(
             '',
-            '授权异常!', ['确认'],
-            function (e) {
+            '授权异常!',
+            ['确认'],
+            function(e) {
               currentWebview.close();
             },
             'div'
@@ -5131,15 +5114,16 @@ function checkRes() {
           url: '../../login.html',
           id: 'login'
         });
-        setTimeout(function () {
+        setTimeout(function() {
           plus.nativeUI.closeWaiting();
           plus.webview.currentWebview().close('none');
         }, 500);
       } else {
         mui.confirm(
           '',
-          '授权失败!', ['确认'],
-          function (e) {
+          '授权失败!',
+          ['确认'],
+          function(e) {
             currentWebview.close();
           },
           'div'
@@ -5147,11 +5131,12 @@ function checkRes() {
         mui.toast(data.info);
       }
     },
-    error: function (data) {
+    error: function(data) {
       mui.confirm(
         '',
-        '授权异常!', ['确认'],
-        function (e) {
+        '授权异常!',
+        ['确认'],
+        function(e) {
           currentWebview.close();
         },
         'div'
@@ -5160,7 +5145,7 @@ function checkRes() {
   });
 }
 
-window.addEventListener('authRes', function (event) {
+window.addEventListener('authRes', function(event) {
   checkRes();
   clearTimeout(resTime);
 });

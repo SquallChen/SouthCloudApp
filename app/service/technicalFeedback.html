@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>技术反馈</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<!--<link rel="stylesheet" href="../../css/custom.css">-->
+	<link rel="stylesheet" href="../../css/iconfont.css">
+	<style type="text/css">
+		* {
+			padding: 0;
+			margin: 0;
+			box-sizing: border-box;
+		}
+
+		html,
+		body,
+		#vm {
+			height: 100%;
+			background: #fff;
+		}
+
+		a {
+			color: #333;
+		}
+
+		.filter {
+			width: 100%;
+			usertitle
+		}
+
+		.filter a {
+			display: block;
+			width: 80%;
+			height: 50px;
+			line-height: 50px;
+			font-size: 15px;
+			padding-left: 20px;
+		}
+
+		.btn {
+			background: none;
+			border: none;
+			color: white;
+			font-size: 40px;
+			line-height: 24px;
+			width: 48px;
+			height: 48px;
+			float: right;
+			right: -4px;
+		}
+
+		.filter li:after {
+			width: 100%;
+			height: 1px;
+			content: '';
+			display: block;
+			padding: 0;
+			position: relative;
+			-webkit-transform: scaleY(.5);
+			transform: scaleY(.5);
+			background-color: #ccc;
+		}
+
+		.filter .top {
+			padding: 0 10px;
+			display: flex;
+			justify-content: space-between;
+			margin-top: -7px;
+		}
+
+		.filter .middle {
+			padding: 10px;
+		}
+
+		.filter .middle span {
+			margin-right: 20px;
+			color: #333;
+		}
+
+		.filter .middle span:nth-child(1) {
+			font-size: 20px;
+		}
+
+		.filter .middle span:nth-child(2) {
+			font-size: 20px;
+		}
+
+		.filter .Num {
+			font-size: 20px;
+			color: #0b5fde;
+		}
+
+		.filter .time {
+			font-size: 14px;
+			color: #ccc;
+		}
+
+		.mui-bar .mui-icon {
+			font-size: 32px;
+		}
+
+		.mui-bar .mui-title {
+			right: 50px;
+			left: 50px;
+			color: white;
+			margin-top: 29px;
+			font-size: 20px;
+		}
+
+		.mui-bar-nav~.mui-content {
+			padding-top: 73px;
+		}
+
+		.mui-content {
+			background: white;
+		}
+
+		.mui-popover {
+			height: 300px;
+		}
+
+		.mui-popover {
+			width: 180px;
+			height: 166px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+			background: white;
+		}
+
+		.mui-backdrop {
+			background: transparent;
+		}
+
+		.mui-popover .mui-scroll-wrapper {
+			margin: 0;
+		}
+
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child,
+		.mui-popover .mui-table-view .mui-table-view-cell:last-child>a:not(.mui-btn),
+		.mui-popover .mui-table-view .mui-table-view-cell:first-child>a:not(.mui-btn) {
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			border-top-left-radius: 0;
+			border-top-right-radius: 0;
+		}
+
+		.userEntryImg {
+			display: inline-block;
+			width: 22px;
+			height: 22px;
+			background: url(../../public/img/user_icon01.png) no-repeat;
+			background-size: 19px 22px;
+			margin-left: 15px;
+		}
+
+		.userfilter {
+			display: inline-block;
+			width: 22px;
+			height: 22px;
+			background: url(../../public/img/user_icon02.png) no-repeat;
+			background-size: 19px 22px;
+			margin-left: 15px;
+		}
+
+		.mui-content .mui-icon {
+			color: #ccc;
+			position: absolute;
+			right: 15px;
+			top: 13px;
+		}
+
+		.mui-popover {
+			width: 122px;
+			height: 50px;
+			box-shadow: 0 0 15px rgba(0, 0, 0, .3);
+			background: white;
+		}
+
+		.mui-popover .mui-table-view .mui-table-view-cell:first-child {
+			border-top-left-radius: 12px;
+			border-top-right-radius: 12px;
+		}
+
+		.mui-table-view-cell {
+			padding: 11px 15px;
+		}
+
+		.padding_top {
+			height: 21px;
+			background: #e8e8e8;
+		}
+
+		.mui-toast-container {
+			bottom: 60% !important;
+		}
+
+		.mui-pull {
+			height: 40px;
+			bottom: 0;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-pull-caption {
+			height: 40px;
+			line-height: 40px;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+			flex: 1;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+
+		.text-info {
+			width: 65%;
+			padding-left: 10px;
+			padding-bottom: 10px;
+			color: #333;
+			overflow: hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		/*.mui-bar-nav~.mui-content {
+				padding-top: 0;
+				flex: 1;
+				overflow: auto;
+			}*/
+
+		#vm {
+			display: flex;
+			flex-direction: column;
+		}
+
+		.mui-scroll-wrapper {
+			overflow: auto;
+		}
+
+		.mui-bar-nav {
+			height: 73px;
+			background: #0b60de;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="vm">
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<h1 class="mui-title">技术反馈</h1>
+		</header>
+		<!--<div style="height: 73px;"></div>-->
+		<div class="mui-content">
+			<div class="padding_top"></div>
+			<div id="pullrefresh" class="mui-content mui-scroll-wrapper">
+				<div class="filter">
+					<ul class="filter-ul">
+						<li class="filter-li" v-for="(v,k) in list" @tap="detail(v)">
+							<div class="top">
+								<span class="Num">{{v.id}}</span>
+								<span class="time">{{v.createTime | formatterTime}}</span>
+							</div>
+							<div class="middle">
+								<span>{{v.realName}}</span>
+								<span>{{v.machineType}}</span>
+							</div>
+							<div class="text-info">
+								<span>{{v.description}}</span>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+		  el: '#vm',
+		  user_name: '',
+		  token: '',
+		  data: {
+		    list: [],
+		    page_num: 1,
+		    pageCount: ''
+		  },
+		  methods: {
+		    detail: function (v) {
+		      mui.openWindow({
+		        url: './feedbackDetail.html',
+		        id: './feedbackDetail.html',
+		        extras: {
+		          info: v
+		        }
+		      });
+		    }
+		  },
+		  filters: {
+		    formatterTime: function (v) {
+		      return timeTrans(v, 'yyyy-MM-dd HH:mm:ss');
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () {
+		      mui.init({
+		        pullRefresh: {
+		          //容器本身不能绝对定位并overflow:auto，否则就会下拉立即加载，不会等拉到内容顶部再加载（overflow:auto默认已在顶部）
+		          container: '#pullrefresh',
+		          down: {
+		            style: 'circle', // 必选，下拉刷新样式，目前支持原生5+ ‘circle’ 样式
+		            auto: false, // 可选,默认false.首次加载自动上拉刷新一次
+		            callback: pulldownRefresh // 必选，刷新函数，根据具体业务来编写，比如通过ajax从服务器获取新数据；
+		          },
+		          up: {
+		            auto: false,
+		            contentrefresh: '正在加载...',
+		            callback: pullupRefresh
+		          }
+
+		        }
+		      });
+		      mui.back = function () {
+		        mui.openWindow({
+		          url: './serviceList.html',
+		          id: 'serviceList.html'
+		        });
+		        plus.nativeUI.closeWaiting();
+		        plus.webview.currentWebview().close('none');
+		      };
+		      getTechOrder();
+		    });
+		  }
+		});
+
+		function pullupRefresh() {
+		  if (vm.page_num >= vm.pageCount) {
+		    mui('#pullrefresh').pullRefresh().endPullupToRefresh(true);
+		  } else {
+		    setTimeout(function () {
+		      vm.page_num += 1;
+		      mui('#pullrefresh').pullRefresh().endPullupToRefresh((vm.page_num >= vm.pageCount)); // 参数为true代表没有更多数据了。
+		      getTechOrder();
+		    }, 1500);
+		  }
+		}
+
+		function pulldownRefresh() {
+		  vm.list = [];
+		  vm.page_num = 1;
+		  getTechOrder();
+		}
+
+		function getTechOrder() {
+		  mui.ajax(apiUrl.tech_order_page, {
+		    data: {
+		      token: plus.storage.getItem('tokenQC'),
+		      user_name: plus.storage.getItem('userNameQC'),
+		      page_num: vm.page_num,
+		      num_per_page: 20
+		    },
+		    dataType: 'json',
+		    type: 'post',
+		    timeout: 20000,
+		    success: function (data) {
+		      if (data.status === 0 && data.recordList.length > 0) {
+		        temp = data.recordList;
+		        templength = temp.length;
+		        for (var i = 0; i < templength; i++) {
+		          vm.list.push(temp[i]);
+		        }
+		        vm.pageCount = data.pageCount;
+		        mui('#pullrefresh').pullRefresh().endPulldown();
+		      } else {
+		        mui.toast(data.info);
+		      }
+		      plus.nativeUI.closeWaiting();
+		    },
+		    error: function (xhr, type, errorThrown) {
+		      onNetChange();
+		      plus.nativeUI.closeWaiting();
+		    }
+		  });
+		}
+	</script>
+</body>
+
+</html>

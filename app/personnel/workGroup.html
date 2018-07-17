@@ -183,6 +183,10 @@
 						if(vm.wrok_group===''){
 							plus.webview.currentWebview().close();
 						}else{
+							console.log(vm.user_name)
+							console.log(vm.token)
+							console.log(vm.userId)
+							console.log(vm.wrok_group)
 							mui.ajax(apiUrl.update_user_additional_info, {
 							data: {
 								user_name: vm.user_name,
@@ -200,7 +204,6 @@
 								plus.webview.currentWebview().close();
 							},
 							error: function(xhr, type, errorThrown) {
-								console.log(33333);
 								console.log(JSON.stringify(xhr));
 								console.log(JSON.stringify(errorThrown));
 								// 异常处理；

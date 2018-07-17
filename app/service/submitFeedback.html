@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>提交反馈</title>
+	<link href="../../css/mui.min.css" rel="stylesheet" />
+	<link href="../../css/custom.css" rel="stylesheet" />
+	<style>
+		body {
+			background: #f2f2f2;
+		}
+
+		#app {
+			height: 100%;
+			background: #f2f2f2;
+		}
+
+		.mui-content .spacing {
+			height: 21px;
+			background: #f2f2f2;
+			padding: 0;
+			width: 100%;
+			display: block;
+			position: relative;
+		}
+
+		.mui-content .border_top,
+		.mui-content .border_bottom {
+			width: 100%;
+			height: 1px;
+			padding-top: 0 !important;
+			padding-right: 0;
+			padding-left: 0;
+			padding-bottom: 0;
+			-webkit-transform: scaleY(.2);
+			transform: scaleY(.2);
+			background-color: #ccc;
+		}
+
+		.mui-content .border_bottom {
+			position: absolute !important;
+			bottom: 1px;
+		}
+
+		.mui-content div label {
+			color: #333;
+		}
+
+		.mui-content div:nth-child(2) {
+			padding-top: 20px;
+		}
+
+		.mui-content div {
+			padding-right: 20px;
+			padding-left: 20px;
+			padding-bottom: 15px;
+			display: flex;
+			position: relative;
+		}
+
+		.mui-content>div span {
+			display: inline-block;
+			position: absolute;
+			right: 28px;
+			top: 16px;
+			width: 0px;
+			height: 0px;
+			border-top: 8px solid #666;
+			border-right: 5px solid rgba(0, 0, 0, 0);
+			border-bottom: 50px solid rgba(0, 0, 0, 0);
+			border-left: 5px solid rgba(0, 0, 0, 0);
+		}
+
+		.mui-content div:nth-child(1) {
+			padding-top: 20px;
+		}
+
+		.mui-content div:nth-child(2) {
+			position: relative;
+		}
+
+		.mui-content div label {
+			width: 60px;
+			margin-right: 30px;
+			text-align: right;
+			padding: 0;
+			line-height: 36px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.mui-content div input {
+			flex: 1;
+			margin-bottom: 0;
+			height: 36px;
+			font-size: 15px;
+			padding-left: 10px;
+		}
+
+		.mui-content select {
+			font-size: 15px;
+			padding: 0 0 0 6px;
+			color: #333;
+			flex: 1;
+			height: 36px;
+			margin-bottom: 0;
+			border: 1px solid #ccc !important;
+		}
+
+		.down {
+			width: 16px;
+			height: 16px;
+			position: absolute;
+			top: 20px;
+			right: 30px;
+		}
+
+		.mui-bar-nav.mui-bar .mui-icon {
+			width: 73px;
+			height: 52px;
+			top: 21px;
+			display: flex;
+			align-items: center;
+		}
+
+		.mui-icon-back:before,
+		.mui-icon-left-nav:before {
+			content: '';
+		}
+
+		.mui-bar-nav~.mui-content {
+			height: 100%;
+			background: white;
+		}
+
+		.back {
+			display: block;
+			width: 10px;
+			height: 16px;
+			background: url('../../public/img/back.png') no-repeat;
+			background-size: 10px 16px;
+			margin-left: 10px;
+		}
+
+		.management {
+			margin-left: 6%;
+			width: 88%;
+			height: 36px;
+			line-height: 18px;
+			border-radius: 0;
+			background: #3a89fb;
+			color: white;
+			font-size: 15px;
+			margin-top: 25px;
+			border: none;
+			border-radius: 4px;
+		}
+
+		.management:active {
+			background: #0b5fde !important;
+		}
+
+		.problemDescription {
+			display: block;
+			padding-top: 20px;
+			padding-left: 15px;
+			font-size: 15px;
+			color: #999;
+		}
+
+		.selectBtn {
+			background: transparent;
+			border: none;
+			color: white;
+			float: right;
+			position: relative;
+			top: 32px;
+			left: 8px;
+			font-size: 17px;
+		}
+
+		input[type=text] {
+			border: 1px solid #ccc;
+		}
+
+		input[type=text]:focus {
+			border: 1px solid #0b60de;
+		}
+
+		.meg {
+			display: block;
+			text-align: center;
+			height: 80px;
+			line-height: 80px;
+			color: #999;
+			font-size: 15px;
+		}
+
+		[v-cloak] {
+			display: none;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="app" v-cloak>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left">
+				<span class="back"></span>
+			</a>
+			<button class="selectBtn" v-on:tap="submit">完 成</button>
+			<h1 class="mui-title">提交反馈</h1>
+		</header>
+		<div class="mui-content">
+			<div class="spacing"></div>
+			<div>
+				<label>客户姓名</label>
+				<input v-model="real_name" type="text" placeholder="请输入姓名">
+			</div>
+			<div>
+				<label>客户电话</label>
+				<input v-model="mobile" type="text" placeholder="请输入电话号码">
+			</div>
+			<div>
+				<label>设备类别</label>
+				<select v-model="machine_type_group" @change="toggleGroup">
+					<option value="host">主机</option>
+					<option value="handbook">手簿</option>
+					<option value="station">电台</option>
+					<option value="software">软件</option>
+				</select>
+				<span></span>
+			</div>
+			<div>
+				<label>设备类型</label>
+				<select v-model="machine_type">
+					<!-- <option value="" selected disabled>请选择设备类型...</option> -->
+					<option :value="v" v-for="v in deviceType">{{v}}</option>
+				</select>
+				<span></span>
+			</div>
+			<div>
+				<label>机&nbsp;&nbsp;器&nbsp;&nbsp;号</label>
+				<input v-model="machine_sn" type="text" placeholder="请输入机器号">
+			</div>
+			<div class="spacing" style="margin-top: 5px;">
+				<div class="border_top"></div>
+				<div class="border_bottom"></div>
+			</div>
+			<span class="problemDescription">问题描述</span>
+			<div style="padding-top: 10px;padding-left: 15px;padding-right: 15px;">
+				<textarea rows="5" v-model="description" placeholder="请输入问题描述..."></textarea>
+			</div>
+		</div>
+	</div>
+	<script src="../../js/mui.min.js"></script>
+	<script src="../../js/app.js"></script>
+	<script src="../../js/url.js"></script>
+	<script src="../../js/vue.min.js"></script>
+	<script>
+		var vm = new Vue({
+		  el: '#app',
+		  data: {
+		    real_name: '',
+		    mobile: '',
+		    machine_type_group: 'host',
+		    machine_type: '银河6',
+		    deviceType: ['银河6', 'S86', '银河1Plus', '银河1', 'S8213', 'S82'],
+		    machine_sn: '',
+		    description: ''
+		  },
+		  methods: {
+		    toggleGroup: function () {
+		      if (this.machine_type_group === 'host') {
+		        this.deviceType = ['银河6', 'S86', '银河1Plus', '银河1', 'S8213', 'S82'];
+		      } else if (this.machine_type_group === 'handbook') {
+		        this.deviceType = ['X3(Mobile)', 'S730'];
+		      } else if (this.machine_type_group === 'station') {
+		        this.deviceType = ['GDL-20'];
+		      } else if (this.machine_type_group === 'software') {
+		        this.deviceType = ['工程之星', '电力之星', '测图之星', '路桥之星', 'GNSS解算软件', '其它'];
+		      }
+		      this.machine_type = this.deviceType[0];
+		    },
+		    submit: function () {
+		      if (this.real_name == '' || this.mobile == '' || this.machine_sn == '' || this.description == '') {
+		        mui.toast('请完整填写信息!');
+		        return false;
+		      }
+		      plus.nativeUI.showWaiting();
+		      mui.ajax(apiUrl.tech_create_order, {
+		        data: {
+		          token: plus.storage.getItem('tokenQC'),
+		          user_name: plus.storage.getItem('userNameQC'),
+		          real_name: vm.real_name,
+		          mobile: vm.mobile,
+		          machine_type_group: vm.machine_type_group,
+		          machine_type: vm.machine_type,
+		          machine_sn: vm.machine_sn,
+		          description: vm.description
+		        },
+		        dataType: 'json',
+		        type: 'post',
+		        timeout: 20000,
+		        success: function (data) {
+		          if (data.status === 0) {
+		            mui.openWindow({
+		              url: './technicalFeedback.html',
+		              id: 'technicalFeedback.html'
+		            });
+		          } else {
+		            mui.toast(data.info);
+		          }
+		          plus.nativeUI.closeWaiting();
+		        },
+		        error: function (xhr, type, errorThrown) {
+		          onNetChange();
+		          plus.nativeUI.closeWaiting();
+		        }
+		      });
+		    }
+		  },
+		  created: function () {
+		    mui.plusReady(function () {
+		    });
+		  }
+		});
+	</script>
+</body>
+
+</html>
